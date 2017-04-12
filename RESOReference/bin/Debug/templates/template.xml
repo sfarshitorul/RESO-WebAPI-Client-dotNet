@@ -7,6 +7,7 @@
   <RedirectURI>*RedirectURI*</RedirectURI>
   <!-- Credentials -->
   <AuthenticationType>*AuthenticationType*</AuthenticationType>
+  <BearerToken>*BearerToken*</BearerToken>
   <ClientIdentification>*ClientIdentification*</ClientIdentification>
   <ClientSecret>*ClientSecret*</ClientSecret>
   <UserName>*UserName*</UserName>

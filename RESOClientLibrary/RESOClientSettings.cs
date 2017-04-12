@@ -11,8 +11,8 @@ namespace RESOClientLibrary
     {
         standard,
         version,
-        rets_username,
-        rets_password,
+        username,
+        password,
         useragent,
         rets_useragentpasswordhash,
         rets_initialurl,
@@ -34,7 +34,8 @@ namespace RESOClientLibrary
         testscript,
         outputdirectory,
         log_directory,
-        results_directory
+        results_directory,
+        bearertoken
     }
 
     public class RESOClientSettings

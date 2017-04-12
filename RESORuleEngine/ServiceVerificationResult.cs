@@ -1,5 +1,5 @@
 ﻿using System.Net;
-namespace RESORuleEngine
+namespace ODataValidator.RuleEngine
 {
     public class ServiceVerificationResult
     {

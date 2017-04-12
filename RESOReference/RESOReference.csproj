@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>RESOReference</RootNamespace>
     <AssemblyName>RESOReference</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -56,6 +57,12 @@
     <Compile Include="MetadataForm.Designer.cs">
       <DependentUpon>MetadataForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="OutputForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OutputForm.Designer.cs">
+      <DependentUpon>OutputForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ReferencePropertiesFile.cs" />
     <Compile Include="ReferenceClient.cs">
       <SubType>Form</SubType>
@@ -71,6 +78,9 @@
     <EmbeddedResource Include="MetadataForm.resx">
       <DependentUpon>MetadataForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="OutputForm.resx">
+      <DependentUpon>OutputForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ReferenceClient.resx">
       <DependentUpon>ReferenceClient.cs</DependentUpon>
     </EmbeddedResource>
@@ -82,6 +92,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -97,6 +108,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CodeRules\ODataValidator.CodeRules.csproj">
+      <Project>{a1a00cdb-3bb3-4881-9b7a-4d6196c37e37}</Project>
+      <Name>ODataValidator.CodeRules</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ODataTransactions\ODataTransactions.csproj">
       <Project>{e682ce28-e6e3-45c4-ad4e-21660b28c54b}</Project>
       <Name>ODataTransactions</Name>
@@ -108,6 +123,10 @@
     <ProjectReference Include="..\RESOClientLibrary\RESOClientLibrary.csproj">
       <Project>{97f2fbaa-4f93-416a-9bbe-f4ce4bbd4c98}</Project>
       <Name>RESOClientLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RESORuleEngine\RESORuleEngine.csproj">
+      <Project>{068daf17-3d3a-42b7-8aa3-417b77d14f03}</Project>
+      <Name>RESORuleEngine</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

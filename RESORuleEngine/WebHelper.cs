@@ -14,7 +14,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 
-namespace RESORuleEngine
+namespace ODataValidator.RuleEngine
 {
     public static class WebHelper
     {

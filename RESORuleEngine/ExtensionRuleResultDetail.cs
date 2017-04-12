@@ -1,4 +1,4 @@
-﻿namespace RESORuleEngine
+﻿namespace ODataValidator.RuleEngine
 {
     public sealed class ExtensionRuleResultDetail
     {

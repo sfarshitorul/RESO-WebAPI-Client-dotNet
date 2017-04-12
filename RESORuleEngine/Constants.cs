@@ -1,4 +1,4 @@
-﻿namespace RESORuleEngine
+﻿namespace ODataValidator.RuleEngine
 {
     /// <summary>
     /// Class to keep cross-component constants

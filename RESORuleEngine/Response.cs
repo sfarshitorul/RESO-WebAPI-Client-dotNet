@@ -1,6 +1,6 @@
 ﻿using System.Net;
 
-namespace RESORuleEngine
+namespace ODataValidator.RuleEngine
 {
     /// <summary>
     /// Helper class to encapulate response information from OData servcie endpoint

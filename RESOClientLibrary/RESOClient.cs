@@ -26,7 +26,7 @@ namespace RESOClientLibrary
 
     public class RESOClient
     {
-        RESOLogging debuglog = null; 
+
         public RESOClientSettings clientsettings { get; set; }
         private OutputLog outputlog;
         public StringBuilder ClientLog = new StringBuilder();

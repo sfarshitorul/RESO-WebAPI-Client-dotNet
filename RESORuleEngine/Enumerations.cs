@@ -4,8 +4,26 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RESORuleEngine
+namespace ODataValidator.RuleEngine
 {
+    public enum JobType
+    {
+        None = 0,
+
+        Normal = 1,
+
+        Conformance = 2,
+
+        ConformanceRerun = 3,
+
+        Uri = 4,
+
+        UriRerun = 5,
+
+        Payload,
+
+        PayloadRerun
+    }
     public enum ODataMetadataType
     {
         /// <summary>

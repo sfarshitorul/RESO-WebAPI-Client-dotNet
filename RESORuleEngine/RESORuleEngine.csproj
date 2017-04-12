@@ -7,8 +7,8 @@
     <ProjectGuid>{068DAF17-3D3A-42B7-8AA3-417B77D14F03}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RESORuleEngine</RootNamespace>
-    <AssemblyName>RESORuleEngine</AssemblyName>
+    <RootNamespace>ODataValidator.RuleEngine</RootNamespace>
+    <AssemblyName>ODataValidator.RuleEngine</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -30,12 +30,20 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Commons.Xml.Relaxng">
+      <HintPath>..\RelaxNG.3.0.2\lib\net40\Commons.Xml.Relaxng.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -46,18 +54,31 @@
   <ItemGroup>
     <Compile Include="AdditionalInfo.cs" />
     <Compile Include="AnnotationDVsManager.cs" />
+    <Compile Include="ConformanceAdvancedExtensionRule.cs" />
+    <Compile Include="ConformanceExtensionRule.cs" />
+    <Compile Include="ConformanceIntermediateExtensionRule.cs" />
+    <Compile Include="ConformanceMinimalExtensionRule.cs" />
     <Compile Include="ConformanceRuleDependencyInfo.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="ContextHelper.cs" />
     <Compile Include="Enumerations.cs" />
     <Compile Include="ExceptionHelper.cs" />
+    <Compile Include="ExtensionRule.cs" />
     <Compile Include="ExtensionRuleResultDetail.cs" />
+    <Compile Include="ExtensionRuleStore.cs" />
     <Compile Include="ExtensionRuleViolationInfo.cs" />
+    <Compile Include="ExtensionVerifier.cs" />
+    <Compile Include="HttpHeaderRegexVerifier.cs" />
     <Compile Include="HttpMethod.cs" />
+    <Compile Include="ILogger.cs" />
+    <Compile Include="IResultProvider.cs" />
+    <Compile Include="IRuleStore.cs" />
     <Compile Include="IVerifier.cs" />
     <Compile Include="JsonHelper.cs" />
+    <Compile Include="JsonSchemaVerifier.cs" />
     <Compile Include="ODataNamespaceManager.cs" />
     <Compile Include="OversizedPayloadException.cs" />
+    <Compile Include="RegexVerifier.cs" />
     <Compile Include="Request.cs" />
     <Compile Include="Resource.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -65,14 +86,28 @@
       <DependentUpon>Resource.resx</DependentUpon>
     </Compile>
     <Compile Include="Response.cs" />
+    <Compile Include="ResultsProvider.cs" />
+    <Compile Include="RngVerifier.cs" />
     <Compile Include="Rule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RuleCatalogCollection.cs" />
+    <Compile Include="RuleControlImport.cs" />
     <Compile Include="RuleEngineSetting.cs" />
+    <Compile Include="RuleEngineWrapper.cs" />
+    <Compile Include="RuleExecuter.cs" />
+    <Compile Include="RuleSelector.cs" />
+    <Compile Include="RuntimeException.cs" />
     <Compile Include="ServiceContext.cs" />
     <Compile Include="ServiceContextCore.cs" />
+    <Compile Include="ServiceExtensionRules.cs" />
+    <Compile Include="ServiceImplCategoryName.cs" />
+    <Compile Include="ServiceStatus.cs" />
     <Compile Include="ServiceVerification.cs" />
     <Compile Include="ServiceVerificationResult.cs" />
+    <Compile Include="SupportedScheme.cs" />
+    <Compile Include="TabDelimitedFile.cs" />
     <Compile Include="TermDocuments.cs" />
+    <Compile Include="TestControl.cs" />
     <Compile Include="TestResult.cs" />
     <Compile Include="WebHelper.cs" />
     <Compile Include="XmlHelper.cs" />
@@ -85,6 +120,12 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RESOClientLibrary\RESOClientLibrary.csproj">
+      <Project>{97f2fbaa-4f93-416a-9bbe-f4ce4bbd4c98}</Project>
+      <Name>RESOClientLibrary</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

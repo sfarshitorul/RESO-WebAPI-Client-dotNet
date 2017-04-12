@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace RESORuleEngine
+namespace ODataValidator.RuleEngine
 {
     public class Request
     {
