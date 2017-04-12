@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<OutputScript>
+  <ServerParameters>
+    <EndPoint>http://api1.mlslistings.com/resodata/Public/Property</EndPoint>
+  </ServerParameters>
+  <Parameters>
+    <Parameter Name="SelectList" Value="ListingKeyNumeric,ListingId,ListPrice,PropertyType,MlsStatus,StandardStatus"/>
+    <Parameter Name="ListingKeyNumeric" Value="ListingKeyNumeric"/>
+    <Parameter Name="topcount" Value="5"/>  
+    <Parameter Name="OutputDirectory" Value="E:\Drive\TestResults\Output"/>
+    <Parameter Name="Greg" Value="test"/>
+  </Parameters>
+  <Requests>
+    <Request ID="REQ-WA100-QR1" Url="*Parameter_Greg*?$top=*Parameter_topcount*&amp;$orderby=*Parameter_ListingKeyNumeric*&amp;$select=*Parameter_ListingKeyNumeric*" OutputFile="REQ-WA100-QR1_UniqueID.txt"/>
+    <Request Url="*ServerParameters_EndPoint*?$top=*Parameter_topcount*&amp;$select=*Parameter_SelectList*" OutputFile="REQ-WA100-QR3_Select.txt"/>
+    <Request Url="*ServerParameters_EndPoint*?$top=*Parameter_topcount*&amp;$select=*Parameter_SelectList*" OutputFile="REQ-WA100-QR4_Top.txt"/>
+    <Request Url="http://api1.mlslistings.com/resodata/Public/Property?$top=*Parameter_topcount*&amp;$select=*Parameter_SelectList*&amp;$skip=10" OutputFile="REQ-WA100-QR5_skip.txt"/>
+    <Request Url="http://api1.mlslistings.com/resodata/Public/Property?$select=*Parameter_SelectList*&amp;$orderby=ListingKeyNumeric&amp;$filter=ListingKeyNumeric eq 10&amp;$top=*Parameter_topcount*" OutputFile="REQ-WA100-QO2_filter_eq.txt"/>
+    <Request Url="*ServerParameters_EndPoint*?$select=*Parameter_SelectList*&amp;$orderby=*Parameter_ListingKeyNumeric*&amp;$filter=*Parameter_ListingKeyNumeric* ne 3&amp;$top=*Parameter_topcount*" OutputFile="REQ-WA100-QO3.txt"/>
+    <Request Url="*ServerParameters_EndPoint*?$select=*Parameter_SelectList*&amp;$orderby=ListingKeyNumeric&amp;$filter=ListingKeyNumeric gt 49&amp;$top=*Parameter_topcount*" OutputFile="REQ-WA100-QO4.txt"/>
+    <Request Url="*ServerParameters_EndPoint*?$select=*Parameter_SelectList*&amp;$orderby=ListingKeyNumeric&amp;$filter=ListingKeyNumeric ge 97&amp;$top=*Parameter_topcount*" OutputFile="REQ-WA100-QO5.txt"/>
+    <Request Url="*ServerParameters_EndPoint*?$select=*Parameter_SelectList*&amp;$orderby=ListingKeyNumeric&amp;$filter=ListingKeyNumeric lt 10&amp;$top=*Parameter_topcount*" OutputFile="REQ-WA100-QO6.txt"/>
+    <Request Url="*ServerParameters_EndPoint*?$select=*Parameter_SelectList*,StreetSuffix&amp;$orderby=ListingKeyNumeric&amp;$filter=ListingKeyNumeric le 10&amp;$top=*Parameter_topcount*" OutputFile="REQ-WA100-QO7.txt"/>
+    <Request Url="*ServerParameters_EndPoint*?$filter=PropertyType has ResourceEnums.PropertyType'Residential'&amp;$select=ListingKeyNumeric,PropertyType&amp;$top=*Parameter_topcount*" OutputFile="REQ-WA100-QO8.txt"/>
+    <Request Url="*ServerParameters_EndPoint*?$select=*Parameter_SelectList*&amp;$orderby=ListingKeyNumeric&amp;$filter=ListingKeyNumeric gt 5 and ListingKeyNumeric lt 7&amp;$top=*Parameter_topcount*" OutputFile="REQ-WA100-QO9.txt"/>
+    <Request Url="*ServerParameters_EndPoint*?$select=*Parameter_SelectList*&amp;$orderby=ListingKeyNumeric&amp;$filter=ListingKeyNumeric gt 10 or ListingKeyNumeric lt 5&amp;$top=*Parameter_topcount*" OutputFile="REQ-WA100-QO10.txt"/>
+    <Request Url="*ServerParameters_EndPoint*?$select=*Parameter_SelectList*&amp;$orderby=ListingKeyNumeric&amp;$filter=not(ListingKeyNumeric eq 2)&amp;$top=*Parameter_topcount*" OutputFile="REQ-WA100-QO11.txt"/>
+    <Request Url="*ServerParameters_EndPoint*?$select=*Parameter_SelectList*&amp;$orderby=ListingKeyNumeric&amp;$filter=not(ListingKeyNumeric eq 2) and (ListingKeyNumeric lt 5 and ListingKeyNumeric ge 1)&amp;$top=*Parameter_topcount*" OutputFile="REQ-WA100-QO12.txt"/>
+  
+  </Requests>
+</OutputScript>

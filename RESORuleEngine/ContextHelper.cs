@@ -8,7 +8,7 @@ using System.Xml.Linq;
 using System.Xml.XPath;
 using Newtonsoft.Json.Linq;
 
-namespace RESORuleEngine
+namespace ODataValidator.RuleEngine
 {
     /// <summary>
     /// Helper class of extension methods useful for context construction (including header parsing, payload parsing, etc) 

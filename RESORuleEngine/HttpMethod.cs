@@ -2,7 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 
-namespace RESORuleEngine
+namespace ODataValidator.RuleEngine
 {
     /// <summary>
     /// Definitions of methods for sending a request to odata service using in HttpRequest.

@@ -6,7 +6,7 @@ using System.Xml;
 using System.Xml.Linq;
 using System.Xml.XPath;
 
-namespace RESORuleEngine
+namespace ODataValidator.RuleEngine
 {
     /// <summary>
     /// Helper class for extension methods of Xml-Atom content

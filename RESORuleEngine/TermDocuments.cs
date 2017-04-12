@@ -4,7 +4,7 @@ using System;
 using System.Net;
 using System.Runtime.CompilerServices;
 
-namespace RESORuleEngine
+namespace ODataValidator.RuleEngine
 {
     /// <summary>
     /// The TermDocument class.

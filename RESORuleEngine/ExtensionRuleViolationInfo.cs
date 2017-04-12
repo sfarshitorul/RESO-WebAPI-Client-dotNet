@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace RESORuleEngine
+namespace ODataValidator.RuleEngine
 {
     /// <summary>
     /// Class of semantic extension rule violating information

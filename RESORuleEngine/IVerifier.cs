@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RESORuleEngine
+namespace ODataValidator.RuleEngine
 {
     public interface IVerifier
     {

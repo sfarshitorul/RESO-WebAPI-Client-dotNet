@@ -48,9 +48,9 @@
             this.textOAuthRedirectURI = new System.Windows.Forms.TextBox();
             this.label23 = new System.Windows.Forms.Label();
             this.authorizationurilabel = new System.Windows.Forms.Label();
-            this.textOAuthAuthorizationURI = new System.Windows.Forms.TextBox();
-            this.textOAuthPassword = new System.Windows.Forms.TextBox();
-            this.textOAuthUserName = new System.Windows.Forms.TextBox();
+            this.AuthorizationURI = new System.Windows.Forms.TextBox();
+            this.Password = new System.Windows.Forms.TextBox();
+            this.UserName = new System.Windows.Forms.TextBox();
             this.oauth_granttype = new System.Windows.Forms.ComboBox();
             this.label15 = new System.Windows.Forms.Label();
             this.textWebAPIURI = new System.Windows.Forms.TextBox();
@@ -60,7 +60,7 @@
             this.clientidlabel = new System.Windows.Forms.Label();
             this.clientsecretlabel = new System.Windows.Forms.Label();
             this.scopelabel = new System.Windows.Forms.Label();
-            this.textOAuthTokenURI = new System.Windows.Forms.TextBox();
+            this.TokenURI = new System.Windows.Forms.TextBox();
             this.textOAuthClientIdentification = new System.Windows.Forms.TextBox();
             this.textOAuthClientSecret = new System.Windows.Forms.TextBox();
             this.textOAuthClientScope = new System.Windows.Forms.TextBox();
@@ -210,7 +210,7 @@
             // 
             // executetestscript
             // 
-            this.executetestscript.Location = new System.Drawing.Point(778, 445);
+            this.executetestscript.Location = new System.Drawing.Point(778, 388);
             this.executetestscript.Name = "executetestscript";
             this.executetestscript.Size = new System.Drawing.Size(143, 23);
             this.executetestscript.TabIndex = 126;
@@ -271,26 +271,26 @@
             this.authorizationurilabel.TabIndex = 115;
             this.authorizationurilabel.Text = "Authorization URI:";
             // 
-            // textOAuthAuthorizationURI
+            // AuthorizationURI
             // 
-            this.textOAuthAuthorizationURI.Location = new System.Drawing.Point(139, 177);
-            this.textOAuthAuthorizationURI.Name = "textOAuthAuthorizationURI";
-            this.textOAuthAuthorizationURI.Size = new System.Drawing.Size(379, 20);
-            this.textOAuthAuthorizationURI.TabIndex = 70;
+            this.AuthorizationURI.Location = new System.Drawing.Point(139, 177);
+            this.AuthorizationURI.Name = "AuthorizationURI";
+            this.AuthorizationURI.Size = new System.Drawing.Size(379, 20);
+            this.AuthorizationURI.TabIndex = 70;
             // 
-            // textOAuthPassword
+            // Password
             // 
-            this.textOAuthPassword.Location = new System.Drawing.Point(139, 150);
-            this.textOAuthPassword.Name = "textOAuthPassword";
-            this.textOAuthPassword.Size = new System.Drawing.Size(379, 20);
-            this.textOAuthPassword.TabIndex = 60;
+            this.Password.Location = new System.Drawing.Point(139, 150);
+            this.Password.Name = "Password";
+            this.Password.Size = new System.Drawing.Size(379, 20);
+            this.Password.TabIndex = 60;
             // 
-            // textOAuthUserName
+            // UserName
             // 
-            this.textOAuthUserName.Location = new System.Drawing.Point(139, 123);
-            this.textOAuthUserName.Name = "textOAuthUserName";
-            this.textOAuthUserName.Size = new System.Drawing.Size(380, 20);
-            this.textOAuthUserName.TabIndex = 50;
+            this.UserName.Location = new System.Drawing.Point(139, 123);
+            this.UserName.Name = "UserName";
+            this.UserName.Size = new System.Drawing.Size(380, 20);
+            this.UserName.TabIndex = 50;
             // 
             // oauth_granttype
             // 
@@ -381,12 +381,12 @@
             this.scopelabel.TabIndex = 105;
             this.scopelabel.Text = "Scope:";
             // 
-            // textOAuthTokenURI
+            // TokenURI
             // 
-            this.textOAuthTokenURI.Location = new System.Drawing.Point(139, 204);
-            this.textOAuthTokenURI.Name = "textOAuthTokenURI";
-            this.textOAuthTokenURI.Size = new System.Drawing.Size(379, 20);
-            this.textOAuthTokenURI.TabIndex = 80;
+            this.TokenURI.Location = new System.Drawing.Point(139, 204);
+            this.TokenURI.Name = "TokenURI";
+            this.TokenURI.Size = new System.Drawing.Size(379, 20);
+            this.TokenURI.TabIndex = 80;
             // 
             // textOAuthClientIdentification
             // 
@@ -561,7 +561,7 @@
             // 
             // ValidationTest
             // 
-            this.ValidationTest.Location = new System.Drawing.Point(778, 386);
+            this.ValidationTest.Location = new System.Drawing.Point(778, 445);
             this.ValidationTest.Name = "ValidationTest";
             this.ValidationTest.Size = new System.Drawing.Size(143, 23);
             this.ValidationTest.TabIndex = 152;
@@ -597,9 +597,8 @@
             this.Controls.Add(this.textOAuthRedirectURI);
             this.Controls.Add(this.label23);
             this.Controls.Add(this.authorizationurilabel);
-            this.Controls.Add(this.textOAuthAuthorizationURI);
-            this.Controls.Add(this.textOAuthPassword);
-            this.Controls.Add(this.textOAuthUserName);
+            this.Controls.Add(this.AuthorizationURI);
+            this.Controls.Add(this.Password);
             this.Controls.Add(this.oauth_granttype);
             this.Controls.Add(this.label15);
             this.Controls.Add(this.textWebAPIURI);
@@ -609,7 +608,7 @@
             this.Controls.Add(this.clientidlabel);
             this.Controls.Add(this.clientsecretlabel);
             this.Controls.Add(this.scopelabel);
-            this.Controls.Add(this.textOAuthTokenURI);
+            this.Controls.Add(this.TokenURI);
             this.Controls.Add(this.textOAuthClientIdentification);
             this.Controls.Add(this.textOAuthClientSecret);
             this.Controls.Add(this.textOAuthClientScope);
@@ -624,9 +623,10 @@
             this.Controls.Add(this.SelectLogDirectory);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.label13);
-            this.Controls.Add(this.bearertokenedit);
             this.Controls.Add(this.authtypelabelun);
             this.Controls.Add(this.authtypebearer);
+            this.Controls.Add(this.UserName);
+            this.Controls.Add(this.bearertokenedit);
             this.Name = "ReferenceClient";
             this.Text = "RESO Reference Client";
             this.ResumeLayout(false);
@@ -656,9 +656,9 @@
         private System.Windows.Forms.TextBox textOAuthRedirectURI;
         private System.Windows.Forms.Label label23;
         private System.Windows.Forms.Label authorizationurilabel;
-        private System.Windows.Forms.TextBox textOAuthAuthorizationURI;
-        private System.Windows.Forms.TextBox textOAuthPassword;
-        private System.Windows.Forms.TextBox textOAuthUserName;
+        private System.Windows.Forms.TextBox AuthorizationURI;
+        private System.Windows.Forms.TextBox Password;
+        private System.Windows.Forms.TextBox UserName;
         private System.Windows.Forms.ComboBox oauth_granttype;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.TextBox textWebAPIURI;
@@ -668,7 +668,7 @@
         private System.Windows.Forms.Label clientidlabel;
         private System.Windows.Forms.Label clientsecretlabel;
         private System.Windows.Forms.Label scopelabel;
-        private System.Windows.Forms.TextBox textOAuthTokenURI;
+        private System.Windows.Forms.TextBox TokenURI;
         private System.Windows.Forms.TextBox textOAuthClientIdentification;
         private System.Windows.Forms.TextBox textOAuthClientSecret;
         private System.Windows.Forms.TextBox textOAuthClientScope;

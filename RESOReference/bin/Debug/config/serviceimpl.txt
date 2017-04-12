@@ -1,0 +1,124 @@
+Greg’s Notes	CERT TR	CERT Impact	TTT Testing Results	MLSListings Parameters	Category	Name	Description	HelpLink	ErrorMessage	RequirementLevel	Aspect	SpecificationSection	V4SpecificationSection	V4Specification	PayloadType	LevelType	ResourceType	DependencyType	DependencyInfo	IsMediaLinkEntry	Projection	PayloadFormat	Version	OdataMetadataType	RequireMetadata	RequireServiceDocument	COUNT	Orig Order
+	Not in Testing Rules	SHOULD	(Not in Results)		SERVICEIMPL	ServiceImpl_BatchRequests	"Batch Requests,Batch Requests"			Should			11.7	ODataV4SpecificationUriForProtocol									V_All				X	1
+	Not in Testing Rules	SHOULD	(Not in Results)		SERVICEIMPL	ServiceImpl_AsynchronousRequest	"Asynchronous Requests,Asynchronous Requests"			Should			11.6	ODataV4SpecificationUriForProtocol									V_All				X	2
+	IGNORE: UPDATE	OData MUST	(Not in Results)		SERVICEIMPL	ServiceImpl_ActionImport	"Operations,ActionImport"			Must			11.5.4.1	ODataV4SpecificationUriForProtocol									V_All				X	3
+	Not in Testing Rules	OData MUST	error		SERVICEIMPL	ServiceImpl_CrossJoin	"Requesting Data,Cross Join"			Must				ODataV4SpecificationUriForProtocol									V_All				X	4
+	Not in Testing Rules	OData MUST	(Not in Results)		SERVICEIMPL	ServiceImpl_Etag	"Response Headers,Etag"			Must				ODataV4SpecificationUriForProtocol									V_All				X	5
+UPDATE TTT Tests	REQ-WA100-QO12	Platinum	error	not(ListingKeyNumeric eq 2) and (ListingKeyNumeric lt 5 and ListingKeyNumeric ge 1)	SERVICEIMPL	ServiceImpl_FilterGrouping	"Requesting Data,System Query Option,Logical Operators,$filter (Grouping)"			Must				ODataV4SpecificationUriForProtocol									V_All				X	6
+UPDATE TTT Tests	REQ-WA100-QO8	Bronze	error	$filter=PropertyType has ResourceEnums.PropertyType'Residential'	SERVICEIMPL	ServiceImpl_FilterHas	"Requesting Data,System Query Option,Logical Operators,$filter (Has)"			Must				ODataV4SpecificationUriForProtocol									V_All				X	7
+UPDATE TTT Tests	REQ-WA100-QO11	Core	error	$filter=not(ListingKeyNumeric eq 2)	SERVICEIMPL	ServiceImpl_FilterNot	"Requesting Data,System Query Option,Logical Operators,$filter (Not)"			Must				ODataV4SpecificationUriForProtocol									V_All				X	8
+	Not in Testing Rules	OData MUST	success		SERVICEIMPL	ServiceImpl_GetEntity	"Requesting Data,Get Entity"			Must				ODataV4SpecificationUriForProtocol									V_All				X	9
+	Not in Testing Rules	OData MUST	error		SERVICEIMPL	ServiceImpl_GetNavigationProperty	"Requesting Data,Get Navigation Property"			Must				ODataV4SpecificationUriForProtocol									V_All				X	10
+	Not in Testing Rules	OData MUST	error		SERVICEIMPL	ServiceImpl_GetProperty	"Requesting Data,Get Property"			Must				ODataV4SpecificationUriForProtocol									V_All				X	11
+	Not in Testing Rules	MAY	success		SERVICEIMPL	ServiceImpl_MetadataServiceDocumentRequest	"Metadata Requests,Metadata Service Document Request"			May			11.1.3	ODataV4SpecificationUriForProtocol									V_All				X	12
+	REQ-WA100-END3	Core	success	Downloaded Metadata	SERVICEIMPL	ServiceImpl_MetadataDocumentRequest	"Metadata Requests,Metadata Document Request"			Must			11.1.2	ODataV4SpecificationUriForProtocol									V_All				X	13
+	Not in Testing Rules	OData MUST	(Not in Results)		SERVICEIMPL	ServiceImpl_FunctionImport	"Operations,FunctionImport"			Must			11.5.3.1	ODataV4SpecificationUriForProtocol									V_All				X	14
+	Not in Testing Rules	OData MUST	(Not in Results)		SERVICEIMPL	ServiceImpl_RequestingChanges_delta	"Requesting Changes,$delta"			Must			11.3	ODataV4SpecificationUriForProtocol									V_All				X	15
+	Not in Testing Rules	OData MUST	error		SERVICEIMPL	ServiceImpl_All	"Requesting Data,All"			Must				ODataV4SpecificationUriForProtocol									V_All				X	16
+		OData MUST	success		SERVICEIMPL	ServiceImpl_ServiceDocumentRequest	"Metadata Requests,Service Document Request"			Must			11.1.1	ODataV4SpecificationUriForProtocol									V_All				X	17
+	REQ-WA100-QO25	Core	success		SERVICEIMPL	ServiceImpl_SystemQueryOptionFilter_Date	"Requesting Data,System Query Option,Arithmetic Operators,$filter(date)"			Must				ODataV4SpecificationUriForProtocol									V_All				X	18
+Any one Geo should be fine.		OData MUST	error		SERVICEIMPL	ServiceImpl_SystemQueryOptionFilter_GeoDistance	"Requesting Data,System Query Option,Arithmetic Operators,$filter(geo.distance)"			Must				ODataV4SpecificationUriForProtocol									V_All				X	19
+Any one Geo should be fine.	REQ-WA100-QM5	Platinum	error	"geo.intersects(Location,geography'POLYGON((-121.969652 37.525904, -121.939652 37.505904, -121.949652 37.515904, -121.959652 37.525904, -121.969652 37.525904))')"	SERVICEIMPL	ServiceImpl_SystemQueryOptionFilter_GeoIntersects	"Requesting Data,System Query Option,Arithmetic Operators,$filter(geo.intersects)"			Must				ODataV4SpecificationUriForProtocol									V_All				X	20
+Any one Geo should be fine.		OData MUST	(Not in Results)		SERVICEIMPL	ServiceImpl_SystemQueryOptionFilter_GeoLength	"Requesting Data,System Query Option,Arithmetic Operators,$filter(geo.length)"			Must				ODataV4SpecificationUriForProtocol									V_All				X	21
+UPDATE TTT Tests	REQ-WA100-QO26	Core	error	"WORKS: $filter=ModificationTimestamp gt 2010-05-10T15:24:22.456-07:00
+WORKS: $filter=time(ModificationTimestamp) lt 16:06:38.123"	SERVICEIMPL	ServiceImpl_SystemQueryOptionFilter_Time	"Requesting Data,System Query Option,Arithmetic Operators,$filter(time)"			Must				ODataV4SpecificationUriForProtocol									V_All				X	22
+	Not in Testing Rules	OData MUST	error		SERVICEIMPL	ServiceImpl_SystemQueryOptionFilter_TotalOffsetMinutes	"Requesting Data,System Query Option,Arithmetic Operators,$filter(totaloffsetminutes)"			Must				ODataV4SpecificationUriForProtocol									V_All				X	23
+	IGNORE: UPDATE	SHOULD	(Not in Results)		SERVICEIMPL	ServiceImpl_UpdateRefForNavigationProperty	"Data Modification,Modifying Relationships between Entities,Change the Reference in a Single-Valued Navigation Property"			Should			11.4.6.3	ODataV4SpecificationUriForProtocol									V_All				X	24
+	IGNORE: UPDATE	SHOULD	(Not in Results)		SERVICEIMPL	ServiceImpl_RemoveReferenceToEntity	"Data Modification,Modifying Relationships between Entities,Remove a Reference to an Entity"			Should			11.4.6.2	ODataV4SpecificationUriForProtocol									V_All				X	25
+	IGNORE: UPDATE	OData MUST	(Not in Results)		SERVICEIMPL	ServiceImpl_DeleteMediaEntity	"Data Modification,Managing Media Entities,Delete a Media Entity"			Must			11.4.7.3	ODataV4SpecificationUriForProtocol									V_All				X	26
+	IGNORE: UPDATE	OData MUST	(Not in Results)		SERVICEIMPL	ServiceImpl_DeleteProperty	"Data Modification,Managing Values and Properties Directly,Set a Value to Null"			Must			11.4.9.2	ODataV4SpecificationUriForProtocol									V_All				X	27
+	IGNORE: UPDATE	OData MUST	(Not in Results)		SERVICEIMPL	ServiceImpl_DeleteStreamPropertyValue	"Data Modification,Managing Stream Properties,Deleting Stream Values"			Must			11.4.8.2	ODataV4SpecificationUriForProtocol									V_All				X	28
+	IGNORE: UPDATE	OData MUST	(Not in Results)		SERVICEIMPL	ServiceImpl_EditStreamPropertyValue	"Data Modification,Managing Stream Properties,Editing Stream Values"			Must			11.4.8.1	ODataV4SpecificationUriForProtocol									V_All				X	29
+	IGNORE: UPDATE	OData MUST	(Not in Results)		SERVICEIMPL	ServiceImpl_EditMediaEntityStream	"Data Modification,Managing Media Entities,Edit a Media Entity Stream"			Must			11.4.7.2	ODataV4SpecificationUriForProtocol									V_All				X	30
+	IGNORE: UPDATE	OData MUST	(Not in Results)		SERVICEIMPL	ServiceImpl_CreateMediaEntity	"Data Modification,Managing Media Entities,Create a Media Entity"			Must			11.4.7.1	ODataV4SpecificationUriForProtocol									V_All				X	31
+	IGNORE: UPDATE	OData MUST	aborted		SERVICEIMPL	ServiceImpl_DeleteEntity	"Data Modification,Delete an Entity"			Must			11.4.5	ODataV4SpecificationUriForProtocol									V_All				X	32
+OPEN QUESTION: Duplicate of “REQ-WA100-QO1”	?	OData MUST	aborted		SERVICEIMPL	ServiceImpl_FilterAll	"Requesting Data,System Query Option,Lambda Operators,$filter (all)"			Must				ODataV4SpecificationUriForProtocol									V_All				X	33
+	REQ-WA100-QO9	Core	success		SERVICEIMPL	ServiceImpl_FilterAnd	"Requesting Data,System Query Option,Logical Operators,$filter (And)"			Must				ODataV4SpecificationUriForProtocol									V_All				X	34
+OPEN QUESTION: Duplicate of “REQ-WA100-QO1”	?	OData MUST	(Not in Results)		SERVICEIMPL	ServiceImpl_FilterAny	"Requesting Data,System Query Option,Lambda Operators,$filter (any)"			Must				ODataV4SpecificationUriForProtocol									V_All				X	35
+	REQ-WA100-QO2	Core	success		SERVICEIMPL	ServiceImpl_FilterEquals	"Requesting Data,System Query Option,Logical Operators,$filter (Equals)"			Must				ODataV4SpecificationUriForProtocol									V_All				X	36
+	REQ-WA100-QO4	Core	success		SERVICEIMPL	ServiceImpl_FilterGreaterThan	"Requesting Data,System Query Option,Logical Operators,$filter (Greater Than)"			Must				ODataV4SpecificationUriForProtocol									V_All				X	37
+	REQ-WA100-QO5	Core	success		SERVICEIMPL	ServiceImpl_FilterGreaterThanOrEqual	"Requesting Data,System Query Option,Logical Operators,$filter (Greater Than or Equal)"			Must				ODataV4SpecificationUriForProtocol									V_All				X	38
+	REQ-WA100-QO6	Core	success		SERVICEIMPL	ServiceImpl_FilterLessThan	"Requesting Data,System Query Option,Logical Operators,$filter (Less Than)"			Must				ODataV4SpecificationUriForProtocol									V_All				X	39
+	REQ-WA100-QO7	Core	success		SERVICEIMPL	ServiceImpl_FilterLessThanOrEqual	"Requesting Data,System Query Option,Logical Operators,$filter (Less Than or Equal)"			Must				ODataV4SpecificationUriForProtocol									V_All				X	40
+	REQ-WA100-QO3	Core	success		SERVICEIMPL	ServiceImpl_FilterNotEquals	"Requesting Data,System Query Option,Logical Operators,$filter (Not Equals)"			Must				ODataV4SpecificationUriForProtocol									V_All				X	41
+	REQ-WA100-QO10	Core	success		SERVICEIMPL	ServiceImpl_FilterOr	"Requesting Data,System Query Option,Logical Operators,$filter (Or)"			Must				ODataV4SpecificationUriForProtocol									V_All				X	42
+	Not in Testing Rules	OData MUST	error		SERVICEIMPL	ServiceImpl_SystemQueryOptionFilter_Cast	"Requesting Data,System Query Option,Arithmetic Operators,$filter(cast)"			Must				ODataV4SpecificationUriForProtocol									V_All				X	43
+	Not in Testing Rules	OData MUST	aborted		SERVICEIMPL	ServiceImpl_SystemQueryOptionFilter_Ceiling	"Requesting Data,System Query Option,Arithmetic Operators,$filter(ceiling)"			Must				ODataV4SpecificationUriForProtocol									V_All				X	44
+	Not in Testing Rules	OData MUST	success		SERVICEIMPL	ServiceImpl_SystemQueryOptionFilter_Concat	"Requesting Data,System Query Option,Arithmetic Operators,$filter(concat)"			Must				ODataV4SpecificationUriForProtocol									V_All				X	45
+UPDATE TTT Tests	REQ-WA100-QO13	Platinum	error	"$filter=contains(OriginatingSystemName, 'S')
+$orderby=ListingKeyNumeric
+$select=ListingKeyNumeric,BathroomsFull,OriginatingSystemName,ListingContractDate,ModificationTimestamp,StreetSuffix,AssociationAmenities"	SERVICEIMPL	ServiceImpl_SystemQueryOptionFilter_Contains	"Requesting Data,System Query Option,Arithmetic Operators,$filter(contains)"			Must				ODataV4SpecificationUriForProtocol									V_All				X	46
+UPDATE TTT Tests	REQ-WA100-QO20	Gold	aborted	"$filter=day(ListingContractDate) eq 26
+$select=ListingKeyNumeric,ListingContractDate"	SERVICEIMPL	ServiceImpl_SystemQueryOptionFilter_Day	"Requesting Data,System Query Option,Arithmetic Operators,$filter(day)"			Must				ODataV4SpecificationUriForProtocol									V_All				X	47
+	Not in Testing Rules	OData MUST	success		SERVICEIMPL	ServiceImpl_SystemQueryOptionFilter_Division	"Requesting Data,System Query Option,Arithmetic Operators,$filter(Division)"			Must				ODataV4SpecificationUriForProtocol									V_All				X	48
+UPDATE TTT Tests	REQ-WA100-QO14	Platinum	error	"$filter=endswith(OriginatingSystemName, 'L')
+$orderby=ListingKeyNumeric
+$select=ListingKeyNumeric,BathroomsFull,OriginatingSystemName,ListingContractDate,ModificationTimestamp,StreetSuffix,AssociationAmenities"	SERVICEIMPL	ServiceImpl_SystemQueryOptionFilter_EndsWith	"Requesting Data,System Query Option,Arithmetic Operators,$filter(endswith)"			Must				ODataV4SpecificationUriForProtocol									V_All				X	49
+	Not in Testing Rules	OData MUST	aborted		SERVICEIMPL	ServiceImpl_SystemQueryOptionFilter_Floor	"Requesting Data,System Query Option,Arithmetic Operators,$filter(floor)"			Must				ODataV4SpecificationUriForProtocol									V_All				X	50
+UPDATE TTT Tests	REQ-WA100-QO24	Gold	aborted	"$filter=fractionalseconds(ModificationTimestamp) lt 30
+$filter=fractionalseconds(ModificationTimestamp) ne 0
+$select=ListingKeyNumeric,ModificationTimestamp"	SERVICEIMPL	ServiceImpl_SystemQueryOptionFilter_Fractionalseconds	"Requesting Data,System Query Option,Arithmetic Operators,$filter(fractionalseconds)"			Must				ODataV4SpecificationUriForProtocol									V_All				X	51
+UPDATE TTT Tests	REQ-WA100-QO21	Gold	aborted	"$filter=hour(ModificationTimestamp) eq 13
+$select=ListingKeyNumeric,ModificationTimestamp"	SERVICEIMPL	ServiceImpl_SystemQueryOptionFilter_Hour	"Requesting Data,System Query Option,Arithmetic Operators,$filter(hour)"			Must				ODataV4SpecificationUriForProtocol									V_All				X	52
+	Not in Testing Rules	OData MUST	(Not in Results)		SERVICEIMPL	ServiceImpl_SystemQueryOptionFilter_IndexOf	"Requesting Data,System Query Option,Arithmetic Operators,$filter(indexof)"			Must				ODataV4SpecificationUriForProtocol									V_All				X	53
+	Not in Testing Rules	OData MUST	success		SERVICEIMPL	ServiceImpl_SystemQueryOptionFilter_IsOf	"Requesting Data,System Query Option,Arithmetic Operators,$filter(isof)"			Must				ODataV4SpecificationUriForProtocol									V_All				X	54
+	Not in Testing Rules	OData MUST	(Not in Results)		SERVICEIMPL	ServiceImpl_SystemQueryOptionFilter_Length	"Requesting Data,System Query Option,Arithmetic Operators,$filter(length)"			Must				ODataV4SpecificationUriForProtocol									V_All				X	55
+	Not in Testing Rules	OData MUST	error		SERVICEIMPL	ServiceImpl_SystemQueryOptionFilter_Maxdatetime	"Requesting Data,System Query Option,Arithmetic Operators,$filter(maxdatetime)"			Must				ODataV4SpecificationUriForProtocol									V_All				X	56
+	Not in Testing Rules	OData MUST	error		SERVICEIMPL	ServiceImpl_SystemQueryOptionFilter_Mindatetime	"Requesting Data,System Query Option,Arithmetic Operators,$filter(mindatetime)"			Must				ODataV4SpecificationUriForProtocol									V_All				X	57
+UPDATE TTT Tests	REQ-WA100-QO22	Gold	aborted	"$filter=minute(ModificationTimestamp) gt 55
+$select=ListingKeyNumeric,ModificationTimestamp"	SERVICEIMPL	ServiceImpl_SystemQueryOptionFilter_Minute	"Requesting Data,System Query Option,Arithmetic Operators,$filter(minute)"			Must				ODataV4SpecificationUriForProtocol									V_All				X	58
+	Not in Testing Rules	OData MUST	success		SERVICEIMPL	ServiceImpl_SystemQueryOptionFilter_Modulo	"Requesting Data,System Query Option,Arithmetic Operators,$filter(Modulo)"			Must				ODataV4SpecificationUriForProtocol									V_All				X	59
+UPDATE TTT Tests	REQ-WA100-QO19	Gold	aborted	"$filter=month(ListingContractDate) eq 01
+$select=ListingKeyNumeric,ListingContractDate"	SERVICEIMPL	ServiceImpl_SystemQueryOptionFilter_Month	"Requesting Data,System Query Option,Arithmetic Operators,$filter(month)"			Must				ODataV4SpecificationUriForProtocol									V_All				X	60
+	Not in Testing Rules	OData MUST	success		SERVICEIMPL	ServiceImpl_SystemQueryOptionFilter_Multiplication	"Requesting Data,System Query Option,Arithmetic Operators,$filter(Multiplication)"			Must				ODataV4SpecificationUriForProtocol									V_All				X	61
+	Not in Testing Rules	OData MUST	success		SERVICEIMPL	ServiceImpl_SystemQueryOptionFilter_Negation	"Requesting Data,System Query Option,Arithmetic Operators,$filter(Negation)"			Must				ODataV4SpecificationUriForProtocol									V_All				X	62
+	REQ-WA100-QO27	Core	success		SERVICEIMPL	ServiceImpl_SystemQueryOptionFilter_Now	"Requesting Data,System Query Option,Arithmetic Operators,$filter(now)"			Must				ODataV4SpecificationUriForProtocol									V_All				X	63
+	Not in Testing Rules	OData MUST	aborted		SERVICEIMPL	ServiceImpl_SystemQueryOptionFilter_Round	"Requesting Data,System Query Option,Arithmetic Operators,$filter(round)"			Must				ODataV4SpecificationUriForProtocol									V_All				X	64
+UPDATE TTT Tests	REQ-WA100-QO23	Gold	aborted	"$filter=second(ModificationTimestamp) lt 5
+$select=ListingKeyNumeric,ModificationTimestamp"	SERVICEIMPL	ServiceImpl_SystemQueryOptionFilter_Second	"Requesting Data,System Query Option,Arithmetic Operators,$filter(second)"			Must				ODataV4SpecificationUriForProtocol									V_All				X	65
+UPDATE TTT Tests	REQ-WA100-QO15	Platinum	aborted	"$filter=startswith(OriginatingSystemName, 'Q')
+$orderby=ListingKeyNumeric
+$select=ListingKeyNumeric,BathroomsFull,OriginatingSystemName,ListingContractDate,ModificationTimestamp,StreetSuffix,AssociationAmenities"	SERVICEIMPL	ServiceImpl_SystemQueryOptionFilter_StartsWith	"Requesting Data,System Query Option,Arithmetic Operators,$filter(startswith)"			Must				ODataV4SpecificationUriForProtocol									V_All				X	66
+	Not in Testing Rules	OData MUST	error		SERVICEIMPL	ServiceImpl_SystemQueryOptionFilter_Substring	"Requesting Data,System Query Option,Arithmetic Operators,$filter(substring)"			Must				ODataV4SpecificationUriForProtocol									V_All				X	67
+	REQ-WA100-QO16	Platinum	(Not in Results)		SERVICEIMPL	ServiceImpl_SystemQueryOptionFilter_ToLower	"Requesting Data,System Query Option,Arithmetic Operators,$filter(tolower)"			Must				ODataV4SpecificationUriForProtocol									V_All				X	68
+	Not in Testing Rules	OData MUST	(Not in Results)		SERVICEIMPL	ServiceImpl_SystemQueryOptionFilter_TotalSeconds	"Requesting Data,System Query Option,Arithmetic Operators,$filter(totalseconds)"			Must				ODataV4SpecificationUriForProtocol									V_All				X	69
+UPDATE TTT Tests	REQ-WA100-QO17	Platinum	error	"$filter=toupper(OriginatingSystemName) eq 'MLSL'
+$orderby=ListingKeyNumeric
+$select=ListingKeyNumeric,OriginatingSystemName,StreetSuffix"	SERVICEIMPL	ServiceImpl_SystemQueryOptionFilter_ToUpper	"Requesting Data,System Query Option,Arithmetic Operators,$filter(toupper)"			Must				ODataV4SpecificationUriForProtocol									V_All				X	70
+	Not in Testing Rules	OData MUST	(Not in Results)		SERVICEIMPL	ServiceImpl_UpdateCollectionProperty	"Data Modification,Managing Values and Properties Directly,Update a Collection Property"			Must			11.4.9.4	ODataV4SpecificationUriForProtocol									V_All				X	71
+	Not in Testing Rules	OData MUST	aborted		SERVICEIMPL	ServiceImpl_AddRefToCollectionNavigationProperty	"Data Modification,Modifying Relationships between Entities,Add a Reference to a Collection-Valued Navigation Property"			Must			11.4.6.1	ODataV4SpecificationUriForProtocol									V_All				X	72
+	Not in Testing Rules	OData MUST	(Not in Results)		SERVICEIMPL	ServiceImpl_UpdatePrimitiveProperty	"Data Modification,Managing Values and Properties Directly,Update a Primitive Property"			Must			11.4.9.1	ODataV4SpecificationUriForProtocol									V_All				X	73
+	Not in Testing Rules	OData MUST	(Not in Results)		SERVICEIMPL	ServiceImpl_UpdateComplexProperty	"Data Modification,Managing Values and Properties Directly,Update a Complex Property"			Must			11.4.9.3	ODataV4SpecificationUriForProtocol									V_All				X	74
+	Not in Testing Rules	OData MUST	error		SERVICEIMPL	ServiceImpl_SystemQueryOptionFilter_Trim	"Requesting Data,System Query Option,Arithmetic Operators,$filter(trim)"			Must				ODataV4SpecificationUriForProtocol									V_All				X	75
+UPDATE TTT Tests	REQ-WA100-QO18	Gold	aborted	"$filter=year(ListingContractDate) eq 2010
+$select=ListingKeyNumeric,ListingContractDate"	SERVICEIMPL	ServiceImpl_SystemQueryOptionFilter_Year	"Requesting Data,System Query Option,Arithmetic Operators,$filter(year)"			Must				ODataV4SpecificationUriForProtocol									V_All				X	76
+	Not in Testing Rules	OData MUST	aborted		SERVICEIMPL	ServiceImpl_UpsertEntity	"Data Modification,Upsert an Entity"			Must			11.4.4	ODataV4SpecificationUriForProtocol									V_All				X	77
+	Not in Testing Rules	OData MUST	aborted		SERVICEIMPL	ServiceImpl_UpdateEntity	"Data Modification,Update an Entity"			Must			11.4.3	ODataV4SpecificationUriForProtocol									V_All				X	78
+	Not in Testing Rules	SHOULD	(Not in Results)		SERVICEIMPL	ServiceImpl_CreateEntityDeepInsert	"Data Modification,Create an Entity (Deep Insert)"			Should			11.4.2.2	ODataV4SpecificationUriForProtocol									V_All				X	79
+	Not in Testing Rules	OData MUST	error		SERVICEIMPL	ServiceImpl_SystemQueryOptionCount	"Requesting Data,System Query Option,$count"			Must				ODataV4SpecificationUriForProtocol									V_All				X	80
+	Not in Testing Rules	OData MUST	error		SERVICEIMPL	ServiceImpl_SystemQueryOptionEntity_Id	"Requesting Data,System Query Option,$entity($id)"			Must				ODataV4SpecificationUriForProtocol									V_All				X	81
+UPDATE TTT Tests	REQ-WA100-QO29	Platinum	error	"$filter=ListingKeyNumeric ge 1
+$expand=Media
+$select=ListingKeyNumeric,Media
+$top=5"	SERVICEIMPL	ServiceImpl_SystemQueryOptionExpand	"Requesting Data,System Query Option,$expand"			Must				ODataV4SpecificationUriForProtocol									V_All				X	82
+	REQ-WA100-QO1	Core	success		SERVICEIMPL	ServiceImpl_SystemQueryOptionFilter	"Requesting Data,System Query Option,$filter"			Must				ODataV4SpecificationUriForProtocol									V_All				X	83
+	Not in Testing Rules	OData MUST	success		SERVICEIMPL	ServiceImpl_SystemQueryOptionFilter_Addition	"Requesting Data,System Query Option,Arithmetic Operators,$filter(Addition)"			Must				ODataV4SpecificationUriForProtocol									V_All				X	84
+	Not in Testing Rules	OData MUST	success		SERVICEIMPL	ServiceImpl_SystemQueryOptionFilter_Subtraction	"Requesting Data,System Query Option,Arithmetic Operators,$filter(Subtraction)"			Must				ODataV4SpecificationUriForProtocol									V_All				X	85
+	Not in Testing Rules	OData MUST	success		SERVICEIMPL	ServiceImpl_SystemQueryOptionFormat	"Requesting Data,System Query Option,$format"			Must				ODataV4SpecificationUriForProtocol									V_All				X	86
+	REQ-WA100-QO28	Bronze	success		SERVICEIMPL	ServiceImpl_SystemQueryOptionOrderBy	"Requesting Data,System Query Option,$orderby"			Must				ODataV4SpecificationUriForProtocol									V_All				X	87
+	Not in Testing Rules	OData MUST	error		SERVICEIMPL	ServiceImpl_SystemQueryOptionRef	"Requesting Data,System Query Option,$ref"			Must				ODataV4SpecificationUriForProtocol									V_All				X	88
+	Not in Testing Rules	OData MUST	error		SERVICEIMPL	ServiceImpl_SystemQueryOptionSearch	"Requesting Data,System Query Option,$search"			Must				ODataV4SpecificationUriForProtocol									V_All				X	89
+	REQ-WA100-QR3	Core	success		SERVICEIMPL	ServiceImpl_SystemQueryOptionSelect	"Requesting Data,System Query Option,$select"			Must				ODataV4SpecificationUriForProtocol									V_All				X	90
+UPDATE TTT Tests	REQ-WA100-QR5	Core	error	$skip=50	SERVICEIMPL	ServiceImpl_SystemQueryOptionSkip	"Requesting Data,System Query Option,$skip"			Must				ODataV4SpecificationUriForProtocol									V_All				X	91
+	Not in Testing Rules	OData MUST	(Not in Results)		SERVICEIMPL	ServiceImpl_SystemQueryOptionSkipToken	"Requesting Data,System Query Option,$skiptoken"			Must				ODataV4SpecificationUriForProtocol									V_All				X	92
+	REQ-WA100-QR4	Core	success		SERVICEIMPL	ServiceImpl_SystemQueryOptionTop	"Requesting Data,System Query Option,$top"			Must				ODataV4SpecificationUriForProtocol									V_All				X	93
+	Not in Testing Rules	OData MUST	error		SERVICEIMPL	ServiceImpl_SystemQueryOptionValue	"Requesting Data,System Query Option,$value"			Must				ODataV4SpecificationUriForProtocol									V_All				X	94
+RESO Only TR	REQ-WA100-QR1	Core					Required Search Parameters: Search by UniqueID																				X	95
+RESO Only TR	REQ-WA100-QM1	Platinum					"Support Only Correct Data Types
+<<Need additional information to determine if this is the right location for this rule.>>"																				X	96
+RESO Only TR	REQ-WA100-QM2	Platinum					Support Lambda Operators																				X	97
+RESO Only TR	REQ-WA100-QM3	Platinum					Support Literals: $it																				X	98
+RESO Only TR	REQ-WA100-QM4	Platinum					Support Literals: $root																				X	99
+RESO Only TR	REQ-WA100-QM6	Bronze					Support Annotations																				X	100
+RESO Only TR	REQ-WA100-QM7	Bronze					Support Single Value Lookups																				X	101
+RESO Only TR	REQ-WA100-QM8	Bronze					Support Multi Value Lookups																				X	102

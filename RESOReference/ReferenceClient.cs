@@ -12,6 +12,11 @@ using RESOClientLibrary.Transactions;
 using ReferenceLibrary;
 using System.Collections;
 using System.IO;
+using ODataValidator.RuleEngine;
+
+using System.Net;
+using ODataValidator.Rule;
+//using ODataValidator.Rule;
 
 namespace RESOReference
 {
@@ -25,6 +30,7 @@ namespace RESOReference
         public string serviceresponse { get; set; }
         public string openidcode { get; set; }
         public string responseheaders { get; set; }
+
         public Hashtable commandlinefunctions = new Hashtable();
         public ReferenceClient()
         {
@@ -132,16 +138,17 @@ namespace RESOReference
 
                 this.webapiprogressBar.Value = 0;
                 this.ServerVersion.Text = string.Empty;
-                this.textOAuthAuthorizationURI.Text = string.Empty;
-                this.textOAuthTokenURI.Text = string.Empty;
-                this.textOAuthTokenURI.Text = string.Empty;
+                this.AuthorizationURI.Text = string.Empty;
+                this.TokenURI.Text = string.Empty;
+                this.TokenURI.Text = string.Empty;
                 this.textOAuthClientIdentification.Text = string.Empty;
                 this.textOAuthRedirectURI.Text = string.Empty;
                 this.textOAuthClientSecret.Text = string.Empty;
                 this.textOAuthClientScope.Text = string.Empty;
                 this.textWebAPIURI.Text = string.Empty;
-                this.textOAuthUserName.Text = string.Empty;
-                this.textOAuthPassword.Text = string.Empty;
+                this.UserName.Text = string.Empty;
+                this.bearertokenedit.Text = string.Empty;
+                this.Password.Text = string.Empty;
                 this.LogDirectory.Text = string.Empty;
                 this.ResultsDirectory.Text = string.Empty;
                 this.openid_code.Text = string.Empty;
@@ -226,16 +233,18 @@ namespace RESOReference
                 }
 
                 clientsettings.SetSetting(settings.testscript, scriptfile.Text);
-                clientsettings.SetSetting(settings.oauth_authorizationuri, textOAuthAuthorizationURI.Text);
+                clientsettings.SetSetting(settings.oauth_authorizationuri, AuthorizationURI.Text);
                 clientsettings.SetSetting(settings.oauth_clientidentification, textOAuthClientIdentification.Text);
                 clientsettings.SetSetting(settings.oauth_redirecturi, textOAuthRedirectURI.Text);
                 clientsettings.SetSetting(settings.oauth_clientscope, textOAuthClientScope.Text);
                 clientsettings.SetSetting(settings.oauth_clientsecret, textOAuthClientSecret.Text);
-                clientsettings.SetSetting(settings.oauth_tokenuri, textOAuthTokenURI.Text);
+                clientsettings.SetSetting(settings.oauth_tokenuri, TokenURI.Text);
                 clientsettings.SetSetting(settings.webapi_uri, textWebAPIURI.Text);
                 clientsettings.SetSetting(settings.oauth_granttype, oauth_granttype.Text);
-                clientsettings.SetSetting(settings.rets_username, textOAuthUserName.Text);
-                clientsettings.SetSetting(settings.rets_password, textOAuthPassword.Text);
+                clientsettings.SetSetting(settings.username, UserName.Text);
+                clientsettings.SetSetting(settings.bearertoken, bearertokenedit.Text);
+                
+                clientsettings.SetSetting(settings.password, Password.Text);
                 clientsettings.SetSetting(settings.useragent, "webapiclient/1.0");
 
                 string resultsdirectory = ResultsDirectory.Text;
@@ -279,11 +288,11 @@ namespace RESOReference
             {
 
                 DebugLogLabel("ReferenceClient:saveclientpropertiesfile()");
-                if (this.textOAuthClientScope.Text.ToUpper().IndexOf("OPENID") < 0)
-                {
-                    MessageBox.Show("Scope requires openid as a parameter for the RESO Web API OpenID Authentcation.  Please correct before saving.");
-                    return;
-                }
+                //if (this.textOAuthClientScope.Text.ToUpper().IndexOf("OPENID") < 0)
+                //{
+                //    MessageOutput("Scope requires openid as a parameter for the RESO Web API OpenID Authentcation.  Please correct before saving.");
+                //    return;
+                //}
                 SaveFileDialog saveFileDialog1 = new SaveFileDialog();
                 saveFileDialog1.Filter = "Client Settings Files (*.resocs)|*.resocs|Property Files (*.properties)|*.properties|All files (*.*)|*.*";
                 saveFileDialog1.Title = "Save Client Settings";
@@ -298,17 +307,18 @@ namespace RESOReference
                     clientproperties.setProperty("ServerVersion", this.ServerVersion.Text);
                     //OData
                     clientproperties.setProperty("textScriptFile", this.scriptfile.Text);
-                    clientproperties.setProperty("textOAuthAuthorizationURI", this.textOAuthAuthorizationURI.Text);
-                    clientproperties.setProperty("textOAuthTokenURI", this.textOAuthTokenURI.Text);
-                    clientproperties.setProperty("textOAuthTokenURI", this.textOAuthTokenURI.Text);
+                    clientproperties.setProperty("AuthorizationURI", this.AuthorizationURI.Text);
+                    clientproperties.setProperty("TokenURI", this.TokenURI.Text);
+                    clientproperties.setProperty("TokenURI", this.TokenURI.Text);
                     clientproperties.setProperty("textWebAPIURI", this.textWebAPIURI.Text);
                     clientproperties.setProperty("textOAuthClientIdentification", this.textOAuthClientIdentification.Text);
                     clientproperties.setProperty("textOAuthRedirectURI", this.textOAuthRedirectURI.Text);
                     clientproperties.setProperty("textOAuthClientSecret", this.textOAuthClientSecret.Text);
                     clientproperties.setProperty("textOAuthClientScope", this.textOAuthClientScope.Text);
                     //clientproperties.setProperty("textWebAPIHost", this.textWebAPIURI.Text);
-                    clientproperties.setProperty("textOAuthUserName", this.textOAuthUserName.Text);
-                    clientproperties.setProperty("textOAuthPassword", this.textOAuthPassword.Text);
+                    clientproperties.setProperty("UserName", this.UserName.Text);
+                    clientproperties.setProperty("BearerToken", bearertokenedit.Text);
+                    clientproperties.setProperty("Password", this.Password.Text);
                     clientproperties.setProperty("transactionlogdirectory", this.LogDirectory.Text);
                     clientproperties.setProperty("resultsdirectory", this.ResultsDirectory.Text);
                     clientproperties.saveFile(saveFileDialog1.FileName);
@@ -328,22 +338,30 @@ namespace RESOReference
                 loadclientpropertiesfile();
                 clientsettings = GetSettings();
             }
+            if (clientsettings.GetSetting(settings.oauth_granttype) != "Bearer Token")
+            {
+                if (string.IsNullOrEmpty(clientsettings.GetSetting(settings.oauth_authorizationuri)))
+                {
+                    MessageOutput("Please Enter login information or load select a saved client properties file");
+                    return;
+                }
+                try
+                {
+                    Uri test = new Uri(clientsettings.GetSetting(settings.oauth_authorizationuri));
+                }
+                catch
+                {
+                    MessageOutput("Please Enter correct authorization URI");
 
-            if (string.IsNullOrEmpty(clientsettings.GetSetting(settings.oauth_authorizationuri)))
-            {
-                MessageBox.Show("Please Enter login information or load select a saved client properties file");
-                return;
-            }
-            try
-            {
-                Uri test = new Uri(clientsettings.GetSetting(settings.oauth_authorizationuri));
-            }
-            catch
-            {
-                MessageBox.Show("Please Enter correct authorization URI");
-                return;
+                    return;
+                }
             }
             Login();
+        }
+
+        private void MessageOutput(string message)
+        {
+            MessageBox.Show(message);
         }
 
         private void OutputLog(string logentry)
@@ -371,7 +389,6 @@ namespace RESOReference
                 }
 
             }
-
         }
 
         private bool BrowserLogin(ref RESOClientSettings clientsettings)
@@ -386,7 +403,7 @@ namespace RESOReference
                     browserform.ShowDialog();
                     if (string.IsNullOrEmpty(openidcode))
                     {
-                        MessageBox.Show("Open ID Code not retrieved");
+                        MessageOutput("Open ID Code not retrieved");
                         return false;
                     }
                     clientsettings.SetSetting(settings.openid_code, openidcode);
@@ -396,9 +413,16 @@ namespace RESOReference
         }
         private bool Login()
         {
-            RESOClientSettings clientsettings = GetSettings();
-            RESOClient app = new RESOClient(clientsettings, OutputLog);
-            return Login(ref app,ref clientsettings);
+            try
+            {
+                RESOClientSettings clientsettings = GetSettings();
+                RESOClient app = new RESOClient(clientsettings, OutputLog);
+                return Login(ref app, ref clientsettings);
+            }
+            catch
+            {
+                return false;
+            }
         }
         private bool Login(ref RESOClient app, ref RESOClientSettings clientsettings)
         {
@@ -410,12 +434,31 @@ namespace RESOReference
             {
                 app = new RESOClient(clientsettings, OutputLog);
             }
-            if(!BrowserLogin(ref clientsettings))
+            
+            if (clientsettings.GetSetting(settings.oauth_granttype) == "authorization_code")
             {
-                return false;
+                if (!BrowserLogin(ref clientsettings))
+                {
+                    return false;
+                }
+                openid_code.Text = "Loading...";
+                webapi_token.Text = "Loading...";
+                
             }
-            openid_code.Text = "Loading...";
-            webapi_token.Text = "Loading...";
+            if (clientsettings.GetSetting(settings.oauth_granttype) == "Bearer Token")
+            {
+                if(app.oauth_token == null)
+                {
+                    app.oauth_token = new OAuthToken();
+                }
+                app.oauth_token.token_type = "Bearer";
+                app.oauth_token.access_token = this.bearertokenedit.Text;
+
+                openid_code.Text = string.Empty;
+
+                webapi_token.Text = "Loading...";
+
+            }
             webapi_metadata.Text = "Loading...";
             serviceresponsedata.Text = "Loading...";
             this.Update();
@@ -423,9 +466,12 @@ namespace RESOReference
             ODataLoginTransaction login = new ODataLoginTransaction(app.clientsettings);
             try
             {
-                if (!login.ExecuteEvent(app, preauth))
+                if (clientsettings.GetSetting(settings.oauth_granttype) == "authorization_code")
                 {
-                    return false;
+                    if (!login.ExecuteEvent(app, preauth))
+                    {
+                        return false;
+                    }
                 }
             }
             catch (Exception ex)
@@ -456,7 +502,8 @@ namespace RESOReference
                 return false;
             }
 
-            oauth_bearertoken = app.oauth_token.token_type + " " + app.oauth_token.access_token;
+            //oauth_bearertoken = app.oauth_token.token_type + " " + app.oauth_token.access_token;
+            oauth_bearertoken = "Bearer" + " " + app.oauth_token.access_token;
             openid_code.Text = clientsettings.GetSetting(settings.openid_code);
             webapi_token.Text = oauth_bearertoken;
             this.Update();
@@ -497,20 +544,7 @@ namespace RESOReference
             }
 
             this.Update();
-            //string ServiceStatusHeaders = "ODataVersion:4.0;Authorization:" + app.oauth_token.token_type + " " + app.oauth_token.access_token;
-            //try
-            //{
-            //    ServiceStatus.GetInstance(clientsettings.GetSetting(settings.webapi_uri).TrimEnd('/'), ServiceStatusHeaders);
-            //}
-            //catch
-            //{
-            //    ServiceStatus.GetInstance(clientsettings.GetSetting(settings.webapi_uri).TrimEnd('/'), ServiceStatusHeaders);
-            //}
-
-
-            //ServiceStatus.ReviseMetadata(metadata.responsedata);
-
-
+      
             responseheaders = app.responseobject.ResponseHeaders;
             return true;
         }
@@ -526,7 +560,7 @@ namespace RESOReference
             ReferencePropertiesFile testproperties = new ReferencePropertiesFile();
             if (string.IsNullOrEmpty(scriptfiledata))
             {
-                MessageBox.Show("Please load a Script File");
+                MessageOutput("Please load a Script File");
                 return;
             }
             testproperties.ReadFile(scriptfiledata);
@@ -551,12 +585,12 @@ namespace RESOReference
        
             if (app.oauth_token == null)
             {
-                MessageBox.Show("Error Authenticating.  Token is null");
+                MessageOutput("Error Authenticating.  Token is null");
                 return;
             }
             oauth_bearertoken = app.oauth_token.token_type + " " + app.oauth_token.access_token;
 
-            LoadTestScript testscript = new LoadTestScript();
+            RESOClientLibrary.LoadTestScript testscript = new LoadTestScript();
             testscript.LoadData(clientsettings.GetSetting(settings.testscript));
             
             ODataTestScriptTransaction testscriptobject = new ODataTestScriptTransaction(app.clientsettings);
@@ -574,6 +608,8 @@ namespace RESOReference
                     Directory.CreateDirectory(outputdirectory);
                 }
             }
+            ResultsDirectory.Text = outputdirectory;
+            clientsettings.SetSetting(settings.outputdirectory, outputdirectory);
             DebugLogData(outputdirectory);
             
             int currcount = 0;
@@ -734,8 +770,8 @@ namespace RESOReference
 
                 //clientproperties.setProperty("Preauthenticate", ((this.preauthenticate.Checked == true) ? ("TRUE") : ("FALSE")));
                 this.preauthenticate.Checked = ((clientproperties.getProperty("Preauthenticate") == "TRUE") ? (true):(false));
-                this.textOAuthAuthorizationURI.Text = clientproperties.getProperty("textOAuthAuthorizationURI");
-                this.textOAuthTokenURI.Text = clientproperties.getProperty("textOAuthTokenURI");
+                this.AuthorizationURI.Text = clientproperties.getProperty("AuthorizationURI");
+                this.TokenURI.Text = clientproperties.getProperty("TokenURI");
 
                 this.textWebAPIURI.Text = clientproperties.getProperty("textWebAPIURI");
 
@@ -746,15 +782,16 @@ namespace RESOReference
                 this.textOAuthClientScope.Text = clientproperties.getProperty("textOAuthClientScope");
 
 
-                this.textOAuthUserName.Text = clientproperties.getProperty("textOAuthUserName");
-                this.textOAuthPassword.Text = clientproperties.getProperty("textOAuthPassword");
+                this.UserName.Text = clientproperties.getProperty("UserName");
+                this.bearertokenedit.Text = clientproperties.getProperty("BearerToken");
+                this.Password.Text = clientproperties.getProperty("Password");
                 //Global
                 this.LogDirectory.Text = clientproperties.getProperty("transactionlogdirectory");
                 this.ResultsDirectory.Text = clientproperties.getProperty("resultsdirectory");
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error: Could not read file from disk. Original error: " + ex.Message);
+                MessageOutput("Error: Could not read file from disk. Original error: " + ex.Message);
             }
         }
 
@@ -793,35 +830,581 @@ namespace RESOReference
 
         private void SetAuthTypeControls(string authtype)
         {
-            bool showbearer = false;
+            bool bearertokenonly = false;
             if (authtype == "Bearer Token")
             {
-                showbearer = true;
+                bearertokenonly = true;
             }
 
-            authtypelabelun.Visible = !showbearer;
-            authtypebearer.Visible = showbearer;
-            textOAuthUserName.Visible = !showbearer;
-            bearertokenedit.Visible = showbearer;
-            labelpassword.Visible = !showbearer;
-            authorizationurilabel.Visible = !showbearer;
-            accesstokenurilabel.Visible = !showbearer;
-            redirecturilabel.Visible = !showbearer;
-            clientidlabel.Visible = !showbearer;
-            clientsecretlabel.Visible = !showbearer;
-            scopelabel.Visible = !showbearer;
-            textOAuthPassword.Visible = !showbearer;
-            textOAuthAuthorizationURI.Visible = !showbearer;
-            textOAuthTokenURI.Visible = !showbearer;
-            textOAuthRedirectURI.Visible = !showbearer;
-            textOAuthClientIdentification.Visible = !showbearer;
-            textOAuthClientSecret.Visible = !showbearer;
-            textOAuthClientScope.Visible = !showbearer;
+            authtypelabelun.Visible = !bearertokenonly;
+            authtypebearer.Visible = bearertokenonly;
+            UserName.Visible = !bearertokenonly;
+            bearertokenedit.Visible = bearertokenonly;
+            labelpassword.Visible = !bearertokenonly;
+            authorizationurilabel.Visible = !bearertokenonly;
+            accesstokenurilabel.Visible = !bearertokenonly;
+            redirecturilabel.Visible = !bearertokenonly;
+            clientidlabel.Visible = !bearertokenonly;
+            clientsecretlabel.Visible = !bearertokenonly;
+            scopelabel.Visible = !bearertokenonly;
+            Password.Visible = !bearertokenonly;
+            AuthorizationURI.Visible = !bearertokenonly;
+            TokenURI.Visible = !bearertokenonly;
+            textOAuthRedirectURI.Visible = !bearertokenonly;
+            textOAuthClientIdentification.Visible = !bearertokenonly;
+            textOAuthClientSecret.Visible = !bearertokenonly;
+            textOAuthClientScope.Visible = !bearertokenonly;
         }
 
         private void ValidationTest_Click(object sender, EventArgs e)
         {
+            RunWebAPITest();
+        }
 
+        private void OutputLogCapture()
+        {
+            debuglog.OutputLogFile();
+
+        }
+
+        private Uri GetUri(string uri)
+        {
+            LogDebugEvent("GetUri", 1, string.Empty);
+            try
+            {
+                LogDebugEvent("GetUri", 2, uri);
+                return new Uri(uri);
+            }
+            catch (Exception ex)
+            {
+                LogDebugEvent("GetUri", 3, ex.Message);
+            }
+            return null;
+        }
+
+        private void LogDebugEvent(string v1, int v2, string empty)
+        {
+            
+        }
+
+        private void RunWebAPITest()
+        {
+            try
+            {
+               CommonCore1000_Entry hack = new CommonCore1000_Entry();
+               string test = hack.Description;
+
+                //int debugcount = 1;
+                OutputLogCapture();
+                
+                RESOClientSettings clientsettings = GetSettings();
+                //var instance = ODataValidator.ODataValidator.RuleEngine.TermDocuments.GetInstance();
+                if (string.IsNullOrWhiteSpace(clientsettings.GetSetting(settings.webapi_uri)))
+                {
+                    
+                    loadclientpropertiesfile();
+                    if (!Login())
+                    {
+                        MessageOutput("Login Failed");
+                        return;
+                    }
+                }
+
+                if (string.IsNullOrEmpty(webapi_token.Text.Trim().Replace("Loading...", string.Empty).Replace("Error", string.Empty)))
+                {
+                    if (!Login())
+                    {
+                        MessageOutput("Login Failed");
+                        return;
+                    }
+                }
+                clientsettings = GetSettings();
+
+
+                
+                var reqHeaders = new List<KeyValuePair<string, string>> { new KeyValuePair<string, string>("ODataVersion", "4.0") };
+                reqHeaders.Add(new KeyValuePair<string, string>("Authorization", oauth_bearertoken));
+
+
+                System.Guid JobID = System.Guid.NewGuid();
+                ResultsProvider resultProvider = new ResultsProvider(JobID);
+                ILogger logger = resultProvider as ILogger;
+
+
+                
+                Uri url = GetUri(clientsettings.GetSetting(settings.webapi_uri));
+
+                Uri host = GetUri(url.Scheme.ToString() + "://" + url.Host);
+                //Uri uri = new Uri(host, url.AbsoluteUri);
+                
+                Uri service = GetUri(clientsettings.GetSetting(settings.webapi_uri));
+                ServiceContext ctx = new ServiceContext(url, JobID, HttpStatusCode.OK, responseheaders, metadataresponse, string.Empty, service, serviceresponse, metadataresponse, false, reqHeaders, ODataMetadataType.MinOnly);
+
+
+                
+
+                int count = 0;
+                TestControl testcontrol = new TestControl();
+                testcontrol.BuildRuleControlList(clientsettings);
+                RuleCatalogCollection.Instance.Clear();
+                
+                StringBuilder sb = new StringBuilder();
+                sb.Append("Category\tName\tDescription\tHelpLink\tErrorMessage\tRequirementLevel\tAspect\tSpecificationSection\tV4SpecificationSection\tV4Specification\tPayloadType\t");
+                sb.Append("LevelType\tResourceType\tDependencyType\tDependencyInfo\tIsMediaLinkEntry\tProjection\tPayloadFormat\tVersion\tOdataMetadataType\tRequireMetadata\tRequireServiceDocument");
+                sb.Append("\r\n");
+
+                //RuleStoreAsXmlFolder ruleStore = new RuleStoreAsXmlFolder("rulestore", logger);
+                //foreach (var rule in ruleStore.GetRules())
+                //{
+                //    count++;
+                //    AddRuleData(ref sb, rule);
+                //    //if (!CheckRule(rule, count, clientsettings, testcontrol))
+                //    //{
+                //    //    continue;
+                //    //}
+                //    RuleCatalogCollection.Instance.Add(rule);
+                //}
+
+                ExtensionRuleStore extensionStore = new ExtensionRuleStore("extensions", logger);
+                foreach (var rule in extensionStore.GetRules())
+                {
+                    count++;
+                    AddRuleData(ref sb, rule);
+                    if (!CheckRule(rule, count, clientsettings, testcontrol))
+                    {
+                        continue;
+                    }
+                    RuleCatalogCollection.Instance.Add(rule);
+                }
+                
+                System.IO.File.WriteAllText(clientsettings.GetSetting(settings.log_directory) + "\\rulelist.txt", sb.ToString());
+
+
+                //var header = ctx.RequestHeaders;
+                var ruleArray = RuleCatalogCollection.Instance.ToArray();
+                
+                //RuleEngineWrapper ruleEngine = new RuleEngineWrapper(ctx, resultProvider, logger);
+                //return;
+                RuleExecuter rules = new RuleExecuter(resultProvider, logger);
+                rules.Execute(ctx, ruleArray, (int)ruleArray.Length, webapitestcomplete);
+                ResultsProvider logitems = logger as ResultsProvider;
+                Hashtable logitemshash = new Hashtable();
+                
+                int detailcount = 0;
+                foreach (ExtensionRuleResultDetail item in logitems.Details)
+                {
+                    detailcount++;
+                    if (logitemshash[item.RuleName] == null)
+                    {
+                        Hashtable hsh = new Hashtable();
+                        hsh[detailcount] = item;
+                        logitemshash[item.RuleName] = hsh;
+                    }
+                    else
+                    {
+                        Hashtable hsh = logitemshash[item.RuleName] as Hashtable;
+                        hsh[detailcount] = item;
+                        logitemshash[item.RuleName] = hsh;
+                    }
+                }
+                StringBuilder sbresults = new StringBuilder();
+                StringBuilder sbLogAll = new StringBuilder();
+                sbresults.Append("URL");
+                sbresults.Append("\t");
+                sbresults.Append("ODataLevel");
+                sbresults.Append("\t");
+                sbresults.Append("RuleName");
+                sbresults.Append("\t");
+                sbresults.Append("Classification");
+                sbresults.Append("\t");
+                sbresults.Append("Description");
+                sbresults.Append("\t");
+                sbresults.Append("SpecificationUri");
+                sbresults.Append("\t");
+                sbresults.Append("\r\n");
+                foreach (ODataValidator.RuleEngine.TestResult result in resultProvider.ResultsToSave)
+                {
+                    BuildResultsOutput(ref sbresults, result, ref sbLogAll, logitemshash);
+                }
+                
+                using (System.IO.StreamWriter file = new System.IO.StreamWriter(clientsettings.GetSetting(settings.log_directory) + "\\" + "outputlog" + ".txt", false))
+                {
+                    file.Write(sbLogAll.ToString());
+                }
+                
+                using (System.IO.StreamWriter file = new System.IO.StreamWriter(clientsettings.GetSetting(settings.results_directory) + "\\" + "results" + ".txt", false))
+                {
+                    file.Write(sbresults.ToString());
+                }
+                OutputForm form = new OutputForm();
+                form.SetOutputText(sbresults.ToString());
+                form.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                //throw ex;
+            }
+
+            OutputLogCapture();
+        }
+
+        void webapitestcomplete(ODataValidator.RuleEngine.TestResult results, int numberofrules, ref int count)
+        {
+
+            webapicurrentrule.Text = results.RuleName;
+            webapicurrentrule.Update();
+            this.webapiprogressBar.Value = (int)((100 * count) / numberofrules);
+
+
+            this.Update();
+        }
+        private bool CheckRule(ODataValidator.RuleEngine.Rule rule, int count, RESOClientSettings settings, ODataValidator.RuleEngine.TestControl testcontrol)
+        {
+
+
+            if (rule == null)
+            {
+                return false;
+            }
+            if (!rule.IsValid())
+            {
+                return false;
+            }
+            if (testcontrol == null)
+            {
+                return false;
+            }
+            //Advanced.Conformance.1004
+            //Advanced.Conformance.1007
+
+
+            //if (rule.Name == "Minimal.Conformance.100501")
+            //{
+            //    return true;
+            //}
+
+
+            //return false;
+            //if (rule.Name == "Common.Core.4070")
+            //{
+            //    return true;
+            //}
+
+
+            //return false;
+            if (rule.Name == "Intermediate.Conformance.1016")
+            {
+                return false;
+            }
+            if (rule.Name == "Advanced.Conformance.1007")
+            {
+                return false;
+            }
+            if (rule.Name == "Advanced.Conformance.1004")
+            {
+                return false;
+            }
+            if (rule.Name == "Intermediate.Conformance.1013")
+            {
+                return false;
+            }
+            if (rule.Name == "ServiceImpl_GetNavigationProperty")
+            {
+                return false;
+            }
+            if (rule.Name == "ServiceImpl_RequestingChanges_delta")
+            {
+                return false;
+            }
+            if (rule.Name == "ServiceImpl_SystemQueryOptionSkip")
+            {
+                return false;
+            }
+            if (rule.Name == "ServiceImpl_SystemQueryOptionSkipToken")
+            {
+                return false;
+            }
+            //Intermediate.Conformance.1013
+            //ServiceImpl_GetNavigationProperty
+            //ServiceImpl_RequestingChanges_delta
+            //ServiceImpl_SystemQueryOptionSkip
+            //ServiceImpl_SystemQueryOptionSkipToken
+            //return false;
+            RuleControl control = testcontrol.rulecontrol[rule.Name] as RuleControl;
+            if (control != null)
+            {
+                if (string.Compare(control.cert_impact, "Core", true) == 0)
+                {
+                    return true;
+                }
+                if (string.Compare(control.cert_impact, "Platinum", true) == 0)
+                {
+                    return true;
+                }
+
+                if (string.Compare(control.cert_impact, "Gold", true) == 0)
+                {
+                    return true;
+                }
+                if (string.Compare(control.cert_impact, "Silver", true) == 0)
+                {
+                    return true;
+                }
+                if (string.Compare(control.cert_impact, "Bronze", true) == 0)
+                {
+                    return true;
+                }
+            }
+            //ServiceImpl_SystemQueryOptionSkip
+
+            if (rule.Name == "ServiceImpl_SystemQueryOptionCount")//Takes too long.  Need to make it an option.
+            {
+                return false;
+            }
+            if (rule.Name == "ServiceImpl_RequestingChanges_delta")//Takes too long.  Need to make it an option.
+            {
+                return false;
+            }
+
+
+            //return false;
+
+            //if ((rule.RequirementLevel != RequirementLevel.Must) && (rule.RequirementLevel != RequirementLevel.MustNot))
+            //{
+            //    return false;
+            //}
+            //if (rule.Name == "Common.Core.3100") return true;
+            //if (rule.Name == "Common.Core.3009") return true;
+            //return false;
+            //if (rule.Name.IndexOf("Advanced.Conformance") >= 0)
+            //{
+            //    return false;
+            //}
+            //if (rule.Name.IndexOf("Intermediate.Conformance") >= 0)
+            //{
+            //    return false;
+            //}
+            // if (rule.Name.IndexOf("Entry.Core") >= 0)
+            {
+                // return false;
+            }
+
+            if (string.IsNullOrEmpty(rule.V4Specification) || (rule.Version != ODataValidator.RuleEngine.ODataVersion.UNKNOWN && rule.Version != ODataValidator.RuleEngine.ODataVersion.V_All && rule.Version != ODataValidator.RuleEngine.ODataVersion.V3_V4 && rule.Version != ODataValidator.RuleEngine.ODataVersion.V4))
+            {
+                return false;
+            }
+            if (rule.PayloadFormat != null && rule.PayloadFormat == ODataValidator.RuleEngine.PayloadFormat.Atom)
+            {
+                return false;
+            }
+            if (rule.PayloadType == ODataValidator.RuleEngine.PayloadType.Entry)
+            {
+                return false;
+            }
+            //if (rule.ResourceType != null && rule.ResourceType == ConformanceServiceType.ReadWrite)
+            //{
+            //    return false;
+            ////}
+            //if (!AtomTests.Checked)
+            //{
+            //    if (rule.Description.IndexOf("Atom", StringComparison.CurrentCultureIgnoreCase) >= 0)
+            //    {
+            //        return false;
+            //    }
+            //    if (rule.PayloadFormat == ODataValidator.RuleEngine.PayloadFormat.Atom)
+            //    {
+            //        return false;
+            //    }
+            //}
+            //if(rule.IsMediaLinkEntry != null && (bool)rule.IsMediaLinkEntry)
+            //{
+            //    return false;
+            //}
+
+
+
+            if (rule.Name == "ServiceImpl_RequestingChanges_delta")//Takes too long.  Need to make it an option.
+            {
+                return false;
+            }
+
+            //if (rule.Category == "SERVICEIMPL")
+            //{
+            //    //if (rule.Name != "ServiceImpl_RequestingChanges_delta")
+            //    return false;
+            //}
+            //if ((rule.RequirementLevel == RequirementLevel.Must) || (rule.RequirementLevel == RequirementLevel.MustNot))
+            //{
+            //    return true;
+            //}
+            return true;
+        }
+
+        private void BuildResultsOutput(ref StringBuilder sbresults, ODataValidator.RuleEngine.TestResult result, ref StringBuilder sbLogAll, Hashtable logitemshash)
+        {
+            if (result.Classification != "notApplicable")
+            {
+                string[] descspit = result.Description.Split('^');
+
+                if (descspit.Length == 2)
+                {
+                    sbresults.Append(descspit[1]);
+                    sbresults.Append("\t");
+
+                }
+                else
+                {
+                    sbresults.Append(string.Empty);
+                    sbresults.Append("\t");
+                }
+                sbresults.Append(result.ODataLevel);
+                sbresults.Append("\t");
+                sbresults.Append(result.RuleName);
+                sbresults.Append("\t");
+                sbresults.Append(result.Classification);
+                sbresults.Append("\t");
+                if (descspit.Length == 2)
+                {
+                    sbresults.Append(descspit[0]);
+                    if (!string.IsNullOrEmpty(result.ErrorMessage))
+                    {
+                        sbresults.Append(" ERROR:  ");
+                        sbresults.Append(result.ErrorMessage);
+                    }
+                    sbresults.Append("\t");
+
+                }
+                else
+                {
+                    sbresults.Append(result.Description);
+                    if (!string.IsNullOrEmpty(result.ErrorMessage))
+                    {
+                        sbresults.Append(" ERROR:  ");
+                        sbresults.Append(result.ErrorMessage);
+                    }
+                    sbresults.Append("\t");
+                }
+
+                sbresults.Append(result.SpecificationUri);
+                sbresults.Append("\t");
+
+
+
+                Hashtable hsh = null;
+                if (logitemshash[result.RuleName] != null)
+                {
+                    hsh = logitemshash[result.RuleName] as Hashtable;
+                }
+
+                if (hsh != null)
+                {
+                    StringBuilder sbLog = new StringBuilder();
+                    foreach (DictionaryEntry entry in hsh)
+                    {
+                        ExtensionRuleResultDetail item = entry.Value as ExtensionRuleResultDetail;
+                        if (item != null)
+                        {
+                            try
+                            {
+
+
+                                if (item.RuleName != null) sbLog.Append("___________Start " + item.RuleName + "___________");
+                                sbLog.Append("\r\n");
+                                if (!string.IsNullOrWhiteSpace(item.ErrorMessage)) sbLog.Append("ERROR MESSAGE: " + item.ErrorMessage + "\r\n");
+                                sbLog.Append("___________REQUEST___________");
+                                sbLog.Append("\r\n");
+                                if (item.HTTPMethod != null) sbLog.Append(item.HTTPMethod);
+                                sbLog.Append("\r\n");
+                                if (item.URI != null) sbLog.Append(item.URI.ToString());
+                                sbLog.Append("\r\n");
+
+                                if (item.RequestData != null) sbLog.Append(item.RequestData.ToString());
+                                sbLog.Append("\r\n");
+
+                                if (item.RequestHeaders != null) sbLog.Append(item.RequestHeaders.ToString());
+                                sbLog.Append("\r\n");
+                                sbLog.Append("___________RESPONSE___________");
+                                sbLog.Append("\r\n");
+                                if (item.ResponseStatusCode != null) sbLog.Append(item.ResponseStatusCode);
+                                sbLog.Append("\r\n");
+                                if (item.ResponseHeaders != null) sbLog.Append(item.ResponseHeaders.ToString());
+                                sbLog.Append("\r\n");
+
+                                if (item.ResponsePayload != null) sbLog.Append(item.ResponsePayload.ToString());
+                                sbLog.Append("\r\n");
+
+
+
+
+                                if (item.RuleName != null) sbLog.Append("___________End " + item.RuleName + "___________");
+                                sbLog.Append("\r\n");
+
+                            }
+
+                            catch (Exception ex)
+                            {
+                                LogDebugEvent("RunWebAPITest", 98, ex.Message);
+                            }
+                        }
+                    }
+                    RESOClientSettings clientsettings = GetSettings();
+                    using (System.IO.StreamWriter file = new System.IO.StreamWriter(clientsettings.GetSetting(settings.log_directory) + "\\" + result.RuleName + ".txt", false))
+                    {
+                        file.Write(sbLog.ToString());
+                    }
+                    sbLogAll.Append(sbLog);
+
+                }
+                sbresults.Append("\r\n");
+            }
+        }
+        private void AddRuleData(ref StringBuilder sb, ODataValidator.RuleEngine.Rule rule)
+        {
+            sb.Append(rule.Category);
+            sb.Append("\t");
+            sb.Append(rule.Name);
+            sb.Append("\t");
+            sb.Append(rule.Description);
+            sb.Append("\t");
+            sb.Append(rule.HelpLink);
+            sb.Append("\t");
+            sb.Append(rule.ErrorMessage);
+            sb.Append("\t");
+            sb.Append(rule.RequirementLevel);
+            sb.Append("\t");
+            sb.Append(rule.Aspect);
+            sb.Append("\t");
+            sb.Append(rule.SpecificationSection);
+            sb.Append("\t");
+            sb.Append(rule.V4SpecificationSection);
+            sb.Append("\t");
+            sb.Append(rule.V4Specification);
+            sb.Append("\t");
+            sb.Append(rule.PayloadType);
+            sb.Append("\t");
+            sb.Append(rule.LevelType);
+            sb.Append("\t");
+            sb.Append(rule.ResourceType);
+            sb.Append("\t");
+            sb.Append(rule.DependencyType);
+            sb.Append("\t");
+            sb.Append(rule.DependencyInfo);
+            sb.Append("\t");
+            sb.Append(rule.IsMediaLinkEntry);
+            sb.Append("\t");
+            sb.Append(rule.Projection);
+            sb.Append("\t");
+            sb.Append(rule.PayloadFormat);
+            sb.Append("\t");
+            sb.Append(rule.Version);
+            sb.Append("\t");
+            sb.Append(rule.OdataMetadataType);
+            sb.Append("\t");
+            sb.Append(rule.RequireMetadata);
+            sb.Append("\t");
+            sb.Append(rule.RequireServiceDocument);
+
+            sb.Append("\r\n");
         }
     }
 

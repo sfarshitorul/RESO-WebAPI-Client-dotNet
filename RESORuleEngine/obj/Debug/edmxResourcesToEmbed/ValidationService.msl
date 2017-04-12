@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ODataValidationSuiteModelStoreContainer" CdmEntityContainer="ODataValidationSuiteEntities">
+    <EntitySetMapping Name="EngineRuntimeExceptions">
+      <EntityTypeMapping TypeName="IsTypeOf(ODataValidationSuiteModel.EngineRuntimeException)">
+        <MappingFragment StoreEntitySet="EngineRuntimeExceptions">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="JobId" ColumnName="JobId" />
+          <ScalarProperty Name="RuleName" ColumnName="RuleName" />
+          <ScalarProperty Name="TimeStamp" ColumnName="TimeStamp" />
+          <ScalarProperty Name="Message" ColumnName="Message" />
+          <ScalarProperty Name="StackTrace" ColumnName="StackTrace" />
+          <ScalarProperty Name="Detail" ColumnName="Detail" />
+          <ScalarProperty Name="Uri" ColumnName="Uri" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PayloadLines">
+      <EntityTypeMapping TypeName="IsTypeOf(ODataValidationSuiteModel.PayloadLine)">
+        <MappingFragment StoreEntitySet="PayloadLines">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="LineNumber" ColumnName="LineNumber" />
+          <ScalarProperty Name="LineText" ColumnName="LineText" />
+          <ScalarProperty Name="JobID" ColumnName="JobID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TestResults">
+      <EntityTypeMapping TypeName="IsTypeOf(ODataValidationSuiteModel.TestResult)">
+        <MappingFragment StoreEntitySet="TestResults">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="RuleName" ColumnName="RuleName" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="HelpUri" ColumnName="HelpUri" />
+          <ScalarProperty Name="SpecificationUri" ColumnName="SpecificationUri" />
+          <ScalarProperty Name="LineNumberInError" ColumnName="LineNumberInError" />
+          <ScalarProperty Name="HeaderInError" ColumnName="HeaderInError" />
+          <ScalarProperty Name="Classification" ColumnName="Classification" />
+          <ScalarProperty Name="AppliesTo" ColumnName="AppliesTo" />
+          <ScalarProperty Name="ODataLevel" ColumnName="ODataLevel" />
+          <ScalarProperty Name="ValidationJobID" ColumnName="ValidationJobID" />
+          <ScalarProperty Name="ErrorMessage" ColumnName="ErrorMessage" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ValidationJobs">
+      <EntityTypeMapping TypeName="IsTypeOf(ODataValidationSuiteModel.ValidationJob)">
+        <MappingFragment StoreEntitySet="ValidationJobs">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Complete" ColumnName="Complete" />
+          <ScalarProperty Name="Version" ColumnName="Version" />
+          <ScalarProperty Name="RuleCount" ColumnName="RuleCount" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="CompleteDate" ColumnName="CompleteDate" />
+          <ScalarProperty Name="ErrorOccurred" ColumnName="ErrorOccurred" />
+          <ScalarProperty Name="ResourceType" ColumnName="ResourceType" />
+          <ScalarProperty Name="ServiceType" ColumnName="ServiceType" />
+          <ScalarProperty Name="LevelTypes" ColumnName="LevelTypes" />
+          <ScalarProperty Name="ReqHeaders" ColumnName="ReqHeaders" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ExtValidationJobs">
+      <EntityTypeMapping TypeName="IsTypeOf(ODataValidationSuiteModel.ExtValidationJobs)">
+        <MappingFragment StoreEntitySet="ExtValidationJobs">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="RuleCount" ColumnName="RuleCount" />
+          <ScalarProperty Name="Uri" ColumnName="Uri" />
+          <ScalarProperty Name="ReqHeaders" ColumnName="ReqHeaders" />
+          <ScalarProperty Name="Format" ColumnName="Format" />
+          <ScalarProperty Name="PayloadText" ColumnName="PayloadText" />
+          <ScalarProperty Name="MetadataText" ColumnName="MetadataText" />
+          <ScalarProperty Name="Complete" ColumnName="Complete" />
+          <ScalarProperty Name="ErrorOccurred" ColumnName="ErrorOccurred" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="CompleteDate" ColumnName="CompleteDate" />
+          <ScalarProperty Name="ResourceType" ColumnName="ResourceType" />
+          <ScalarProperty Name="ServiceType" ColumnName="ServiceType" />
+          <ScalarProperty Name="LevelTypes" ColumnName="LevelTypes" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="JobGroups">
+      <EntityTypeMapping TypeName="IsTypeOf(ODataValidationSuiteModel.JobGroup)">
+        <MappingFragment StoreEntitySet="JobGroup">
+          <ScalarProperty Name="MasterJobId" ColumnName="MasterJobId" />
+          <ScalarProperty Name="ResourceType" ColumnName="ResourceType" />
+          <ScalarProperty Name="Uri" ColumnName="Uri" />
+          <ScalarProperty Name="DerivativeJobId" ColumnName="DerivativeJobId" />
+          <ScalarProperty Name="RuleCount" ColumnName="RuleCount" />
+          <ScalarProperty Name="Issues" ColumnName="Issues" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="JobData">
+      <EntityTypeMapping TypeName="IsTypeOf(ODataValidationSuiteModel.JobData)">
+        <MappingFragment StoreEntitySet="JobData">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="JobID" ColumnName="JobID" />
+          <ScalarProperty Name="RespHeaders" ColumnName="RespHeaders" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Records">
+      <EntityTypeMapping TypeName="ODataValidationSuiteModel.Record">
+        <MappingFragment StoreEntitySet="Record">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="MasterJobId1" ColumnName="MasterJobId1" />
+          <ScalarProperty Name="MasterJobId2" ColumnName="MasterJobId2" />
+          <ScalarProperty Name="MasterJobId3" ColumnName="MasterJobId3" />
+          <ScalarProperty Name="MasterJobId4" ColumnName="MasterJobId4" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="ActiveTabNum" ColumnName="ActiveTabNum" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ResultDetails">
+      <EntityTypeMapping TypeName="IsTypeOf(ODataValidationSuiteModel.ResultDetail)">
+        <MappingFragment StoreEntitySet="ResultDetails">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="RuleName" ColumnName="RuleName" />
+          <ScalarProperty Name="URI" ColumnName="URI" />
+          <ScalarProperty Name="HTTPMethod" ColumnName="HTTPMethod" />
+          <ScalarProperty Name="RequestData" ColumnName="RequestData" />
+          <ScalarProperty Name="RequestHeaders" ColumnName="RequestHeaders" />
+          <ScalarProperty Name="ResponseStatusCode" ColumnName="ResponseStatusCode" />
+          <ScalarProperty Name="ResponseHeaders" ColumnName="ResponseHeaders" />
+          <ScalarProperty Name="ResponsePayload" ColumnName="ResponsePayload" />
+          <ScalarProperty Name="ErrorMessage" ColumnName="ErrorMessage" />
+          <ScalarProperty Name="TestResultID" ColumnName="TestResultID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

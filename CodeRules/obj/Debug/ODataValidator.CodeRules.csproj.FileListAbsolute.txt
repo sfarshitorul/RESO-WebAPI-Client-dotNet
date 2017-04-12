@@ -1,0 +1,36 @@
+C:\Users\stusch1\Google Drive\Odata\validation\ValidationTool-master\src\CodeRules\bin\ODataValidator.CodeRules.dll
+C:\Users\stusch1\Google Drive\Odata\validation\ValidationTool-master\src\CodeRules\bin\ODataValidator.CodeRules.pdb
+C:\Users\stusch1\Google Drive\Odata\validation\ValidationTool-master\src\CodeRules\bin\Newtonsoft.Json.dll
+C:\Users\stusch1\Google Drive\Odata\validation\ValidationTool-master\src\CodeRules\bin\ODataValidator.RuleEngine.dll
+C:\Users\stusch1\Google Drive\Odata\validation\ValidationTool-master\src\CodeRules\bin\Commons.Xml.Relaxng.dll
+C:\Users\stusch1\Google Drive\Odata\validation\ValidationTool-master\src\CodeRules\bin\ODataValidator.RuleEngine.pdb
+C:\Users\stusch1\Google Drive\Odata\validation\ValidationTool-master\src\CodeRules\bin\Newtonsoft.Json.xml
+C:\Users\stusch1\Google Drive\Odata\validation\ValidationTool-master\src\CodeRules\obj\Debug\ODataValidator.CodeRules.csprojResolveAssemblyReference.cache
+C:\Users\stusch1\Google Drive\Odata\validation\ValidationTool-master\src\CodeRules\obj\Debug\ODataValidator.Rule.Resource.resources
+C:\Users\stusch1\Google Drive\Odata\validation\ValidationTool-master\src\CodeRules\obj\Debug\ODataValidator.CodeRules.csproj.GenerateResource.Cache
+C:\Users\stusch1\Google Drive\Odata\validation\ValidationTool-master\src\CodeRules\obj\Debug\ODataValidator.CodeRules.dll
+C:\Users\stusch1\Google Drive\Odata\validation\ValidationTool-master\src\CodeRules\obj\Debug\ODataValidator.CodeRules.pdb
+E:\Drive\Odata\validation\ValidationTool-master\src\CodeRules\bin\ODataValidator.CodeRules.dll
+E:\Drive\Odata\validation\ValidationTool-master\src\CodeRules\bin\ODataValidator.CodeRules.pdb
+E:\Drive\Odata\validation\ValidationTool-master\src\CodeRules\bin\Newtonsoft.Json.dll
+E:\Drive\Odata\validation\ValidationTool-master\src\CodeRules\bin\ODataValidator.RuleEngine.dll
+E:\Drive\Odata\validation\ValidationTool-master\src\CodeRules\bin\Commons.Xml.Relaxng.dll
+E:\Drive\Odata\validation\ValidationTool-master\src\CodeRules\bin\ODataValidator.RuleEngine.pdb
+E:\Drive\Odata\validation\ValidationTool-master\src\CodeRules\bin\Newtonsoft.Json.xml
+E:\Drive\Odata\validation\ValidationTool-master\src\CodeRules\obj\Debug\ODataValidator.CodeRules.csprojResolveAssemblyReference.cache
+E:\Drive\Odata\validation\ValidationTool-master\src\CodeRules\obj\Debug\ODataValidator.Rule.Resource.resources
+E:\Drive\Odata\validation\ValidationTool-master\src\CodeRules\obj\Debug\ODataValidator.CodeRules.csproj.GenerateResource.Cache
+E:\Drive\Odata\validation\ValidationTool-master\src\CodeRules\obj\Debug\ODataValidator.CodeRules.dll
+E:\Drive\Odata\validation\ValidationTool-master\src\CodeRules\obj\Debug\ODataValidator.CodeRules.pdb
+E:\Drive\WebClientTest\CodeRules\bin\ODataValidator.CodeRules.dll
+E:\Drive\WebClientTest\CodeRules\bin\ODataValidator.CodeRules.pdb
+E:\Drive\WebClientTest\CodeRules\bin\Newtonsoft.Json.dll
+E:\Drive\WebClientTest\CodeRules\bin\ODataValidator.RuleEngine.dll
+E:\Drive\WebClientTest\CodeRules\bin\Commons.Xml.Relaxng.dll
+E:\Drive\WebClientTest\CodeRules\bin\ODataValidator.RuleEngine.pdb
+E:\Drive\WebClientTest\CodeRules\bin\Newtonsoft.Json.xml
+E:\Drive\WebClientTest\CodeRules\obj\Debug\ODataValidator.CodeRules.csprojResolveAssemblyReference.cache
+E:\Drive\WebClientTest\CodeRules\obj\Debug\ODataValidator.Rule.Resource.resources
+E:\Drive\WebClientTest\CodeRules\obj\Debug\ODataValidator.CodeRules.csproj.GenerateResource.Cache
+E:\Drive\WebClientTest\CodeRules\obj\Debug\ODataValidator.CodeRules.dll
+E:\Drive\WebClientTest\CodeRules\obj\Debug\ODataValidator.CodeRules.pdb

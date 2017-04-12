@@ -7,10 +7,10 @@ using System.Net;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.XPath;
-//using ODataValidator.RuleEngine.Common;
+//
 
 
-namespace RESORuleEngine
+namespace ODataValidator.RuleEngine
 {
     public class ServiceContext : ServiceContextCore
     {

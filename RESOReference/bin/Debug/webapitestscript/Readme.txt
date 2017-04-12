@@ -1,0 +1,1 @@
+This folder is reserved for the default path for the validation scripts.

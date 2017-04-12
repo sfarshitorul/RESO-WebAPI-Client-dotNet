@@ -1,0 +1,226 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ODataValidationSuiteModel" Alias="Self" xmlns="http://schemas.microsoft.com/ado/2009/11/edm" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
+  <EntityContainer Name="ODataValidationSuiteEntities" annotation:LazyLoadingEnabled="true" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
+    <EntitySet Name="EngineRuntimeExceptions" EntityType="ODataValidationSuiteModel.EngineRuntimeException" />
+    <EntitySet Name="PayloadLines" EntityType="ODataValidationSuiteModel.PayloadLine" />
+    <EntitySet Name="TestResults" EntityType="ODataValidationSuiteModel.TestResult" />
+    <EntitySet Name="ValidationJobs" EntityType="ODataValidationSuiteModel.ValidationJob" />
+    <EntitySet Name="ExtValidationJobs" EntityType="ODataValidationSuiteModel.ExtValidationJobs" />
+    <EntitySet Name="JobGroups" EntityType="ODataValidationSuiteModel.JobGroup" />
+    <EntitySet Name="JobData" EntityType="ODataValidationSuiteModel.JobData" />
+    <EntitySet Name="Records" EntityType="ODataValidationSuiteModel.Record" />
+    <EntitySet Name="ResultDetails" EntityType="ODataValidationSuiteModel.ResultDetail" />
+    <AssociationSet Name="FK_PayloadLines_ValidationJobs" Association="ODataValidationSuiteModel.FK_PayloadLines_ValidationJobs">
+      <End Role="ValidationJobs" EntitySet="ValidationJobs" />
+      <End Role="PayloadLines" EntitySet="PayloadLines" />
+    </AssociationSet>
+    <AssociationSet Name="FK_JobData_ValidationJobs" Association="ODataValidationSuiteModel.FK_JobData_ValidationJobs">
+      <End Role="ValidationJobs" EntitySet="ValidationJobs" />
+      <End Role="JobData" EntitySet="JobData" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TestResults_ValidationJobs" Association="ODataValidationSuiteModel.FK_TestResults_ValidationJobs">
+      <End Role="ValidationJobs" EntitySet="ValidationJobs" />
+      <End Role="TestResults" EntitySet="TestResults" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ExtValidationJobsPayloadLine" Association="ODataValidationSuiteModel.FK_ExtValidationJobsPayloadLine">
+      <End Role="ExtValidationJobs" EntitySet="ExtValidationJobs" />
+      <End Role="PayloadLine" EntitySet="PayloadLines" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TestResult_ResultDetail" Association="ODataValidationSuiteModel.FK_TestResult_ResultDetail">
+      <End Role="TestResult" EntitySet="TestResults" />
+      <End Role="ResultDetail" EntitySet="ResultDetails" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="EngineRuntimeException">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="JobId" Type="Guid" Nullable="false" />
+    <Property Name="RuleName" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="TimeStamp" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Message" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="StackTrace" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="Detail" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="Uri" Type="String" Nullable="false" MaxLength="300" Unicode="true" FixedLength="false" />
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+  </EntityType>
+  <EntityType Name="PayloadLine">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="LineNumber" Type="Int32" Nullable="false" />
+    <Property Name="LineText" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="JobID" Type="Guid" Nullable="false" />
+    <NavigationProperty Name="ValidationJob" Relationship="ODataValidationSuiteModel.FK_PayloadLines_ValidationJobs" FromRole="PayloadLines" ToRole="ValidationJobs" />
+  </EntityType>
+  <EntityType Name="JobData">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="JobID" Type="Guid" Nullable="false" />
+    <Property Name="RespHeaders" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="ValidationJob" Relationship="ODataValidationSuiteModel.FK_JobData_ValidationJobs" FromRole="JobData" ToRole="ValidationJobs" />
+  </EntityType>
+  <EntityType Name="TestResult">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+    <Property Name="RuleName" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="HelpUri" Type="String" MaxLength="300" Unicode="true" FixedLength="false" />
+    <Property Name="SpecificationUri" Type="String" MaxLength="300" Unicode="true" FixedLength="false" />
+    <Property Name="LineNumberInError" Type="String" MaxLength="300" Unicode="true" FixedLength="false" />
+    <Property Name="HeaderInError" Type="String" MaxLength="300" Unicode="true" FixedLength="false" />
+    <Property Name="Classification" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="AppliesTo" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="ODataLevel" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="ValidationJobID" Type="Guid" Nullable="false" />
+    <Property Name="ErrorMessage" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="ValidationJob" Relationship="ODataValidationSuiteModel.FK_TestResults_ValidationJobs" FromRole="TestResults" ToRole="ValidationJobs" />
+    <NavigationProperty Name="ResultDetails" Relationship="ODataValidationSuiteModel.FK_TestResult_ResultDetail" FromRole="TestResult" ToRole="ResultDetail" />
+  </EntityType>
+  <EntityType Name="ValidationJob">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="Complete" Type="Boolean" />
+    <Property Name="Version" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+    <Property Name="RuleCount" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="CompleteDate" Type="DateTime" Precision="3" />
+    <Property Name="ErrorOccurred" Type="Boolean" />
+    <Property Type="String" Name="ResourceType" />
+    <Property Type="String" Name="ServiceType" />
+    <Property Type="String" Name="LevelTypes" />
+    <Property Name="ReqHeaders" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="PayloadLines" Relationship="ODataValidationSuiteModel.FK_PayloadLines_ValidationJobs" FromRole="ValidationJobs" ToRole="PayloadLines" />
+    <NavigationProperty Name="TestResults" Relationship="ODataValidationSuiteModel.FK_TestResults_ValidationJobs" FromRole="ValidationJobs" ToRole="TestResults" />
+    <NavigationProperty Name="JobData" Relationship="ODataValidationSuiteModel.FK_JobData_ValidationJobs" FromRole="ValidationJobs" ToRole="JobData" />
+  </EntityType>
+  <EntityType Name="ExtValidationJobs">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="RuleCount" Type="Int32" />
+    <Property Name="Uri" Type="String" MaxLength="300" Unicode="true" FixedLength="false" />
+    <Property Name="ReqHeaders" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="Format" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="PayloadText" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="MetadataText" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="Complete" Type="Boolean" />
+    <Property Name="ErrorOccurred" Type="Boolean" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="CompleteDate" Type="DateTime" Precision="3" />
+    <Property Type="String" Name="ResourceType" />
+    <Property Type="String" Name="ServiceType" />
+    <Property Type="String" Name="LevelTypes" />
+    <NavigationProperty Name="PayloadLines" Relationship="ODataValidationSuiteModel.FK_ExtValidationJobsPayloadLine" FromRole="ExtValidationJobs" ToRole="PayloadLine" />
+  </EntityType>
+  <EntityType Name="JobGroup">
+    <Key>
+      <PropertyRef Name="MasterJobId" />
+      <PropertyRef Name="ResourceType" />
+      <PropertyRef Name="Uri" />
+    </Key>
+    <Property Name="MasterJobId" Type="Guid" Nullable="false" />
+    <Property Name="DerivativeJobId" Type="Guid" />
+    <Property Name="ResourceType" Type="String" Nullable="false" />
+    <Property Name="RuleCount" Type="Int32" Nullable="false" />
+    <Property Name="Issues" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="Uri" Type="String" Nullable="false" MaxLength="300" Unicode="true" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="Record">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+    <Property Name="MasterJobId1" Type="Guid" />
+    <Property Name="MasterJobId2" Type="Guid" />
+    <Property Name="MasterJobId3" Type="Guid" />
+    <Property Name="MasterJobId4" Type="Guid" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="ActiveTabNum" Type="Byte" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ResultDetail">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+    <Property Type="String" Name="RuleName" Nullable="false" />
+    <Property Type="String" Name="URI" Nullable="true" />
+    <Property Type="String" Name="HTTPMethod" Nullable="true" />
+    <Property Type="String" Name="RequestData" Nullable="true" />
+    <Property Type="String" Name="RequestHeaders" Nullable="true" />
+    <Property Type="String" Name="ResponseStatusCode" Nullable="true" />
+    <Property Type="String" Name="ResponseHeaders" Nullable="true" />
+    <Property Type="String" Name="ResponsePayload" Nullable="true" />
+    <Property Type="String" Name="ErrorMessage" Nullable="true" />
+    <NavigationProperty Name="TestResult" Relationship="ODataValidationSuiteModel.FK_TestResult_ResultDetail" FromRole="ResultDetail" ToRole="TestResult" />
+    <Property Type="Int32" Name="TestResultID" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_PayloadLines_ValidationJobs">
+    <End Role="ValidationJobs" Type="ODataValidationSuiteModel.ValidationJob" Multiplicity="1" />
+    <End Role="PayloadLines" Type="ODataValidationSuiteModel.PayloadLine" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ValidationJobs">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="PayloadLines">
+        <PropertyRef Name="JobID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_JobData_ValidationJobs">
+    <End Role="ValidationJobs" Type="ODataValidationSuiteModel.ValidationJob" Multiplicity="1" />
+    <End Role="JobData" Type="ODataValidationSuiteModel.JobData" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ValidationJobs">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="JobData">
+        <PropertyRef Name="JobID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TestResults_ValidationJobs">
+    <End Role="ValidationJobs" Type="ODataValidationSuiteModel.ValidationJob" Multiplicity="1" />
+    <End Role="TestResults" Type="ODataValidationSuiteModel.TestResult" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ValidationJobs">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TestResults">
+        <PropertyRef Name="ValidationJobID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ExtValidationJobsPayloadLine">
+    <End Type="ODataValidationSuiteModel.ExtValidationJobs" Role="ExtValidationJobs" Multiplicity="1" />
+    <End Type="ODataValidationSuiteModel.PayloadLine" Role="PayloadLine" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ExtValidationJobs">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="PayloadLine">
+        <PropertyRef Name="JobID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TestResult_ResultDetail">
+    <End Type="ODataValidationSuiteModel.TestResult" Role="TestResult" Multiplicity="1" />
+    <End Type="ODataValidationSuiteModel.ResultDetail" Role="ResultDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TestResult">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ResultDetail">
+        <PropertyRef Name="TestResultID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

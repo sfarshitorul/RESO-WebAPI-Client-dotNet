@@ -3,7 +3,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 
-namespace RESORuleEngine
+namespace ODataValidator.RuleEngine
 {
     /// <summary>
     /// Class with utility methods to work with exceptions

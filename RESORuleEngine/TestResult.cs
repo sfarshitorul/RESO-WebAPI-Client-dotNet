@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace RESORuleEngine
+namespace ODataValidator.RuleEngine
 {
-    public class TestResult
+    public partial class TestResult
     {
       
             /// <summary>
@@ -22,57 +22,57 @@ namespace RESORuleEngine
             /// <summary>
             /// Gets/sets rule name
             /// </summary>
-            public string RuleName { get; private set; }
+            public string RuleName { get; set; }
 
             /// <summary>
             /// Get/sets payload target (recognized payload type)
             /// </summary>
-            public string Target { get; private set; }
+            public string Target { get; set; }
 
             /// <summary>
             /// Get/sets rule description
             /// </summary>
-            public string Description { get; private set; }
+            public string Description { get; set; }
 
             /// <summary>
             /// Gets/sets rule error message
             /// </summary>
-            public string ErrorMessage { get; private set; }
+            public string ErrorMessage { get; set; }
 
             /// <summary>
             /// Gets/sets requirement level of the validated rule: must, should, may, recommended, etc
             /// </summary>
-            public RequirementLevel RequirementLevel { get; private set; }
+            public RequirementLevel RequirementLevel { get; set; }
 
             /// <summary>
             /// Gets/sets category value of the validated rule
             /// </summary>
-            public string Category { get; private set; }
+            public string Category { get; set; }
 
             /// <summary>
             /// Gets/sets specification section information of the validated rule
             /// </summary>
-            public string SpecificationSection { get; private set; }
+            public string SpecificationSection { get; set; }
 
             /// <summary>
             /// Gets/sets odata v4 specification section information of the validated rule
             /// </summary>
-            public string V4SpecificationSection { get; private set; }
+            public string V4SpecificationSection { get; set; }
 
             /// <summary>
             /// Gets/sets odata v4 specification information of the validated rule
             /// </summary>
-            public string V4Specification { get; private set; }
+            public string V4Specification { get; set; }
 
             /// <summary>
             /// Gets/sets odata version of the validated rule
             /// </summary>
-            public string Version { get; private set; }
+            public string Version { get; set; }
 
             /// <summary>
             /// Gets/sets help link's uri 
             /// </summary>
-            public string HelpLink { get; private set; }
+            public string HelpLink { get; set; }
 
             /// <summary>
             /// Gets/sets significant text portion for found issues (such as offending header field and value)
@@ -102,14 +102,18 @@ namespace RESORuleEngine
             /// Gets the detail information of the validation.
             /// </summary>
             public List<ExtensionRuleResultDetail> Details { get; set; }
+        public Guid ValidationJobID { get; internal set; }
+        public string HelpUri { get; internal set; }
+        public string SpecificationUri { get; internal set; }
+        public string ODataLevel { get; internal set; }
 
-            /// <summary>
-            /// Creates an aborted test result from rule definition and job ID
-            /// </summary>
-            /// <param name="rule">The rule this aborted result is about</param>
-            /// <param name="jobId">The job this aborted validation is part of</param>
-            /// <returns>TestResult object for aborted validation</returns>
-            public static TestResult CreateAbortedResult(Rule rule, Guid jobId)
+        /// <summary>
+        /// Creates an aborted test result from rule definition and job ID
+        /// </summary>
+        /// <param name="rule">The rule this aborted result is about</param>
+        /// <param name="jobId">The job this aborted validation is part of</param>
+        /// <returns>TestResult object for aborted validation</returns>
+        public static TestResult CreateAbortedResult(Rule rule, Guid jobId)
             {
                 TestResult result = new TestResult();
                 result.JobId = jobId;

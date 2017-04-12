@@ -1,0 +1,659 @@
+<rulecontrols>
+<rulecontrol>
+<rulename>ServiceImpl_SystemQueryOptionFilter_Division</rulename >
+<notes></notes >
+<cert_tr>Not in Testing Rules</cert_tr >
+<cert_impact>OData MUST</cert_impact >
+<ttt_testing_results>success</ttt_testing_results >
+<category>SERVICEIMPL</category >
+</rulecontrol>
+<rulecontrol>
+<rulename>ServiceImpl_SystemQueryOptionFilter_Subtraction</rulename >
+<notes></notes >
+<cert_tr>Not in Testing Rules</cert_tr >
+<cert_impact>OData MUST</cert_impact >
+<ttt_testing_results>success</ttt_testing_results >
+<category>SERVICEIMPL</category >
+</rulecontrol>
+<rulecontrol>
+<rulename>ServiceImpl_UpdateRefForNavigationProperty</rulename >
+<notes></notes >
+<cert_tr>IGNORE: UPDATE</cert_tr >
+<cert_impact>SHOULD</cert_impact >
+<ttt_testing_results>(Not in Results)</ttt_testing_results >
+<category>SERVICEIMPL</category >
+</rulecontrol>
+<rulecontrol>
+<rulename>ServiceImpl_UpdateCollectionProperty</rulename >
+<notes></notes >
+<cert_tr>Not in Testing Rules</cert_tr >
+<cert_impact>OData MUST</cert_impact >
+<ttt_testing_results>(Not in Results)</ttt_testing_results >
+<category>SERVICEIMPL</category >
+</rulecontrol>
+<rulecontrol>
+<rulename>ServiceImpl_SystemQueryOptionSelect</rulename >
+<notes></notes >
+<cert_tr>REQ-WA100-QR3</cert_tr >
+<cert_impact>Core</cert_impact >
+<ttt_testing_results>success</ttt_testing_results >
+<category>SERVICEIMPL</category >
+</rulecontrol>
+<rulecontrol>
+<rulename>ServiceImpl_DeleteEntity</rulename >
+<notes></notes >
+<cert_tr>IGNORE: UPDATE</cert_tr >
+<cert_impact>OData MUST</cert_impact >
+<ttt_testing_results>aborted</ttt_testing_results >
+<category>SERVICEIMPL</category >
+</rulecontrol>
+<rulecontrol>
+<rulename>ServiceImpl_GetProperty</rulename >
+<notes></notes >
+<cert_tr>Not in Testing Rules</cert_tr >
+<cert_impact>OData MUST</cert_impact >
+<ttt_testing_results>error</ttt_testing_results >
+<category>SERVICEIMPL</category >
+</rulecontrol>
+<rulecontrol>
+<rulename>ServiceImpl_SystemQueryOptionFilter_GeoLength</rulename >
+<notes>Any one Geo should be fine.</notes >
+<cert_tr></cert_tr >
+<cert_impact>OData MUST</cert_impact >
+<ttt_testing_results>(Not in Results)</ttt_testing_results >
+<category>SERVICEIMPL</category >
+</rulecontrol>
+<rulecontrol>
+<rulename>ServiceImpl_SystemQueryOptionFilter</rulename >
+<notes></notes >
+<cert_tr>REQ-WA100-QO1</cert_tr >
+<cert_impact>Core</cert_impact >
+<ttt_testing_results>success</ttt_testing_results >
+<category>SERVICEIMPL</category >
+</rulecontrol>
+<rulecontrol>
+<rulename>ServiceImpl_SystemQueryOptionFilter_Ceiling</rulename >
+<notes></notes >
+<cert_tr>Not in Testing Rules</cert_tr >
+<cert_impact>OData MUST</cert_impact >
+<ttt_testing_results>aborted</ttt_testing_results >
+<category>SERVICEIMPL</category >
+</rulecontrol>
+<rulecontrol>
+<rulename>ServiceImpl_FunctionImport</rulename >
+<notes></notes >
+<cert_tr>Not in Testing Rules</cert_tr >
+<cert_impact>OData MUST</cert_impact >
+<ttt_testing_results>(Not in Results)</ttt_testing_results >
+<category>SERVICEIMPL</category >
+</rulecontrol>
+<rulecontrol>
+<rulename>ServiceImpl_DeleteStreamPropertyValue</rulename >
+<notes></notes >
+<cert_tr>IGNORE: UPDATE</cert_tr >
+<cert_impact>OData MUST</cert_impact >
+<ttt_testing_results>(Not in Results)</ttt_testing_results >
+<category>SERVICEIMPL</category >
+</rulecontrol>
+<rulecontrol>
+<rulename>ServiceImpl_AddRefToCollectionNavigationProperty</rulename >
+<notes></notes >
+<cert_tr>Not in Testing Rules</cert_tr >
+<cert_impact>OData MUST</cert_impact >
+<ttt_testing_results>aborted</ttt_testing_results >
+<category>SERVICEIMPL</category >
+</rulecontrol>
+<rulecontrol>
+<rulename>ServiceImpl_SystemQueryOptionFilter_ToLower</rulename >
+<notes></notes >
+<cert_tr>REQ-WA100-QO16</cert_tr >
+<cert_impact>Platinum</cert_impact >
+<ttt_testing_results>(Not in Results)</ttt_testing_results >
+<category>SERVICEIMPL</category >
+</rulecontrol>
+<rulecontrol>
+<rulename>ServiceImpl_RequestingChanges_delta</rulename >
+<notes></notes >
+<cert_tr>Not in Testing Rules</cert_tr >
+<cert_impact>OData MUST</cert_impact >
+<ttt_testing_results>(Not in Results)</ttt_testing_results >
+<category>SERVICEIMPL</category >
+</rulecontrol>
+<rulecontrol>
+<rulename>ServiceImpl_SystemQueryOptionTop</rulename >
+<notes></notes >
+<cert_tr>REQ-WA100-QR4</cert_tr >
+<cert_impact>Core</cert_impact >
+<ttt_testing_results>success</ttt_testing_results >
+<category>SERVICEIMPL</category >
+</rulecontrol>
+<rulecontrol>
+<rulename>ServiceImpl_UpsertEntity</rulename >
+<notes></notes >
+<cert_tr>Not in Testing Rules</cert_tr >
+<cert_impact>OData MUST</cert_impact >
+<ttt_testing_results>aborted</ttt_testing_results >
+<category>SERVICEIMPL</category >
+</rulecontrol>
+<rulecontrol>
+<rulename>ServiceImpl_SystemQueryOptionFilter_GeoDistance</rulename >
+<notes>Any one Geo should be fine.</notes >
+<cert_tr></cert_tr >
+<cert_impact>OData MUST</cert_impact >
+<ttt_testing_results>error</ttt_testing_results >
+<category>SERVICEIMPL</category >
+</rulecontrol>
+<rulecontrol>
+<rulename>ServiceImpl_SystemQueryOptionFormat</rulename >
+<notes></notes >
+<cert_tr>Not in Testing Rules</cert_tr >
+<cert_impact>OData MUST</cert_impact >
+<ttt_testing_results>success</ttt_testing_results >
+<category>SERVICEIMPL</category >
+</rulecontrol>
+<rulecontrol>
+<rulename>ServiceImpl_SystemQueryOptionFilter_Date</rulename >
+<notes></notes >
+<cert_tr>REQ-WA100-QO25</cert_tr >
+<cert_impact>Core</cert_impact >
+<ttt_testing_results>success</ttt_testing_results >
+<category>SERVICEIMPL</category >
+</rulecontrol>
+<rulecontrol>
+<rulename>ServiceImpl_BatchRequests</rulename >
+<notes></notes >
+<cert_tr>Not in Testing Rules</cert_tr >
+<cert_impact>SHOULD</cert_impact >
+<ttt_testing_results>(Not in Results)</ttt_testing_results >
+<category>SERVICEIMPL</category >
+</rulecontrol>
+<rulecontrol>
+<rulename></rulename >
+<notes>RESO Only TR</notes >
+<cert_tr>REQ-WA100-QR1</cert_tr >
+<cert_impact>Core</cert_impact >
+<ttt_testing_results></ttt_testing_results >
+<category></category >
+</rulecontrol>
+<rulecontrol>
+<rulename>ServiceImpl_SystemQueryOptionFilter_Floor</rulename >
+<notes></notes >
+<cert_tr>Not in Testing Rules</cert_tr >
+<cert_impact>OData MUST</cert_impact >
+<ttt_testing_results>aborted</ttt_testing_results >
+<category>SERVICEIMPL</category >
+</rulecontrol>
+<rulecontrol>
+<rulename>ServiceImpl_FilterNotEquals</rulename >
+<notes></notes >
+<cert_tr>REQ-WA100-QO3</cert_tr >
+<cert_impact>Core</cert_impact >
+<ttt_testing_results>success</ttt_testing_results >
+<category>SERVICEIMPL</category >
+</rulecontrol>
+<rulecontrol>
+<rulename>ServiceImpl_UpdateEntity</rulename >
+<notes></notes >
+<cert_tr>Not in Testing Rules</cert_tr >
+<cert_impact>OData MUST</cert_impact >
+<ttt_testing_results>aborted</ttt_testing_results >
+<category>SERVICEIMPL</category >
+</rulecontrol>
+<rulecontrol>
+<rulename>ServiceImpl_FilterHas</rulename >
+<notes>UPDATE TTT Tests</notes >
+<cert_tr>REQ-WA100-QO8</cert_tr >
+<cert_impact>Bronze</cert_impact >
+<ttt_testing_results>error</ttt_testing_results >
+<category>SERVICEIMPL</category >
+</rulecontrol>
+<rulecontrol>
+<rulename>ServiceImpl_FilterGreaterThanOrEqual</rulename >
+<notes></notes >
+<cert_tr>REQ-WA100-QO5</cert_tr >
+<cert_impact>Core</cert_impact >
+<ttt_testing_results>success</ttt_testing_results >
+<category>SERVICEIMPL</category >
+</rulecontrol>
+<rulecontrol>
+<rulename>ServiceImpl_SystemQueryOptionEntity_Id</rulename >
+<notes></notes >
+<cert_tr>Not in Testing Rules</cert_tr >
+<cert_impact>OData MUST</cert_impact >
+<ttt_testing_results>error</ttt_testing_results >
+<category>SERVICEIMPL</category >
+</rulecontrol>
+<rulecontrol>
+<rulename>ServiceImpl_GetEntity</rulename >
+<notes></notes >
+<cert_tr>Not in Testing Rules</cert_tr >
+<cert_impact>OData MUST</cert_impact >
+<ttt_testing_results>success</ttt_testing_results >
+<category>SERVICEIMPL</category >
+</rulecontrol>
+<rulecontrol>
+<rulename>ServiceImpl_DeleteMediaEntity</rulename >
+<notes></notes >
+<cert_tr>IGNORE: UPDATE</cert_tr >
+<cert_impact>OData MUST</cert_impact >
+<ttt_testing_results>(Not in Results)</ttt_testing_results >
+<category>SERVICEIMPL</category >
+</rulecontrol>
+<rulecontrol>
+<rulename>ServiceImpl_FilterGrouping</rulename >
+<notes>UPDATE TTT Tests</notes >
+<cert_tr>REQ-WA100-QO12</cert_tr >
+<cert_impact>Platinum</cert_impact >
+<ttt_testing_results>error</ttt_testing_results >
+<category>SERVICEIMPL</category >
+</rulecontrol>
+<rulecontrol>
+<rulename>ServiceImpl_FilterLessThanOrEqual</rulename >
+<notes></notes >
+<cert_tr>REQ-WA100-QO7</cert_tr >
+<cert_impact>Core</cert_impact >
+<ttt_testing_results>success</ttt_testing_results >
+<category>SERVICEIMPL</category >
+</rulecontrol>
+<rulecontrol>
+<rulename>ServiceImpl_UpdatePrimitiveProperty</rulename >
+<notes></notes >
+<cert_tr>Not in Testing Rules</cert_tr >
+<cert_impact>OData MUST</cert_impact >
+<ttt_testing_results>(Not in Results)</ttt_testing_results >
+<category>SERVICEIMPL</category >
+</rulecontrol>
+<rulecontrol>
+<rulename>ServiceImpl_ActionImport</rulename >
+<notes></notes >
+<cert_tr>IGNORE: UPDATE</cert_tr >
+<cert_impact>OData MUST</cert_impact >
+<ttt_testing_results>(Not in Results)</ttt_testing_results >
+<category>SERVICEIMPL</category >
+</rulecontrol>
+<rulecontrol>
+<rulename>ServiceImpl_FilterGreaterThan</rulename >
+<notes></notes >
+<cert_tr>REQ-WA100-QO4</cert_tr >
+<cert_impact>Core</cert_impact >
+<ttt_testing_results>success</ttt_testing_results >
+<category>SERVICEIMPL</category >
+</rulecontrol>
+<rulecontrol>
+<rulename>ServiceImpl_SystemQueryOptionFilter_IsOf</rulename >
+<notes></notes >
+<cert_tr>Not in Testing Rules</cert_tr >
+<cert_impact>OData MUST</cert_impact >
+<ttt_testing_results>success</ttt_testing_results >
+<category>SERVICEIMPL</category >
+</rulecontrol>
+<rulecontrol>
+<rulename>ServiceImpl_SystemQueryOptionFilter_Concat</rulename >
+<notes></notes >
+<cert_tr>Not in Testing Rules</cert_tr >
+<cert_impact>OData MUST</cert_impact >
+<ttt_testing_results>success</ttt_testing_results >
+<category>SERVICEIMPL</category >
+</rulecontrol>
+<rulecontrol>
+<rulename>ServiceImpl_ServiceDocumentRequest</rulename >
+<notes></notes >
+<cert_tr></cert_tr >
+<cert_impact>OData MUST</cert_impact >
+<ttt_testing_results>success</ttt_testing_results >
+<category>SERVICEIMPL</category >
+</rulecontrol>
+<rulecontrol>
+<rulename>ServiceImpl_FilterAll</rulename >
+<notes>OPEN QUESTION: Duplicate of “REQ-WA100-QO1”</notes >
+<cert_tr>?</cert_tr >
+<cert_impact>OData MUST</cert_impact >
+<ttt_testing_results>aborted</ttt_testing_results >
+<category>SERVICEIMPL</category >
+</rulecontrol>
+<rulecontrol>
+<rulename>ServiceImpl_DeleteProperty</rulename >
+<notes></notes >
+<cert_tr>IGNORE: UPDATE</cert_tr >
+<cert_impact>OData MUST</cert_impact >
+<ttt_testing_results>(Not in Results)</ttt_testing_results >
+<category>SERVICEIMPL</category >
+</rulecontrol>
+<rulecontrol>
+<rulename>ServiceImpl_SystemQueryOptionValue</rulename >
+<notes></notes >
+<cert_tr>Not in Testing Rules</cert_tr >
+<cert_impact>OData MUST</cert_impact >
+<ttt_testing_results>error</ttt_testing_results >
+<category>SERVICEIMPL</category >
+</rulecontrol>
+<rulecontrol>
+<rulename>ServiceImpl_SystemQueryOptionSkip</rulename >
+<notes>UPDATE TTT Tests</notes >
+<cert_tr>REQ-WA100-QR5</cert_tr >
+<cert_impact>Core</cert_impact >
+<ttt_testing_results>error</ttt_testing_results >
+<category>SERVICEIMPL</category >
+</rulecontrol>
+<rulecontrol>
+<rulename>ServiceImpl_SystemQueryOptionFilter_TotalSeconds</rulename >
+<notes></notes >
+<cert_tr>Not in Testing Rules</cert_tr >
+<cert_impact>OData MUST</cert_impact >
+<ttt_testing_results>(Not in Results)</ttt_testing_results >
+<category>SERVICEIMPL</category >
+</rulecontrol>
+<rulecontrol>
+<rulename>ServiceImpl_FilterEquals</rulename >
+<notes></notes >
+<cert_tr>REQ-WA100-QO2</cert_tr >
+<cert_impact>Core</cert_impact >
+<ttt_testing_results>success</ttt_testing_results >
+<category>SERVICEIMPL</category >
+</rulecontrol>
+<rulecontrol>
+<rulename>ServiceImpl_FilterLessThan</rulename >
+<notes></notes >
+<cert_tr>REQ-WA100-QO6</cert_tr >
+<cert_impact>Core</cert_impact >
+<ttt_testing_results>success</ttt_testing_results >
+<category>SERVICEIMPL</category >
+</rulecontrol>
+<rulecontrol>
+<rulename>ServiceImpl_AsynchronousRequest</rulename >
+<notes></notes >
+<cert_tr>Not in Testing Rules</cert_tr >
+<cert_impact>SHOULD</cert_impact >
+<ttt_testing_results>(Not in Results)</ttt_testing_results >
+<category>SERVICEIMPL</category >
+</rulecontrol>
+<rulecontrol>
+<rulename>ServiceImpl_UpdateComplexProperty</rulename >
+<notes></notes >
+<cert_tr>Not in Testing Rules</cert_tr >
+<cert_impact>OData MUST</cert_impact >
+<ttt_testing_results>(Not in Results)</ttt_testing_results >
+<category>SERVICEIMPL</category >
+</rulecontrol>
+<rulecontrol>
+<rulename>ServiceImpl_SystemQueryOptionFilter_Mindatetime</rulename >
+<notes></notes >
+<cert_tr>Not in Testing Rules</cert_tr >
+<cert_impact>OData MUST</cert_impact >
+<ttt_testing_results>error</ttt_testing_results >
+<category>SERVICEIMPL</category >
+</rulecontrol>
+<rulecontrol>
+<rulename>ServiceImpl_CreateMediaEntity</rulename >
+<notes></notes >
+<cert_tr>IGNORE: UPDATE</cert_tr >
+<cert_impact>OData MUST</cert_impact >
+<ttt_testing_results>(Not in Results)</ttt_testing_results >
+<category>SERVICEIMPL</category >
+</rulecontrol>
+<rulecontrol>
+<rulename>ServiceImpl_SystemQueryOptionCount</rulename >
+<notes></notes >
+<cert_tr>Not in Testing Rules</cert_tr >
+<cert_impact>OData MUST</cert_impact >
+<ttt_testing_results>error</ttt_testing_results >
+<category>SERVICEIMPL</category >
+</rulecontrol>
+<rulecontrol>
+<rulename>ServiceImpl_SystemQueryOptionFilter_Maxdatetime</rulename >
+<notes></notes >
+<cert_tr>Not in Testing Rules</cert_tr >
+<cert_impact>OData MUST</cert_impact >
+<ttt_testing_results>error</ttt_testing_results >
+<category>SERVICEIMPL</category >
+</rulecontrol>
+<rulecontrol>
+<rulename>ServiceImpl_FilterAnd</rulename >
+<notes></notes >
+<cert_tr>REQ-WA100-QO9</cert_tr >
+<cert_impact>Core</cert_impact >
+<ttt_testing_results>success</ttt_testing_results >
+<category>SERVICEIMPL</category >
+</rulecontrol>
+<rulecontrol>
+<rulename>ServiceImpl_CreateEntityDeepInsert</rulename >
+<notes></notes >
+<cert_tr>Not in Testing Rules</cert_tr >
+<cert_impact>SHOULD</cert_impact >
+<ttt_testing_results>(Not in Results)</ttt_testing_results >
+<category>SERVICEIMPL</category >
+</rulecontrol>
+<rulecontrol>
+<rulename>ServiceImpl_FilterAny</rulename >
+<notes>OPEN QUESTION: Duplicate of “REQ-WA100-QO1”</notes >
+<cert_tr>?</cert_tr >
+<cert_impact>OData MUST</cert_impact >
+<ttt_testing_results>(Not in Results)</ttt_testing_results >
+<category>SERVICEIMPL</category >
+</rulecontrol>
+<rulecontrol>
+<rulename>ServiceImpl_Etag</rulename >
+<notes></notes >
+<cert_tr>Not in Testing Rules</cert_tr >
+<cert_impact>OData MUST</cert_impact >
+<ttt_testing_results>(Not in Results)</ttt_testing_results >
+<category>SERVICEIMPL</category >
+</rulecontrol>
+<rulecontrol>
+<rulename>ServiceImpl_SystemQueryOptionFilter_TotalOffsetMinutes</rulename >
+<notes></notes >
+<cert_tr>Not in Testing Rules</cert_tr >
+<cert_impact>OData MUST</cert_impact >
+<ttt_testing_results>error</ttt_testing_results >
+<category>SERVICEIMPL</category >
+</rulecontrol>
+<rulecontrol>
+<rulename>ServiceImpl_SystemQueryOptionFilter_GeoIntersects</rulename >
+<notes>Any one Geo should be fine.</notes >
+<cert_tr>REQ-WA100-QM5</cert_tr >
+<cert_impact>Platinum</cert_impact >
+<ttt_testing_results>error</ttt_testing_results >
+<category>SERVICEIMPL</category >
+</rulecontrol>
+<rulecontrol>
+<rulename>ServiceImpl_EditStreamPropertyValue</rulename >
+<notes></notes >
+<cert_tr>IGNORE: UPDATE</cert_tr >
+<cert_impact>OData MUST</cert_impact >
+<ttt_testing_results>(Not in Results)</ttt_testing_results >
+<category>SERVICEIMPL</category >
+</rulecontrol>
+<rulecontrol>
+<rulename>ServiceImpl_SystemQueryOptionSkipToken</rulename >
+<notes></notes >
+<cert_tr>Not in Testing Rules</cert_tr >
+<cert_impact>OData MUST</cert_impact >
+<ttt_testing_results>(Not in Results)</ttt_testing_results >
+<category>SERVICEIMPL</category >
+</rulecontrol>
+<rulecontrol>
+<rulename>ServiceImpl_SystemQueryOptionFilter_Cast</rulename >
+<notes></notes >
+<cert_tr>Not in Testing Rules</cert_tr >
+<cert_impact>OData MUST</cert_impact >
+<ttt_testing_results>error</ttt_testing_results >
+<category>SERVICEIMPL</category >
+</rulecontrol>
+<rulecontrol>
+<rulename>ServiceImpl_FilterNot</rulename >
+<notes>UPDATE TTT Tests</notes >
+<cert_tr>REQ-WA100-QO11</cert_tr >
+<cert_impact>Core</cert_impact >
+<ttt_testing_results>error</ttt_testing_results >
+<category>SERVICEIMPL</category >
+</rulecontrol>
+<rulecontrol>
+<rulename>ServiceImpl_RemoveReferenceToEntity</rulename >
+<notes></notes >
+<cert_tr>IGNORE: UPDATE</cert_tr >
+<cert_impact>SHOULD</cert_impact >
+<ttt_testing_results>(Not in Results)</ttt_testing_results >
+<category>SERVICEIMPL</category >
+</rulecontrol>
+<rulecontrol>
+<rulename>ServiceImpl_SystemQueryOptionFilter_Multiplication</rulename >
+<notes></notes >
+<cert_tr>Not in Testing Rules</cert_tr >
+<cert_impact>OData MUST</cert_impact >
+<ttt_testing_results>success</ttt_testing_results >
+<category>SERVICEIMPL</category >
+</rulecontrol>
+<rulecontrol>
+<rulename>ServiceImpl_SystemQueryOptionSearch</rulename >
+<notes></notes >
+<cert_tr>Not in Testing Rules</cert_tr >
+<cert_impact>OData MUST</cert_impact >
+<ttt_testing_results>error</ttt_testing_results >
+<category>SERVICEIMPL</category >
+</rulecontrol>
+<rulecontrol>
+<rulename>ServiceImpl_SystemQueryOptionFilter_Modulo</rulename >
+<notes></notes >
+<cert_tr>Not in Testing Rules</cert_tr >
+<cert_impact>OData MUST</cert_impact >
+<ttt_testing_results>success</ttt_testing_results >
+<category>SERVICEIMPL</category >
+</rulecontrol>
+<rulecontrol>
+<rulename>ServiceImpl_SystemQueryOptionFilter_Length</rulename >
+<notes></notes >
+<cert_tr>Not in Testing Rules</cert_tr >
+<cert_impact>OData MUST</cert_impact >
+<ttt_testing_results>(Not in Results)</ttt_testing_results >
+<category>SERVICEIMPL</category >
+</rulecontrol>
+<rulecontrol>
+<rulename>ServiceImpl_SystemQueryOptionFilter_Round</rulename >
+<notes></notes >
+<cert_tr>Not in Testing Rules</cert_tr >
+<cert_impact>OData MUST</cert_impact >
+<ttt_testing_results>aborted</ttt_testing_results >
+<category>SERVICEIMPL</category >
+</rulecontrol>
+<rulecontrol>
+<rulename>ServiceImpl_All</rulename >
+<notes></notes >
+<cert_tr>Not in Testing Rules</cert_tr >
+<cert_impact>OData MUST</cert_impact >
+<ttt_testing_results>error</ttt_testing_results >
+<category>SERVICEIMPL</category >
+</rulecontrol>
+<rulecontrol>
+<rulename>ServiceImpl_MetadataServiceDocumentRequest</rulename >
+<notes></notes >
+<cert_tr>Not in Testing Rules</cert_tr >
+<cert_impact>MAY</cert_impact >
+<ttt_testing_results>success</ttt_testing_results >
+<category>SERVICEIMPL</category >
+</rulecontrol>
+<rulecontrol>
+<rulename>ServiceImpl_SystemQueryOptionFilter_Negation</rulename >
+<notes></notes >
+<cert_tr>Not in Testing Rules</cert_tr >
+<cert_impact>OData MUST</cert_impact >
+<ttt_testing_results>success</ttt_testing_results >
+<category>SERVICEIMPL</category >
+</rulecontrol>
+<rulecontrol>
+<rulename>ServiceImpl_CrossJoin</rulename >
+<notes></notes >
+<cert_tr>Not in Testing Rules</cert_tr >
+<cert_impact>OData MUST</cert_impact >
+<ttt_testing_results>error</ttt_testing_results >
+<category>SERVICEIMPL</category >
+</rulecontrol>
+<rulecontrol>
+<rulename>ServiceImpl_SystemQueryOptionFilter_Trim</rulename >
+<notes></notes >
+<cert_tr>Not in Testing Rules</cert_tr >
+<cert_impact>OData MUST</cert_impact >
+<ttt_testing_results>error</ttt_testing_results >
+<category>SERVICEIMPL</category >
+</rulecontrol>
+<rulecontrol>
+<rulename>ServiceImpl_EditMediaEntityStream</rulename >
+<notes></notes >
+<cert_tr>IGNORE: UPDATE</cert_tr >
+<cert_impact>OData MUST</cert_impact >
+<ttt_testing_results>(Not in Results)</ttt_testing_results >
+<category>SERVICEIMPL</category >
+</rulecontrol>
+<rulecontrol>
+<rulename>ServiceImpl_GetNavigationProperty</rulename >
+<notes></notes >
+<cert_tr>Not in Testing Rules</cert_tr >
+<cert_impact>OData MUST</cert_impact >
+<ttt_testing_results>error</ttt_testing_results >
+<category>SERVICEIMPL</category >
+</rulecontrol>
+<rulecontrol>
+<rulename>ServiceImpl_SystemQueryOptionOrderBy</rulename >
+<notes></notes >
+<cert_tr>REQ-WA100-QO28</cert_tr >
+<cert_impact>Bronze</cert_impact >
+<ttt_testing_results>success</ttt_testing_results >
+<category>SERVICEIMPL</category >
+</rulecontrol>
+<rulecontrol>
+<rulename>ServiceImpl_SystemQueryOptionFilter_Addition</rulename >
+<notes></notes >
+<cert_tr>Not in Testing Rules</cert_tr >
+<cert_impact>OData MUST</cert_impact >
+<ttt_testing_results>success</ttt_testing_results >
+<category>SERVICEIMPL</category >
+</rulecontrol>
+<rulecontrol>
+<rulename>ServiceImpl_SystemQueryOptionFilter_IndexOf</rulename >
+<notes></notes >
+<cert_tr>Not in Testing Rules</cert_tr >
+<cert_impact>OData MUST</cert_impact >
+<ttt_testing_results>(Not in Results)</ttt_testing_results >
+<category>SERVICEIMPL</category >
+</rulecontrol>
+<rulecontrol>
+<rulename>ServiceImpl_SystemQueryOptionFilter_Now</rulename >
+<notes></notes >
+<cert_tr>REQ-WA100-QO27</cert_tr >
+<cert_impact>Core</cert_impact >
+<ttt_testing_results>success</ttt_testing_results >
+<category>SERVICEIMPL</category >
+</rulecontrol>
+<rulecontrol>
+<rulename>ServiceImpl_SystemQueryOptionRef</rulename >
+<notes></notes >
+<cert_tr>Not in Testing Rules</cert_tr >
+<cert_impact>OData MUST</cert_impact >
+<ttt_testing_results>error</ttt_testing_results >
+<category>SERVICEIMPL</category >
+</rulecontrol>
+<rulecontrol>
+<rulename>ServiceImpl_MetadataDocumentRequest</rulename >
+<notes></notes >
+<cert_tr>REQ-WA100-END3</cert_tr >
+<cert_impact>Core</cert_impact >
+<ttt_testing_results>success</ttt_testing_results >
+<category>SERVICEIMPL</category >
+</rulecontrol>
+<rulecontrol>
+<rulename>ServiceImpl_SystemQueryOptionFilter_Substring</rulename >
+<notes></notes >
+<cert_tr>Not in Testing Rules</cert_tr >
+<cert_impact>OData MUST</cert_impact >
+<ttt_testing_results>error</ttt_testing_results >
+<category>SERVICEIMPL</category >
+</rulecontrol>
+<rulecontrol>
+<rulename>ServiceImpl_FilterOr</rulename >
+<notes></notes >
+<cert_tr>REQ-WA100-QO10</cert_tr >
+<cert_impact>Core</cert_impact >
+<ttt_testing_results>success</ttt_testing_results >
+<category>SERVICEIMPL</category >
+</rulecontrol>
+</rulecontrols>
+
