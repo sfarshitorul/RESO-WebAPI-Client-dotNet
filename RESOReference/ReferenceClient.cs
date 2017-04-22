@@ -938,6 +938,8 @@ namespace RESOReference
                 //Uri uri = new Uri(host, url.AbsoluteUri);
                 
                 Uri service = GetUri(clientsettings.GetSetting(settings.webapi_uri));
+                ServiceStatus intservice = ServiceStatus.GetInstance(clientsettings.GetSetting(settings.webapi_uri), responseheaders);
+                ServiceStatus.ReviseMetadata(metadataresponse);
                 ServiceContext ctx = new ServiceContext(url, JobID, HttpStatusCode.OK, responseheaders, metadataresponse, string.Empty, service, serviceresponse, metadataresponse, false, reqHeaders, ODataMetadataType.MinOnly);
 
 
