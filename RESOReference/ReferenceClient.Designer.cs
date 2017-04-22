@@ -141,7 +141,7 @@
             // webapicurrentrule
             // 
             this.webapicurrentrule.AutoSize = true;
-            this.webapicurrentrule.Location = new System.Drawing.Point(528, 40);
+            this.webapicurrentrule.Location = new System.Drawing.Point(368, 40);
             this.webapicurrentrule.Name = "webapicurrentrule";
             this.webapicurrentrule.Size = new System.Drawing.Size(36, 13);
             this.webapicurrentrule.TabIndex = 100;
