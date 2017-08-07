@@ -28,10 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.SelectResultsDirectory = new System.Windows.Forms.Button();
+            this.btn_SelectResultsDirectory = new System.Windows.Forms.Button();
             this.ResultsDirectory = new System.Windows.Forms.TextBox();
             this.LogDirectory = new System.Windows.Forms.TextBox();
-            this.SelectLogDirectory = new System.Windows.Forms.Button();
+            this.btn_SelectLogDirectory = new System.Windows.Forms.Button();
             this.label12 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.webapicurrentrule = new System.Windows.Forms.Label();
@@ -39,32 +39,32 @@
             this.ServerVersion = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
             this.preauthenticate = new System.Windows.Forms.CheckBox();
-            this.clearsettings = new System.Windows.Forms.Button();
-            this.resetsession = new System.Windows.Forms.Button();
-            this.executetestscript = new System.Windows.Forms.Button();
-            this.labelpassword = new System.Windows.Forms.Label();
-            this.authtypelabelun = new System.Windows.Forms.Label();
-            this.redirecturilabel = new System.Windows.Forms.Label();
-            this.textOAuthRedirectURI = new System.Windows.Forms.TextBox();
+            this.btn_ClearSettings = new System.Windows.Forms.Button();
+            this.btn_ResetSession = new System.Windows.Forms.Button();
+            this.btn_ExecuteTestScript = new System.Windows.Forms.Button();
+            this.lbl_Password = new System.Windows.Forms.Label();
+            this.lbl_UserName = new System.Windows.Forms.Label();
+            this.lbl_RedirectURI = new System.Windows.Forms.Label();
+            this.edit_RedirectURI = new System.Windows.Forms.TextBox();
             this.label23 = new System.Windows.Forms.Label();
-            this.authorizationurilabel = new System.Windows.Forms.Label();
-            this.AuthorizationURI = new System.Windows.Forms.TextBox();
-            this.Password = new System.Windows.Forms.TextBox();
-            this.UserName = new System.Windows.Forms.TextBox();
+            this.lbl_AuthorizationURI = new System.Windows.Forms.Label();
+            this.edit_AuthorizationURI = new System.Windows.Forms.TextBox();
+            this.edit_Password = new System.Windows.Forms.TextBox();
+            this.edit_UserName = new System.Windows.Forms.TextBox();
             this.oauth_granttype = new System.Windows.Forms.ComboBox();
-            this.label15 = new System.Windows.Forms.Label();
-            this.textWebAPIURI = new System.Windows.Forms.TextBox();
-            this.SaveClientSettings = new System.Windows.Forms.Button();
-            this.SelectClientSettings = new System.Windows.Forms.Button();
-            this.accesstokenurilabel = new System.Windows.Forms.Label();
-            this.clientidlabel = new System.Windows.Forms.Label();
-            this.clientsecretlabel = new System.Windows.Forms.Label();
-            this.scopelabel = new System.Windows.Forms.Label();
-            this.TokenURI = new System.Windows.Forms.TextBox();
-            this.textOAuthClientIdentification = new System.Windows.Forms.TextBox();
-            this.textOAuthClientSecret = new System.Windows.Forms.TextBox();
-            this.textOAuthClientScope = new System.Windows.Forms.TextBox();
-            this.btnTestOpenIDLogin = new System.Windows.Forms.Button();
+            this.lbl_WebAPIEndPointURI = new System.Windows.Forms.Label();
+            this.edit_WebAPIEndPointURI = new System.Windows.Forms.TextBox();
+            this.btn_SaveClientSettings = new System.Windows.Forms.Button();
+            this.btn_SelectClientSettings = new System.Windows.Forms.Button();
+            this.lbl_AccessTokenURI = new System.Windows.Forms.Label();
+            this.lbl_ClientID = new System.Windows.Forms.Label();
+            this.lbl_ClientSecret = new System.Windows.Forms.Label();
+            this.lbl_Scope = new System.Windows.Forms.Label();
+            this.edit_AccessTokenURI = new System.Windows.Forms.TextBox();
+            this.edit_ClientID = new System.Windows.Forms.TextBox();
+            this.edit_ClientSecret = new System.Windows.Forms.TextBox();
+            this.edit_Scope = new System.Windows.Forms.TextBox();
+            this.btn_Login = new System.Windows.Forms.Button();
             this.ViewMetadata = new System.Windows.Forms.Button();
             this.label24 = new System.Windows.Forms.Label();
             this.serviceresponsedata = new System.Windows.Forms.TextBox();
@@ -76,22 +76,22 @@
             this.label18 = new System.Windows.Forms.Label();
             this.scriptfile = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
-            this.bearertokenedit = new System.Windows.Forms.TextBox();
-            this.authtypebearer = new System.Windows.Forms.Label();
-            this.ValidationTest = new System.Windows.Forms.Button();
+            this.btn_LoadTestScript = new System.Windows.Forms.Button();
+            this.edit_BearerToken = new System.Windows.Forms.TextBox();
+            this.lbl_BearerToken = new System.Windows.Forms.Label();
+            this.btn_RunValidationTest = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // SelectResultsDirectory
+            // btn_SelectResultsDirectory
             // 
-            this.SelectResultsDirectory.Location = new System.Drawing.Point(629, 446);
-            this.SelectResultsDirectory.Name = "SelectResultsDirectory";
-            this.SelectResultsDirectory.Size = new System.Drawing.Size(143, 23);
-            this.SelectResultsDirectory.TabIndex = 150;
-            this.SelectResultsDirectory.Tag = "Select Results Directory";
-            this.SelectResultsDirectory.Text = "Select Results Directory";
-            this.SelectResultsDirectory.UseVisualStyleBackColor = true;
-            this.SelectResultsDirectory.Click += new System.EventHandler(this.SelectResultsDirectory_Click);
+            this.btn_SelectResultsDirectory.Location = new System.Drawing.Point(629, 446);
+            this.btn_SelectResultsDirectory.Name = "btn_SelectResultsDirectory";
+            this.btn_SelectResultsDirectory.Size = new System.Drawing.Size(143, 23);
+            this.btn_SelectResultsDirectory.TabIndex = 150;
+            this.btn_SelectResultsDirectory.Tag = "Select Results Directory";
+            this.btn_SelectResultsDirectory.Text = "Select Results Directory";
+            this.btn_SelectResultsDirectory.UseVisualStyleBackColor = true;
+            this.btn_SelectResultsDirectory.Click += new System.EventHandler(this.SelectResultsDirectory_Click);
             // 
             // ResultsDirectory
             // 
@@ -109,16 +109,16 @@
             this.LogDirectory.TabIndex = 14;
             this.LogDirectory.TabStop = false;
             // 
-            // SelectLogDirectory
+            // btn_SelectLogDirectory
             // 
-            this.SelectLogDirectory.Location = new System.Drawing.Point(629, 417);
-            this.SelectLogDirectory.Name = "SelectLogDirectory";
-            this.SelectLogDirectory.Size = new System.Drawing.Size(143, 23);
-            this.SelectLogDirectory.TabIndex = 140;
-            this.SelectLogDirectory.Tag = "Select Log Directory";
-            this.SelectLogDirectory.Text = "Select Log Directory";
-            this.SelectLogDirectory.UseVisualStyleBackColor = true;
-            this.SelectLogDirectory.Click += new System.EventHandler(this.SelectLogDirectory_Click);
+            this.btn_SelectLogDirectory.Location = new System.Drawing.Point(629, 417);
+            this.btn_SelectLogDirectory.Name = "btn_SelectLogDirectory";
+            this.btn_SelectLogDirectory.Size = new System.Drawing.Size(143, 23);
+            this.btn_SelectLogDirectory.TabIndex = 140;
+            this.btn_SelectLogDirectory.Tag = "Select Log Directory";
+            this.btn_SelectLogDirectory.Text = "Select Log Directory";
+            this.btn_SelectLogDirectory.UseVisualStyleBackColor = true;
+            this.btn_SelectLogDirectory.Click += new System.EventHandler(this.SelectLogDirectory_Click);
             // 
             // label12
             // 
@@ -186,72 +186,72 @@
             this.preauthenticate.Text = "Preauthenticate";
             this.preauthenticate.UseVisualStyleBackColor = true;
             // 
-            // clearsettings
+            // btn_ClearSettings
             // 
-            this.clearsettings.Location = new System.Drawing.Point(140, 359);
-            this.clearsettings.Name = "clearsettings";
-            this.clearsettings.Size = new System.Drawing.Size(135, 23);
-            this.clearsettings.TabIndex = 129;
-            this.clearsettings.TabStop = false;
-            this.clearsettings.Text = "Clear Settings";
-            this.clearsettings.UseVisualStyleBackColor = true;
-            this.clearsettings.Click += new System.EventHandler(this.clearsettings_Click);
+            this.btn_ClearSettings.Location = new System.Drawing.Point(140, 359);
+            this.btn_ClearSettings.Name = "btn_ClearSettings";
+            this.btn_ClearSettings.Size = new System.Drawing.Size(135, 23);
+            this.btn_ClearSettings.TabIndex = 129;
+            this.btn_ClearSettings.TabStop = false;
+            this.btn_ClearSettings.Text = "Clear Settings";
+            this.btn_ClearSettings.UseVisualStyleBackColor = true;
+            this.btn_ClearSettings.Click += new System.EventHandler(this.clearsettings_Click);
             // 
-            // resetsession
+            // btn_ResetSession
             // 
-            this.resetsession.Location = new System.Drawing.Point(281, 359);
-            this.resetsession.Name = "resetsession";
-            this.resetsession.Size = new System.Drawing.Size(135, 23);
-            this.resetsession.TabIndex = 128;
-            this.resetsession.TabStop = false;
-            this.resetsession.Text = "Reset Session";
-            this.resetsession.UseVisualStyleBackColor = true;
-            this.resetsession.Click += new System.EventHandler(this.resetsession_Click);
+            this.btn_ResetSession.Location = new System.Drawing.Point(281, 359);
+            this.btn_ResetSession.Name = "btn_ResetSession";
+            this.btn_ResetSession.Size = new System.Drawing.Size(135, 23);
+            this.btn_ResetSession.TabIndex = 128;
+            this.btn_ResetSession.TabStop = false;
+            this.btn_ResetSession.Text = "Reset Session";
+            this.btn_ResetSession.UseVisualStyleBackColor = true;
+            this.btn_ResetSession.Click += new System.EventHandler(this.resetsession_Click);
             // 
-            // executetestscript
+            // btn_ExecuteTestScript
             // 
-            this.executetestscript.Location = new System.Drawing.Point(778, 388);
-            this.executetestscript.Name = "executetestscript";
-            this.executetestscript.Size = new System.Drawing.Size(143, 23);
-            this.executetestscript.TabIndex = 126;
-            this.executetestscript.TabStop = false;
-            this.executetestscript.Text = "Execute Test Script";
-            this.executetestscript.UseVisualStyleBackColor = true;
-            this.executetestscript.Click += new System.EventHandler(this.executetestscript_Click_1);
+            this.btn_ExecuteTestScript.Location = new System.Drawing.Point(778, 388);
+            this.btn_ExecuteTestScript.Name = "btn_ExecuteTestScript";
+            this.btn_ExecuteTestScript.Size = new System.Drawing.Size(143, 23);
+            this.btn_ExecuteTestScript.TabIndex = 126;
+            this.btn_ExecuteTestScript.TabStop = false;
+            this.btn_ExecuteTestScript.Text = "Execute Test Script";
+            this.btn_ExecuteTestScript.UseVisualStyleBackColor = true;
+            this.btn_ExecuteTestScript.Click += new System.EventHandler(this.executetestscript_Click_1);
             // 
-            // labelpassword
+            // lbl_Password
             // 
-            this.labelpassword.AutoSize = true;
-            this.labelpassword.Location = new System.Drawing.Point(77, 152);
-            this.labelpassword.Name = "labelpassword";
-            this.labelpassword.Size = new System.Drawing.Size(56, 13);
-            this.labelpassword.TabIndex = 124;
-            this.labelpassword.Text = "Password:";
+            this.lbl_Password.AutoSize = true;
+            this.lbl_Password.Location = new System.Drawing.Point(77, 152);
+            this.lbl_Password.Name = "lbl_Password";
+            this.lbl_Password.Size = new System.Drawing.Size(56, 13);
+            this.lbl_Password.TabIndex = 124;
+            this.lbl_Password.Text = "Password:";
             // 
-            // authtypelabelun
+            // lbl_UserName
             // 
-            this.authtypelabelun.AutoSize = true;
-            this.authtypelabelun.Location = new System.Drawing.Point(32, 130);
-            this.authtypelabelun.Name = "authtypelabelun";
-            this.authtypelabelun.Size = new System.Drawing.Size(99, 13);
-            this.authtypelabelun.TabIndex = 123;
-            this.authtypelabelun.Text = "            User Name:";
+            this.lbl_UserName.AutoSize = true;
+            this.lbl_UserName.Location = new System.Drawing.Point(32, 130);
+            this.lbl_UserName.Name = "lbl_UserName";
+            this.lbl_UserName.Size = new System.Drawing.Size(99, 13);
+            this.lbl_UserName.TabIndex = 123;
+            this.lbl_UserName.Text = "            User Name:";
             // 
-            // redirecturilabel
+            // lbl_RedirectURI
             // 
-            this.redirecturilabel.AutoSize = true;
-            this.redirecturilabel.Location = new System.Drawing.Point(61, 233);
-            this.redirecturilabel.Name = "redirecturilabel";
-            this.redirecturilabel.Size = new System.Drawing.Size(72, 13);
-            this.redirecturilabel.TabIndex = 122;
-            this.redirecturilabel.Text = "Redirect URI:";
+            this.lbl_RedirectURI.AutoSize = true;
+            this.lbl_RedirectURI.Location = new System.Drawing.Point(61, 233);
+            this.lbl_RedirectURI.Name = "lbl_RedirectURI";
+            this.lbl_RedirectURI.Size = new System.Drawing.Size(72, 13);
+            this.lbl_RedirectURI.TabIndex = 122;
+            this.lbl_RedirectURI.Text = "Redirect URI:";
             // 
-            // textOAuthRedirectURI
+            // edit_RedirectURI
             // 
-            this.textOAuthRedirectURI.Location = new System.Drawing.Point(139, 231);
-            this.textOAuthRedirectURI.Name = "textOAuthRedirectURI";
-            this.textOAuthRedirectURI.Size = new System.Drawing.Size(379, 20);
-            this.textOAuthRedirectURI.TabIndex = 90;
+            this.edit_RedirectURI.Location = new System.Drawing.Point(139, 231);
+            this.edit_RedirectURI.Name = "edit_RedirectURI";
+            this.edit_RedirectURI.Size = new System.Drawing.Size(379, 20);
+            this.edit_RedirectURI.TabIndex = 90;
             // 
             // label23
             // 
@@ -262,162 +262,158 @@
             this.label23.TabIndex = 121;
             this.label23.Text = "Grant Type:";
             // 
-            // authorizationurilabel
+            // lbl_AuthorizationURI
             // 
-            this.authorizationurilabel.AutoSize = true;
-            this.authorizationurilabel.Location = new System.Drawing.Point(40, 179);
-            this.authorizationurilabel.Name = "authorizationurilabel";
-            this.authorizationurilabel.Size = new System.Drawing.Size(93, 13);
-            this.authorizationurilabel.TabIndex = 115;
-            this.authorizationurilabel.Text = "Authorization URI:";
+            this.lbl_AuthorizationURI.AutoSize = true;
+            this.lbl_AuthorizationURI.Location = new System.Drawing.Point(40, 179);
+            this.lbl_AuthorizationURI.Name = "lbl_AuthorizationURI";
+            this.lbl_AuthorizationURI.Size = new System.Drawing.Size(93, 13);
+            this.lbl_AuthorizationURI.TabIndex = 115;
+            this.lbl_AuthorizationURI.Text = "Authorization URI:";
             // 
-            // AuthorizationURI
+            // edit_AuthorizationURI
             // 
-            this.AuthorizationURI.Location = new System.Drawing.Point(139, 177);
-            this.AuthorizationURI.Name = "AuthorizationURI";
-            this.AuthorizationURI.Size = new System.Drawing.Size(379, 20);
-            this.AuthorizationURI.TabIndex = 70;
+            this.edit_AuthorizationURI.Location = new System.Drawing.Point(139, 177);
+            this.edit_AuthorizationURI.Name = "edit_AuthorizationURI";
+            this.edit_AuthorizationURI.Size = new System.Drawing.Size(379, 20);
+            this.edit_AuthorizationURI.TabIndex = 70;
             // 
-            // Password
+            // edit_Password
             // 
-            this.Password.Location = new System.Drawing.Point(139, 150);
-            this.Password.Name = "Password";
-            this.Password.Size = new System.Drawing.Size(379, 20);
-            this.Password.TabIndex = 60;
+            this.edit_Password.Location = new System.Drawing.Point(139, 150);
+            this.edit_Password.Name = "edit_Password";
+            this.edit_Password.Size = new System.Drawing.Size(379, 20);
+            this.edit_Password.TabIndex = 60;
             // 
-            // UserName
+            // edit_UserName
             // 
-            this.UserName.Location = new System.Drawing.Point(139, 123);
-            this.UserName.Name = "UserName";
-            this.UserName.Size = new System.Drawing.Size(380, 20);
-            this.UserName.TabIndex = 50;
+            this.edit_UserName.Location = new System.Drawing.Point(139, 123);
+            this.edit_UserName.Name = "edit_UserName";
+            this.edit_UserName.Size = new System.Drawing.Size(380, 20);
+            this.edit_UserName.TabIndex = 50;
             // 
             // oauth_granttype
             // 
             this.oauth_granttype.FormattingEnabled = true;
-            this.oauth_granttype.Items.AddRange(new object[] {
-            "authorization_code",
-            "Bearer Token"});
             this.oauth_granttype.Location = new System.Drawing.Point(140, 71);
             this.oauth_granttype.Name = "oauth_granttype";
             this.oauth_granttype.Size = new System.Drawing.Size(121, 21);
             this.oauth_granttype.TabIndex = 30;
-            this.oauth_granttype.Text = "authorization_code";
             this.oauth_granttype.SelectedValueChanged += new System.EventHandler(this.oauth_granttype_SelectedValueChanged);
             // 
-            // label15
+            // lbl_WebAPIEndPointURI
             // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(10, 101);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(124, 13);
-            this.label15.TabIndex = 109;
-            this.label15.Text = "Web API End Point URI:";
+            this.lbl_WebAPIEndPointURI.AutoSize = true;
+            this.lbl_WebAPIEndPointURI.Location = new System.Drawing.Point(10, 101);
+            this.lbl_WebAPIEndPointURI.Name = "lbl_WebAPIEndPointURI";
+            this.lbl_WebAPIEndPointURI.Size = new System.Drawing.Size(124, 13);
+            this.lbl_WebAPIEndPointURI.TabIndex = 109;
+            this.lbl_WebAPIEndPointURI.Text = "Web API End Point URI:";
             // 
-            // textWebAPIURI
+            // edit_WebAPIEndPointURI
             // 
-            this.textWebAPIURI.Location = new System.Drawing.Point(140, 98);
-            this.textWebAPIURI.Name = "textWebAPIURI";
-            this.textWebAPIURI.Size = new System.Drawing.Size(379, 20);
-            this.textWebAPIURI.TabIndex = 40;
+            this.edit_WebAPIEndPointURI.Location = new System.Drawing.Point(140, 98);
+            this.edit_WebAPIEndPointURI.Name = "edit_WebAPIEndPointURI";
+            this.edit_WebAPIEndPointURI.Size = new System.Drawing.Size(379, 20);
+            this.edit_WebAPIEndPointURI.TabIndex = 40;
             // 
-            // SaveClientSettings
+            // btn_SaveClientSettings
             // 
-            this.SaveClientSettings.Location = new System.Drawing.Point(496, 10);
-            this.SaveClientSettings.Name = "SaveClientSettings";
-            this.SaveClientSettings.Size = new System.Drawing.Size(135, 23);
-            this.SaveClientSettings.TabIndex = 107;
-            this.SaveClientSettings.TabStop = false;
-            this.SaveClientSettings.Tag = "Select Results Directory";
-            this.SaveClientSettings.Text = "Save Client Settings";
-            this.SaveClientSettings.UseVisualStyleBackColor = true;
-            this.SaveClientSettings.Click += new System.EventHandler(this.SaveClientSettings_Click);
+            this.btn_SaveClientSettings.Location = new System.Drawing.Point(496, 10);
+            this.btn_SaveClientSettings.Name = "btn_SaveClientSettings";
+            this.btn_SaveClientSettings.Size = new System.Drawing.Size(135, 23);
+            this.btn_SaveClientSettings.TabIndex = 107;
+            this.btn_SaveClientSettings.TabStop = false;
+            this.btn_SaveClientSettings.Tag = "Select Results Directory";
+            this.btn_SaveClientSettings.Text = "Save Client Settings";
+            this.btn_SaveClientSettings.UseVisualStyleBackColor = true;
+            this.btn_SaveClientSettings.Click += new System.EventHandler(this.SaveClientSettings_Click);
             // 
-            // SelectClientSettings
+            // btn_SelectClientSettings
             // 
-            this.SelectClientSettings.Location = new System.Drawing.Point(637, 10);
-            this.SelectClientSettings.Name = "SelectClientSettings";
-            this.SelectClientSettings.Size = new System.Drawing.Size(135, 23);
-            this.SelectClientSettings.TabIndex = 106;
-            this.SelectClientSettings.TabStop = false;
-            this.SelectClientSettings.Tag = "Select Results Directory";
-            this.SelectClientSettings.Text = "Select Client Settings";
-            this.SelectClientSettings.UseVisualStyleBackColor = true;
-            this.SelectClientSettings.Click += new System.EventHandler(this.SelectClientSettings_Click);
+            this.btn_SelectClientSettings.Location = new System.Drawing.Point(637, 10);
+            this.btn_SelectClientSettings.Name = "btn_SelectClientSettings";
+            this.btn_SelectClientSettings.Size = new System.Drawing.Size(135, 23);
+            this.btn_SelectClientSettings.TabIndex = 106;
+            this.btn_SelectClientSettings.TabStop = false;
+            this.btn_SelectClientSettings.Tag = "Select Results Directory";
+            this.btn_SelectClientSettings.Text = "Select Client Settings";
+            this.btn_SelectClientSettings.UseVisualStyleBackColor = true;
+            this.btn_SelectClientSettings.Click += new System.EventHandler(this.SelectClientSettings_Click);
             // 
-            // accesstokenurilabel
+            // lbl_AccessTokenURI
             // 
-            this.accesstokenurilabel.AutoSize = true;
-            this.accesstokenurilabel.Location = new System.Drawing.Point(32, 206);
-            this.accesstokenurilabel.Name = "accesstokenurilabel";
-            this.accesstokenurilabel.Size = new System.Drawing.Size(101, 13);
-            this.accesstokenurilabel.TabIndex = 102;
-            this.accesstokenurilabel.Text = "Access Token URI:";
+            this.lbl_AccessTokenURI.AutoSize = true;
+            this.lbl_AccessTokenURI.Location = new System.Drawing.Point(32, 206);
+            this.lbl_AccessTokenURI.Name = "lbl_AccessTokenURI";
+            this.lbl_AccessTokenURI.Size = new System.Drawing.Size(101, 13);
+            this.lbl_AccessTokenURI.TabIndex = 102;
+            this.lbl_AccessTokenURI.Text = "Access Token URI:";
             // 
-            // clientidlabel
+            // lbl_ClientID
             // 
-            this.clientidlabel.AutoSize = true;
-            this.clientidlabel.Location = new System.Drawing.Point(83, 260);
-            this.clientidlabel.Name = "clientidlabel";
-            this.clientidlabel.Size = new System.Drawing.Size(50, 13);
-            this.clientidlabel.TabIndex = 103;
-            this.clientidlabel.Text = "Client ID:";
+            this.lbl_ClientID.AutoSize = true;
+            this.lbl_ClientID.Location = new System.Drawing.Point(83, 260);
+            this.lbl_ClientID.Name = "lbl_ClientID";
+            this.lbl_ClientID.Size = new System.Drawing.Size(50, 13);
+            this.lbl_ClientID.TabIndex = 103;
+            this.lbl_ClientID.Text = "Client ID:";
             // 
-            // clientsecretlabel
+            // lbl_ClientSecret
             // 
-            this.clientsecretlabel.AutoSize = true;
-            this.clientsecretlabel.Location = new System.Drawing.Point(63, 287);
-            this.clientsecretlabel.Name = "clientsecretlabel";
-            this.clientsecretlabel.Size = new System.Drawing.Size(70, 13);
-            this.clientsecretlabel.TabIndex = 104;
-            this.clientsecretlabel.Text = "Client Secret:";
+            this.lbl_ClientSecret.AutoSize = true;
+            this.lbl_ClientSecret.Location = new System.Drawing.Point(63, 287);
+            this.lbl_ClientSecret.Name = "lbl_ClientSecret";
+            this.lbl_ClientSecret.Size = new System.Drawing.Size(70, 13);
+            this.lbl_ClientSecret.TabIndex = 104;
+            this.lbl_ClientSecret.Text = "Client Secret:";
             // 
-            // scopelabel
+            // lbl_Scope
             // 
-            this.scopelabel.AutoSize = true;
-            this.scopelabel.Location = new System.Drawing.Point(92, 314);
-            this.scopelabel.Name = "scopelabel";
-            this.scopelabel.Size = new System.Drawing.Size(41, 13);
-            this.scopelabel.TabIndex = 105;
-            this.scopelabel.Text = "Scope:";
+            this.lbl_Scope.AutoSize = true;
+            this.lbl_Scope.Location = new System.Drawing.Point(92, 314);
+            this.lbl_Scope.Name = "lbl_Scope";
+            this.lbl_Scope.Size = new System.Drawing.Size(41, 13);
+            this.lbl_Scope.TabIndex = 105;
+            this.lbl_Scope.Text = "Scope:";
             // 
-            // TokenURI
+            // edit_AccessTokenURI
             // 
-            this.TokenURI.Location = new System.Drawing.Point(139, 204);
-            this.TokenURI.Name = "TokenURI";
-            this.TokenURI.Size = new System.Drawing.Size(379, 20);
-            this.TokenURI.TabIndex = 80;
+            this.edit_AccessTokenURI.Location = new System.Drawing.Point(139, 204);
+            this.edit_AccessTokenURI.Name = "edit_AccessTokenURI";
+            this.edit_AccessTokenURI.Size = new System.Drawing.Size(379, 20);
+            this.edit_AccessTokenURI.TabIndex = 80;
             // 
-            // textOAuthClientIdentification
+            // edit_ClientID
             // 
-            this.textOAuthClientIdentification.Location = new System.Drawing.Point(139, 258);
-            this.textOAuthClientIdentification.Name = "textOAuthClientIdentification";
-            this.textOAuthClientIdentification.Size = new System.Drawing.Size(212, 20);
-            this.textOAuthClientIdentification.TabIndex = 100;
+            this.edit_ClientID.Location = new System.Drawing.Point(139, 258);
+            this.edit_ClientID.Name = "edit_ClientID";
+            this.edit_ClientID.Size = new System.Drawing.Size(212, 20);
+            this.edit_ClientID.TabIndex = 100;
             // 
-            // textOAuthClientSecret
+            // edit_ClientSecret
             // 
-            this.textOAuthClientSecret.Location = new System.Drawing.Point(139, 285);
-            this.textOAuthClientSecret.Name = "textOAuthClientSecret";
-            this.textOAuthClientSecret.Size = new System.Drawing.Size(212, 20);
-            this.textOAuthClientSecret.TabIndex = 110;
+            this.edit_ClientSecret.Location = new System.Drawing.Point(139, 285);
+            this.edit_ClientSecret.Name = "edit_ClientSecret";
+            this.edit_ClientSecret.Size = new System.Drawing.Size(212, 20);
+            this.edit_ClientSecret.TabIndex = 110;
             // 
-            // textOAuthClientScope
+            // edit_Scope
             // 
-            this.textOAuthClientScope.Location = new System.Drawing.Point(139, 312);
-            this.textOAuthClientScope.Name = "textOAuthClientScope";
-            this.textOAuthClientScope.Size = new System.Drawing.Size(212, 20);
-            this.textOAuthClientScope.TabIndex = 120;
+            this.edit_Scope.Location = new System.Drawing.Point(139, 312);
+            this.edit_Scope.Name = "edit_Scope";
+            this.edit_Scope.Size = new System.Drawing.Size(212, 20);
+            this.edit_Scope.TabIndex = 120;
             // 
-            // btnTestOpenIDLogin
+            // btn_Login
             // 
-            this.btnTestOpenIDLogin.Location = new System.Drawing.Point(778, 10);
-            this.btnTestOpenIDLogin.Name = "btnTestOpenIDLogin";
-            this.btnTestOpenIDLogin.Size = new System.Drawing.Size(135, 23);
-            this.btnTestOpenIDLogin.TabIndex = 16;
-            this.btnTestOpenIDLogin.Text = "Login";
-            this.btnTestOpenIDLogin.UseVisualStyleBackColor = true;
-            this.btnTestOpenIDLogin.Click += new System.EventHandler(this.btnTestOpenIDLogin_Click_1);
+            this.btn_Login.Location = new System.Drawing.Point(778, 10);
+            this.btn_Login.Name = "btn_Login";
+            this.btn_Login.Size = new System.Drawing.Size(135, 23);
+            this.btn_Login.TabIndex = 16;
+            this.btn_Login.Text = "Login";
+            this.btn_Login.UseVisualStyleBackColor = true;
+            this.btn_Login.Click += new System.EventHandler(this.Login_Click);
             // 
             // ViewMetadata
             // 
@@ -530,53 +526,53 @@
             this.label2.TabIndex = 141;
             this.label2.Text = "Test Script";
             // 
-            // button1
+            // btn_LoadTestScript
             // 
-            this.button1.Location = new System.Drawing.Point(629, 387);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(143, 23);
-            this.button1.TabIndex = 130;
-            this.button1.Tag = "Select Log Directory";
-            this.button1.Text = "Load Test Script";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.btn_LoadTestScript.Location = new System.Drawing.Point(629, 387);
+            this.btn_LoadTestScript.Name = "btn_LoadTestScript";
+            this.btn_LoadTestScript.Size = new System.Drawing.Size(143, 23);
+            this.btn_LoadTestScript.TabIndex = 130;
+            this.btn_LoadTestScript.Tag = "Select Log Directory";
+            this.btn_LoadTestScript.Text = "Load Test Script";
+            this.btn_LoadTestScript.UseVisualStyleBackColor = true;
+            this.btn_LoadTestScript.Click += new System.EventHandler(this.LoadTestScript_Click);
             // 
-            // bearertokenedit
+            // edit_BearerToken
             // 
-            this.bearertokenedit.Location = new System.Drawing.Point(140, 125);
-            this.bearertokenedit.Name = "bearertokenedit";
-            this.bearertokenedit.Size = new System.Drawing.Size(380, 20);
-            this.bearertokenedit.TabIndex = 50;
-            this.bearertokenedit.Visible = false;
+            this.edit_BearerToken.Location = new System.Drawing.Point(140, 125);
+            this.edit_BearerToken.Name = "edit_BearerToken";
+            this.edit_BearerToken.Size = new System.Drawing.Size(380, 20);
+            this.edit_BearerToken.TabIndex = 50;
+            this.edit_BearerToken.Visible = false;
             // 
-            // authtypebearer
+            // lbl_BearerToken
             // 
-            this.authtypebearer.AutoSize = true;
-            this.authtypebearer.Location = new System.Drawing.Point(56, 130);
-            this.authtypebearer.Name = "authtypebearer";
-            this.authtypebearer.Size = new System.Drawing.Size(75, 13);
-            this.authtypebearer.TabIndex = 151;
-            this.authtypebearer.Text = "Bearer Token:";
-            this.authtypebearer.Visible = false;
+            this.lbl_BearerToken.AutoSize = true;
+            this.lbl_BearerToken.Location = new System.Drawing.Point(56, 130);
+            this.lbl_BearerToken.Name = "lbl_BearerToken";
+            this.lbl_BearerToken.Size = new System.Drawing.Size(75, 13);
+            this.lbl_BearerToken.TabIndex = 151;
+            this.lbl_BearerToken.Text = "Bearer Token:";
+            this.lbl_BearerToken.Visible = false;
             // 
-            // ValidationTest
+            // btn_RunValidationTest
             // 
-            this.ValidationTest.Location = new System.Drawing.Point(778, 445);
-            this.ValidationTest.Name = "ValidationTest";
-            this.ValidationTest.Size = new System.Drawing.Size(143, 23);
-            this.ValidationTest.TabIndex = 152;
-            this.ValidationTest.Tag = "Select Log Directory";
-            this.ValidationTest.Text = "Run Validation Test";
-            this.ValidationTest.UseVisualStyleBackColor = true;
-            this.ValidationTest.Click += new System.EventHandler(this.ValidationTest_Click);
+            this.btn_RunValidationTest.Location = new System.Drawing.Point(778, 445);
+            this.btn_RunValidationTest.Name = "btn_RunValidationTest";
+            this.btn_RunValidationTest.Size = new System.Drawing.Size(143, 23);
+            this.btn_RunValidationTest.TabIndex = 152;
+            this.btn_RunValidationTest.Tag = "Select Log Directory";
+            this.btn_RunValidationTest.Text = "Run Validation Test";
+            this.btn_RunValidationTest.UseVisualStyleBackColor = true;
+            this.btn_RunValidationTest.Click += new System.EventHandler(this.ValidationTest_Click);
             // 
             // ReferenceClient
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(946, 490);
-            this.Controls.Add(this.ValidationTest);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btn_RunValidationTest);
+            this.Controls.Add(this.btn_LoadTestScript);
             this.Controls.Add(this.scriptfile);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.ViewMetadata);
@@ -589,46 +585,46 @@
             this.Controls.Add(this.label19);
             this.Controls.Add(this.label18);
             this.Controls.Add(this.preauthenticate);
-            this.Controls.Add(this.clearsettings);
-            this.Controls.Add(this.resetsession);
-            this.Controls.Add(this.executetestscript);
-            this.Controls.Add(this.labelpassword);
-            this.Controls.Add(this.redirecturilabel);
-            this.Controls.Add(this.textOAuthRedirectURI);
+            this.Controls.Add(this.btn_ClearSettings);
+            this.Controls.Add(this.btn_ResetSession);
+            this.Controls.Add(this.btn_ExecuteTestScript);
+            this.Controls.Add(this.lbl_Password);
+            this.Controls.Add(this.lbl_RedirectURI);
+            this.Controls.Add(this.edit_RedirectURI);
             this.Controls.Add(this.label23);
-            this.Controls.Add(this.authorizationurilabel);
-            this.Controls.Add(this.AuthorizationURI);
-            this.Controls.Add(this.Password);
+            this.Controls.Add(this.lbl_AuthorizationURI);
+            this.Controls.Add(this.edit_AuthorizationURI);
+            this.Controls.Add(this.edit_Password);
             this.Controls.Add(this.oauth_granttype);
-            this.Controls.Add(this.label15);
-            this.Controls.Add(this.textWebAPIURI);
-            this.Controls.Add(this.SaveClientSettings);
-            this.Controls.Add(this.SelectClientSettings);
-            this.Controls.Add(this.accesstokenurilabel);
-            this.Controls.Add(this.clientidlabel);
-            this.Controls.Add(this.clientsecretlabel);
-            this.Controls.Add(this.scopelabel);
-            this.Controls.Add(this.TokenURI);
-            this.Controls.Add(this.textOAuthClientIdentification);
-            this.Controls.Add(this.textOAuthClientSecret);
-            this.Controls.Add(this.textOAuthClientScope);
-            this.Controls.Add(this.btnTestOpenIDLogin);
+            this.Controls.Add(this.lbl_WebAPIEndPointURI);
+            this.Controls.Add(this.edit_WebAPIEndPointURI);
+            this.Controls.Add(this.btn_SaveClientSettings);
+            this.Controls.Add(this.btn_SelectClientSettings);
+            this.Controls.Add(this.lbl_AccessTokenURI);
+            this.Controls.Add(this.lbl_ClientID);
+            this.Controls.Add(this.lbl_ClientSecret);
+            this.Controls.Add(this.lbl_Scope);
+            this.Controls.Add(this.edit_AccessTokenURI);
+            this.Controls.Add(this.edit_ClientID);
+            this.Controls.Add(this.edit_ClientSecret);
+            this.Controls.Add(this.edit_Scope);
+            this.Controls.Add(this.btn_Login);
             this.Controls.Add(this.webapicurrentrule);
             this.Controls.Add(this.webapiprogressBar);
             this.Controls.Add(this.ServerVersion);
             this.Controls.Add(this.label7);
-            this.Controls.Add(this.SelectResultsDirectory);
+            this.Controls.Add(this.btn_SelectResultsDirectory);
             this.Controls.Add(this.ResultsDirectory);
             this.Controls.Add(this.LogDirectory);
-            this.Controls.Add(this.SelectLogDirectory);
+            this.Controls.Add(this.btn_SelectLogDirectory);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.label13);
-            this.Controls.Add(this.authtypelabelun);
-            this.Controls.Add(this.authtypebearer);
-            this.Controls.Add(this.UserName);
-            this.Controls.Add(this.bearertokenedit);
+            this.Controls.Add(this.lbl_UserName);
+            this.Controls.Add(this.edit_UserName);
+            this.Controls.Add(this.edit_BearerToken);
+            this.Controls.Add(this.lbl_BearerToken);
             this.Name = "ReferenceClient";
-            this.Text = "RESO Reference Client";
+            this.Text = "RESO Reference Client v3.1.4";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -636,10 +632,10 @@
 
         #endregion
 
-        private System.Windows.Forms.Button SelectResultsDirectory;
+        private System.Windows.Forms.Button btn_SelectResultsDirectory;
         private System.Windows.Forms.TextBox ResultsDirectory;
         private System.Windows.Forms.TextBox LogDirectory;
-        private System.Windows.Forms.Button SelectLogDirectory;
+        private System.Windows.Forms.Button btn_SelectLogDirectory;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label webapicurrentrule;
@@ -647,32 +643,32 @@
         private System.Windows.Forms.ComboBox ServerVersion;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.CheckBox preauthenticate;
-        private System.Windows.Forms.Button clearsettings;
-        private System.Windows.Forms.Button resetsession;
-        private System.Windows.Forms.Button executetestscript;
-        private System.Windows.Forms.Label labelpassword;
-        private System.Windows.Forms.Label authtypelabelun;
-        private System.Windows.Forms.Label redirecturilabel;
-        private System.Windows.Forms.TextBox textOAuthRedirectURI;
+        private System.Windows.Forms.Button btn_ClearSettings;
+        private System.Windows.Forms.Button btn_ResetSession;
+        private System.Windows.Forms.Button btn_ExecuteTestScript;
+        private System.Windows.Forms.Label lbl_Password;
+        private System.Windows.Forms.Label lbl_UserName;
+        private System.Windows.Forms.Label lbl_RedirectURI;
+        private System.Windows.Forms.TextBox edit_RedirectURI;
         private System.Windows.Forms.Label label23;
-        private System.Windows.Forms.Label authorizationurilabel;
-        private System.Windows.Forms.TextBox AuthorizationURI;
-        private System.Windows.Forms.TextBox Password;
-        private System.Windows.Forms.TextBox UserName;
+        private System.Windows.Forms.Label lbl_AuthorizationURI;
+        private System.Windows.Forms.TextBox edit_AuthorizationURI;
+        private System.Windows.Forms.TextBox edit_Password;
+        private System.Windows.Forms.TextBox edit_UserName;
         private System.Windows.Forms.ComboBox oauth_granttype;
-        private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.TextBox textWebAPIURI;
-        private System.Windows.Forms.Button SaveClientSettings;
-        private System.Windows.Forms.Button SelectClientSettings;
-        private System.Windows.Forms.Label accesstokenurilabel;
-        private System.Windows.Forms.Label clientidlabel;
-        private System.Windows.Forms.Label clientsecretlabel;
-        private System.Windows.Forms.Label scopelabel;
-        private System.Windows.Forms.TextBox TokenURI;
-        private System.Windows.Forms.TextBox textOAuthClientIdentification;
-        private System.Windows.Forms.TextBox textOAuthClientSecret;
-        private System.Windows.Forms.TextBox textOAuthClientScope;
-        private System.Windows.Forms.Button btnTestOpenIDLogin;
+        private System.Windows.Forms.Label lbl_WebAPIEndPointURI;
+        private System.Windows.Forms.TextBox edit_WebAPIEndPointURI;
+        private System.Windows.Forms.Button btn_SaveClientSettings;
+        private System.Windows.Forms.Button btn_SelectClientSettings;
+        private System.Windows.Forms.Label lbl_AccessTokenURI;
+        private System.Windows.Forms.Label lbl_ClientID;
+        private System.Windows.Forms.Label lbl_ClientSecret;
+        private System.Windows.Forms.Label lbl_Scope;
+        private System.Windows.Forms.TextBox edit_AccessTokenURI;
+        private System.Windows.Forms.TextBox edit_ClientID;
+        private System.Windows.Forms.TextBox edit_ClientSecret;
+        private System.Windows.Forms.TextBox edit_Scope;
+        private System.Windows.Forms.Button btn_Login;
         private System.Windows.Forms.Button ViewMetadata;
         private System.Windows.Forms.Label label24;
         private System.Windows.Forms.TextBox serviceresponsedata;
@@ -684,10 +680,10 @@
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.TextBox scriptfile;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.TextBox bearertokenedit;
-        private System.Windows.Forms.Label authtypebearer;
-        private System.Windows.Forms.Button ValidationTest;
+        private System.Windows.Forms.Button btn_LoadTestScript;
+        private System.Windows.Forms.TextBox edit_BearerToken;
+        private System.Windows.Forms.Label lbl_BearerToken;
+        private System.Windows.Forms.Button btn_RunValidationTest;
     }
 }
 

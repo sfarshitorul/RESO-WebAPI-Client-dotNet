@@ -12,7 +12,7 @@ namespace ReferenceLibrary
             /// <summary>
             /// The timeout value of web request.
             /// </summary>
-            public const string WebRequestTimeOut = "8000";
+            public const string WebRequestTimeOut = "18000";
 
             /// <summary>
             /// HTTP header Content-Type for json-formatted payload

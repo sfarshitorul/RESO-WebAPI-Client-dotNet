@@ -36,6 +36,15 @@ namespace RESOReference
         {
             InitializeComponent();
 
+
+
+            oauth_granttype.Items.Add(new AuthenticationTypeData { Name = "Authorization Code", Value = "authorization_code" });
+            oauth_granttype.Items.Add(new AuthenticationTypeData { Name = "Bearer Token", Value = "bearer_token" });
+            oauth_granttype.Items.Add(new AuthenticationTypeData { Name = "Client Credentials", Value = "client_credentials" });
+            oauth_granttype.DisplayMember = "Name";
+            oauth_granttype.ValueMember = "Value";
+
+
             executepath = System.IO.Path.GetDirectoryName(Application.ExecutablePath);
             debuglog = new RESOLogging("debug", System.IO.Path.Combine(executepath, @"Logs\\debug.resolog"), false);
             clientproperties.executablepath = executepath;
@@ -138,17 +147,17 @@ namespace RESOReference
 
                 this.webapiprogressBar.Value = 0;
                 this.ServerVersion.Text = string.Empty;
-                this.AuthorizationURI.Text = string.Empty;
-                this.TokenURI.Text = string.Empty;
-                this.TokenURI.Text = string.Empty;
-                this.textOAuthClientIdentification.Text = string.Empty;
-                this.textOAuthRedirectURI.Text = string.Empty;
-                this.textOAuthClientSecret.Text = string.Empty;
-                this.textOAuthClientScope.Text = string.Empty;
-                this.textWebAPIURI.Text = string.Empty;
-                this.UserName.Text = string.Empty;
-                this.bearertokenedit.Text = string.Empty;
-                this.Password.Text = string.Empty;
+                this.edit_AuthorizationURI.Text = string.Empty;
+                this.edit_AccessTokenURI.Text = string.Empty;
+                this.edit_AccessTokenURI.Text = string.Empty;
+                this.edit_ClientID.Text = string.Empty;
+                this.edit_RedirectURI.Text = string.Empty;
+                this.edit_ClientSecret.Text = string.Empty;
+                this.edit_Scope.Text = string.Empty;
+                this.edit_WebAPIEndPointURI.Text = string.Empty;
+                this.edit_UserName.Text = string.Empty;
+                this.edit_BearerToken.Text = string.Empty;
+                this.edit_Password.Text = string.Empty;
                 this.LogDirectory.Text = string.Empty;
                 this.ResultsDirectory.Text = string.Empty;
                 this.openid_code.Text = string.Empty;
@@ -233,18 +242,27 @@ namespace RESOReference
                 }
 
                 clientsettings.SetSetting(settings.testscript, scriptfile.Text);
-                clientsettings.SetSetting(settings.oauth_authorizationuri, AuthorizationURI.Text);
-                clientsettings.SetSetting(settings.oauth_clientidentification, textOAuthClientIdentification.Text);
-                clientsettings.SetSetting(settings.oauth_redirecturi, textOAuthRedirectURI.Text);
-                clientsettings.SetSetting(settings.oauth_clientscope, textOAuthClientScope.Text);
-                clientsettings.SetSetting(settings.oauth_clientsecret, textOAuthClientSecret.Text);
-                clientsettings.SetSetting(settings.oauth_tokenuri, TokenURI.Text);
-                clientsettings.SetSetting(settings.webapi_uri, textWebAPIURI.Text);
-                clientsettings.SetSetting(settings.oauth_granttype, oauth_granttype.Text);
-                clientsettings.SetSetting(settings.username, UserName.Text);
-                clientsettings.SetSetting(settings.bearertoken, bearertokenedit.Text);
+                clientsettings.SetSetting(settings.oauth_authorizationuri, edit_AuthorizationURI.Text);
+                clientsettings.SetSetting(settings.oauth_clientidentification, edit_ClientID.Text);
+                clientsettings.SetSetting(settings.oauth_redirecturi, edit_RedirectURI.Text);
+                clientsettings.SetSetting(settings.oauth_clientscope, edit_Scope.Text);
+                clientsettings.SetSetting(settings.oauth_clientsecret, edit_ClientSecret.Text);
+                clientsettings.SetSetting(settings.oauth_tokenuri, edit_AccessTokenURI.Text);
+                clientsettings.SetSetting(settings.webapi_uri, edit_WebAPIEndPointURI.Text);
+                AuthenticationTypeData combodata = oauth_granttype.SelectedItem as AuthenticationTypeData;
+                if (combodata != null)
+                {
+                    clientsettings.SetSetting(settings.oauth_granttype, combodata.Value);
+                }
+                else
+                {
+                    oauth_granttype.SelectedValue = "authorization_code";
+                    clientsettings.SetSetting(settings.oauth_granttype, "authorization_code");
+                }
+                clientsettings.SetSetting(settings.username, edit_UserName.Text);
+                clientsettings.SetSetting(settings.bearertoken, edit_BearerToken.Text);
                 
-                clientsettings.SetSetting(settings.password, Password.Text);
+                clientsettings.SetSetting(settings.password, edit_Password.Text);
                 clientsettings.SetSetting(settings.useragent, "webapiclient/1.0");
 
                 string resultsdirectory = ResultsDirectory.Text;
@@ -301,24 +319,31 @@ namespace RESOReference
                 // If the file name is not an empty string open it for saving.
                 if (saveFileDialog1.FileName != "")
                 {
-
-                    clientproperties.setProperty("AuthenticationType", this.oauth_granttype.Text);
+                    AuthenticationTypeData combodata = this.oauth_granttype.SelectedItem as AuthenticationTypeData;
+                    if (combodata != null)
+                    {
+                        clientproperties.setProperty("AuthenticationType", combodata.Name);
+                    }
+                    else
+                    {
+                        clientproperties.setProperty("AuthenticationType", "Authorization Code");
+                    }
                     clientproperties.setProperty("Preauthenticate", ((this.preauthenticate.Checked == true) ? ("TRUE") : ("FALSE")));
                     clientproperties.setProperty("ServerVersion", this.ServerVersion.Text);
                     //OData
                     clientproperties.setProperty("textScriptFile", this.scriptfile.Text);
-                    clientproperties.setProperty("AuthorizationURI", this.AuthorizationURI.Text);
-                    clientproperties.setProperty("TokenURI", this.TokenURI.Text);
-                    clientproperties.setProperty("TokenURI", this.TokenURI.Text);
-                    clientproperties.setProperty("textWebAPIURI", this.textWebAPIURI.Text);
-                    clientproperties.setProperty("textOAuthClientIdentification", this.textOAuthClientIdentification.Text);
-                    clientproperties.setProperty("textOAuthRedirectURI", this.textOAuthRedirectURI.Text);
-                    clientproperties.setProperty("textOAuthClientSecret", this.textOAuthClientSecret.Text);
-                    clientproperties.setProperty("textOAuthClientScope", this.textOAuthClientScope.Text);
+                    clientproperties.setProperty("AuthorizationURI", this.edit_AuthorizationURI.Text);
+                    clientproperties.setProperty("TokenURI", this.edit_AccessTokenURI.Text);
+                    clientproperties.setProperty("TokenURI", this.edit_AccessTokenURI.Text);
+                    clientproperties.setProperty("textWebAPIURI", this.edit_WebAPIEndPointURI.Text);
+                    clientproperties.setProperty("ClientIdentification", this.edit_ClientID.Text);
+                    clientproperties.setProperty("RedirectURI", this.edit_RedirectURI.Text);
+                    clientproperties.setProperty("ClientSecret", this.edit_ClientSecret.Text);
+                    clientproperties.setProperty("ClientScope", this.edit_Scope.Text);
                     //clientproperties.setProperty("textWebAPIHost", this.textWebAPIURI.Text);
-                    clientproperties.setProperty("UserName", this.UserName.Text);
-                    clientproperties.setProperty("BearerToken", bearertokenedit.Text);
-                    clientproperties.setProperty("Password", this.Password.Text);
+                    clientproperties.setProperty("UserName", this.edit_UserName.Text);
+                    clientproperties.setProperty("BearerToken", edit_BearerToken.Text);
+                    clientproperties.setProperty("Password", this.edit_Password.Text);
                     clientproperties.setProperty("transactionlogdirectory", this.LogDirectory.Text);
                     clientproperties.setProperty("resultsdirectory", this.ResultsDirectory.Text);
                     clientproperties.saveFile(saveFileDialog1.FileName);
@@ -330,15 +355,17 @@ namespace RESOReference
             }
         }
 
-        private void btnTestOpenIDLogin_Click_1(object sender, EventArgs e)
+        private void Login_Click(object sender, EventArgs e)
         {
             RESOClientSettings clientsettings = GetSettings();
             if (string.IsNullOrWhiteSpace(clientsettings.GetSetting(settings.webapi_uri)))
             {
                 loadclientpropertiesfile();
-                clientsettings = GetSettings();
+                
             }
-            if (clientsettings.GetSetting(settings.oauth_granttype) != "Bearer Token")
+            clientsettings = GetSettings();
+            string test33 = clientsettings.GetSetting(settings.oauth_granttype);
+            if (clientsettings.GetSetting(settings.oauth_granttype) == "authorization_code")
             {
                 if (string.IsNullOrEmpty(clientsettings.GetSetting(settings.oauth_authorizationuri)))
                 {
@@ -398,6 +425,8 @@ namespace RESOReference
                 if (string.IsNullOrEmpty(clientsettings.GetSetting(settings.openid_code)))
                 {
                     LoginBrowser browserform = new LoginBrowser();
+                    browserform.SetLoginInfo(clientsettings.GetSetting(settings.username), clientsettings.GetSetting(settings.password));
+                    
                     browserform.SetURL(clientsettings.GetSetting(settings.oauth_authorizationuri) + "?response_type=code&client_id=" + clientsettings.GetSetting(settings.oauth_clientidentification) + "&redirect_uri=" + clientsettings.GetSetting(settings.oauth_redirecturi) + "&scope=" + clientsettings.GetSetting(settings.oauth_clientscope), ViewNavigateURL);
                     //browserform.SetURL(clientsettings.GetSetting(settings.oauth_authorizationuri) + "?response_type=code&client_id=" + clientsettings.GetSetting(settings.oauth_clientidentification) + "&redirect_uri=" + clientsettings.GetSetting(settings.oauth_redirecturi) /*+ "&scope=" + clientsettings.GetSetting(settings.oauth_clientscope)*/, ViewNavigateURL);
                     browserform.ShowDialog();
@@ -445,14 +474,19 @@ namespace RESOReference
                 webapi_token.Text = "Loading...";
                 
             }
-            if (clientsettings.GetSetting(settings.oauth_granttype) == "Bearer Token")
+            
+            if (clientsettings.GetSetting(settings.oauth_granttype) == "client_credentials")
+            {
+
+            }
+            if (clientsettings.GetSetting(settings.oauth_granttype) == "bearer_token")
             {
                 if(app.oauth_token == null)
                 {
                     app.oauth_token = new OAuthToken();
                 }
                 app.oauth_token.token_type = "Bearer";
-                app.oauth_token.access_token = this.bearertokenedit.Text;
+                app.oauth_token.access_token = this.edit_BearerToken.Text;
 
                 openid_code.Text = string.Empty;
 
@@ -467,6 +501,13 @@ namespace RESOReference
             try
             {
                 if (clientsettings.GetSetting(settings.oauth_granttype) == "authorization_code")
+                {
+                    if (!login.ExecuteEvent(app, preauth))
+                    {
+                        return false;
+                    }
+                }
+                else if(clientsettings.GetSetting(settings.oauth_granttype) == "client_credentials")
                 {
                     if (!login.ExecuteEvent(app, preauth))
                     {
@@ -689,7 +730,7 @@ namespace RESOReference
             loadscriptfile(scriptfile.Text);
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void LoadTestScript_Click(object sender, EventArgs e)
         {
             OpenFileDialog testfile = new OpenFileDialog();
             testfile.Filter = "Client Script Files (*.resoscript)|*.resoscript|XML Script Files (*.xml)|*.xml|All files (*.*)|*.*";
@@ -744,19 +785,22 @@ namespace RESOReference
                 string granttype = clientproperties.getProperty("AuthenticationType");
                 if (string.IsNullOrEmpty(granttype))
                 {
-                    granttype = "authorization_code";
+                    granttype = "Authorization Code";
                 }
-                index = this.oauth_granttype.Items.IndexOf(granttype.Trim());
-
-                if (index >= 0)
+                if(granttype == "authorization_code")
                 {
-                    this.oauth_granttype.SelectedIndex = index;
+                    granttype = "Authorization Code";
                 }
-                else
+                this.oauth_granttype.SelectedIndex = this.oauth_granttype.FindString(granttype.Trim());
+                //this.oauth_granttype.SelectedIndex = this.oauth_granttype.FindString("Client Credentials");
+
+                if (this.oauth_granttype.SelectedIndex == -1)
                 {
                     this.oauth_granttype.SelectedIndex = 0;
                 }
-                this.oauth_granttype.Text = this.oauth_granttype.SelectedItem.ToString();
+
+                AuthenticationTypeData combodata = this.oauth_granttype.SelectedItem as AuthenticationTypeData;
+                this.oauth_granttype.Text = combodata.Name;
 
                 
                 
@@ -770,21 +814,22 @@ namespace RESOReference
 
                 //clientproperties.setProperty("Preauthenticate", ((this.preauthenticate.Checked == true) ? ("TRUE") : ("FALSE")));
                 this.preauthenticate.Checked = ((clientproperties.getProperty("Preauthenticate") == "TRUE") ? (true):(false));
-                this.AuthorizationURI.Text = clientproperties.getProperty("AuthorizationURI");
-                this.TokenURI.Text = clientproperties.getProperty("TokenURI");
+                this.edit_AuthorizationURI.Text = clientproperties.getProperty("AuthorizationURI");
+                this.edit_AccessTokenURI.Text = clientproperties.getProperty("TokenURI");
 
-                this.textWebAPIURI.Text = clientproperties.getProperty("textWebAPIURI");
+                this.edit_WebAPIEndPointURI.Text = clientproperties.getProperty("textWebAPIURI");
 
-                this.textOAuthClientIdentification.Text = clientproperties.getProperty("textOAuthClientIdentification");
-                this.textOAuthRedirectURI.Text = clientproperties.getProperty("textOAuthRedirectURI");
+                //this.edit_ClientID.Text = clientproperties.getProperty("textOAuthClientIdentification");
+                this.edit_ClientID.Text = clientproperties.getProperty("ClientIdentification");
+                this.edit_RedirectURI.Text = clientproperties.getProperty("RedirectURI");
 
-                this.textOAuthClientSecret.Text = clientproperties.getProperty("textOAuthClientSecret");
-                this.textOAuthClientScope.Text = clientproperties.getProperty("textOAuthClientScope");
+                this.edit_ClientSecret.Text = clientproperties.getProperty("ClientSecret");
+                this.edit_Scope.Text = clientproperties.getProperty("ClientScope");
 
 
-                this.UserName.Text = clientproperties.getProperty("UserName");
-                this.bearertokenedit.Text = clientproperties.getProperty("BearerToken");
-                this.Password.Text = clientproperties.getProperty("Password");
+                this.edit_UserName.Text = clientproperties.getProperty("UserName");
+                this.edit_BearerToken.Text = clientproperties.getProperty("BearerToken");
+                this.edit_Password.Text = clientproperties.getProperty("Password");
                 //Global
                 this.LogDirectory.Text = clientproperties.getProperty("transactionlogdirectory");
                 this.ResultsDirectory.Text = clientproperties.getProperty("resultsdirectory");
@@ -812,48 +857,57 @@ namespace RESOReference
             metadataview.ShowDialog();
         }
 
-        private void viewscript_Click(object sender, EventArgs e)
-        {
-
-        }
   
         private void oauth_granttype_SelectedValueChanged(object sender, EventArgs e)
         {
             ComboBox comboBox = (ComboBox)sender;
-            SetAuthTypeControls(comboBox.SelectedItem as string);
-
-         
-
-
-
+            AuthenticationTypeData combodata = comboBox.SelectedItem as AuthenticationTypeData;
+            if (combodata == null)
+            {
+                SetAuthTypeControls("authorization_code");
+            }
+            else
+            {
+                SetAuthTypeControls(combodata.Value);
+            }
         }
 
         private void SetAuthTypeControls(string authtype)
         {
+            //lbl_textWebAPIURI/textWebAPIURI
+            //lbl_UserName/UserName and lbl_BearerToken/edit_BearerToken
+            //lbl_Password/edit_Password
+            //lbl_AuthorizationURI/edit_AuthorizationURI
+            //lbl_AccessTokenURI/edit_AccessTokenURI
+            //lbl_RedirectURI/edit_RedirectURI
+            //lbl_ClientID/edit_ClientID
+            //lbl_ClientSecret/edit_ClientSecret
+            //lbl_Scope/edit_Scope
+
+
+
             bool bearertokenonly = false;
-            if (authtype == "Bearer Token")
+            bool clientcredientals = false;
+            if (authtype == "bearer_token")
             {
                 bearertokenonly = true;
             }
+            else if(authtype == "client_credentials")
+            {
+                clientcredientals = true;
+            }
 
-            authtypelabelun.Visible = !bearertokenonly;
-            authtypebearer.Visible = bearertokenonly;
-            UserName.Visible = !bearertokenonly;
-            bearertokenedit.Visible = bearertokenonly;
-            labelpassword.Visible = !bearertokenonly;
-            authorizationurilabel.Visible = !bearertokenonly;
-            accesstokenurilabel.Visible = !bearertokenonly;
-            redirecturilabel.Visible = !bearertokenonly;
-            clientidlabel.Visible = !bearertokenonly;
-            clientsecretlabel.Visible = !bearertokenonly;
-            scopelabel.Visible = !bearertokenonly;
-            Password.Visible = !bearertokenonly;
-            AuthorizationURI.Visible = !bearertokenonly;
-            TokenURI.Visible = !bearertokenonly;
-            textOAuthRedirectURI.Visible = !bearertokenonly;
-            textOAuthClientIdentification.Visible = !bearertokenonly;
-            textOAuthClientSecret.Visible = !bearertokenonly;
-            textOAuthClientScope.Visible = !bearertokenonly;
+
+            lbl_WebAPIEndPointURI.Visible = edit_WebAPIEndPointURI.Visible = (bearertokenonly == true) ? true : (clientcredientals == true) ? true : true;
+            lbl_UserName.Visible = edit_UserName.Visible = (bearertokenonly == true) ? false : (clientcredientals == true) ? false : true;
+            lbl_BearerToken.Visible = edit_BearerToken.Visible = (bearertokenonly == true) ? true : (clientcredientals == true) ? false : true;
+            lbl_Password.Visible = edit_Password.Visible = (bearertokenonly == true) ? false : (clientcredientals == true) ? false : true;
+            lbl_AuthorizationURI.Visible = edit_AuthorizationURI.Visible = (bearertokenonly == true) ? false : (clientcredientals == true) ? false : true;
+            lbl_AccessTokenURI.Visible = edit_AccessTokenURI.Visible = (bearertokenonly == true) ? false : (clientcredientals == true) ? true : true;
+            lbl_RedirectURI.Visible = edit_RedirectURI.Visible = (bearertokenonly == true) ? false : (clientcredientals == true) ? false : true;
+            lbl_ClientID.Visible = edit_ClientID.Visible = (bearertokenonly == true) ? false : (clientcredientals == true) ? true : true;
+            lbl_ClientSecret.Visible = edit_ClientSecret.Visible = (bearertokenonly == true) ? false : (clientcredientals == true) ? true : true;
+            lbl_Scope.Visible = edit_Scope.Visible = (bearertokenonly == true) ? false : (clientcredientals == true) ? true : true;
         }
 
         private void ValidationTest_Click(object sender, EventArgs e)
@@ -925,6 +979,7 @@ namespace RESOReference
                 var reqHeaders = new List<KeyValuePair<string, string>> { new KeyValuePair<string, string>("ODataVersion", "4.0") };
                 reqHeaders.Add(new KeyValuePair<string, string>("Authorization", oauth_bearertoken));
 
+                string reqHeadersString = ConvertListToString(reqHeaders);
 
                 System.Guid JobID = System.Guid.NewGuid();
                 ResultsProvider resultProvider = new ResultsProvider(JobID);
@@ -938,9 +993,9 @@ namespace RESOReference
                 //Uri uri = new Uri(host, url.AbsoluteUri);
                 
                 Uri service = GetUri(clientsettings.GetSetting(settings.webapi_uri));
-                ServiceStatus intservice = ServiceStatus.GetInstance(clientsettings.GetSetting(settings.webapi_uri), responseheaders);
+                ServiceStatus intservice = ServiceStatus.GetInstance(clientsettings.GetSetting(settings.webapi_uri), reqHeadersString);
                 ServiceStatus.ReviseMetadata(metadataresponse);
-                ServiceContext ctx = new ServiceContext(url, JobID, HttpStatusCode.OK, responseheaders, metadataresponse, string.Empty, service, serviceresponse, metadataresponse, false, reqHeaders, ODataMetadataType.MinOnly);
+                ServiceContext ctx = new ServiceContext(url, JobID, HttpStatusCode.OK, reqHeadersString, metadataresponse, string.Empty, service, serviceresponse, metadataresponse, false, reqHeaders, ODataMetadataType.MinOnly);
 
 
                 
@@ -982,11 +1037,8 @@ namespace RESOReference
                 System.IO.File.WriteAllText(clientsettings.GetSetting(settings.log_directory) + "\\rulelist.txt", sb.ToString());
 
 
-                //var header = ctx.RequestHeaders;
                 var ruleArray = RuleCatalogCollection.Instance.ToArray();
                 
-                //RuleEngineWrapper ruleEngine = new RuleEngineWrapper(ctx, resultProvider, logger);
-                //return;
                 RuleExecuter rules = new RuleExecuter(resultProvider, logger);
                 rules.Execute(ctx, ruleArray, (int)ruleArray.Length, webapitestcomplete);
                 ResultsProvider logitems = logger as ResultsProvider;
@@ -1044,10 +1096,26 @@ namespace RESOReference
             }
             catch (Exception ex)
             {
-                //throw ex;
+                MessageOutput(ex.Message);
             }
 
             OutputLogCapture();
+        }
+
+        private string ConvertListToString(List<KeyValuePair<string, string>> reqHeaders)
+        {
+            string ret = string.Empty;
+
+            foreach (KeyValuePair<string, string> entry in reqHeaders)
+            {
+                string name = entry.Key as string;
+                string value = entry.Value as string;
+                ret += name + ":" + value + "\r\n;";
+            }
+            ret = ret.TrimEnd(';');
+            return ret;
+
+
         }
 
         void webapitestcomplete(ODataValidator.RuleEngine.TestResult results, int numberofrules, ref int count)
@@ -1408,12 +1476,17 @@ namespace RESOReference
 
             sb.Append("\r\n");
         }
+
+    }
+
+    public class AuthenticationTypeData
+    {
+        public string Name { get; set; }
+        public string Value { get; set; }
     }
 
 
 
 
-        
-    
 }
-    
+
