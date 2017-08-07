@@ -71,5 +71,11 @@ namespace RESOReference
                 this.Close();
             }
         }
+
+        internal void SetLoginInfo(string username, string password)
+        {
+            edit_UserName.Text = username;
+            edit_Password.Text = password;
+        }
     }
 }

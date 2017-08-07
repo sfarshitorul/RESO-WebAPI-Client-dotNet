@@ -136,27 +136,44 @@ namespace ODataValidator.RuleEngine
         /// </summary>
         private IEnumerable<KeyValuePair<string, string>> defaultHeaders = new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("ODataVersion", "4.0") };
 
+        private bool CheckHeader(string header)
+        {
+            if(header == "Content-Length")
+            {
+                return false;
+            }
+            if (header == "Content-Type")
+            {
+                return false;
+            }
+            return true;
+        }
         /// <summary>
         /// The constructor of class type ServiceStatus.
         /// </summary>
         private ServiceStatus(string url, string headers)
         {
+            string[] stringSeparators = new string[] { ";", "\r", "\n" };
             var uri = this.ConvertToUri(url);
 
             if (!string.IsNullOrWhiteSpace(headers))
             {
-                string[] headersSplited = headers.Split(';');
+                string[] headersSplited = headers.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
                 List<KeyValuePair<string, string>> heaserCollection = new List<KeyValuePair<string, string>>();
                 foreach (string header in headersSplited)
                 {
                     string[] headerKeyValue = header.Split(':');
                     if (headerKeyValue.Length == 2)
                     {
-                        heaserCollection.Add(new KeyValuePair<string, string>(headerKeyValue[0], headerKeyValue[1]));
+                        if (CheckHeader(headerKeyValue[0]))
+                        {
+                            heaserCollection.Add(new KeyValuePair<string, string>(headerKeyValue[0], headerKeyValue[1]));
+                        }
                     }
                 }
                 defaultHeaders = heaserCollection;
             }
+
 
             // Get the service document.
             if (this.GetServiceDocument(uri, out this.rootURL, out this.serviceDoc))

@@ -129,7 +129,15 @@ namespace RESOClientLibrary
                 // Create POST data and convert it to a byte array.
                 byte[] byteArray = Encoding.UTF8.GetBytes(postData);
                 // Set the ContentType property of the WebRequest.
-                request.ContentType = "application/x-www-form-urlencoded";
+                if (clientsettings.GetSetting(settings.oauth_granttype) == "authorization_code")
+                {
+                    request.ContentType = "application/x-www-form-urlencoded";
+                }
+                else
+                {
+                    //request.ContentType = "application/json";
+                    request.ContentType = "application/x-www-form-urlencoded";
+                }
                 // Set the ContentLength property of the WebRequest.
                 request.ContentLength = byteArray.Length;
 
@@ -257,7 +265,10 @@ namespace RESOClientLibrary
 
                 //responseobject = WebHelper.Post
                 responseobject = WebHelper.Get(request, 999999);
-
+                if(responseobject.StatusCode == HttpStatusCode.RequestTimeout)
+                {
+                    return "RequestTimeout.  Currently set to:  "+ Constants.WebRequestTimeOut;
+                }
                 return responseobject.ResponsePayload;
             }
             catch (Exception ex)
@@ -269,7 +280,8 @@ namespace RESOClientLibrary
         {
             try
             {
-
+                return GetData(uri);
+                
                 Uri test = new Uri(uri);
 
                 // Create a request using a URL that can receive a post. 
@@ -306,7 +318,10 @@ namespace RESOClientLibrary
                 //Response response = WebHelper.Get(test, acceptHeader, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, request.Headers as HttpWebRequest);
 
                 responseobject = WebHelper.Get(request, 999999);
-
+                if(responseobject.StatusCode == HttpStatusCode.RequestTimeout)
+                {
+                    return "RequestTimeout.  Currently set to:  " + Constants.WebRequestTimeOut;
+                }
                 return responseobject.ResponsePayload;
             }
             catch (Exception ex)
