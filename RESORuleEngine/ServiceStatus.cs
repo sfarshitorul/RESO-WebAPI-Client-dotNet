@@ -134,7 +134,7 @@ namespace ODataValidator.RuleEngine
         /// <summary>
         /// The default request headers.
         /// </summary>
-        private IEnumerable<KeyValuePair<string, string>> defaultHeaders = new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("ODataVersion", "4.0") };
+        private IEnumerable<KeyValuePair<string, string>> defaultHeaders = new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("OData-Version", "4.0") };
 
         private bool CheckHeader(string header)
         {
@@ -270,7 +270,7 @@ namespace ODataValidator.RuleEngine
 
             try
             {
-                uri = new Uri(url.TrimEnd('/'));
+                uri = new Uri(url); //.TrimEnd('/'));
             }
             catch (UriFormatException)
             {

@@ -328,7 +328,9 @@ namespace RESOReference
                     {
                         clientproperties.setProperty("AuthenticationType", "Authorization Code");
                     }
-                    clientproperties.setProperty("Preauthenticate", ((this.preauthenticate.Checked == true) ? ("TRUE") : ("FALSE")));
+                    
+                    
+                    clientproperties.setProperty("Preauthenticate", (this.preauthenticate.Visible == false) ? "FALSE" : (this.preauthenticate.Checked == true) ? "TRUE" : "FALSE");
                     clientproperties.setProperty("ServerVersion", this.ServerVersion.Text);
                     //OData
                     clientproperties.setProperty("textScriptFile", this.scriptfile.Text);
@@ -496,7 +498,7 @@ namespace RESOReference
             webapi_metadata.Text = "Loading...";
             serviceresponsedata.Text = "Loading...";
             this.Update();
-            bool preauth = preauthenticate.Checked;
+            bool preauth = (this.preauthenticate.Visible == false) ? false:(this.preauthenticate.Checked == true) ? true : false;
             ODataLoginTransaction login = new ODataLoginTransaction(app.clientsettings);
             try
             {
@@ -897,6 +899,7 @@ namespace RESOReference
                 clientcredientals = true;
             }
 
+            preauthenticate.Visible = (bearertokenonly == true) ? false : (clientcredientals == true) ? true : true; 
 
             lbl_WebAPIEndPointURI.Visible = edit_WebAPIEndPointURI.Visible = (bearertokenonly == true) ? true : (clientcredientals == true) ? true : true;
             lbl_UserName.Visible = edit_UserName.Visible = (bearertokenonly == true) ? false : (clientcredientals == true) ? false : true;
@@ -976,7 +979,7 @@ namespace RESOReference
 
 
                 
-                var reqHeaders = new List<KeyValuePair<string, string>> { new KeyValuePair<string, string>("ODataVersion", "4.0") };
+                var reqHeaders = new List<KeyValuePair<string, string>> { new KeyValuePair<string, string>("OData-Version", "4.0") };
                 reqHeaders.Add(new KeyValuePair<string, string>("Authorization", oauth_bearertoken));
 
                 string reqHeadersString = ConvertListToString(reqHeaders);

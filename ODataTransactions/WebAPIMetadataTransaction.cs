@@ -20,7 +20,7 @@ namespace ODataTransactions
         {
             try
             {
-                responsedata = app.GetODataMetadata(clientsettings.GetSetting(settings.webapi_uri).TrimEnd('/') + "/$metadata");
+                responsedata = app.GetData(clientsettings.GetSetting(settings.webapi_uri).TrimEnd('/') + "/$metadata");
                 app.LogData("Response Data");
                 app.LogData("METADATA", responsedata);
             }
