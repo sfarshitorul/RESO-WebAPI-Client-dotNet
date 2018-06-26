@@ -1,80 +1,41 @@
-# RESOWebAPIReferenceClient
+# RESO-WebAPI-Client-dotNet
 
-Open Source .Net Code Based RESO Web API Reference Client for accessing RESO Web API Servers for Real Estate Data
+Open Source .Net Code Based RESO Web API Reference Client for accessing RESO Web API Servers for Real Estate Data. More information at http://www.reso.org
+
+## Requirements
+
+< *Platform / Language requirements. Example: PHP 5.3.3 or later.* >
+
+## Getting Started and Installation
+
+< *A step by step series of examples that will get you a copy of the project up and running on your local machine for development and testing purposes including guidelines and different approaches (if available) on how the code should be deployed, integrated in the development environment. This sectioion should also discuss or reference a very short example usage in a mini application *>
+
+## Dependencies
+
+[*List of all dependencies, required to run the code*]
 
 
-## Getting Started
+## Example apps
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+[*A list of example applications, provided in the examples/ directory. Should list all the applications, shortly explain the functionality it implements and how to execute it.*]
 
-### Prerequisites
+## Specific code configuration, usage guidelines, depending on situation
 
-What things you need to install the software and how to install them
+[*For each specific code configuration and / or usage, which would be essential to mention for the developer for successful code use, create a separate section and provide the guidelines.*]
 
-```
-Give examples
-```
+## Unit Tests
 
-### Installing
-
-A step by step series of examples that tell you have to get a development env running
-
-Say what the step will be
-
-```
-Give the example
-```
-
-And repeat
-
-```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo
-
-## Running the tests
-
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-## Deployment
-
-Add additional notes about how to deploy this on a live system
-
-## Built With
-
-* [.net](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [abc](https://maven.apache.org/) - Dependency Management
-* [xyz](https://rometools.github.io/rome/) - Used to generate RSS Feeds
+[*If applicable. For tests in the tests/ folder provide the guidelines on how to configure and execute those. Also, provide guidelines on how to create new tests and requirements for the newly created code tests, e.g. if new functions are added - those should be covered by unit tests.*]
 
 ## Contributing
 
-Please read [CONTRIBUTING.md](https://gist.github.com/dconroy/8e46607f7427da51fc96dd522a8e1da7) for details on our code of conduct, and the process for submitting pull requests to us.
-
-## Versioning
-For the versions available, see the [tags on this repository](https://github.com/RESOStandards/RESOWebAPIReferenceClient/tags).
+Please read the [contributing guidelines](CONTRIBUTING.md) if You are interested in contributing to the project.
 
 ## Authors
 
 * **First Last**
 
-See also the list of [contributors](https://github.com/RESOStandards/RESOWebAPIReferenceClient/graphs/contributors) who participated in this project.
+See also the list of [contributors](https://github.com/RESOStandards/RESO-WebAPI-Client-dotNet/graphs/contributors) who participated in this project.
 
 ## License
 
@@ -84,7 +45,6 @@ This project is licensed under the RESO License - see the [LICENSE.md](LICENSE.m
 
 * Real Estate Standards Organization
 * National Association of REALTORS
-
 
 
 [![Real Estate Standards Organziation](https://www.reso.org/wp-content/uploads/2016/10/RESO.png)](https://reso.org)
