@@ -15,7 +15,7 @@ Please note we have a code of conduct, please follow it in all your interactions
 
 #### How to submit an Issue / Bug Report?
 
-Bugs are tracked as [GitHub issues](https://guides.github.com/features/issues/). Follow [the issue template](ISSUE_TEMPLATE.md) and fill the issue inside the GitHub repository’s Issue section.
+Bugs are tracked as [GitHub issues](https://guides.github.com/features/issues/). Follow [the issue template](ISSUE_TEMPLATE.md) and fill the issue inside the GitHub repositoryâ€™s Issue section.
 
 
 ### Pull Request Process
