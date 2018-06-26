@@ -1,6 +1,6 @@
-# Contributing to <PROJECT NAME>
+# Contributing to RESO-WebAPI-Client-dotNet
 
-The following is a set of guidelines for contributing to <PROJECT NAME>. When contributing to this repository, please first discuss the change you wish to make via issue instance in the GitHub repository before making a change. 
+The following is a set of guidelines for contributing to RESO-WebAPI-Client-dotNet. When contributing to this repository, please first discuss the change you wish to make via issue instance in the GitHub repository before making a change. 
 
 Please note we have a code of conduct, please follow it in all your interactions with the project.
 
@@ -15,13 +15,13 @@ Please note we have a code of conduct, please follow it in all your interactions
 
 #### How to submit an Issue / Bug Report?
 
-Bugs are tracked as [GitHub issues](https://guides.github.com/features/issues/). Follow [the issue template](ISSUE_TEMPLATE.md) and fill the issue inside the GitHub repository’s Issue section.
+Bugs are tracked as [GitHub issues](https://guides.github.com/features/issues/). Follow [the issue template](ISSUE_Template.md) and fill the issue inside the GitHub repository’s Issue section.
 
 
 ### Pull Request Process
 
 * Create a separate fixes/<fix-name> or features/<feature-name> branch out of the current develop branch and apply the changes;
-* Follow and fill in [the Pull Request template](PULL_REQUEST_TEMPLATE.md)
+* Follow and fill in [the Pull Request template](PULL_REQUEST_Template.md)
 * Include screenshots, debug logs, error messages or whatever additional material that would help to understand the changes in the Pull Request;
 * Follow the <Specific Programming Guidelines, if applicable> guidelines and style guides;
 * Document new code based on the documentation style guide (<If applicable and code documentation system is used>);
