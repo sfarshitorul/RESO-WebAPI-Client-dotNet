@@ -69,7 +69,7 @@ namespace ODataValidator.Rule
             {
                 info.SetDetailsName(this.Name);
             }
-
+            
             return passed;
         }
     }

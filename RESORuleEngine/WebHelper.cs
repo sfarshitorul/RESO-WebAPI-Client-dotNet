@@ -29,6 +29,16 @@ namespace ODataValidator.RuleEngine
         /// <returns>Reponse object which contains payload, response headers and status code</returns>
         /// <exception cref="ArgumentException">Throws exception when parameter is out of scope</exception>
         /// <exception cref="OversizedPayloadException">Throws exception when payload content exceeds the set maximum size</exception>
+        /// 
+        public static Response Get(string uristring, string acceptHeader, int maximumPayloadSize, IEnumerable<KeyValuePair<string, string>> reqHeaders)
+        {
+            uristring = uristring.Replace("//", "/");
+            uristring = uristring.Replace("https:/", "https://");
+            uristring = uristring.Replace("http:/", "http://");
+            uristring = uristring.Replace("/?", "?");
+            Uri uri = new Uri(uristring);
+            return Get(uri, acceptHeader, maximumPayloadSize, reqHeaders);
+        }
         public static Response Get(Uri uri, string acceptHeader, int maximumPayloadSize, IEnumerable<KeyValuePair<string, string>> reqHeaders)
         {
             if (reqHeaders != null)
@@ -78,6 +88,37 @@ namespace ODataValidator.RuleEngine
         [SuppressMessage("DataWeb.Usage", "AC0013: call WebUtil.GetResponseStream instead of calling the method directly on the HTTP object.", Justification = "interop prefers to interact directly with network")]
         public static Response Get(WebRequest request, int maximumPayloadSize)
         {
+
+           
+            IEnumerable<KeyValuePair<string, string>> reqHeaders = Headers;
+
+
+
+            //if (!string.IsNullOrEmpty(uri.UserInfo))
+            //{
+            //    req.Credentials = new NetworkCredential(Uri.UnescapeDataString(uri.UserInfo.Split(':')[0]), Uri.UnescapeDataString(uri.UserInfo.Split(':')[1]));
+            //}
+
+
+            //if (!string.IsNullOrEmpty(acceptHeader) && reqHttp != null)
+            //{
+            //    reqHttp.Accept = acceptHeader;
+            //}
+
+            if (reqHeaders != null && reqHeaders.Any())
+            {
+                foreach (var p in reqHeaders)
+                {
+                    if (!string.IsNullOrEmpty(p.Key))
+                    {
+                        if (request.Headers[p.Key] == null)
+                        {
+                            request.Headers[p.Key] = p.Value;
+                        }
+                    }
+                }
+            }
+
             if (request == null)
             {
                 throw new ArgumentNullException("request");

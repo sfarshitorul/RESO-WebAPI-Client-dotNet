@@ -77,8 +77,9 @@ namespace ODataValidator.Rule
             bool? passed = null;
 
             string url = string.Format("{0}/?$find=*", context.Destination);
-            var req = WebRequest.Create(url) as HttpWebRequest;
-            Response response = WebHelper.Get(req, RuleEngineSetting.Instance().DefaultMaximumPayloadSize);
+            //var req = WebRequest.Create(url) as HttpWebRequest;
+            //Response response = WebHelper.Get(req, RuleEngineSetting.Instance().DefaultMaximumPayloadSize);//REPLACE HEADER
+            Response response = WebHelper.Get(url, null, RuleEngineSetting.Instance().DefaultMaximumPayloadSize,context.RequestHeaders);
             ExtensionRuleResultDetail detail1 = new ExtensionRuleResultDetail(this.Name, url, "GET", string.Empty, response);
 
             if (response != null && response.StatusCode != null)

@@ -115,7 +115,7 @@ namespace ODataValidator.Rule
             }
 
             url = string.Format("{0}/{1}/$value", entryUrl, propNames[0]);
-            response = WebHelper.Get(WebRequest.Create(url), RuleEngineSetting.Instance().DefaultMaximumPayloadSize);
+            response = WebHelper.Get(url, null, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
             detail = new ExtensionRuleResultDetail(this.Name, url, HttpMethod.Get, string.Empty, response);
 
             // Get the value of propNames[0] property in entry payload and verify whether this value is equal to /$value payload value.

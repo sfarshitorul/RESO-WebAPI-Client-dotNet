@@ -95,7 +95,7 @@ namespace ODataValidator.Rule
 
             bool? passed = null;
             info = null;
-                        
+            passed = true;            
             return passed;
         }
     }
