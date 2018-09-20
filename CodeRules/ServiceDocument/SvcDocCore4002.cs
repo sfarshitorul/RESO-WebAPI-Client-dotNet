@@ -169,6 +169,9 @@ namespace ODataValidator.Rule
             if (!context.OdataMetadataType.Equals("none"))
             {
                 JObject jo;
+                string test = string.Empty;
+                test.TryToJObject(out jo);
+
                 context.ResponsePayload.TryToJObject(out jo);
                 var inner = jo.ReachInnerToken();
 

@@ -16,6 +16,7 @@ using ODataValidator.RuleEngine;
 
 using System.Net;
 using ODataValidator.Rule;
+
 //using ODataValidator.Rule;
 
 namespace RESOReference
@@ -126,13 +127,22 @@ namespace RESOReference
         private void loadclientpropertiesfile()
         {
             OpenFileDialog testfile = new OpenFileDialog();
-            testfile.Filter = "Client Settings Files (*.resocs)|*.resocs|Property Files (*.properties)|*.properties|All files (*.*)|*.*";
+            testfile.Filter = "Client Settings Files (*.resocs)|*.resocs|Property Files (*.properties)|*.properties|RESOS Script (*.resoscript)|*.resoscript|All files (*.*)|*.*";
             testfile.FilterIndex = 1;
             testfile.RestoreDirectory = true;
-            testfile.InitialDirectory = System.IO.Path.Combine(executepath, @"Properties");
+            testfile.FileName = RESOReference.Properties.Settings.Default.Folder_Path;
+            testfile.InitialDirectory = RESOReference.Properties.Settings.Default.Folder_Path;
 
             if (testfile.ShowDialog() == DialogResult.OK)
             {
+                if (!String.IsNullOrEmpty(Properties.Settings.Default.Folder_Path))
+                {
+                    Properties.Settings.Default.Folder_Path = testfile.FileName;
+                }
+
+                Properties.Settings.Default.Folder_Path = testfile.FileName;
+                Properties.Settings.Default.Save();
+
                 loadclientpropertiesfile(testfile.FileName);
 
             }
@@ -566,6 +576,8 @@ namespace RESOReference
             {
 
                 webapi_metadata.Text = metadataresponse;
+               // ValidateMetadata test = new ValidateMetadata();
+               // test.ReadResultsData(metadataresponse);
             }
             this.Update();
             ODataServiceTransaction service = new ODataServiceTransaction(app.clientsettings);
@@ -584,6 +596,9 @@ namespace RESOReference
             {
 
                 serviceresponsedata.Text = serviceresponse;
+                //ValidateServiceData test = new ValidateServiceData();
+                //test.ReadResultsData(serviceresponse);
+
             }
 
             this.Update();
@@ -946,6 +961,11 @@ namespace RESOReference
 
         private void RunWebAPITest()
         {
+            int finderror = 0;
+            System.Guid JobID = System.Guid.NewGuid();
+            ResultsProvider resultProvider = new ResultsProvider(JobID);
+
+            ILogger logger = resultProvider as ILogger;
             try
             {
                CommonCore1000_Entry hack = new CommonCore1000_Entry();
@@ -977,16 +997,14 @@ namespace RESOReference
                 }
                 clientsettings = GetSettings();
 
+                finderror = 1;
 
-                
                 var reqHeaders = new List<KeyValuePair<string, string>> { new KeyValuePair<string, string>("OData-Version", "4.0") };
                 reqHeaders.Add(new KeyValuePair<string, string>("Authorization", oauth_bearertoken));
 
                 string reqHeadersString = ConvertListToString(reqHeaders);
 
-                System.Guid JobID = System.Guid.NewGuid();
-                ResultsProvider resultProvider = new ResultsProvider(JobID);
-                ILogger logger = resultProvider as ILogger;
+                
 
 
                 
@@ -1001,13 +1019,16 @@ namespace RESOReference
                 ServiceContext ctx = new ServiceContext(url, JobID, HttpStatusCode.OK, reqHeadersString, metadataresponse, string.Empty, service, serviceresponse, metadataresponse, false, reqHeaders, ODataMetadataType.MinOnly);
 
 
-                
+                finderror = 2;
 
                 int count = 0;
                 TestControl testcontrol = new TestControl();
                 testcontrol.BuildRuleControlList(clientsettings);
                 RuleCatalogCollection.Instance.Clear();
-                
+
+                StringBuilder rulecontrolallfile = new StringBuilder();
+                rulecontrolallfile.Append("<rulecontrols>\r\n");
+
                 StringBuilder sb = new StringBuilder();
                 sb.Append("Category\tName\tDescription\tHelpLink\tErrorMessage\tRequirementLevel\tAspect\tSpecificationSection\tV4SpecificationSection\tV4Specification\tPayloadType\t");
                 sb.Append("LevelType\tResourceType\tDependencyType\tDependencyInfo\tIsMediaLinkEntry\tProjection\tPayloadFormat\tVersion\tOdataMetadataType\tRequireMetadata\tRequireServiceDocument");
@@ -1029,7 +1050,14 @@ namespace RESOReference
                 foreach (var rule in extensionStore.GetRules())
                 {
                     count++;
-                    AddRuleData(ref sb, rule);
+                    try
+                    {
+                        AddRuleData(ref rulecontrolallfile, ref sb, rule, testcontrol);
+                    }
+                    catch(Exception ex)
+                    {
+
+                    }
                     if (!CheckRule(rule, count, clientsettings, testcontrol))
                     {
                         continue;
@@ -1038,7 +1066,12 @@ namespace RESOReference
                 }
                 
                 System.IO.File.WriteAllText(clientsettings.GetSetting(settings.log_directory) + "\\rulelist.txt", sb.ToString());
+                sb.Clear();
 
+                rulecontrolallfile.Append("</rulecontrols>\r\n");
+                System.IO.File.WriteAllText(clientsettings.GetSetting(settings.log_directory) + "\\rulecontrolfile.xml", rulecontrolallfile.ToString());
+                rulecontrolallfile.Clear();
+                finderror = 6;
 
                 var ruleArray = RuleCatalogCollection.Instance.ToArray();
                 
@@ -1046,7 +1079,7 @@ namespace RESOReference
                 rules.Execute(ctx, ruleArray, (int)ruleArray.Length, webapitestcomplete);
                 ResultsProvider logitems = logger as ResultsProvider;
                 Hashtable logitemshash = new Hashtable();
-                
+                finderror = 10;
                 int detailcount = 0;
                 foreach (ExtensionRuleResultDetail item in logitems.Details)
                 {
@@ -1064,6 +1097,7 @@ namespace RESOReference
                         logitemshash[item.RuleName] = hsh;
                     }
                 }
+                finderror = 11;
                 StringBuilder sbresults = new StringBuilder();
                 StringBuilder sbLogAll = new StringBuilder();
                 sbresults.Append("URL");
@@ -1079,16 +1113,17 @@ namespace RESOReference
                 sbresults.Append("SpecificationUri");
                 sbresults.Append("\t");
                 sbresults.Append("\r\n");
+                finderror = 7;
                 foreach (ODataValidator.RuleEngine.TestResult result in resultProvider.ResultsToSave)
                 {
                     BuildResultsOutput(ref sbresults, result, ref sbLogAll, logitemshash);
                 }
-                
+                finderror = 8;
                 using (System.IO.StreamWriter file = new System.IO.StreamWriter(clientsettings.GetSetting(settings.log_directory) + "\\" + "outputlog" + ".txt", false))
                 {
                     file.Write(sbLogAll.ToString());
                 }
-                
+                finderror = 9;
                 using (System.IO.StreamWriter file = new System.IO.StreamWriter(clientsettings.GetSetting(settings.results_directory) + "\\" + "results" + ".txt", false))
                 {
                     file.Write(sbresults.ToString());
@@ -1103,6 +1138,16 @@ namespace RESOReference
             }
 
             OutputLogCapture();
+        }
+
+        private string EscapeXML(string data)
+        {
+            if(string.IsNullOrEmpty(data))
+            {
+                return string.Empty;
+            }
+            
+            return data.Replace("&", "&amp;").Replace("\"", "\\\"").Replace("'", "&apos;").Replace("<", "&lt;").Replace(">", "&gt;").Replace("\r",string.Empty).Replace("\n",string.Empty);
         }
 
         private string ConvertListToString(List<KeyValuePair<string, string>> reqHeaders)
@@ -1165,68 +1210,68 @@ namespace RESOReference
 
 
             //return false;
-            if (rule.Name == "Intermediate.Conformance.1016")
-            {
-                return false;
-            }
-            if (rule.Name == "Advanced.Conformance.1007")
-            {
-                return false;
-            }
-            if (rule.Name == "Advanced.Conformance.1004")
-            {
-                return false;
-            }
-            if (rule.Name == "Intermediate.Conformance.1013")
-            {
-                return false;
-            }
-            if (rule.Name == "ServiceImpl_GetNavigationProperty")
-            {
-                return false;
-            }
-            if (rule.Name == "ServiceImpl_RequestingChanges_delta")
-            {
-                return false;
-            }
-            if (rule.Name == "ServiceImpl_SystemQueryOptionSkip")
-            {
-                return false;
-            }
-            if (rule.Name == "ServiceImpl_SystemQueryOptionSkipToken")
-            {
-                return false;
-            }
-            //Intermediate.Conformance.1013
-            //ServiceImpl_GetNavigationProperty
-            //ServiceImpl_RequestingChanges_delta
-            //ServiceImpl_SystemQueryOptionSkip
-            //ServiceImpl_SystemQueryOptionSkipToken
-            //return false;
+            //if (rule.Name == "Intermediate.Conformance.1016")
+            //{
+            //    return false;
+            //}
+            //if (rule.Name == "Advanced.Conformance.1007")
+            //{
+            //    return false;
+            //}
+            //if (rule.Name == "Advanced.Conformance.1004")
+            //{
+            //    return false;
+            //}
+            //if (rule.Name == "Intermediate.Conformance.1013")
+            //{
+            //    return false;
+            //}
+            //if (rule.Name == "ServiceImpl_GetNavigationProperty")
+            //{
+            //    return false;
+            //}
+            //if (rule.Name == "ServiceImpl_RequestingChanges_delta")
+            //{
+            //    return false;
+            //}
+            //if (rule.Name == "ServiceImpl_SystemQueryOptionSkip")
+            //{
+            //    return false;
+            //}
+            //if (rule.Name == "ServiceImpl_SystemQueryOptionSkipToken")
+            //{
+            //    return false;
+            //}
+       
             RuleControl control = testcontrol.rulecontrol[rule.Name] as RuleControl;
             if (control != null)
             {
-                if (string.Compare(control.cert_impact, "Core", true) == 0)
-                {
-                    return true;
-                }
-                if (string.Compare(control.cert_impact, "Platinum", true) == 0)
-                {
-                    return true;
-                }
+                return true;
+                //if (string.Compare(control.cert_impact, "Core", true) == 0)
+                //{
+                //    return true;
+                //}
+                //if (string.Compare(control.cert_impact, "Platinum", true) == 0)
+                //{
+                //    return true;
+                //}
 
-                if (string.Compare(control.cert_impact, "Gold", true) == 0)
-                {
-                    return true;
-                }
-                if (string.Compare(control.cert_impact, "Silver", true) == 0)
-                {
-                    return true;
-                }
-                if (string.Compare(control.cert_impact, "Bronze", true) == 0)
-                {
-                    return true;
-                }
+                //if (string.Compare(control.cert_impact, "Gold", true) == 0)
+                //{
+                //    return true;
+                //}
+                //if (string.Compare(control.cert_impact, "Silver", true) == 0)
+                //{
+                //    return true;
+                //}
+                //if (string.Compare(control.cert_impact, "Bronze", true) == 0)
+                //{
+                //    return true;
+                //}
+            }
+            else
+            {
+                return false;
             }
             //ServiceImpl_SystemQueryOptionSkip
 
@@ -1315,7 +1360,7 @@ namespace RESOReference
 
         private void BuildResultsOutput(ref StringBuilder sbresults, ODataValidator.RuleEngine.TestResult result, ref StringBuilder sbLogAll, Hashtable logitemshash)
         {
-            if (result.Classification != "notApplicable")
+            //if (result.Classification != "notApplicable")
             {
                 string[] descspit = result.Description.Split('^');
 
@@ -1426,13 +1471,58 @@ namespace RESOReference
                         file.Write(sbLog.ToString());
                     }
                     sbLogAll.Append(sbLog);
+                    sbLog.Clear();
 
                 }
                 sbresults.Append("\r\n");
             }
         }
-        private void AddRuleData(ref StringBuilder sb, ODataValidator.RuleEngine.Rule rule)
+        private void AddRuleData(ref StringBuilder allrulecontrollist, ref StringBuilder sb, ODataValidator.RuleEngine.Rule rule, TestControl testcontrol)
         {
+            if (testcontrol != null)
+            {
+                RuleControl control = testcontrol.rulecontrol[rule.Name] as RuleControl;
+
+                allrulecontrollist.Append("\t<rulecontrol>\r\n");
+                //Original
+                allrulecontrollist.Append("\t\t<rulename>" + EscapeXML(rule.Name) + "</rulename>\r\n");
+                if (control == null)
+                {
+                    allrulecontrollist.Append("\t\t<notes></notes>\r\n");
+                    allrulecontrollist.Append("\t\t<cert_tr></cert_tr>\r\n");
+                    allrulecontrollist.Append("\t\t<cert_impact>" + rule.RequirementLevel + "</cert_impact>\r\n");
+                    allrulecontrollist.Append("\t\t<ttt_testing_results></ttt_testing_results>\r\n");
+                    allrulecontrollist.Append("\t\t<category>" + rule.Category + "</category>\r\n");
+                    allrulecontrollist.Append("\t\t<RESOVersion></RESOVersion>\r\n");
+
+                }
+                else
+                {
+                    allrulecontrollist.Append("\t\t<notes>" + EscapeXML(control.notes) + "</notes>\r\n");
+                    allrulecontrollist.Append("\t\t<cert_tr>" + control.cert_tr + "</cert_tr>\r\n");
+                    allrulecontrollist.Append("\t\t<cert_impact>" + control.cert_impact + "</cert_impact>\r\n");
+                    allrulecontrollist.Append("\t\t<ttt_testing_results>" + control.ttt_testing_results + "</ttt_testing_results>\r\n");
+                    allrulecontrollist.Append("\t\t<category>" + control.category + "</category>\r\n");
+                    allrulecontrollist.Append("\t\t<RESOVersion>1.02</RESOVersion>\r\n");
+                }
+                //Added
+                allrulecontrollist.Append("\t\t<Description>" + EscapeXML(rule.Description) + "</Description>\r\n");
+                allrulecontrollist.Append("\t\t<ErrorMessage>" + EscapeXML(rule.ErrorMessage) + "</ErrorMessage>\r\n");
+                allrulecontrollist.Append("\t\t<ODataSpecification>" + (string.IsNullOrEmpty(rule.SpecificationSection) ? "" : rule.SpecificationSection) + "</ODataSpecification>\r\n");
+                allrulecontrollist.Append("\t\t<V4ODataSpecification>" + (string.IsNullOrEmpty(rule.V4SpecificationSection) ? "" : rule.V4SpecificationSection) + "</V4ODataSpecification>\r\n");
+                allrulecontrollist.Append("\t\t<V4Specification>" + (string.IsNullOrEmpty(rule.V4Specification) ? "" : rule.V4Specification) + "</V4Specification>\r\n");
+                allrulecontrollist.Append("\t\t<ODataVersion>" + rule.Version + "</ODataVersion>\r\n");
+                allrulecontrollist.Append("\t\t<PayloadType>" + rule.PayloadType + "</PayloadType>\r\n");
+                allrulecontrollist.Append("\t\t<PayloadFormat>" + rule.PayloadFormat + "</PayloadFormat>\r\n");
+                allrulecontrollist.Append("\t\t<HelpLink>" + rule.HelpLink + "</HelpLink>\r\n");
+                
+
+
+                allrulecontrollist.Append("\t</rulecontrol>\r\n");
+
+
+
+      }
             sb.Append(rule.Category);
             sb.Append("\t");
             sb.Append(rule.Name);

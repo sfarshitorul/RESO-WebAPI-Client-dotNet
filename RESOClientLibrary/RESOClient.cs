@@ -264,7 +264,7 @@ namespace RESOClientLibrary
                 }
 
                 //responseobject = WebHelper.Post
-                responseobject = WebHelper.Get(request, 999999);
+                responseobject = WebHelper.Get(request, int.MaxValue);
                 if (responseobject.StatusCode == HttpStatusCode.RequestTimeout)
                 {
                     return "RequestTimeout.  Currently set to:  " + Constants.WebRequestTimeOut;

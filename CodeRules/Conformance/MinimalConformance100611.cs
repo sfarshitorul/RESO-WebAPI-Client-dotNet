@@ -93,8 +93,9 @@ namespace ODataValidator.Rule
             }
 
             string url = string.Format("{0}/?$select={1}.{2}", context.Destination, appropriateNamespace[0], selectedName);
-            var req = WebRequest.Create(url) as HttpWebRequest;
-            var response = WebHelper.Get(req, RuleEngineSetting.Instance().DefaultMaximumPayloadSize);
+            //var req = WebRequest.Create(url) as HttpWebRequest;
+            //var response = WebHelper.Get(req, RuleEngineSetting.Instance().DefaultMaximumPayloadSize);//REPLACE HEADER
+            var response = WebHelper.Get(url,null, RuleEngineSetting.Instance().DefaultMaximumPayloadSize,context.RequestHeaders);
             ExtensionRuleResultDetail detail = new ExtensionRuleResultDetail(this.Name, url, "GET", string.Empty, response);
 
             if (response != null && response.StatusCode != null)

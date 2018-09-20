@@ -287,9 +287,9 @@
             // 
             // edit_UserName
             // 
-            this.edit_UserName.Location = new System.Drawing.Point(139, 123);
+            this.edit_UserName.Location = new System.Drawing.Point(139, 125);
             this.edit_UserName.Name = "edit_UserName";
-            this.edit_UserName.Size = new System.Drawing.Size(380, 20);
+            this.edit_UserName.Size = new System.Drawing.Size(381, 20);
             this.edit_UserName.TabIndex = 50;
             // 
             // oauth_granttype
@@ -624,7 +624,7 @@
             this.Controls.Add(this.edit_BearerToken);
             this.Controls.Add(this.lbl_BearerToken);
             this.Name = "ReferenceClient";
-            this.Text = "RESO Reference Client v3.1.7";
+            this.Text = "RESO Reference Client v3.1.11";
             this.ResumeLayout(false);
             this.PerformLayout();
 

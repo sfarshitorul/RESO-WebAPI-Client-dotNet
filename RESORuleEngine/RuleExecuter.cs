@@ -152,6 +152,11 @@ namespace ODataValidator.RuleEngine
                         e.RuleName = rule.Name;
                         e.DestinationEndpoint = context.Destination.AbsolutePath;
                         this.LogRuntimeError(e);
+                        bool tryagain = false;
+                        if (tryagain)
+                        {
+                            result = RuleExecuter.ExecuteRule(context, rule);
+                        }
                     }
                     if (ruleresult != null)
                     {

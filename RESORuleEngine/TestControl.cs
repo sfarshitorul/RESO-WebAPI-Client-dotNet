@@ -34,8 +34,12 @@ namespace ODataValidator.RuleEngine
                             {
                                 rulecontrol[value] = record;
                             }
-                            record = new RuleControl();
-                            record.rulename = value;
+                            else
+                            {
+                                record = new RuleControl();
+                                record.rulename = value;
+                                rulecontrol[value] = record;
+                            }
                         }
                         if (name == "notes")
                         {
@@ -57,6 +61,65 @@ namespace ODataValidator.RuleEngine
                         {
                             record.category = value;
                         }
+                        if (name == "RESOVersion")
+                        {
+                            record.RESOVersion = value;
+                        }
+                        if (name == "Description")
+                        {
+                            record.Description = value;
+                        }
+                        if (name == "ErrorMessage")
+                        {
+                            record.ErrorMessage = value;
+                        }
+                        if (name == "ODataSpecification")
+                        {
+                            record.ODataSpecification = value;
+                        }
+                        if (name == "V4ODataSpecification")
+                        {
+                            record.V4ODataSpecification = value;
+                        }
+                        if (name == "V4Specification")
+                        {
+                            record.V4Specification = value;
+                        }
+                        if (name == "ODataVersion")
+                        {
+                            record.ODataVersion = value;
+                        }
+                        if (name == "PayloadType")
+                        {
+                            record.PayloadType = value;
+                        }
+                        if (name == "PayloadFormat")
+                        {
+                            record.PayloadFormat = value;
+                        }
+                        if (name == "HelpLink")
+                        {
+                            record.HelpLink = value;
+                        }
+
+                        /*
+                            <rulename>Common.Core.1000</rulename>
+                                <notes></notes>
+                                <cert_tr></cert_tr>
+                                <cert_impact>Should</cert_impact>
+                                <ttt_testing_results></ttt_testing_results>
+                                <category>CORE</category>
+                                <RESOVersion></RESOVersion>
+                                <Description>A data service SHOULD expose a conceptual schema definition language (CSDL) based metadata endpoint that describes the structure and organization of all the resources exposed as HTTP endpoints.</Description>
+                                <ErrorMessage>A data service SHOULD expose a conceptual schema definition language (CSDL) based metadata endpoint that describes the structure and organization of all the resources exposed as HTTP endpoints.</ErrorMessage>
+                                <ODataSpecification>2.2.3.7.2</ODataSpecification>
+                                <V4ODataSpecification></V4ODataSpecification>
+                                <V4Specification></V4Specification>
+                                <ODataVersion></ODataVersion>
+                                <PayloadType>Entry</PayloadType>
+                                <PayloadFormat></PayloadFormat>
+                                <HelpLink></HelpLink>
+                         */
                     }
                 }
                 //string text = node.InnerXml;

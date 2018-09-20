@@ -228,8 +228,8 @@ namespace ODataValidator.Rule
                     {
                         if (navigPropNames.Contains(j.Name) && j.Value.Type == JTokenType.Array)
                         {
-                            var req = WebRequest.Create(context.DestinationBasePath + "/" + j.Name + @"/$count") as HttpWebRequest;
-                            Response resp = WebHelper.Get(req, RuleEngineSetting.Instance().DefaultMaximumPayloadSize);
+                            string uri = context.DestinationBasePath + "/" + j.Name + @"/$count";
+                            Response resp = WebHelper.Get(uri, null, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
                             passed = null;
 
                             if ((j.Value as JArray).Count < Convert.ToInt32(resp.ResponsePayload))

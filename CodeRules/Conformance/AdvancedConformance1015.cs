@@ -98,8 +98,8 @@ namespace ODataValidator.Rule
                 }
 
                 Uri crossJoinUrl = new Uri(context.DestinationBasePath + crossJoinSegment);
-                var req = WebRequest.Create(crossJoinUrl) as HttpWebRequest;
-                Response response = WebHelper.Get(req, RuleEngineSetting.Instance().DefaultMaximumPayloadSize);
+                
+                Response response = WebHelper.Get(crossJoinUrl, null, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
                 detail = new ExtensionRuleResultDetail(this.Name, crossJoinUrl.AbsoluteUri, "GET", string.Empty, response);
 
                 if (response != null && response.StatusCode == HttpStatusCode.OK)

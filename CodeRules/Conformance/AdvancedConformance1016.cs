@@ -77,8 +77,10 @@ namespace ODataValidator.Rule
             bool? passed = null;
 
             Uri metadataServiceUrl = new Uri(context.Destination.AbsoluteUri.TrimEnd('/') + @"/$metadata" + @"/");
-            var req = WebRequest.Create(metadataServiceUrl) as HttpWebRequest;
-            Response response = WebHelper.Get(req, RuleEngineSetting.Instance().DefaultMaximumPayloadSize);
+            //var req = WebRequest.Create(metadataServiceUrl) as HttpWebRequest;
+            //Response response = WebHelper.Get(req, RuleEngineSetting.Instance().DefaultMaximumPayloadSize);
+            Response response = WebHelper.Get(metadataServiceUrl, null, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
+
             ExtensionRuleResultDetail detail = new ExtensionRuleResultDetail(this.Name, metadataServiceUrl.AbsoluteUri, "GET", string.Empty, response);
 
             if (response != null && response.StatusCode == HttpStatusCode.OK && response.ResponsePayload.IsMetadata())
