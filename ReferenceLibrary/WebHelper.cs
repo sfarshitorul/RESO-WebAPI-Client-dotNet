@@ -108,6 +108,10 @@ namespace ReferenceLibrary
                         HttpStatusCode? statusCode = WebHelper.ParseResponse(maximumPayloadSize, wex.Response, out responseHeaders, out responsePayload);
                         return new Response(statusCode, responseHeaders, responsePayload);
                     }
+                    if(wex.Message == "The operation has timed out")
+                    {
+                        return new Response(HttpStatusCode.RequestTimeout, null, null);
+                    }
                 }
                 catch (OversizedPayloadException)
                 {
@@ -167,6 +171,7 @@ namespace ReferenceLibrary
 
                 using (var stream = response.GetResponseStream())
                 {
+                    
                     responsePayload = WebHelper.GetPayloadString(stream, maximumPayloadSize, charset, contentType);
                 }
             }
@@ -901,12 +906,7 @@ namespace ReferenceLibrary
         /// <returns>payload text read using proper encoding</returns>
         private static string GetPayloadString(Stream stream, int maximumPayloadSize, string charset, string contentType)
         {
-            byte[] buffer = WebHelper.GetPayloadBytes(stream, maximumPayloadSize);
-            if (buffer == null || buffer.Length == 0)
-            {
-                return null;
-            }
-
+            string result;
             Encoding encoding = Encoding.UTF8;
             if (!string.IsNullOrEmpty(charset))
             {
@@ -919,30 +919,45 @@ namespace ReferenceLibrary
                     charset = null;
                 }
             }
+            var sr = new StreamReader(stream, encoding);
+            result = sr.ReadToEnd();
+            return result;
 
-            if (buffer.Length > 3 && buffer[0] == 0xef && buffer[1] == 0xbb && buffer[2] == 0xbf)
-            {
-                buffer[0] = 0x20;
-                buffer[1] = 0x20;
-                buffer[2] = 0x20;
-            }
+            //Stuart - The following code was failing to read a response from FBS properly.  Possibly a character encoding issue.  The exception
+            //occured on the GetPayloadBytes function.
+
+            //byte[] buffer = WebHelper.GetPayloadBytes(stream, maximumPayloadSize);
+            //if (buffer == null || buffer.Length == 0)
+            //{
+            //    return null;
+            //}
 
 
-            // Read the content.
-            string responsetext = System.Text.Encoding.Default.GetString(buffer);
 
-            string responsePayload = encoding.GetString(buffer).TrimStart();
 
-            if (string.IsNullOrEmpty(charset))
-            {
-                string payloadInEmbbedEncoding;
-                if (TryReadWithEmbeddedEncoding(buffer, contentType, responsePayload, out payloadInEmbbedEncoding))
-                {
-                    return payloadInEmbbedEncoding;
-                }
-            }
+            //if (buffer.Length > 3 && buffer[0] == 0xef && buffer[1] == 0xbb && buffer[2] == 0xbf)
+            //{
+            //    buffer[0] = 0x20;
+            //    buffer[1] = 0x20;
+            //    buffer[2] = 0x20;
+            //}
 
-            return responsePayload;
+
+            //// Read the content.
+            //string responsetext = System.Text.Encoding.Default.GetString(buffer);
+
+            //string responsePayload = encoding.GetString(buffer).TrimStart();
+
+            //if (string.IsNullOrEmpty(charset))
+            //{
+            //    string payloadInEmbbedEncoding;
+            //    if (TryReadWithEmbeddedEncoding(buffer, contentType, responsePayload, out payloadInEmbbedEncoding))
+            //    {
+            //        return payloadInEmbbedEncoding;
+            //    }
+            //}
+
+            //return responsePayload;
         }
 
         /// <summary>

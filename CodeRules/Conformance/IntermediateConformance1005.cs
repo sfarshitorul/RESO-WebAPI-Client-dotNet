@@ -62,7 +62,7 @@ namespace ODataValidator.Rule
             {
                 throw new ArgumentNullException("context");
             }
-
+            
             bool? passed = null;
             info = null;
             HttpStatusCode? statusCode = VerificationHelper.VerifyTop(context, out passed, out info);

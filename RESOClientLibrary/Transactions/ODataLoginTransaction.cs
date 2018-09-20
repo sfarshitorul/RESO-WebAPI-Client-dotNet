@@ -41,10 +41,13 @@ namespace RESOClientLibrary.Transactions
                 setClientApp(app);
                 setURL(app.clientsettings.GetSetting(settings.oauth_tokenuri));
                 app.LogData("Begin Login Event");
-                if (string.IsNullOrEmpty(app.clientsettings.GetSetting(settings.openid_code)))
+                if (clientsettings.GetSetting(settings.oauth_granttype) == "authorization_code")
                 {
-                    app.LogData("No Code Available");
-                    return false;
+                    if (string.IsNullOrEmpty(app.clientsettings.GetSetting(settings.openid_code)))
+                    {
+                        app.LogData("No Code Available");
+                        return false;
+                    }
                 }
                 responsedata = app.PostData(getURL(), BuildTokenRequest(app.clientsettings), preauth);
 
@@ -75,16 +78,31 @@ namespace RESOClientLibrary.Transactions
             StringBuilder sb = new StringBuilder();
             sb.Append("grant_type=");
             sb.Append(clientsettings.GetSetting(settings.oauth_granttype));
-            sb.Append("&");
-            sb.Append("code=");
-            sb.Append(clientsettings.GetSetting(settings.openid_code));
-            sb.Append("&");
-            sb.Append("redirect_uri=");
-            sb.Append(clientsettings.GetSetting(settings.oauth_redirecturi));
+            if (clientsettings.GetSetting(settings.oauth_granttype) == "authorization_code")
+            {
+                sb.Append("&");
+                sb.Append("code=");
+                sb.Append(clientsettings.GetSetting(settings.openid_code));
+
+                sb.Append("&");
+                sb.Append("redirect_uri=");
+                sb.Append(clientsettings.GetSetting(settings.oauth_redirecturi));
+            }
             sb.Append("&");
             sb.Append("client_id=");
             sb.Append(clientsettings.GetSetting(settings.oauth_clientidentification));
-             return sb.ToString();
+            if (clientsettings.GetSetting(settings.oauth_granttype) == "client_credentials")
+            {
+                sb.Append("&");
+                sb.Append("client_secret=");
+                sb.Append(clientsettings.GetSetting(settings.oauth_clientsecret));
+                sb.Append("&");
+                sb.Append("scope=");
+                sb.Append(clientsettings.GetSetting(settings.oauth_clientscope));
+
+            }
+
+            return sb.ToString();
         }
 
 

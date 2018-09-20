@@ -19,6 +19,34 @@ namespace ODataValidator.RuleEngine
         public string parameters;
         public string category;
         public string rulename;
+        public string RESOVersion;
+        public string Description;
+        public string ErrorMessage;
+        public string ODataSpecification;
+        public string V4ODataSpecification;
+        public string V4Specification;
+        public string ODataVersion;
+        public string PayloadType;
+        public string PayloadFormat;
+        public string HelpLink;
+
+        /*    <rulename>Common.Core.1000</rulename>
+                <notes></notes>
+                <cert_tr></cert_tr>
+                <cert_impact>Should</cert_impact>
+                <ttt_testing_results></ttt_testing_results>
+                <category>CORE</category>
+                <RESOVersion></RESOVersion>
+                <Description>A data service SHOULD expose a conceptual schema definition language(CSDL) based metadata endpoint that describes the structure and organization of all the resources exposed as HTTP endpoints.</Description>
+                <ErrorMessage>A data service SHOULD expose a conceptual schema definition language (CSDL) based metadata endpoint that describes the structure and organization of all the resources exposed as HTTP endpoints.</ErrorMessage>
+                <ODataSpecification>2.2.3.7.2</ODataSpecification>
+                <V4ODataSpecification></V4ODataSpecification>
+                <V4Specification></V4Specification>
+                <ODataVersion></ODataVersion>
+                <PayloadType>Entry</PayloadType>
+                <PayloadFormat></PayloadFormat>
+                <HelpLink></HelpLink>
+           */
     }
 
     public class RuleControlImport : TabDelimitedFile

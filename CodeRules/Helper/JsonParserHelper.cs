@@ -711,7 +711,7 @@ namespace ODataValidator.Rule.Helper
         /// <param name="totalCount">The amount of the entities.</param>
         public static void GetEntitiesCountFromFeed(Uri url, JObject feed, IEnumerable<KeyValuePair<string, string>> RequestHeaders, ref int totalCount)
         {
-            int skip = 0;
+            int skiptoken = 0;
 
             foreach (var r in feed.Children<JProperty>())
             {
@@ -723,9 +723,9 @@ namespace ODataValidator.Rule.Helper
                 // When entities are more than one page.
                 if (r.Name.Equals(Constants.V4OdataNextLink, StringComparison.Ordinal))
                 {
-                    string[] skipValues = r.Value.ToString().StripOffDoubleQuotes().Split(new string[] { "skip=" }, StringSplitOptions.None);
-                    skip = Int32.Parse(skipValues[1]);
-                    string nextLinkUrl = !url.AbsoluteUri.Contains("?$") ? url + @"?$skip=" + skip.ToString() : url + @"&$skip=" + skip.ToString();
+                    string[] skiptokenValues = r.Value.ToString().StripOffDoubleQuotes().Split(new string[] { "skiptoken=" }, StringSplitOptions.None);
+                    skiptoken = Int32.Parse(skiptokenValues[1]);
+                    string nextLinkUrl = !url.AbsoluteUri.Contains("?$") ? url + @"?$skiptoken=" + skiptoken.ToString() : url + @"&$skiptoken=" + skiptoken.ToString();
                     Response response = WebHelper.Get(new Uri(nextLinkUrl), Constants.AcceptHeaderJson, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, RequestHeaders);
 
                     JObject jo;

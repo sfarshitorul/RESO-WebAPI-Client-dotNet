@@ -1,659 +1,2450 @@
 <rulecontrols>
-<rulecontrol>
-<rulename>ServiceImpl_SystemQueryOptionFilter_Division</rulename >
-<notes></notes >
-<cert_tr>Not in Testing Rules</cert_tr >
-<cert_impact>OData MUST</cert_impact >
-<ttt_testing_results>success</ttt_testing_results >
-<category>SERVICEIMPL</category >
-</rulecontrol>
-<rulecontrol>
-<rulename>ServiceImpl_SystemQueryOptionFilter_Subtraction</rulename >
-<notes></notes >
-<cert_tr>Not in Testing Rules</cert_tr >
-<cert_impact>OData MUST</cert_impact >
-<ttt_testing_results>success</ttt_testing_results >
-<category>SERVICEIMPL</category >
-</rulecontrol>
-<rulecontrol>
-<rulename>ServiceImpl_UpdateRefForNavigationProperty</rulename >
-<notes></notes >
-<cert_tr>IGNORE: UPDATE</cert_tr >
-<cert_impact>SHOULD</cert_impact >
-<ttt_testing_results>(Not in Results)</ttt_testing_results >
-<category>SERVICEIMPL</category >
-</rulecontrol>
-<rulecontrol>
-<rulename>ServiceImpl_UpdateCollectionProperty</rulename >
-<notes></notes >
-<cert_tr>Not in Testing Rules</cert_tr >
-<cert_impact>OData MUST</cert_impact >
-<ttt_testing_results>(Not in Results)</ttt_testing_results >
-<category>SERVICEIMPL</category >
-</rulecontrol>
-<rulecontrol>
-<rulename>ServiceImpl_SystemQueryOptionSelect</rulename >
-<notes></notes >
-<cert_tr>REQ-WA100-QR3</cert_tr >
-<cert_impact>Core</cert_impact >
-<ttt_testing_results>success</ttt_testing_results >
-<category>SERVICEIMPL</category >
-</rulecontrol>
-<rulecontrol>
-<rulename>ServiceImpl_DeleteEntity</rulename >
-<notes></notes >
-<cert_tr>IGNORE: UPDATE</cert_tr >
-<cert_impact>OData MUST</cert_impact >
-<ttt_testing_results>aborted</ttt_testing_results >
-<category>SERVICEIMPL</category >
-</rulecontrol>
-<rulecontrol>
-<rulename>ServiceImpl_GetProperty</rulename >
-<notes></notes >
-<cert_tr>Not in Testing Rules</cert_tr >
-<cert_impact>OData MUST</cert_impact >
-<ttt_testing_results>error</ttt_testing_results >
-<category>SERVICEIMPL</category >
-</rulecontrol>
-<rulecontrol>
-<rulename>ServiceImpl_SystemQueryOptionFilter_GeoLength</rulename >
-<notes>Any one Geo should be fine.</notes >
-<cert_tr></cert_tr >
-<cert_impact>OData MUST</cert_impact >
-<ttt_testing_results>(Not in Results)</ttt_testing_results >
-<category>SERVICEIMPL</category >
-</rulecontrol>
-<rulecontrol>
-<rulename>ServiceImpl_SystemQueryOptionFilter</rulename >
-<notes></notes >
-<cert_tr>REQ-WA100-QO1</cert_tr >
-<cert_impact>Core</cert_impact >
-<ttt_testing_results>success</ttt_testing_results >
-<category>SERVICEIMPL</category >
-</rulecontrol>
-<rulecontrol>
-<rulename>ServiceImpl_SystemQueryOptionFilter_Ceiling</rulename >
-<notes></notes >
-<cert_tr>Not in Testing Rules</cert_tr >
-<cert_impact>OData MUST</cert_impact >
-<ttt_testing_results>aborted</ttt_testing_results >
-<category>SERVICEIMPL</category >
-</rulecontrol>
-<rulecontrol>
-<rulename>ServiceImpl_FunctionImport</rulename >
-<notes></notes >
-<cert_tr>Not in Testing Rules</cert_tr >
-<cert_impact>OData MUST</cert_impact >
-<ttt_testing_results>(Not in Results)</ttt_testing_results >
-<category>SERVICEIMPL</category >
-</rulecontrol>
-<rulecontrol>
-<rulename>ServiceImpl_DeleteStreamPropertyValue</rulename >
-<notes></notes >
-<cert_tr>IGNORE: UPDATE</cert_tr >
-<cert_impact>OData MUST</cert_impact >
-<ttt_testing_results>(Not in Results)</ttt_testing_results >
-<category>SERVICEIMPL</category >
-</rulecontrol>
-<rulecontrol>
-<rulename>ServiceImpl_AddRefToCollectionNavigationProperty</rulename >
-<notes></notes >
-<cert_tr>Not in Testing Rules</cert_tr >
-<cert_impact>OData MUST</cert_impact >
-<ttt_testing_results>aborted</ttt_testing_results >
-<category>SERVICEIMPL</category >
-</rulecontrol>
-<rulecontrol>
-<rulename>ServiceImpl_SystemQueryOptionFilter_ToLower</rulename >
-<notes></notes >
-<cert_tr>REQ-WA100-QO16</cert_tr >
-<cert_impact>Platinum</cert_impact >
-<ttt_testing_results>(Not in Results)</ttt_testing_results >
-<category>SERVICEIMPL</category >
-</rulecontrol>
-<rulecontrol>
-<rulename>ServiceImpl_RequestingChanges_delta</rulename >
-<notes></notes >
-<cert_tr>Not in Testing Rules</cert_tr >
-<cert_impact>OData MUST</cert_impact >
-<ttt_testing_results>(Not in Results)</ttt_testing_results >
-<category>SERVICEIMPL</category >
-</rulecontrol>
-<rulecontrol>
-<rulename>ServiceImpl_SystemQueryOptionTop</rulename >
-<notes></notes >
-<cert_tr>REQ-WA100-QR4</cert_tr >
-<cert_impact>Core</cert_impact >
-<ttt_testing_results>success</ttt_testing_results >
-<category>SERVICEIMPL</category >
-</rulecontrol>
-<rulecontrol>
-<rulename>ServiceImpl_UpsertEntity</rulename >
-<notes></notes >
-<cert_tr>Not in Testing Rules</cert_tr >
-<cert_impact>OData MUST</cert_impact >
-<ttt_testing_results>aborted</ttt_testing_results >
-<category>SERVICEIMPL</category >
-</rulecontrol>
-<rulecontrol>
-<rulename>ServiceImpl_SystemQueryOptionFilter_GeoDistance</rulename >
-<notes>Any one Geo should be fine.</notes >
-<cert_tr></cert_tr >
-<cert_impact>OData MUST</cert_impact >
-<ttt_testing_results>error</ttt_testing_results >
-<category>SERVICEIMPL</category >
-</rulecontrol>
-<rulecontrol>
-<rulename>ServiceImpl_SystemQueryOptionFormat</rulename >
-<notes></notes >
-<cert_tr>Not in Testing Rules</cert_tr >
-<cert_impact>OData MUST</cert_impact >
-<ttt_testing_results>success</ttt_testing_results >
-<category>SERVICEIMPL</category >
-</rulecontrol>
-<rulecontrol>
-<rulename>ServiceImpl_SystemQueryOptionFilter_Date</rulename >
-<notes></notes >
-<cert_tr>REQ-WA100-QO25</cert_tr >
-<cert_impact>Core</cert_impact >
-<ttt_testing_results>success</ttt_testing_results >
-<category>SERVICEIMPL</category >
-</rulecontrol>
-<rulecontrol>
-<rulename>ServiceImpl_BatchRequests</rulename >
-<notes></notes >
-<cert_tr>Not in Testing Rules</cert_tr >
-<cert_impact>SHOULD</cert_impact >
-<ttt_testing_results>(Not in Results)</ttt_testing_results >
-<category>SERVICEIMPL</category >
-</rulecontrol>
-<rulecontrol>
-<rulename></rulename >
-<notes>RESO Only TR</notes >
-<cert_tr>REQ-WA100-QR1</cert_tr >
-<cert_impact>Core</cert_impact >
-<ttt_testing_results></ttt_testing_results >
-<category></category >
-</rulecontrol>
-<rulecontrol>
-<rulename>ServiceImpl_SystemQueryOptionFilter_Floor</rulename >
-<notes></notes >
-<cert_tr>Not in Testing Rules</cert_tr >
-<cert_impact>OData MUST</cert_impact >
-<ttt_testing_results>aborted</ttt_testing_results >
-<category>SERVICEIMPL</category >
-</rulecontrol>
-<rulecontrol>
-<rulename>ServiceImpl_FilterNotEquals</rulename >
-<notes></notes >
-<cert_tr>REQ-WA100-QO3</cert_tr >
-<cert_impact>Core</cert_impact >
-<ttt_testing_results>success</ttt_testing_results >
-<category>SERVICEIMPL</category >
-</rulecontrol>
-<rulecontrol>
-<rulename>ServiceImpl_UpdateEntity</rulename >
-<notes></notes >
-<cert_tr>Not in Testing Rules</cert_tr >
-<cert_impact>OData MUST</cert_impact >
-<ttt_testing_results>aborted</ttt_testing_results >
-<category>SERVICEIMPL</category >
-</rulecontrol>
-<rulecontrol>
-<rulename>ServiceImpl_FilterHas</rulename >
-<notes>UPDATE TTT Tests</notes >
-<cert_tr>REQ-WA100-QO8</cert_tr >
-<cert_impact>Bronze</cert_impact >
-<ttt_testing_results>error</ttt_testing_results >
-<category>SERVICEIMPL</category >
-</rulecontrol>
-<rulecontrol>
-<rulename>ServiceImpl_FilterGreaterThanOrEqual</rulename >
-<notes></notes >
-<cert_tr>REQ-WA100-QO5</cert_tr >
-<cert_impact>Core</cert_impact >
-<ttt_testing_results>success</ttt_testing_results >
-<category>SERVICEIMPL</category >
-</rulecontrol>
-<rulecontrol>
-<rulename>ServiceImpl_SystemQueryOptionEntity_Id</rulename >
-<notes></notes >
-<cert_tr>Not in Testing Rules</cert_tr >
-<cert_impact>OData MUST</cert_impact >
-<ttt_testing_results>error</ttt_testing_results >
-<category>SERVICEIMPL</category >
-</rulecontrol>
-<rulecontrol>
-<rulename>ServiceImpl_GetEntity</rulename >
-<notes></notes >
-<cert_tr>Not in Testing Rules</cert_tr >
-<cert_impact>OData MUST</cert_impact >
-<ttt_testing_results>success</ttt_testing_results >
-<category>SERVICEIMPL</category >
-</rulecontrol>
-<rulecontrol>
-<rulename>ServiceImpl_DeleteMediaEntity</rulename >
-<notes></notes >
-<cert_tr>IGNORE: UPDATE</cert_tr >
-<cert_impact>OData MUST</cert_impact >
-<ttt_testing_results>(Not in Results)</ttt_testing_results >
-<category>SERVICEIMPL</category >
-</rulecontrol>
-<rulecontrol>
-<rulename>ServiceImpl_FilterGrouping</rulename >
-<notes>UPDATE TTT Tests</notes >
-<cert_tr>REQ-WA100-QO12</cert_tr >
-<cert_impact>Platinum</cert_impact >
-<ttt_testing_results>error</ttt_testing_results >
-<category>SERVICEIMPL</category >
-</rulecontrol>
-<rulecontrol>
-<rulename>ServiceImpl_FilterLessThanOrEqual</rulename >
-<notes></notes >
-<cert_tr>REQ-WA100-QO7</cert_tr >
-<cert_impact>Core</cert_impact >
-<ttt_testing_results>success</ttt_testing_results >
-<category>SERVICEIMPL</category >
-</rulecontrol>
-<rulecontrol>
-<rulename>ServiceImpl_UpdatePrimitiveProperty</rulename >
-<notes></notes >
-<cert_tr>Not in Testing Rules</cert_tr >
-<cert_impact>OData MUST</cert_impact >
-<ttt_testing_results>(Not in Results)</ttt_testing_results >
-<category>SERVICEIMPL</category >
-</rulecontrol>
-<rulecontrol>
-<rulename>ServiceImpl_ActionImport</rulename >
-<notes></notes >
-<cert_tr>IGNORE: UPDATE</cert_tr >
-<cert_impact>OData MUST</cert_impact >
-<ttt_testing_results>(Not in Results)</ttt_testing_results >
-<category>SERVICEIMPL</category >
-</rulecontrol>
-<rulecontrol>
-<rulename>ServiceImpl_FilterGreaterThan</rulename >
-<notes></notes >
-<cert_tr>REQ-WA100-QO4</cert_tr >
-<cert_impact>Core</cert_impact >
-<ttt_testing_results>success</ttt_testing_results >
-<category>SERVICEIMPL</category >
-</rulecontrol>
-<rulecontrol>
-<rulename>ServiceImpl_SystemQueryOptionFilter_IsOf</rulename >
-<notes></notes >
-<cert_tr>Not in Testing Rules</cert_tr >
-<cert_impact>OData MUST</cert_impact >
-<ttt_testing_results>success</ttt_testing_results >
-<category>SERVICEIMPL</category >
-</rulecontrol>
-<rulecontrol>
-<rulename>ServiceImpl_SystemQueryOptionFilter_Concat</rulename >
-<notes></notes >
-<cert_tr>Not in Testing Rules</cert_tr >
-<cert_impact>OData MUST</cert_impact >
-<ttt_testing_results>success</ttt_testing_results >
-<category>SERVICEIMPL</category >
-</rulecontrol>
-<rulecontrol>
-<rulename>ServiceImpl_ServiceDocumentRequest</rulename >
-<notes></notes >
-<cert_tr></cert_tr >
-<cert_impact>OData MUST</cert_impact >
-<ttt_testing_results>success</ttt_testing_results >
-<category>SERVICEIMPL</category >
-</rulecontrol>
-<rulecontrol>
-<rulename>ServiceImpl_FilterAll</rulename >
-<notes>OPEN QUESTION: Duplicate of “REQ-WA100-QO1”</notes >
-<cert_tr>?</cert_tr >
-<cert_impact>OData MUST</cert_impact >
-<ttt_testing_results>aborted</ttt_testing_results >
-<category>SERVICEIMPL</category >
-</rulecontrol>
-<rulecontrol>
-<rulename>ServiceImpl_DeleteProperty</rulename >
-<notes></notes >
-<cert_tr>IGNORE: UPDATE</cert_tr >
-<cert_impact>OData MUST</cert_impact >
-<ttt_testing_results>(Not in Results)</ttt_testing_results >
-<category>SERVICEIMPL</category >
-</rulecontrol>
-<rulecontrol>
-<rulename>ServiceImpl_SystemQueryOptionValue</rulename >
-<notes></notes >
-<cert_tr>Not in Testing Rules</cert_tr >
-<cert_impact>OData MUST</cert_impact >
-<ttt_testing_results>error</ttt_testing_results >
-<category>SERVICEIMPL</category >
-</rulecontrol>
-<rulecontrol>
-<rulename>ServiceImpl_SystemQueryOptionSkip</rulename >
-<notes>UPDATE TTT Tests</notes >
-<cert_tr>REQ-WA100-QR5</cert_tr >
-<cert_impact>Core</cert_impact >
-<ttt_testing_results>error</ttt_testing_results >
-<category>SERVICEIMPL</category >
-</rulecontrol>
-<rulecontrol>
-<rulename>ServiceImpl_SystemQueryOptionFilter_TotalSeconds</rulename >
-<notes></notes >
-<cert_tr>Not in Testing Rules</cert_tr >
-<cert_impact>OData MUST</cert_impact >
-<ttt_testing_results>(Not in Results)</ttt_testing_results >
-<category>SERVICEIMPL</category >
-</rulecontrol>
-<rulecontrol>
-<rulename>ServiceImpl_FilterEquals</rulename >
-<notes></notes >
-<cert_tr>REQ-WA100-QO2</cert_tr >
-<cert_impact>Core</cert_impact >
-<ttt_testing_results>success</ttt_testing_results >
-<category>SERVICEIMPL</category >
-</rulecontrol>
-<rulecontrol>
-<rulename>ServiceImpl_FilterLessThan</rulename >
-<notes></notes >
-<cert_tr>REQ-WA100-QO6</cert_tr >
-<cert_impact>Core</cert_impact >
-<ttt_testing_results>success</ttt_testing_results >
-<category>SERVICEIMPL</category >
-</rulecontrol>
-<rulecontrol>
-<rulename>ServiceImpl_AsynchronousRequest</rulename >
-<notes></notes >
-<cert_tr>Not in Testing Rules</cert_tr >
-<cert_impact>SHOULD</cert_impact >
-<ttt_testing_results>(Not in Results)</ttt_testing_results >
-<category>SERVICEIMPL</category >
-</rulecontrol>
-<rulecontrol>
-<rulename>ServiceImpl_UpdateComplexProperty</rulename >
-<notes></notes >
-<cert_tr>Not in Testing Rules</cert_tr >
-<cert_impact>OData MUST</cert_impact >
-<ttt_testing_results>(Not in Results)</ttt_testing_results >
-<category>SERVICEIMPL</category >
-</rulecontrol>
-<rulecontrol>
-<rulename>ServiceImpl_SystemQueryOptionFilter_Mindatetime</rulename >
-<notes></notes >
-<cert_tr>Not in Testing Rules</cert_tr >
-<cert_impact>OData MUST</cert_impact >
-<ttt_testing_results>error</ttt_testing_results >
-<category>SERVICEIMPL</category >
-</rulecontrol>
-<rulecontrol>
-<rulename>ServiceImpl_CreateMediaEntity</rulename >
-<notes></notes >
-<cert_tr>IGNORE: UPDATE</cert_tr >
-<cert_impact>OData MUST</cert_impact >
-<ttt_testing_results>(Not in Results)</ttt_testing_results >
-<category>SERVICEIMPL</category >
-</rulecontrol>
-<rulecontrol>
-<rulename>ServiceImpl_SystemQueryOptionCount</rulename >
-<notes></notes >
-<cert_tr>Not in Testing Rules</cert_tr >
-<cert_impact>OData MUST</cert_impact >
-<ttt_testing_results>error</ttt_testing_results >
-<category>SERVICEIMPL</category >
-</rulecontrol>
-<rulecontrol>
-<rulename>ServiceImpl_SystemQueryOptionFilter_Maxdatetime</rulename >
-<notes></notes >
-<cert_tr>Not in Testing Rules</cert_tr >
-<cert_impact>OData MUST</cert_impact >
-<ttt_testing_results>error</ttt_testing_results >
-<category>SERVICEIMPL</category >
-</rulecontrol>
-<rulecontrol>
-<rulename>ServiceImpl_FilterAnd</rulename >
-<notes></notes >
-<cert_tr>REQ-WA100-QO9</cert_tr >
-<cert_impact>Core</cert_impact >
-<ttt_testing_results>success</ttt_testing_results >
-<category>SERVICEIMPL</category >
-</rulecontrol>
-<rulecontrol>
-<rulename>ServiceImpl_CreateEntityDeepInsert</rulename >
-<notes></notes >
-<cert_tr>Not in Testing Rules</cert_tr >
-<cert_impact>SHOULD</cert_impact >
-<ttt_testing_results>(Not in Results)</ttt_testing_results >
-<category>SERVICEIMPL</category >
-</rulecontrol>
-<rulecontrol>
-<rulename>ServiceImpl_FilterAny</rulename >
-<notes>OPEN QUESTION: Duplicate of “REQ-WA100-QO1”</notes >
-<cert_tr>?</cert_tr >
-<cert_impact>OData MUST</cert_impact >
-<ttt_testing_results>(Not in Results)</ttt_testing_results >
-<category>SERVICEIMPL</category >
-</rulecontrol>
-<rulecontrol>
-<rulename>ServiceImpl_Etag</rulename >
-<notes></notes >
-<cert_tr>Not in Testing Rules</cert_tr >
-<cert_impact>OData MUST</cert_impact >
-<ttt_testing_results>(Not in Results)</ttt_testing_results >
-<category>SERVICEIMPL</category >
-</rulecontrol>
-<rulecontrol>
-<rulename>ServiceImpl_SystemQueryOptionFilter_TotalOffsetMinutes</rulename >
-<notes></notes >
-<cert_tr>Not in Testing Rules</cert_tr >
-<cert_impact>OData MUST</cert_impact >
-<ttt_testing_results>error</ttt_testing_results >
-<category>SERVICEIMPL</category >
-</rulecontrol>
-<rulecontrol>
-<rulename>ServiceImpl_SystemQueryOptionFilter_GeoIntersects</rulename >
-<notes>Any one Geo should be fine.</notes >
-<cert_tr>REQ-WA100-QM5</cert_tr >
-<cert_impact>Platinum</cert_impact >
-<ttt_testing_results>error</ttt_testing_results >
-<category>SERVICEIMPL</category >
-</rulecontrol>
-<rulecontrol>
-<rulename>ServiceImpl_EditStreamPropertyValue</rulename >
-<notes></notes >
-<cert_tr>IGNORE: UPDATE</cert_tr >
-<cert_impact>OData MUST</cert_impact >
-<ttt_testing_results>(Not in Results)</ttt_testing_results >
-<category>SERVICEIMPL</category >
-</rulecontrol>
-<rulecontrol>
-<rulename>ServiceImpl_SystemQueryOptionSkipToken</rulename >
-<notes></notes >
-<cert_tr>Not in Testing Rules</cert_tr >
-<cert_impact>OData MUST</cert_impact >
-<ttt_testing_results>(Not in Results)</ttt_testing_results >
-<category>SERVICEIMPL</category >
-</rulecontrol>
-<rulecontrol>
-<rulename>ServiceImpl_SystemQueryOptionFilter_Cast</rulename >
-<notes></notes >
-<cert_tr>Not in Testing Rules</cert_tr >
-<cert_impact>OData MUST</cert_impact >
-<ttt_testing_results>error</ttt_testing_results >
-<category>SERVICEIMPL</category >
-</rulecontrol>
-<rulecontrol>
-<rulename>ServiceImpl_FilterNot</rulename >
-<notes>UPDATE TTT Tests</notes >
-<cert_tr>REQ-WA100-QO11</cert_tr >
-<cert_impact>Core</cert_impact >
-<ttt_testing_results>error</ttt_testing_results >
-<category>SERVICEIMPL</category >
-</rulecontrol>
-<rulecontrol>
-<rulename>ServiceImpl_RemoveReferenceToEntity</rulename >
-<notes></notes >
-<cert_tr>IGNORE: UPDATE</cert_tr >
-<cert_impact>SHOULD</cert_impact >
-<ttt_testing_results>(Not in Results)</ttt_testing_results >
-<category>SERVICEIMPL</category >
-</rulecontrol>
-<rulecontrol>
-<rulename>ServiceImpl_SystemQueryOptionFilter_Multiplication</rulename >
-<notes></notes >
-<cert_tr>Not in Testing Rules</cert_tr >
-<cert_impact>OData MUST</cert_impact >
-<ttt_testing_results>success</ttt_testing_results >
-<category>SERVICEIMPL</category >
-</rulecontrol>
-<rulecontrol>
-<rulename>ServiceImpl_SystemQueryOptionSearch</rulename >
-<notes></notes >
-<cert_tr>Not in Testing Rules</cert_tr >
-<cert_impact>OData MUST</cert_impact >
-<ttt_testing_results>error</ttt_testing_results >
-<category>SERVICEIMPL</category >
-</rulecontrol>
-<rulecontrol>
-<rulename>ServiceImpl_SystemQueryOptionFilter_Modulo</rulename >
-<notes></notes >
-<cert_tr>Not in Testing Rules</cert_tr >
-<cert_impact>OData MUST</cert_impact >
-<ttt_testing_results>success</ttt_testing_results >
-<category>SERVICEIMPL</category >
-</rulecontrol>
-<rulecontrol>
-<rulename>ServiceImpl_SystemQueryOptionFilter_Length</rulename >
-<notes></notes >
-<cert_tr>Not in Testing Rules</cert_tr >
-<cert_impact>OData MUST</cert_impact >
-<ttt_testing_results>(Not in Results)</ttt_testing_results >
-<category>SERVICEIMPL</category >
-</rulecontrol>
-<rulecontrol>
-<rulename>ServiceImpl_SystemQueryOptionFilter_Round</rulename >
-<notes></notes >
-<cert_tr>Not in Testing Rules</cert_tr >
-<cert_impact>OData MUST</cert_impact >
-<ttt_testing_results>aborted</ttt_testing_results >
-<category>SERVICEIMPL</category >
-</rulecontrol>
-<rulecontrol>
-<rulename>ServiceImpl_All</rulename >
-<notes></notes >
-<cert_tr>Not in Testing Rules</cert_tr >
-<cert_impact>OData MUST</cert_impact >
-<ttt_testing_results>error</ttt_testing_results >
-<category>SERVICEIMPL</category >
-</rulecontrol>
-<rulecontrol>
-<rulename>ServiceImpl_MetadataServiceDocumentRequest</rulename >
-<notes></notes >
-<cert_tr>Not in Testing Rules</cert_tr >
-<cert_impact>MAY</cert_impact >
-<ttt_testing_results>success</ttt_testing_results >
-<category>SERVICEIMPL</category >
-</rulecontrol>
-<rulecontrol>
-<rulename>ServiceImpl_SystemQueryOptionFilter_Negation</rulename >
-<notes></notes >
-<cert_tr>Not in Testing Rules</cert_tr >
-<cert_impact>OData MUST</cert_impact >
-<ttt_testing_results>success</ttt_testing_results >
-<category>SERVICEIMPL</category >
-</rulecontrol>
-<rulecontrol>
-<rulename>ServiceImpl_CrossJoin</rulename >
-<notes></notes >
-<cert_tr>Not in Testing Rules</cert_tr >
-<cert_impact>OData MUST</cert_impact >
-<ttt_testing_results>error</ttt_testing_results >
-<category>SERVICEIMPL</category >
-</rulecontrol>
-<rulecontrol>
-<rulename>ServiceImpl_SystemQueryOptionFilter_Trim</rulename >
-<notes></notes >
-<cert_tr>Not in Testing Rules</cert_tr >
-<cert_impact>OData MUST</cert_impact >
-<ttt_testing_results>error</ttt_testing_results >
-<category>SERVICEIMPL</category >
-</rulecontrol>
-<rulecontrol>
-<rulename>ServiceImpl_EditMediaEntityStream</rulename >
-<notes></notes >
-<cert_tr>IGNORE: UPDATE</cert_tr >
-<cert_impact>OData MUST</cert_impact >
-<ttt_testing_results>(Not in Results)</ttt_testing_results >
-<category>SERVICEIMPL</category >
-</rulecontrol>
-<rulecontrol>
-<rulename>ServiceImpl_GetNavigationProperty</rulename >
-<notes></notes >
-<cert_tr>Not in Testing Rules</cert_tr >
-<cert_impact>OData MUST</cert_impact >
-<ttt_testing_results>error</ttt_testing_results >
-<category>SERVICEIMPL</category >
-</rulecontrol>
-<rulecontrol>
-<rulename>ServiceImpl_SystemQueryOptionOrderBy</rulename >
-<notes></notes >
-<cert_tr>REQ-WA100-QO28</cert_tr >
-<cert_impact>Bronze</cert_impact >
-<ttt_testing_results>success</ttt_testing_results >
-<category>SERVICEIMPL</category >
-</rulecontrol>
-<rulecontrol>
-<rulename>ServiceImpl_SystemQueryOptionFilter_Addition</rulename >
-<notes></notes >
-<cert_tr>Not in Testing Rules</cert_tr >
-<cert_impact>OData MUST</cert_impact >
-<ttt_testing_results>success</ttt_testing_results >
-<category>SERVICEIMPL</category >
-</rulecontrol>
-<rulecontrol>
-<rulename>ServiceImpl_SystemQueryOptionFilter_IndexOf</rulename >
-<notes></notes >
-<cert_tr>Not in Testing Rules</cert_tr >
-<cert_impact>OData MUST</cert_impact >
-<ttt_testing_results>(Not in Results)</ttt_testing_results >
-<category>SERVICEIMPL</category >
-</rulecontrol>
-<rulecontrol>
-<rulename>ServiceImpl_SystemQueryOptionFilter_Now</rulename >
-<notes></notes >
-<cert_tr>REQ-WA100-QO27</cert_tr >
-<cert_impact>Core</cert_impact >
-<ttt_testing_results>success</ttt_testing_results >
-<category>SERVICEIMPL</category >
-</rulecontrol>
-<rulecontrol>
-<rulename>ServiceImpl_SystemQueryOptionRef</rulename >
-<notes></notes >
-<cert_tr>Not in Testing Rules</cert_tr >
-<cert_impact>OData MUST</cert_impact >
-<ttt_testing_results>error</ttt_testing_results >
-<category>SERVICEIMPL</category >
-</rulecontrol>
-<rulecontrol>
-<rulename>ServiceImpl_MetadataDocumentRequest</rulename >
-<notes></notes >
-<cert_tr>REQ-WA100-END3</cert_tr >
-<cert_impact>Core</cert_impact >
-<ttt_testing_results>success</ttt_testing_results >
-<category>SERVICEIMPL</category >
-</rulecontrol>
-<rulecontrol>
-<rulename>ServiceImpl_SystemQueryOptionFilter_Substring</rulename >
-<notes></notes >
-<cert_tr>Not in Testing Rules</cert_tr >
-<cert_impact>OData MUST</cert_impact >
-<ttt_testing_results>error</ttt_testing_results >
-<category>SERVICEIMPL</category >
-</rulecontrol>
-<rulecontrol>
-<rulename>ServiceImpl_FilterOr</rulename >
-<notes></notes >
-<cert_tr>REQ-WA100-QO10</cert_tr >
-<cert_impact>Core</cert_impact >
-<ttt_testing_results>success</ttt_testing_results >
-<category>SERVICEIMPL</category >
-</rulecontrol>
+  <rulecontrol>
+    <rulename>Advanced.Conformance.1001</rulename>
+    <notes></notes>
+    <cert_tr>Excluded</cert_tr>
+    <cert_impact>Must</cert_impact>
+    <ttt_testing_results></ttt_testing_results>
+    <category>CONFORMANCE</category>
+    <RESOVersion></RESOVersion>
+    <Description>1. MUST conform to at least the OData Intermediate Conformance Level.</Description>
+    <ErrorMessage>Please check the results of Intermediate conformance level rules.</ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification>13.1.2</V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V4</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat>JsonLight</PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>Advanced.Conformance.1002</rulename>
+    <notes></notes>
+    <cert_tr>Bronze</cert_tr>
+    <cert_impact>Must</cert_impact>
+    <ttt_testing_results></ttt_testing_results>
+    <category>CONFORMANCE</category>
+    <RESOVersion></RESOVersion>
+    <Description>2. MUST publish metadata at $metadata according to [OData-CSDL] (section 11.1.2)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification>13.1.3</V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V4</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat>JsonLight</PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>Advanced.Conformance.1003</rulename>
+    <notes></notes>
+    <cert_tr>Bronze</cert_tr>
+    <cert_impact>Must</cert_impact>
+    <ttt_testing_results></ttt_testing_results>
+    <category>CONFORMANCE</category>
+    <RESOVersion></RESOVersion>
+    <Description>3. MUST support the [OData-JSON] format.</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification>13.1.3</V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V4</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat>JsonLight</PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>Advanced.Conformance.1006</rulename>
+    <notes></notes>
+    <cert_tr>Core</cert_tr>
+    <cert_impact>Must</cert_impact>
+    <ttt_testing_results></ttt_testing_results>
+    <category>CONFORMANCE</category>
+    <RESOVersion></RESOVersion>
+    <Description>6. MUST support the $skip system query option (section 11.2.5.4)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification>13.1.3</V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V4</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat>JsonLight</PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>Advanced.Conformance.1008</rulename>
+    <notes></notes>
+    <cert_tr>Bronze</cert_tr>
+    <cert_impact>Must</cert_impact>
+    <ttt_testing_results></ttt_testing_results>
+    <category>CONFORMANCE</category>
+    <RESOVersion></RESOVersion>
+    <Description>8. MUST support $orderby asc and desc on individual properties (section 11.2.5.2)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification>13.1.3</V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V4</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat>JsonLight</PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>Advanced.Conformance.1009</rulename>
+    <notes></notes>
+    <cert_tr>Platinum</cert_tr>
+    <cert_impact>Must</cert_impact>
+    <ttt_testing_results></ttt_testing_results>
+    <category>CONFORMANCE</category>
+    <RESOVersion></RESOVersion>
+    <Description>9. MUST support $expand (section 11.2.4.2)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification>13.1.3</V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V4</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat>JsonLight</PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>Advanced.Conformance.100901</rulename>
+    <notes></notes>
+    <cert_tr>Platinum</cert_tr>
+    <cert_impact>Must</cert_impact>
+    <ttt_testing_results></ttt_testing_results>
+    <category>CONFORMANCE</category>
+    <RESOVersion></RESOVersion>
+    <Description>9.1. MUST support returning references for expanded properties (section 11.2.4.2)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification>13.1.3</V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V4</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat>JsonLight</PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>Advanced.Conformance.100902</rulename>
+    <notes></notes>
+    <cert_tr>Platinum</cert_tr>
+    <cert_impact>Must</cert_impact>
+    <ttt_testing_results></ttt_testing_results>
+    <category>CONFORMANCE</category>
+    <RESOVersion></RESOVersion>
+    <Description>9.2. MUST support $filter on expanded entities (section 11.2.4.2.1)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification>13.1.3</V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V4</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat>JsonLight</PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>Advanced.Conformance.100904</rulename>
+    <notes></notes>
+    <cert_tr>Bronze</cert_tr>
+    <cert_impact>Should</cert_impact>
+    <ttt_testing_results></ttt_testing_results>
+    <category>CONFORMANCE</category>
+    <RESOVersion></RESOVersion>
+    <Description>9.4. SHOULD support $orderby asc and desc on individual properties (section 11.2.4.2.1)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification>13.1.3</V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V4</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat>JsonLight</PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>Advanced.Conformance.100905</rulename>
+    <notes></notes>
+    <cert_tr>Platinum</cert_tr>
+    <cert_impact>Should</cert_impact>
+    <ttt_testing_results></ttt_testing_results>
+    <category>CONFORMANCE</category>
+    <RESOVersion></RESOVersion>
+    <Description>9.5. SHOULD support the $count system query option for expanded properties (section 11.2.4.2.1)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification>13.1.3</V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V4</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat>JsonLight</PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>Advanced.Conformance.100906</rulename>
+    <notes></notes>
+    <cert_tr>Platinum</cert_tr>
+    <cert_impact>Should</cert_impact>
+    <ttt_testing_results></ttt_testing_results>
+    <category>CONFORMANCE</category>
+    <RESOVersion></RESOVersion>
+    <Description>9.6. SHOULD support $top and $skip on expanded properties (section 11.2.4.2.1)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification>13.1.3</V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V4</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat>JsonLight</PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>Advanced.Conformance.100907</rulename>
+    <notes></notes>
+    <cert_tr>Platinum</cert_tr>
+    <cert_impact>Should</cert_impact>
+    <ttt_testing_results></ttt_testing_results>
+    <category>CONFORMANCE</category>
+    <RESOVersion></RESOVersion>
+    <Description>9.7. SHOULD support $search on expanded properties (section 11.2.4.2.1)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification>13.1.3</V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V4</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat>JsonLight</PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>Advanced.Conformance.100908</rulename>
+    <notes></notes>
+    <cert_tr>Platinum</cert_tr>
+    <cert_impact>Should</cert_impact>
+    <ttt_testing_results></ttt_testing_results>
+    <category>CONFORMANCE</category>
+    <RESOVersion></RESOVersion>
+    <Description>9.8. SHOULD support $levels for recursive expand (section 11.2.4.2.1.1)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification>13.1.3</V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V4</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat>JsonLight</PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>Advanced.Conformance.1010</rulename>
+    <notes></notes>
+    <cert_tr>Platinum</cert_tr>
+    <cert_impact>Must</cert_impact>
+    <ttt_testing_results></ttt_testing_results>
+    <category>CONFORMANCE</category>
+    <RESOVersion></RESOVersion>
+    <Description>10. MUST support the $search system query option (section 11.2.5.6)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification>13.1.3</V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V4</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat>JsonLight</PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>Advanced.Conformance.1011</rulename>
+    <notes></notes>
+    <cert_tr>Platinum</cert_tr>
+    <cert_impact>Must</cert_impact>
+    <ttt_testing_results></ttt_testing_results>
+    <category>CONFORMANCE</category>
+    <RESOVersion></RESOVersion>
+    <Description>11. MUST support batch requests (section11.7 and all subsections)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification>13.1.3</V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V4</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat>JsonLight</PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>Advanced.Conformance.101101</rulename>
+    <notes></notes>
+    <cert_tr>Core</cert_tr>
+    <cert_impact>Must</cert_impact>
+    <ttt_testing_results></ttt_testing_results>
+    <category>CONFORMANCE</category>
+    <RESOVersion></RESOVersion>
+    <Description>1). Services MUST support all three formats: Absolute URI with schema, host, port, and absolute resource path.                          Absolute resource path and separate Host header. Resource path relative to the batch request URI. (section 11.7.2)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification>11.7.2</V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V4</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat>JsonLight</PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>Advanced.Conformance.101102</rulename>
+    <notes></notes>
+    <cert_tr>Platinum</cert_tr>
+    <cert_impact>Must</cert_impact>
+    <ttt_testing_results></ttt_testing_results>
+    <category>CONFORMANCE</category>
+    <RESOVersion></RESOVersion>
+    <Description>2). A service MUST process the components of the Batch in the order received. (section 11.7.4)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification>11.7.4</V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V4</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat>JsonLight</PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>Advanced.Conformance.101106</rulename>
+    <notes></notes>
+    <cert_tr>Bronze</cert_tr>
+    <cert_impact>Must</cert_impact>
+    <ttt_testing_results></ttt_testing_results>
+    <category>CONFORMANCE</category>
+    <RESOVersion></RESOVersion>
+    <Description>4). The service MUST include the Content-ID header in each response with the same value that the client specified in the corresponding request. (section 11.7.4)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification>11.7.4</V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V4</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat>JsonLight</PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>Advanced.Conformance.101107</rulename>
+    <notes></notes>
+    <cert_tr>Platinum</cert_tr>
+    <cert_impact>Must</cert_impact>
+    <ttt_testing_results></ttt_testing_results>
+    <category>CONFORMANCE</category>
+    <RESOVersion></RESOVersion>
+    <Description>5). If the set of request headers of a Batch request are valid the service MUST return a 200 OK HTTP response code. (section 11.7.4)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification>11.7.4</V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V4</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat>JsonLight</PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>Advanced.Conformance.101108</rulename>
+    <notes></notes>
+    <cert_tr>Platinum</cert_tr>
+    <cert_impact>Must</cert_impact>
+    <ttt_testing_results></ttt_testing_results>
+    <category>CONFORMANCE</category>
+    <RESOVersion></RESOVersion>
+    <Description>6). If the service receives a Batch request with an invalid set of headers it MUST return a 4xx response code. (section 11.7.4)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification>11.7.4</V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V4</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat>JsonLight</PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>Advanced.Conformance.101109</rulename>
+    <notes></notes>
+    <cert_tr>Platinum</cert_tr>
+    <cert_impact>Must</cert_impact>
+    <ttt_testing_results></ttt_testing_results>
+    <category>CONFORMANCE</category>
+    <RESOVersion></RESOVersion>
+    <Description>7). A response to a batch request MUST contain a Content-Type header with value multipart/mixed. (section 11.7.4)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification>11.7.4</V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V4</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat>JsonLight</PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>Advanced.Conformance.101110</rulename>
+    <notes></notes>
+    <cert_tr>Platinum</cert_tr>
+    <cert_impact>Must</cert_impact>
+    <ttt_testing_results></ttt_testing_results>
+    <category>CONFORMANCE</category>
+    <RESOVersion></RESOVersion>
+    <Description>8). Structurally, a batch response body MUST match one-to-one with the corresponding batch request body. (section 11.7.4)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification>11.7.4</V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V4</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat>JsonLight</PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>Advanced.Conformance.101111</rulename>
+    <notes></notes>
+    <cert_tr>Platinum</cert_tr>
+    <cert_impact>Must</cert_impact>
+    <ttt_testing_results></ttt_testing_results>
+    <category>CONFORMANCE</category>
+    <RESOVersion></RESOVersion>
+    <Description>9). When a request within a change set fails, the change set response is represented using the application/http media type and a Content-Transfer-Encoding header with a value of binary instead of using the multipart/mixed media type. (section 11.7.4)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification>11.7.4</V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V4</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat>JsonLight</PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>Advanced.Conformance.101117</rulename>
+    <notes></notes>
+    <cert_tr>Platinum</cert_tr>
+    <cert_impact>Must</cert_impact>
+    <ttt_testing_results></ttt_testing_results>
+    <category>CONFORMANCE</category>
+    <RESOVersion></RESOVersion>
+    <Description>10). When an error occurs processing a request and the odata.continue-on-error preference is not specified, processing of the batch is terminated and the error response is the last part of the multi-part response. (section 11.7.4)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification>11.7.4</V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V4</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat>JsonLight</PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>Advanced.Conformance.1012</rulename>
+    <notes></notes>
+    <cert_tr>Platinum</cert_tr>
+    <cert_impact>Must</cert_impact>
+    <ttt_testing_results></ttt_testing_results>
+    <category>CONFORMANCE</category>
+    <RESOVersion></RESOVersion>
+    <Description>12. MUST support the resource path conventions defined in [OData-URL]</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification>13.1.3</V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V4</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat>JsonLight</PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>Advanced.Conformance.1013</rulename>
+    <notes></notes>
+    <cert_tr>Platinum</cert_tr>
+    <cert_impact>Should</cert_impact>
+    <ttt_testing_results></ttt_testing_results>
+    <category>CONFORMANCE</category>
+    <RESOVersion></RESOVersion>
+    <Description>13. SHOULD support Asynchronous operations.</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification>13.1.3</V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V4</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat>JsonLight</PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>Advanced.Conformance.1014</rulename>
+    <notes></notes>
+    <cert_tr>Platinum</cert_tr>
+    <cert_impact>Should</cert_impact>
+    <ttt_testing_results></ttt_testing_results>
+    <category>CONFORMANCE</category>
+    <RESOVersion></RESOVersion>
+    <Description>14. SHOULD support Delta change tracking.</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification>13.1.3</V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V4</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat>JsonLight</PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>Advanced.Conformance.1015</rulename>
+    <notes></notes>
+    <cert_tr>Platinum</cert_tr>
+    <cert_impact>Should</cert_impact>
+    <ttt_testing_results></ttt_testing_results>
+    <category>CONFORMANCE</category>
+    <RESOVersion></RESOVersion>
+    <Description>15.	SHOULD support cross-join queries defined in [OData-URL].</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification>13.1.3</V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V4</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat>JsonLight</PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>Advanced.Conformance.1016</rulename>
+    <notes></notes>
+    <cert_tr>Platinum</cert_tr>
+    <cert_impact>Should</cert_impact>
+    <ttt_testing_results></ttt_testing_results>
+    <category>CONFORMANCE</category>
+    <RESOVersion></RESOVersion>
+    <Description>16. SHOULD support a conforming OData service interface over metadata.</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification>13.1.3</V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V4</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat>JsonLight</PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>Intermediate.Conformance.1001</rulename>
+    <notes></notes>
+    <cert_tr>Excluded</cert_tr>
+    <cert_impact>Must</cert_impact>
+    <ttt_testing_results></ttt_testing_results>
+    <category>CONFORMANCE</category>
+    <RESOVersion></RESOVersion>
+    <Description>1. MUST conform to the OData Minimal Conformance Level.</Description>
+    <ErrorMessage>Please check the results of Minimal conformance level rules.</ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification>13.1.2</V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V4</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat>JsonLight</PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>Intermediate.Conformance.1002</rulename>
+    <notes></notes>
+    <cert_tr>Bronze</cert_tr>
+    <cert_impact>Must</cert_impact>
+    <ttt_testing_results></ttt_testing_results>
+    <category>CONFORMANCE</category>
+    <RESOVersion></RESOVersion>
+    <Description>2. MUST successfully parse the [OData-ABNF] and either follow the specification or return 501 Not Implemented for any unsupported functionality (section 9.3.1).</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification>13.1.2</V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V4</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat>JsonLight</PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>Intermediate.Conformance.1003</rulename>
+    <notes></notes>
+    <cert_tr>Core</cert_tr>
+    <cert_impact>Must</cert_impact>
+    <ttt_testing_results></ttt_testing_results>
+    <category>CONFORMANCE</category>
+    <RESOVersion></RESOVersion>
+    <Description>3. MUST support $select (section11.2.4.1)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification>13.1.2</V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V4</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat>JsonLight</PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>Intermediate.Conformance.1005</rulename>
+    <notes></notes>
+    <cert_tr>Core</cert_tr>
+    <cert_impact>Must</cert_impact>
+    <ttt_testing_results></ttt_testing_results>
+    <category>CONFORMANCE</category>
+    <RESOVersion></RESOVersion>
+    <Description>5. MUST support $top (section 11.2.5.3)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification>13.1.2</V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V4</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat>JsonLight</PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>Intermediate.Conformance.1006</rulename>
+    <notes></notes>
+    <cert_tr>Platinum</cert_tr>
+    <cert_impact>Must</cert_impact>
+    <ttt_testing_results></ttt_testing_results>
+    <category>CONFORMANCE</category>
+    <RESOVersion></RESOVersion>
+    <Description>6. MUST support /$value on media entities (section 4.10. in [OData-URL]) and individual properties (section 11.2.3.1)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification>13.1.2</V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V4</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat>JsonLight</PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>Intermediate.Conformance.1007</rulename>
+    <notes></notes>
+    <cert_tr>Core</cert_tr>
+    <cert_impact>Must</cert_impact>
+    <ttt_testing_results></ttt_testing_results>
+    <category>CONFORMANCE</category>
+    <RESOVersion></RESOVersion>
+    <Description>7. MUST support $filter (section 11.2.5.1)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification>13.1.2</V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V4</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat>JsonLight</PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>Intermediate.Conformance.100701</rulename>
+    <notes></notes>
+    <cert_tr>Core</cert_tr>
+    <cert_impact>Must</cert_impact>
+    <ttt_testing_results></ttt_testing_results>
+    <category>CONFORMANCE</category>
+    <RESOVersion></RESOVersion>
+    <Description>7.1. MUST support eq, ne filter operations on properties of entities in the requested entity set (section 11.2.5.1.1)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification>13.1.2</V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V4</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat>JsonLight</PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>Intermediate.Conformance.100702</rulename>
+    <notes></notes>
+    <cert_tr>Platinum</cert_tr>
+    <cert_impact>Must</cert_impact>
+    <ttt_testing_results></ttt_testing_results>
+    <category>CONFORMANCE</category>
+    <RESOVersion></RESOVersion>
+    <Description>7.2. MUST support aliases in $filter expressions (section 11.2.5.1.3)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification>13.1.2</V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V4</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat>JsonLight</PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>Intermediate.Conformance.100703</rulename>
+    <notes></notes>
+    <cert_tr>Bronze</cert_tr>
+    <cert_impact>Should</cert_impact>
+    <ttt_testing_results></ttt_testing_results>
+    <category>CONFORMANCE</category>
+    <RESOVersion></RESOVersion>
+    <Description>7.3. SHOULD support additional filter operations (section 11.2.5.1.1) and MUST return 501 Not Implemented for any unsupported filter operations (section 9.3.1)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification>13.1.2</V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V4</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat>JsonLight</PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>Intermediate.Conformance.100704</rulename>
+    <notes></notes>
+    <cert_tr>Bronze</cert_tr>
+    <cert_impact>Should</cert_impact>
+    <ttt_testing_results></ttt_testing_results>
+    <category>CONFORMANCE</category>
+    <RESOVersion></RESOVersion>
+    <Description>7.4. SHOULD support the canonical functions (section 11.2.5.1.2) and MUST return 501 Not Implemented for any unsupported canonical functions (section 9.3.1)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification>13.1.2</V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V4</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat>JsonLight</PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>Intermediate.Conformance.100705</rulename>
+    <notes></notes>
+    <cert_tr>Platinum</cert_tr>
+    <cert_impact>Should</cert_impact>
+    <ttt_testing_results></ttt_testing_results>
+    <category>CONFORMANCE</category>
+    <RESOVersion></RESOVersion>
+    <Description>7.5. SHOULD support $filter on expanded entities (section 11.2.4.2.1)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification>13.1.2</V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V4</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat>JsonLight</PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>Intermediate.Conformance.1008</rulename>
+    <notes></notes>
+    <cert_tr>Bronze</cert_tr>
+    <cert_impact>Should</cert_impact>
+    <ttt_testing_results></ttt_testing_results>
+    <category>CONFORMANCE</category>
+    <RESOVersion></RESOVersion>
+    <Description>8. SHOULD publish metadata at $metadata according to [OData-CSDL] (section 11.1.2)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification>13.1.2</V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V4</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat>JsonLight</PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>Intermediate.Conformance.1009</rulename>
+    <notes></notes>
+    <cert_tr>Bronze</cert_tr>
+    <cert_impact>Should</cert_impact>
+    <ttt_testing_results></ttt_testing_results>
+    <category>CONFORMANCE</category>
+    <RESOVersion></RESOVersion>
+    <Description>9. SHOULD support the [OData-JSON] format.</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification>13.1.2</V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V4</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat>JsonLight</PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>Intermediate.Conformance.1010</rulename>
+    <notes></notes>
+    <cert_tr>Excluded</cert_tr>
+    <cert_impact>Should</cert_impact>
+    <ttt_testing_results></ttt_testing_results>
+    <category>CONFORMANCE</category>
+    <RESOVersion></RESOVersion>
+    <Description>10. SHOULD consider supporting basic authentication as specified in [RFC2617] over HTTPS for the highest level of interoperability with generic clients.</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification>13.1.2</V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V4</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat>JsonLight</PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>Intermediate.Conformance.1011</rulename>
+    <notes></notes>
+    <cert_tr>Platinum</cert_tr>
+    <cert_impact>Must</cert_impact>
+    <ttt_testing_results></ttt_testing_results>
+    <category>CONFORMANCE</category>
+    <RESOVersion></RESOVersion>
+    <Description>11. SHOULD support the $search system query option (section 11.2.5.6)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification>13.1.2</V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V4</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat>JsonLight</PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>Intermediate.Conformance.1012</rulename>
+    <notes></notes>
+    <cert_tr>Core</cert_tr>
+    <cert_impact>Should</cert_impact>
+    <ttt_testing_results></ttt_testing_results>
+    <category>CONFORMANCE</category>
+    <RESOVersion></RESOVersion>
+    <Description>12. SHOULD support the $skip system query option (section 11.2.5.4)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification>13.1.2</V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V4</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat>JsonLight</PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>Intermediate.Conformance.1014</rulename>
+    <notes></notes>
+    <cert_tr>Platinum</cert_tr>
+    <cert_impact>Should</cert_impact>
+    <ttt_testing_results></ttt_testing_results>
+    <category>CONFORMANCE</category>
+    <RESOVersion></RESOVersion>
+    <Description>14. SHOULD support $expand (section 11.2.4.2)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification>13.1.2</V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V4</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat>JsonLight</PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>Intermediate.Conformance.1017</rulename>
+    <notes></notes>
+    <cert_tr>Bronze</cert_tr>
+    <cert_impact>Should</cert_impact>
+    <ttt_testing_results></ttt_testing_results>
+    <category>CONFORMANCE</category>
+    <RESOVersion></RESOVersion>
+    <Description>17. SHOULD support $orderby asc and desc on individual properties (section 11.2.5.2)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification>13.1.2</V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V4</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat>JsonLight</PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>Minimal.Conformance.1001</rulename>
+    <notes></notes>
+    <cert_tr>Core</cert_tr>
+    <cert_impact>Must</cert_impact>
+    <ttt_testing_results></ttt_testing_results>
+    <category>CONFORMANCE</category>
+    <RESOVersion></RESOVersion>
+    <Description>1. MUST publish a service document at the service root (section 11.1.1)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification>13.1.1</V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V4</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat>JsonLight</PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>Minimal.Conformance.1002</rulename>
+    <notes></notes>
+    <cert_tr>Core</cert_tr>
+    <cert_impact>Must</cert_impact>
+    <ttt_testing_results></ttt_testing_results>
+    <category>CONFORMANCE</category>
+    <RESOVersion></RESOVersion>
+    <Description>2. MUST return data according to at least one of the OData defined formats (section 7)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification>13.1.1</V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V4</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat>JsonLight</PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>Minimal.Conformance.1003</rulename>
+    <notes></notes>
+    <cert_tr>Core</cert_tr>
+    <cert_impact>Must</cert_impact>
+    <ttt_testing_results></ttt_testing_results>
+    <category>CONFORMANCE</category>
+    <RESOVersion></RESOVersion>
+    <Description>3. MUST support server-driven paging when returning partial results (section 11.2.5.7)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification>13.1.1</V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V4</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat>JsonLight</PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>Minimal.Conformance.1004</rulename>
+    <notes></notes>
+    <cert_tr>Core</cert_tr>
+    <cert_impact>Must</cert_impact>
+    <ttt_testing_results></ttt_testing_results>
+    <category>CONFORMANCE</category>
+    <RESOVersion></RESOVersion>
+    <Description>4. MUST return the appropriate OData-Version header (section 8.1.5)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification>13.1.1</V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V4</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat>JsonLight</PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>Minimal.Conformance.1005</rulename>
+    <notes></notes>
+    <cert_tr>Core</cert_tr>
+    <cert_impact>Must</cert_impact>
+    <ttt_testing_results></ttt_testing_results>
+    <category>CONFORMANCE</category>
+    <RESOVersion></RESOVersion>
+    <Description>5. MUST conform to the semantics the following headers, or fail the request</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification>13.1.1</V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V4</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat>JsonLight</PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>Minimal.Conformance.100501</rulename>
+    <notes></notes>
+    <cert_tr>Core</cert_tr>
+    <cert_impact>Must</cert_impact>
+    <ttt_testing_results></ttt_testing_results>
+    <category>CONFORMANCE</category>
+    <RESOVersion></RESOVersion>
+    <Description>5.1. Accept (section 8.2.1)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification>13.1.1</V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V4</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat>JsonLight</PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>Minimal.Conformance.100502</rulename>
+    <notes></notes>
+    <cert_tr>Core</cert_tr>
+    <cert_impact>Must</cert_impact>
+    <ttt_testing_results></ttt_testing_results>
+    <category>CONFORMANCE</category>
+    <RESOVersion></RESOVersion>
+    <Description>5.2. OData-MaxVersion (section 8.2.7)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification>13.1.1</V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V4</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat>JsonLight</PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>Minimal.Conformance.1006</rulename>
+    <notes></notes>
+    <cert_tr>Core</cert_tr>
+    <cert_impact>Must</cert_impact>
+    <ttt_testing_results></ttt_testing_results>
+    <category>CONFORMANCE</category>
+    <RESOVersion></RESOVersion>
+    <Description>6. MUST follow OData guidelines for extensibility (section 6 and all subsections)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification>13.1.1</V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V4</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat>JsonLight</PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>Minimal.Conformance.100603</rulename>
+    <notes></notes>
+    <cert_tr>Core</cert_tr>
+    <cert_impact>Should</cert_impact>
+    <ttt_testing_results></ttt_testing_results>
+    <category>CONFORMANCE</category>
+    <RESOVersion></RESOVersion>
+    <Description>1). Services SHOULD fail any request that contains query options that they not understand.(section 6.1)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification>6.1</V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V4</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat>JsonLight</PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>Minimal.Conformance.100611</rulename>
+    <notes></notes>
+    <cert_tr>Core</cert_tr>
+    <cert_impact>Must</cert_impact>
+    <ttt_testing_results></ttt_testing_results>
+    <category>CONFORMANCE</category>
+    <RESOVersion></RESOVersion>
+    <Description>2). An OData service MUST fail any request that contains actions or functions that it does not understand.</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification>6.3</V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V4</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat>JsonLight</PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>Minimal.Conformance.1007</rulename>
+    <notes></notes>
+    <cert_tr>Core</cert_tr>
+    <cert_impact>Must</cert_impact>
+    <ttt_testing_results></ttt_testing_results>
+    <category>CONFORMANCE</category>
+    <RESOVersion></RESOVersion>
+    <Description>7. MUST successfully parse the request according to [OData-ABNF] for any supported system query string options and either follow the specification or return 501 Not Implemented (section 9.3.1) for any unsupported functionality (section 11.2.1).</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification>13.1.1</V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V4</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat>JsonLight</PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>Minimal.Conformance.1008</rulename>
+    <notes></notes>
+    <cert_tr>Core</cert_tr>
+    <cert_impact>Must</cert_impact>
+    <ttt_testing_results></ttt_testing_results>
+    <category>CONFORMANCE</category>
+    <RESOVersion></RESOVersion>
+    <Description>8. MUST expose only data types defined in [OData-CSDL]</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification>13.1.1</V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V4</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat>JsonLight</PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>Minimal.Conformance.1009</rulename>
+    <notes></notes>
+    <cert_tr>Core</cert_tr>
+    <cert_impact>Must</cert_impact>
+    <ttt_testing_results></ttt_testing_results>
+    <category>CONFORMANCE</category>
+    <RESOVersion></RESOVersion>
+    <Description>9. MUST NOT require clients to understand any metadata or instance annotations (section 6.4), custom headers (section 6.5), or custom content (section 6.2) in the payload in order to correctly consume the service.</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification>13.1.1</V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V4</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat>JsonLight</PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>Minimal.Conformance.1010</rulename>
+    <notes></notes>
+    <cert_tr>Core</cert_tr>
+    <cert_impact>Must</cert_impact>
+    <ttt_testing_results></ttt_testing_results>
+    <category>CONFORMANCE</category>
+    <RESOVersion></RESOVersion>
+    <Description>10. MUST NOT violate any OData update semantics (section 11.4 and all subsections).</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification>13.1.1</V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V4</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat>JsonLight</PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>Minimal.Conformance.1011</rulename>
+    <notes></notes>
+    <cert_tr>Core</cert_tr>
+    <cert_impact>Must</cert_impact>
+    <ttt_testing_results></ttt_testing_results>
+    <category>CONFORMANCE</category>
+    <RESOVersion></RESOVersion>
+    <Description>11. MUST NOT violate any other OData-defined semantics.</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification>13.1.1</V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V4</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat>JsonLight</PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>Minimal.Conformance.1012</rulename>
+    <notes></notes>
+    <cert_tr>Platinum</cert_tr>
+    <cert_impact>Should</cert_impact>
+    <ttt_testing_results></ttt_testing_results>
+    <category>CONFORMANCE</category>
+    <RESOVersion></RESOVersion>
+    <Description>12. SHOULD support $expand (section 11.2.4.2)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification>13.1.1</V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V4</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat>JsonLight</PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>Minimal.Conformance.1013</rulename>
+    <notes></notes>
+    <cert_tr>Core</cert_tr>
+    <cert_impact>May</cert_impact>
+    <ttt_testing_results></ttt_testing_results>
+    <category>CONFORMANCE</category>
+    <RESOVersion></RESOVersion>
+    <Description>13. MAY publish metadata at $metadata according to [OData-CSDL] (section 11.1.2)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification>13.1.1</V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V4</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat>JsonLight</PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>ServiceImpl_BatchRequests</rulename>
+    <notes></notes>
+    <cert_tr>Platinum</cert_tr>
+    <cert_impact>Core</cert_impact>
+    <ttt_testing_results>success</ttt_testing_results>
+    <category>SERVICEIMPL</category>
+    <RESOVersion>1.02</RESOVersion>
+    <Description>Batch Requests,Batch Requests</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification>11.7</V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V_All</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat></PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>ServiceImpl_AsynchronousRequest</rulename>
+    <notes></notes>
+    <cert_tr>Platinum</cert_tr>
+    <cert_impact>Core</cert_impact>
+    <ttt_testing_results>success</ttt_testing_results>
+    <category>SERVICEIMPL</category>
+    <RESOVersion>1.02</RESOVersion>
+    <Description>Asynchronous Requests,Asynchronous Requests</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification>11.6</V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V_All</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat></PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>ServiceImpl_ActionImport</rulename>
+    <notes></notes>
+    <cert_tr>Platinum</cert_tr>
+    <cert_impact>OData MUST</cert_impact>
+    <ttt_testing_results>(Not in Results)</ttt_testing_results>
+    <category>SERVICEIMPL</category>
+    <RESOVersion>1.02</RESOVersion>
+    <Description>Operations,ActionImport</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification>11.5.4.1</V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V_All</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat></PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>ServiceImpl_CrossJoin</rulename>
+    <notes></notes>
+    <cert_tr>Platinum</cert_tr>
+    <cert_impact>OData MUST</cert_impact>
+    <ttt_testing_results>success</ttt_testing_results>
+    <category>SERVICEIMPL</category>
+    <RESOVersion>1.02</RESOVersion>
+    <Description>Requesting Data,Cross Join</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification></V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V_All</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat></PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>ServiceImpl_Etag</rulename>
+    <notes>OPEN QUESTION: Duplicate of “REQ-WA100-QO1”</notes>
+    <cert_tr>Platinum</cert_tr>
+    <cert_impact>OData MUST</cert_impact>
+    <ttt_testing_results>(Not in Results)</ttt_testing_results>
+    <category>SERVICEIMPL</category>
+    <RESOVersion>1.02</RESOVersion>
+    <Description>Response Headers,Etag</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification></V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V_All</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat></PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>ServiceImpl_FilterGrouping</rulename>
+    <notes></notes>
+    <cert_tr>Platinum</cert_tr>
+    <cert_impact>OData MUST</cert_impact>
+    <ttt_testing_results>(Not in Results)</ttt_testing_results>
+    <category>SERVICEIMPL</category>
+    <RESOVersion>1.02</RESOVersion>
+    <Description>Requesting Data,System Query Option,Logical Operators,$filter (Grouping)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification></V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V_All</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat></PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>ServiceImpl_FilterHas</rulename>
+    <notes></notes>
+    <cert_tr>Bronze</cert_tr>
+    <cert_impact>OData MUST</cert_impact>
+    <ttt_testing_results>aborted</ttt_testing_results>
+    <category>SERVICEIMPL</category>
+    <RESOVersion>1.02</RESOVersion>
+    <Description>Requesting Data,System Query Option,Logical Operators,$filter (Has)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification></V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V_All</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat></PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>ServiceImpl_FilterNot</rulename>
+    <notes></notes>
+    <cert_tr>Core</cert_tr>
+    <cert_impact>OData MUST</cert_impact>
+    <ttt_testing_results>error</ttt_testing_results>
+    <category>SERVICEIMPL</category>
+    <RESOVersion>1.02</RESOVersion>
+    <Description>Requesting Data,System Query Option,Logical Operators,$filter (Not)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification></V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V_All</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat></PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>ServiceImpl_GetEntity</rulename>
+    <notes></notes>
+    <cert_tr>Platinum</cert_tr>
+    <cert_impact>OData MUST</cert_impact>
+    <ttt_testing_results>error</ttt_testing_results>
+    <category>SERVICEIMPL</category>
+    <RESOVersion>1.02</RESOVersion>
+    <Description>Requesting Data,Get Entity</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification></V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V_All</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat></PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>ServiceImpl_GetProperty</rulename>
+    <notes></notes>
+    <cert_tr>Platinum</cert_tr>
+    <cert_impact>OData MUST</cert_impact>
+    <ttt_testing_results>aborted</ttt_testing_results>
+    <category>SERVICEIMPL</category>
+    <RESOVersion>1.02</RESOVersion>
+    <Description>Requesting Data,Get Property</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification></V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V_All</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat></PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>ServiceImpl_MetadataServiceDocumentRequest</rulename>
+    <notes></notes>
+    <cert_tr>Platinum</cert_tr>
+    <cert_impact>OData MUST</cert_impact>
+    <ttt_testing_results>error</ttt_testing_results>
+    <category>SERVICEIMPL</category>
+    <RESOVersion>1.02</RESOVersion>
+    <Description>Metadata Requests,Metadata Service Document Request</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification>11.1.3</V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V_All</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat></PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>ServiceImpl_MetadataDocumentRequest</rulename>
+    <notes></notes>
+    <cert_tr>Platinum</cert_tr>
+    <cert_impact>OData MUST</cert_impact>
+    <ttt_testing_results>error</ttt_testing_results>
+    <category>SERVICEIMPL</category>
+    <RESOVersion>1.02</RESOVersion>
+    <Description>Metadata Requests,Metadata Document Request</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification>11.1.2</V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V_All</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat></PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>ServiceImpl_FunctionImport</rulename>
+    <notes></notes>
+    <cert_tr>Platinum</cert_tr>
+    <cert_impact>OData MUST</cert_impact>
+    <ttt_testing_results>aborted</ttt_testing_results>
+    <category>SERVICEIMPL</category>
+    <RESOVersion>1.02</RESOVersion>
+    <Description>Operations,FunctionImport</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification>11.5.3.1</V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V_All</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat></PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>ServiceImpl_All</rulename>
+    <notes></notes>
+    <cert_tr>Platinum</cert_tr>
+    <cert_impact>OData MUST</cert_impact>
+    <ttt_testing_results>aborted</ttt_testing_results>
+    <category>SERVICEIMPL</category>
+    <RESOVersion>1.02</RESOVersion>
+    <Description>Requesting Data,All</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification></V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V_All</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat></PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>ServiceImpl_ServiceDocumentRequest</rulename>
+    <notes></notes>
+    <cert_tr>Platinum</cert_tr>
+    <cert_impact>OData MUST</cert_impact>
+    <ttt_testing_results>success</ttt_testing_results>
+    <category>SERVICEIMPL</category>
+    <RESOVersion>1.02</RESOVersion>
+    <Description>Metadata Requests,Service Document Request</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification>11.1.1</V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V_All</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat></PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>ServiceImpl_SystemQueryOptionFilter_Date</rulename>
+    <notes></notes>
+    <cert_tr>Core</cert_tr>
+    <cert_impact>OData MUST</cert_impact>
+    <ttt_testing_results>success</ttt_testing_results>
+    <category>SERVICEIMPL</category>
+    <RESOVersion>1.02</RESOVersion>
+    <Description>Requesting Data,System Query Option,Arithmetic Operators,$filter(date)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification></V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V_All</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat></PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>ServiceImpl_SystemQueryOptionFilter_GeoDistance</rulename>
+    <notes></notes>
+    <cert_tr>Platinum</cert_tr>
+    <cert_impact>OData MUST</cert_impact>
+    <ttt_testing_results>aborted</ttt_testing_results>
+    <category>SERVICEIMPL</category>
+    <RESOVersion>1.02</RESOVersion>
+    <Description>Requesting Data,System Query Option,Arithmetic Operators,$filter(geo.distance)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification></V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V_All</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat></PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>ServiceImpl_SystemQueryOptionFilter_GeoIntersects</rulename>
+    <notes></notes>
+    <cert_tr>Platinum</cert_tr>
+    <cert_impact>OData MUST</cert_impact>
+    <ttt_testing_results>error</ttt_testing_results>
+    <category>SERVICEIMPL</category>
+    <RESOVersion>1.02</RESOVersion>
+    <Description>Requesting Data,System Query Option,Arithmetic Operators,$filter(geo.intersects)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification></V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V_All</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat></PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>ServiceImpl_SystemQueryOptionFilter_GeoLength</rulename>
+    <notes></notes>
+    <cert_tr>Platinum</cert_tr>
+    <cert_impact>OData MUST</cert_impact>
+    <ttt_testing_results>error</ttt_testing_results>
+    <category>SERVICEIMPL</category>
+    <RESOVersion>1.02</RESOVersion>
+    <Description>Requesting Data,System Query Option,Arithmetic Operators,$filter(geo.length)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification></V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V_All</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat></PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>ServiceImpl_SystemQueryOptionFilter_TotalOffsetMinutes</rulename>
+    <notes></notes>
+    <cert_tr>Platinum</cert_tr>
+    <cert_impact>OData MUST</cert_impact>
+    <ttt_testing_results>(Not in Results)</ttt_testing_results>
+    <category>SERVICEIMPL</category>
+    <RESOVersion>1.02</RESOVersion>
+    <Description>Requesting Data,System Query Option,Arithmetic Operators,$filter(totaloffsetminutes)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification></V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V_All</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat></PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>ServiceImpl_FilterAll</rulename>
+    <notes></notes>
+    <cert_tr>Platinum</cert_tr>
+    <cert_impact>OData MUST</cert_impact>
+    <ttt_testing_results>success</ttt_testing_results>
+    <category>SERVICEIMPL</category>
+    <RESOVersion>1.02</RESOVersion>
+    <Description>Requesting Data,System Query Option,Lambda Operators,$filter (all)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification></V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V_All</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat></PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>ServiceImpl_FilterAnd</rulename>
+    <notes></notes>
+    <cert_tr>Core</cert_tr>
+    <cert_impact>OData MUST</cert_impact>
+    <ttt_testing_results>error</ttt_testing_results>
+    <category>SERVICEIMPL</category>
+    <RESOVersion>1.02</RESOVersion>
+    <Description>Requesting Data,System Query Option,Logical Operators,$filter (And)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification></V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V_All</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat></PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>ServiceImpl_FilterAny</rulename>
+    <notes></notes>
+    <cert_tr>Platinum</cert_tr>
+    <cert_impact>SHOULD</cert_impact>
+    <ttt_testing_results>(Not in Results)</ttt_testing_results>
+    <category>SERVICEIMPL</category>
+    <RESOVersion>1.02</RESOVersion>
+    <Description>Requesting Data,System Query Option,Lambda Operators,$filter (any)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification></V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V_All</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat></PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>ServiceImpl_FilterEquals</rulename>
+    <notes></notes>
+    <cert_tr>Core</cert_tr>
+    <cert_impact>OData MUST</cert_impact>
+    <ttt_testing_results>(Not in Results)</ttt_testing_results>
+    <category>SERVICEIMPL</category>
+    <RESOVersion>1.02</RESOVersion>
+    <Description>Requesting Data,System Query Option,Logical Operators,$filter (Equals)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification></V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V_All</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat></PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>ServiceImpl_FilterGreaterThan</rulename>
+    <notes></notes>
+    <cert_tr>Core</cert_tr>
+    <cert_impact>OData MUST</cert_impact>
+    <ttt_testing_results>(Not in Results)</ttt_testing_results>
+    <category>SERVICEIMPL</category>
+    <RESOVersion>1.02</RESOVersion>
+    <Description>Requesting Data,System Query Option,Logical Operators,$filter (Greater Than)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification></V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V_All</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat></PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>ServiceImpl_FilterGreaterThanOrEqual</rulename>
+    <notes>UPDATE TTT Tests</notes>
+    <cert_tr>Core</cert_tr>
+    <cert_impact>Bronze</cert_impact>
+    <ttt_testing_results>error</ttt_testing_results>
+    <category>SERVICEIMPL</category>
+    <RESOVersion>1.02</RESOVersion>
+    <Description>Requesting Data,System Query Option,Logical Operators,$filter (Greater Than or Equal)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification></V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V_All</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat></PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>ServiceImpl_FilterLessThan</rulename>
+    <notes></notes>
+    <cert_tr>Core</cert_tr>
+    <cert_impact>Core</cert_impact>
+    <ttt_testing_results>success</ttt_testing_results>
+    <category>SERVICEIMPL</category>
+    <RESOVersion>1.02</RESOVersion>
+    <Description>Requesting Data,System Query Option,Logical Operators,$filter (Less Than)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification></V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V_All</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat></PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>ServiceImpl_FilterLessThanOrEqual</rulename>
+    <notes>UPDATE TTT Tests</notes>
+    <cert_tr>Core</cert_tr>
+    <cert_impact>Platinum</cert_impact>
+    <ttt_testing_results>error</ttt_testing_results>
+    <category>SERVICEIMPL</category>
+    <RESOVersion>1.02</RESOVersion>
+    <Description>Requesting Data,System Query Option,Logical Operators,$filter (Less Than or Equal)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification></V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V_All</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat></PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>ServiceImpl_FilterNotEquals</rulename>
+    <notes></notes>
+    <cert_tr>Core</cert_tr>
+    <cert_impact>OData MUST</cert_impact>
+    <ttt_testing_results>aborted</ttt_testing_results>
+    <category>SERVICEIMPL</category>
+    <RESOVersion>1.02</RESOVersion>
+    <Description>Requesting Data,System Query Option,Logical Operators,$filter (Not Equals)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification></V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V_All</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat></PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>ServiceImpl_FilterOr</rulename>
+    <notes></notes>
+    <cert_tr>Core</cert_tr>
+    <cert_impact>OData MUST</cert_impact>
+    <ttt_testing_results>error</ttt_testing_results>
+    <category>SERVICEIMPL</category>
+    <RESOVersion>1.02</RESOVersion>
+    <Description>Requesting Data,System Query Option,Logical Operators,$filter (Or)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification></V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V_All</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat></PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>ServiceImpl_SystemQueryOptionFilter_Cast</rulename>
+    <notes></notes>
+    <cert_tr>Platinum</cert_tr>
+    <cert_impact>OData MUST</cert_impact>
+    <ttt_testing_results>(Not in Results)</ttt_testing_results>
+    <category>SERVICEIMPL</category>
+    <RESOVersion>1.02</RESOVersion>
+    <Description>Requesting Data,System Query Option,Arithmetic Operators,$filter(cast)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification></V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V_All</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat></PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>ServiceImpl_SystemQueryOptionFilter_Ceiling</rulename>
+    <notes></notes>
+    <cert_tr>Platinum</cert_tr>
+    <cert_impact>Core</cert_impact>
+    <ttt_testing_results>success</ttt_testing_results>
+    <category>SERVICEIMPL</category>
+    <RESOVersion>1.02</RESOVersion>
+    <Description>Requesting Data,System Query Option,Arithmetic Operators,$filter(ceiling)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification></V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V_All</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat></PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>ServiceImpl_SystemQueryOptionFilter_Concat</rulename>
+    <notes></notes>
+    <cert_tr>Platinum</cert_tr>
+    <cert_impact>OData MUST</cert_impact>
+    <ttt_testing_results>success</ttt_testing_results>
+    <category>SERVICEIMPL</category>
+    <RESOVersion>1.02</RESOVersion>
+    <Description>Requesting Data,System Query Option,Arithmetic Operators,$filter(concat)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification></V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V_All</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat></PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>ServiceImpl_SystemQueryOptionFilter_Contains</rulename>
+    <notes></notes>
+    <cert_tr>Platinum</cert_tr>
+    <cert_impact>Must</cert_impact>
+    <ttt_testing_results></ttt_testing_results>
+    <category>SERVICEIMPL</category>
+    <RESOVersion></RESOVersion>
+    <Description>Requesting Data,System Query Option,Arithmetic Operators,$filter(contains)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification></V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V_All</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat></PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>ServiceImpl_SystemQueryOptionFilter_Day</rulename>
+    <notes></notes>
+    <cert_tr>Platinum</cert_tr>
+    <cert_impact>Must</cert_impact>
+    <ttt_testing_results></ttt_testing_results>
+    <category>SERVICEIMPL</category>
+    <RESOVersion></RESOVersion>
+    <Description>Requesting Data,System Query Option,Arithmetic Operators,$filter(day)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification></V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V_All</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat></PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>ServiceImpl_SystemQueryOptionFilter_Division</rulename>
+    <notes></notes>
+    <cert_tr>Platinum</cert_tr>
+    <cert_impact>Must</cert_impact>
+    <ttt_testing_results></ttt_testing_results>
+    <category>SERVICEIMPL</category>
+    <RESOVersion></RESOVersion>
+    <Description>Requesting Data,System Query Option,Arithmetic Operators,$filter(Division)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification></V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V_All</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat></PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>ServiceImpl_SystemQueryOptionFilter_EndsWith</rulename>
+    <notes></notes>
+    <cert_tr>Platinum</cert_tr>
+    <cert_impact>Must</cert_impact>
+    <ttt_testing_results></ttt_testing_results>
+    <category>SERVICEIMPL</category>
+    <RESOVersion></RESOVersion>
+    <Description>Requesting Data,System Query Option,Arithmetic Operators,$filter(endswith)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification></V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V_All</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat></PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>ServiceImpl_SystemQueryOptionFilter_Floor</rulename>
+    <notes>RESO Only TR</notes>
+    <cert_tr>Platinum</cert_tr>
+    <cert_impact>Core</cert_impact>
+    <ttt_testing_results></ttt_testing_results>
+    <category></category>
+    <RESOVersion>1.02</RESOVersion>
+    <Description>Requesting Data,System Query Option,Arithmetic Operators,$filter(floor)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification></V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V_All</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat></PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>ServiceImpl_SystemQueryOptionFilter_Fractionalseconds</rulename>
+    <notes></notes>
+    <cert_tr>Gold</cert_tr>
+    <cert_impact>Must</cert_impact>
+    <ttt_testing_results></ttt_testing_results>
+    <category>SERVICEIMPL</category>
+    <RESOVersion></RESOVersion>
+    <Description>Requesting Data,System Query Option,Arithmetic Operators,$filter(fractionalseconds)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification></V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V_All</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat></PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>ServiceImpl_SystemQueryOptionFilter_Hour</rulename>
+    <notes></notes>
+    <cert_tr>Gold</cert_tr>
+    <cert_impact>Must</cert_impact>
+    <ttt_testing_results></ttt_testing_results>
+    <category>SERVICEIMPL</category>
+    <RESOVersion></RESOVersion>
+    <Description>Requesting Data,System Query Option,Arithmetic Operators,$filter(hour)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification></V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V_All</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat></PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>ServiceImpl_SystemQueryOptionFilter_IndexOf</rulename>
+    <notes></notes>
+    <cert_tr>Platinum</cert_tr>
+    <cert_impact>OData MUST</cert_impact>
+    <ttt_testing_results>success</ttt_testing_results>
+    <category>SERVICEIMPL</category>
+    <RESOVersion>1.02</RESOVersion>
+    <Description>Requesting Data,System Query Option,Arithmetic Operators,$filter(indexof)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification></V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V_All</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat></PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>ServiceImpl_SystemQueryOptionFilter_IsOf</rulename>
+    <notes></notes>
+    <cert_tr>Platinum</cert_tr>
+    <cert_impact>Core</cert_impact>
+    <ttt_testing_results>success</ttt_testing_results>
+    <category>SERVICEIMPL</category>
+    <RESOVersion>1.02</RESOVersion>
+    <Description>Requesting Data,System Query Option,Arithmetic Operators,$filter(isof)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification></V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V_All</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat></PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>ServiceImpl_SystemQueryOptionFilter_Length</rulename>
+    <notes></notes>
+    <cert_tr>Platinum</cert_tr>
+    <cert_impact>OData MUST</cert_impact>
+    <ttt_testing_results>success</ttt_testing_results>
+    <category>SERVICEIMPL</category>
+    <RESOVersion>1.02</RESOVersion>
+    <Description>Requesting Data,System Query Option,Arithmetic Operators,$filter(length)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification></V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V_All</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat></PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>ServiceImpl_SystemQueryOptionFilter_Maxdatetime</rulename>
+    <notes></notes>
+    <cert_tr>Platinum</cert_tr>
+    <cert_impact>OData MUST</cert_impact>
+    <ttt_testing_results>error</ttt_testing_results>
+    <category>SERVICEIMPL</category>
+    <RESOVersion>1.02</RESOVersion>
+    <Description>Requesting Data,System Query Option,Arithmetic Operators,$filter(maxdatetime)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification></V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V_All</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat></PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>ServiceImpl_SystemQueryOptionFilter_Mindatetime</rulename>
+    <notes></notes>
+    <cert_tr>Excluded</cert_tr>
+    <cert_impact>OData MUST</cert_impact>
+    <ttt_testing_results>(Not in Results)</ttt_testing_results>
+    <category>SERVICEIMPL</category>
+    <RESOVersion>1.02</RESOVersion>
+    <Description>Requesting Data,System Query Option,Arithmetic Operators,$filter(mindatetime)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification></V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V_All</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat></PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>ServiceImpl_SystemQueryOptionFilter_Minute</rulename>
+    <notes></notes>
+    <cert_tr>Gold</cert_tr>
+    <cert_impact>Must</cert_impact>
+    <ttt_testing_results></ttt_testing_results>
+    <category>SERVICEIMPL</category>
+    <RESOVersion></RESOVersion>
+    <Description>Requesting Data,System Query Option,Arithmetic Operators,$filter(minute)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification></V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V_All</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat></PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>ServiceImpl_SystemQueryOptionFilter_Modulo</rulename>
+    <notes></notes>
+    <cert_tr>Platinum</cert_tr>
+    <cert_impact>OData MUST</cert_impact>
+    <ttt_testing_results>error</ttt_testing_results>
+    <category>SERVICEIMPL</category>
+    <RESOVersion>1.02</RESOVersion>
+    <Description>Requesting Data,System Query Option,Arithmetic Operators,$filter(Modulo)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification></V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V_All</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat></PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>ServiceImpl_SystemQueryOptionFilter_Month</rulename>
+    <notes></notes>
+    <cert_tr>Gold</cert_tr>
+    <cert_impact>Must</cert_impact>
+    <ttt_testing_results></ttt_testing_results>
+    <category>SERVICEIMPL</category>
+    <RESOVersion></RESOVersion>
+    <Description>Requesting Data,System Query Option,Arithmetic Operators,$filter(month)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification></V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V_All</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat></PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>ServiceImpl_SystemQueryOptionFilter_Multiplication</rulename>
+    <notes></notes>
+    <cert_tr>Platinum</cert_tr>
+    <cert_impact>SHOULD</cert_impact>
+    <ttt_testing_results>(Not in Results)</ttt_testing_results>
+    <category>SERVICEIMPL</category>
+    <RESOVersion>1.02</RESOVersion>
+    <Description>Requesting Data,System Query Option,Arithmetic Operators,$filter(Multiplication)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification></V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V_All</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat></PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>ServiceImpl_SystemQueryOptionFilter_Negation</rulename>
+    <notes></notes>
+    <cert_tr>Platinum</cert_tr>
+    <cert_impact>MAY</cert_impact>
+    <ttt_testing_results>success</ttt_testing_results>
+    <category>SERVICEIMPL</category>
+    <RESOVersion>1.02</RESOVersion>
+    <Description>Requesting Data,System Query Option,Arithmetic Operators,$filter(Negation)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification></V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V_All</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat></PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>ServiceImpl_SystemQueryOptionFilter_Now</rulename>
+    <notes></notes>
+    <cert_tr>Core</cert_tr>
+    <cert_impact>OData MUST</cert_impact>
+    <ttt_testing_results>(Not in Results)</ttt_testing_results>
+    <category>SERVICEIMPL</category>
+    <RESOVersion>1.02</RESOVersion>
+    <Description>Requesting Data,System Query Option,Arithmetic Operators,$filter(now)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification></V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V_All</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat></PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>ServiceImpl_SystemQueryOptionFilter_Round</rulename>
+    <notes></notes>
+    <cert_tr>Undetermined</cert_tr>
+    <cert_impact>OData MUST</cert_impact>
+    <ttt_testing_results>(Not in Results)</ttt_testing_results>
+    <category>SERVICEIMPL</category>
+    <RESOVersion>1.02</RESOVersion>
+    <Description>Requesting Data,System Query Option,Arithmetic Operators,$filter(round)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification></V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V_All</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat></PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>ServiceImpl_SystemQueryOptionFilter_Second</rulename>
+    <notes></notes>
+    <cert_tr>Gold</cert_tr>
+    <cert_impact>Must</cert_impact>
+    <ttt_testing_results></ttt_testing_results>
+    <category>SERVICEIMPL</category>
+    <RESOVersion></RESOVersion>
+    <Description>Requesting Data,System Query Option,Arithmetic Operators,$filter(second)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification></V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V_All</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat></PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>ServiceImpl_SystemQueryOptionFilter_StartsWith</rulename>
+    <notes></notes>
+    <cert_tr>Platinum</cert_tr>
+    <cert_impact>Must</cert_impact>
+    <ttt_testing_results></ttt_testing_results>
+    <category>SERVICEIMPL</category>
+    <RESOVersion></RESOVersion>
+    <Description>Requesting Data,System Query Option,Arithmetic Operators,$filter(startswith)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification></V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V_All</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat></PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>ServiceImpl_SystemQueryOptionFilter_Substring</rulename>
+    <notes></notes>
+    <cert_tr>Platinum</cert_tr>
+    <cert_impact>Core</cert_impact>
+    <ttt_testing_results>success</ttt_testing_results>
+    <category>SERVICEIMPL</category>
+    <RESOVersion>1.02</RESOVersion>
+    <Description>Requesting Data,System Query Option,Arithmetic Operators,$filter(substring)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification></V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V_All</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat></PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>ServiceImpl_SystemQueryOptionFilter_ToLower</rulename>
+    <notes></notes>
+    <cert_tr>Platinum</cert_tr>
+    <cert_impact>OData MUST</cert_impact>
+    <ttt_testing_results>aborted</ttt_testing_results>
+    <category>SERVICEIMPL</category>
+    <RESOVersion>1.02</RESOVersion>
+    <Description>Requesting Data,System Query Option,Arithmetic Operators,$filter(tolower)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification></V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V_All</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat></PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>ServiceImpl_SystemQueryOptionFilter_TotalSeconds</rulename>
+    <notes>UPDATE TTT Tests</notes>
+    <cert_tr>Platinum</cert_tr>
+    <cert_impact>Core</cert_impact>
+    <ttt_testing_results>error</ttt_testing_results>
+    <category>SERVICEIMPL</category>
+    <RESOVersion>1.02</RESOVersion>
+    <Description>Requesting Data,System Query Option,Arithmetic Operators,$filter(totalseconds)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification></V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V_All</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat></PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>ServiceImpl_SystemQueryOptionFilter_ToUpper</rulename>
+    <notes></notes>
+    <cert_tr>Platinum</cert_tr>
+    <cert_impact>Must</cert_impact>
+    <ttt_testing_results></ttt_testing_results>
+    <category>SERVICEIMPL</category>
+    <RESOVersion></RESOVersion>
+    <Description>Requesting Data,System Query Option,Arithmetic Operators,$filter(toupper)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification></V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V_All</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat></PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>ServiceImpl_SystemQueryOptionFilter_Trim</rulename>
+    <notes></notes>
+    <cert_tr>Platinum</cert_tr>
+    <cert_impact>OData MUST</cert_impact>
+    <ttt_testing_results>error</ttt_testing_results>
+    <category>SERVICEIMPL</category>
+    <RESOVersion>1.02</RESOVersion>
+    <Description>Requesting Data,System Query Option,Arithmetic Operators,$filter(trim)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification></V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V_All</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat></PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>ServiceImpl_SystemQueryOptionFilter_Year</rulename>
+    <notes></notes>
+    <cert_tr>Gold</cert_tr>
+    <cert_impact>Must</cert_impact>
+    <ttt_testing_results></ttt_testing_results>
+    <category>SERVICEIMPL</category>
+    <RESOVersion></RESOVersion>
+    <Description>Requesting Data,System Query Option,Arithmetic Operators,$filter(year)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification></V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V_All</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat></PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>ServiceImpl_SystemQueryOptionEntity_Id</rulename>
+    <notes></notes>
+    <cert_tr>Platinum</cert_tr>
+    <cert_impact>Core</cert_impact>
+    <ttt_testing_results>success</ttt_testing_results>
+    <category>SERVICEIMPL</category>
+    <RESOVersion>1.02</RESOVersion>
+    <Description>Requesting Data,System Query Option,$entity($id)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification></V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V_All</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat></PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>ServiceImpl_SystemQueryOptionExpand</rulename>
+    <notes></notes>
+    <cert_tr>Platinum</cert_tr>
+    <cert_impact>Must</cert_impact>
+    <ttt_testing_results></ttt_testing_results>
+    <category>SERVICEIMPL</category>
+    <RESOVersion></RESOVersion>
+    <Description>Requesting Data,System Query Option,$expand</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification></V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V_All</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat></PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>ServiceImpl_SystemQueryOptionFilter</rulename>
+    <notes>Any one Geo should be fine.</notes>
+    <cert_tr>Platinum</cert_tr>
+    <cert_impact>OData MUST</cert_impact>
+    <ttt_testing_results>(Not in Results)</ttt_testing_results>
+    <category>SERVICEIMPL</category>
+    <RESOVersion>1.02</RESOVersion>
+    <Description>Requesting Data,System Query Option,$filter</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification></V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V_All</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat></PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>ServiceImpl_SystemQueryOptionFilter_Addition</rulename>
+    <notes></notes>
+    <cert_tr>Platinum</cert_tr>
+    <cert_impact>Bronze</cert_impact>
+    <ttt_testing_results>success</ttt_testing_results>
+    <category>SERVICEIMPL</category>
+    <RESOVersion>1.02</RESOVersion>
+    <Description>Requesting Data,System Query Option,Arithmetic Operators,$filter(Addition)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification></V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V_All</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat></PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>ServiceImpl_SystemQueryOptionFilter_Subtraction</rulename>
+    <notes></notes>
+    <cert_tr>Platinum</cert_tr>
+    <cert_impact>OData MUST</cert_impact>
+    <ttt_testing_results>success</ttt_testing_results>
+    <category>SERVICEIMPL</category>
+    <RESOVersion>1.02</RESOVersion>
+    <Description>Requesting Data,System Query Option,Arithmetic Operators,$filter(Subtraction)</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification></V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V_All</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat></PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>ServiceImpl_SystemQueryOptionFormat</rulename>
+    <notes>Any one Geo should be fine.</notes>
+    <cert_tr>Platinum</cert_tr>
+    <cert_impact>OData MUST</cert_impact>
+    <ttt_testing_results>error</ttt_testing_results>
+    <category>SERVICEIMPL</category>
+    <RESOVersion>1.02</RESOVersion>
+    <Description>Requesting Data,System Query Option,$format</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification></V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V_All</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat></PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>ServiceImpl_SystemQueryOptionOrderBy</rulename>
+    <notes></notes>
+    <cert_tr>Platinum</cert_tr>
+    <cert_impact>OData MUST</cert_impact>
+    <ttt_testing_results>error</ttt_testing_results>
+    <category>SERVICEIMPL</category>
+    <RESOVersion>1.02</RESOVersion>
+    <Description>Requesting Data,System Query Option,$orderby</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification></V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V_All</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat></PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>ServiceImpl_SystemQueryOptionRef</rulename>
+    <notes></notes>
+    <cert_tr>Platinum</cert_tr>
+    <cert_impact>Core</cert_impact>
+    <ttt_testing_results>success</ttt_testing_results>
+    <category>SERVICEIMPL</category>
+    <RESOVersion>1.02</RESOVersion>
+    <Description>Requesting Data,System Query Option,$ref</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification></V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V_All</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat></PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>ServiceImpl_SystemQueryOptionSearch</rulename>
+    <notes></notes>
+    <cert_tr>Platinum</cert_tr>
+    <cert_impact>OData MUST</cert_impact>
+    <ttt_testing_results>success</ttt_testing_results>
+    <category>SERVICEIMPL</category>
+    <RESOVersion>1.02</RESOVersion>
+    <Description>Requesting Data,System Query Option,$search</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification></V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V_All</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat></PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>ServiceImpl_SystemQueryOptionSelect</rulename>
+    <notes></notes>
+    <cert_tr>Core</cert_tr>
+    <cert_impact>OData MUST</cert_impact>
+    <ttt_testing_results>(Not in Results)</ttt_testing_results>
+    <category>SERVICEIMPL</category>
+    <RESOVersion>1.02</RESOVersion>
+    <Description>Requesting Data,System Query Option,$select</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification></V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V_All</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat></PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>ServiceImpl_SystemQueryOptionTop</rulename>
+    <notes></notes>
+    <cert_tr>Core</cert_tr>
+    <cert_impact>OData MUST</cert_impact>
+    <ttt_testing_results>(Not in Results)</ttt_testing_results>
+    <category>SERVICEIMPL</category>
+    <RESOVersion>1.02</RESOVersion>
+    <Description>Requesting Data,System Query Option,$top</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification></V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V_All</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat></PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
+  <rulecontrol>
+    <rulename>ServiceImpl_SystemQueryOptionValue</rulename>
+    <notes></notes>
+    <cert_tr>Platinum</cert_tr>
+    <cert_impact>OData MUST</cert_impact>
+    <ttt_testing_results>(Not in Results)</ttt_testing_results>
+    <category>SERVICEIMPL</category>
+    <RESOVersion>1.02</RESOVersion>
+    <Description>Requesting Data,System Query Option,$value</Description>
+    <ErrorMessage></ErrorMessage>
+    <ODataSpecification></ODataSpecification>
+    <V4ODataSpecification></V4ODataSpecification>
+    <V4Specification>ODataV4SpecificationUriForProtocol</V4Specification>
+    <ODataVersion>V_All</ODataVersion>
+    <PayloadType></PayloadType>
+    <PayloadFormat></PayloadFormat>
+    <HelpLink></HelpLink>
+  </rulecontrol>
 </rulecontrols>
-

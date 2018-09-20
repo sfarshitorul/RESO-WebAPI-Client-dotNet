@@ -45,9 +45,9 @@ namespace RESOClientLibrary
         }
         private void SetCredentials(Uri url, string authType, NetworkCredential creds)
         {
-       
-                this.credentials.Remove(url, authType);
-                this.credentials.Add(url, authType, creds);
+
+            this.credentials.Remove(url, authType);
+            this.credentials.Add(url, authType, creds);
         }
         private void PrepareCredentials(string url)
         {
@@ -98,7 +98,7 @@ namespace RESOClientLibrary
         {
             string responsetext = string.Empty;
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(posturl);
-            request.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(delegate(object s, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors) { return true; });
+            request.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(delegate (object s, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors) { return true; });
             X509Certificate Cert = X509Certificate.CreateFromCertFile(clientsettings.GetSetting(settings.certificatepath));
             request.ClientCertificates.Add(Cert);
 
@@ -129,7 +129,15 @@ namespace RESOClientLibrary
                 // Create POST data and convert it to a byte array.
                 byte[] byteArray = Encoding.UTF8.GetBytes(postData);
                 // Set the ContentType property of the WebRequest.
-                request.ContentType = "application/x-www-form-urlencoded";
+                if (clientsettings.GetSetting(settings.oauth_granttype) == "authorization_code")
+                {
+                    request.ContentType = "application/x-www-form-urlencoded";
+                }
+                else
+                {
+                    //request.ContentType = "application/json";
+                    request.ContentType = "application/x-www-form-urlencoded";
+                }
                 // Set the ContentLength property of the WebRequest.
                 request.ContentLength = byteArray.Length;
 
@@ -226,17 +234,17 @@ namespace RESOClientLibrary
 
                 // Create a request using a URL that can receive a post. 
                 HttpWebRequest request = (HttpWebRequest)WebRequest.CreateHttp(test);
-                request.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(delegate(object s, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors) { return true; });
+                request.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(delegate (object s, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors) { return true; });
                 X509Certificate Cert = X509Certificate.CreateFromCertFile(clientsettings.GetSetting(settings.certificatepath));
                 request.ClientCertificates.Add(Cert);
                 //request.Accept = Constants.ContentTypeJson;
                 // Set the Method property of the request to POST.
                 request.Method = "GET";
                 request.KeepAlive = true;
-                //request.Headers.Add("Accept-Encoding", "gzip,deflate");
+                
                 PrepareCredentials(uri);
                 request.Credentials = credentials;
-
+                request.Headers.Add("OData-Version", "4.0");
                 if (oauth_token != null)
                 {
                     request.Headers.Add("Authorization", oauth_token.token_type + " " + oauth_token.access_token);
@@ -256,57 +264,11 @@ namespace RESOClientLibrary
                 }
 
                 //responseobject = WebHelper.Post
-                responseobject = WebHelper.Get(request, 999999);
-
-                return responseobject.ResponsePayload;
-            }
-            catch (Exception ex)
-            {
-                return ex.Message;
-            }
-        }
-        public string GetODataMetadata(string uri)
-        {
-            try
-            {
-
-                Uri test = new Uri(uri);
-
-                // Create a request using a URL that can receive a post. 
-                HttpWebRequest request = (HttpWebRequest)WebRequest.CreateHttp(test);
-                request.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(delegate(object s, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors) { return true; });
-                X509Certificate Cert = X509Certificate.CreateFromCertFile(clientsettings.GetSetting(settings.certificatepath));
-                request.ClientCertificates.Add(Cert);
-                //request.Accept = Constants.V4AcceptHeaderJsonFullMetadata;
-                // Set the Method property of the request to POST.
-                request.Method = "GET";
-                request.KeepAlive = true;
-                //request.Headers.Add("Accept-Encoding", "gzip,deflate");
-                PrepareCredentials(uri);
-                request.Credentials = credentials;
-                if (oauth_token != null)
+                responseobject = WebHelper.Get(request, int.MaxValue);
+                if (responseobject.StatusCode == HttpStatusCode.RequestTimeout)
                 {
-                    request.Headers.Add("Authorization", oauth_token.token_type + " " + oauth_token.access_token);
+                    return "RequestTimeout.  Currently set to:  " + Constants.WebRequestTimeOut;
                 }
-                request.UserAgent = clientsettings.GetSetting(settings.useragent);
-
-                request.ProtocolVersion = HttpVersion.Version11;
-
-                logrequestheader = string.Empty;
-                foreach (string key in request.Headers.AllKeys)
-                {
-                    string keylow = key.ToLower();
-                    string value = request.Headers[key] as string;
-                    LogData(key, value);
-                    logrequestheader += key + "=" + value + "\r\n";
-
-                }
-
-                //string acceptHeader = Constants.V4AcceptHeaderJsonFullMetadata;
-                //Response response = WebHelper.Get(test, acceptHeader, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, request.Headers as HttpWebRequest);
-
-                responseobject = WebHelper.Get(request, 999999);
-
                 return responseobject.ResponsePayload;
             }
             catch (Exception ex)

@@ -73,7 +73,7 @@ namespace ODataValidator.Rule
             {
                 detail.ErrorMessage = "Cannot find an entity-set which supports $count system query options.";
                 info = new ExtensionRuleViolationInfo(context.Destination, context.ResponsePayload, detail);
-
+                passed = false;
                 return passed;
             }
 

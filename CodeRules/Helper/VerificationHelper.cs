@@ -967,8 +967,9 @@ namespace ODataValidator.Rule.Helper
                     int actualAmount = 0;
                     JsonParserHelper.GetEntitiesCountFromFeed(new Uri(url), feed, context.RequestHeaders, ref actualAmount);
                     url = string.Format("{0}/$count", url);
-                    var req = WebRequest.Create(url) as HttpWebRequest;
-                    resp = WebHelper.Get(req, RuleEngineSetting.Instance().DefaultMaximumPayloadSize);
+                    //var req = WebRequest.Create(url) as HttpWebRequest;
+                    //resp = WebHelper.Get(req, RuleEngineSetting.Instance().DefaultMaximumPayloadSize);//REPLACE HEADER
+                    resp = WebHelper.Get(url, null, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
                     detail = new ExtensionRuleResultDetail(string.Empty, url, "GET", string.Empty, resp);
 
                     if (resp != null && resp.StatusCode == HttpStatusCode.OK)
@@ -1039,8 +1040,9 @@ namespace ODataValidator.Rule.Helper
             }
 
             string url = string.Format("{0}/{1}?$select={2}", context.DestinationBasePath, entitySetName, propNames[0]);
-            var req = WebRequest.Create(url) as HttpWebRequest;
-            Response selectResponse = WebHelper.Get(req, RuleEngineSetting.Instance().DefaultMaximumPayloadSize);
+            //var req = WebRequest.Create(url) as HttpWebRequest;
+            //Response selectResponse = WebHelper.Get(req, RuleEngineSetting.Instance().DefaultMaximumPayloadSize);//REPLACE HEADER
+            Response selectResponse = WebHelper.Get(url, null, RuleEngineSetting.Instance().DefaultMaximumPayloadSize,context.RequestHeaders);
             detail = new ExtensionRuleResultDetail(string.Empty, url, "GET", string.Empty, selectResponse);
 
             if (selectResponse.StatusCode == HttpStatusCode.OK)
@@ -1108,7 +1110,8 @@ namespace ODataValidator.Rule.Helper
             string navigProp = expandRestrictions.Item3.First().NavigationPropertyName;
 
             string url = string.Format("{0}/{1}?$expand={2}", context.ServiceBaseUri, entitySet, navigProp);
-            Response resp = WebHelper.Get(WebRequest.Create(url), RuleEngineSetting.Instance().DefaultMaximumPayloadSize);
+            //Response resp = WebHelper.Get(WebRequest.Create(url), RuleEngineSetting.Instance().DefaultMaximumPayloadSize);//REPLACE HEADER
+            Response resp = WebHelper.Get(url, null, RuleEngineSetting.Instance().DefaultMaximumPayloadSize,context.RequestHeaders);
             detail = new ExtensionRuleResultDetail(string.Empty, url, "GET", string.Empty, resp);
 
             if (!string.IsNullOrEmpty(resp.ResponsePayload))
@@ -1181,8 +1184,9 @@ namespace ODataValidator.Rule.Helper
 
             // Send /$count and get the Entries count of response payload.
             var url = string.Format("{0}/{1}/$count", context.ServiceBaseUri, entitySet);
-            var req = WebRequest.Create(url) as HttpWebRequest;
-            Response resp = WebHelper.Get(req, RuleEngineSetting.Instance().DefaultMaximumPayloadSize);
+            //            var req = WebRequest.Create(url) as HttpWebRequest;
+            //          Response resp = WebHelper.Get(req, RuleEngineSetting.Instance().DefaultMaximumPayloadSize);
+            Response resp = WebHelper.Get(url, null, RuleEngineSetting.Instance().DefaultMaximumPayloadSize,context.RequestHeaders);
             detail = new ExtensionRuleResultDetail(string.Empty, url, "GET", null, resp);
 
             if (HttpStatusCode.OK != resp.StatusCode)
@@ -1334,8 +1338,8 @@ namespace ODataValidator.Rule.Helper
 
             // Send /$count and get the Entries count of response payload.
             string url = string.Format("{0}/{1}/$count", context.ServiceBaseUri, entitySet);
-            var req = WebRequest.Create(url) as HttpWebRequest;
-            Response resp = WebHelper.Get(req, RuleEngineSetting.Instance().DefaultMaximumPayloadSize);
+            //var req = WebRequest.Create(url) as HttpWebRequest;//REPLACE HEADER
+            Response resp = WebHelper.Get(url, null, RuleEngineSetting.Instance().DefaultMaximumPayloadSize,context.RequestHeaders);
             detail = new ExtensionRuleResultDetail(string.Empty, url, "GET", null, resp);
 
             if (HttpStatusCode.OK != resp.StatusCode)
@@ -1428,8 +1432,9 @@ namespace ODataValidator.Rule.Helper
             }
 
             string url = string.Format("{0}/{1}", context.DestinationBasePath, entitySetName);
-            var req = WebRequest.Create(url) as HttpWebRequest;
-            var resp = WebHelper.Get(req, RuleEngineSetting.Instance().DefaultMaximumPayloadSize);
+            //var req = WebRequest.Create(url) as HttpWebRequest; //REPLACE HEADER
+            //var resp = WebHelper.Get(req, RuleEngineSetting.Instance().DefaultMaximumPayloadSize);
+            var resp = WebHelper.Get(url, null, RuleEngineSetting.Instance().DefaultMaximumPayloadSize,context.RequestHeaders);
             detail = new ExtensionRuleResultDetail(string.Empty, url, "GET", string.Empty, resp);
             if (resp.StatusCode != HttpStatusCode.OK)
             {
@@ -1451,8 +1456,10 @@ namespace ODataValidator.Rule.Helper
                 var entity = JsonParserHelper.GetEntries(feed1).First;
                 string searchVal = entity[propName].ToString().Contains(" ") ? string.Format("\"{0}\"", entity[propName].ToString()) : entity[propName].ToString();
                 url = string.Format("{0}/{1}?$search={2}", context.DestinationBasePath, entitySetName, searchVal);
-                req = WebRequest.Create(url) as HttpWebRequest;
-                resp = WebHelper.Get(req, RuleEngineSetting.Instance().DefaultMaximumPayloadSize);
+                //req = WebRequest.Create(url) as HttpWebRequest;
+                //resp = WebHelper.Get(req, RuleEngineSetting.Instance().DefaultMaximumPayloadSize);
+                //REPLACE HEADER
+                resp = WebHelper.Get(url, null, RuleEngineSetting.Instance().DefaultMaximumPayloadSize,context.RequestHeaders);
                 detail = new ExtensionRuleResultDetail(string.Empty, url, "GET", string.Empty, resp);
 
                 if (resp.StatusCode == HttpStatusCode.OK)
