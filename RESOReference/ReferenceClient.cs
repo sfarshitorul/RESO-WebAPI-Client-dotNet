@@ -961,6 +961,11 @@ namespace RESOReference
 
         private void RunWebAPITest()
         {
+            int finderror = 0;
+            System.Guid JobID = System.Guid.NewGuid();
+            ResultsProvider resultProvider = new ResultsProvider(JobID);
+
+            ILogger logger = resultProvider as ILogger;
             try
             {
                CommonCore1000_Entry hack = new CommonCore1000_Entry();
@@ -992,16 +997,14 @@ namespace RESOReference
                 }
                 clientsettings = GetSettings();
 
+                finderror = 1;
 
-                
                 var reqHeaders = new List<KeyValuePair<string, string>> { new KeyValuePair<string, string>("OData-Version", "4.0") };
                 reqHeaders.Add(new KeyValuePair<string, string>("Authorization", oauth_bearertoken));
 
                 string reqHeadersString = ConvertListToString(reqHeaders);
 
-                System.Guid JobID = System.Guid.NewGuid();
-                ResultsProvider resultProvider = new ResultsProvider(JobID);
-                ILogger logger = resultProvider as ILogger;
+                
 
 
                 
@@ -1016,8 +1019,8 @@ namespace RESOReference
                 ServiceContext ctx = new ServiceContext(url, JobID, HttpStatusCode.OK, reqHeadersString, metadataresponse, string.Empty, service, serviceresponse, metadataresponse, false, reqHeaders, ODataMetadataType.MinOnly);
 
 
+                finderror = 2;
 
-                
                 int count = 0;
                 TestControl testcontrol = new TestControl();
                 testcontrol.BuildRuleControlList(clientsettings);
@@ -1063,10 +1066,12 @@ namespace RESOReference
                 }
                 
                 System.IO.File.WriteAllText(clientsettings.GetSetting(settings.log_directory) + "\\rulelist.txt", sb.ToString());
+                sb.Clear();
 
                 rulecontrolallfile.Append("</rulecontrols>\r\n");
                 System.IO.File.WriteAllText(clientsettings.GetSetting(settings.log_directory) + "\\rulecontrolfile.xml", rulecontrolallfile.ToString());
-
+                rulecontrolallfile.Clear();
+                finderror = 6;
 
                 var ruleArray = RuleCatalogCollection.Instance.ToArray();
                 
@@ -1074,7 +1079,7 @@ namespace RESOReference
                 rules.Execute(ctx, ruleArray, (int)ruleArray.Length, webapitestcomplete);
                 ResultsProvider logitems = logger as ResultsProvider;
                 Hashtable logitemshash = new Hashtable();
-                
+                finderror = 10;
                 int detailcount = 0;
                 foreach (ExtensionRuleResultDetail item in logitems.Details)
                 {
@@ -1092,6 +1097,7 @@ namespace RESOReference
                         logitemshash[item.RuleName] = hsh;
                     }
                 }
+                finderror = 11;
                 StringBuilder sbresults = new StringBuilder();
                 StringBuilder sbLogAll = new StringBuilder();
                 sbresults.Append("URL");
@@ -1107,16 +1113,17 @@ namespace RESOReference
                 sbresults.Append("SpecificationUri");
                 sbresults.Append("\t");
                 sbresults.Append("\r\n");
+                finderror = 7;
                 foreach (ODataValidator.RuleEngine.TestResult result in resultProvider.ResultsToSave)
                 {
                     BuildResultsOutput(ref sbresults, result, ref sbLogAll, logitemshash);
                 }
-                
+                finderror = 8;
                 using (System.IO.StreamWriter file = new System.IO.StreamWriter(clientsettings.GetSetting(settings.log_directory) + "\\" + "outputlog" + ".txt", false))
                 {
                     file.Write(sbLogAll.ToString());
                 }
-                
+                finderror = 9;
                 using (System.IO.StreamWriter file = new System.IO.StreamWriter(clientsettings.GetSetting(settings.results_directory) + "\\" + "results" + ".txt", false))
                 {
                     file.Write(sbresults.ToString());
@@ -1464,6 +1471,7 @@ namespace RESOReference
                         file.Write(sbLog.ToString());
                     }
                     sbLogAll.Append(sbLog);
+                    sbLog.Clear();
 
                 }
                 sbresults.Append("\r\n");
