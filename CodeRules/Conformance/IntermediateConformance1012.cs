@@ -79,7 +79,7 @@ namespace ODataValidator.Rule
             HttpStatusCode? statusCode = VerificationHelper.VerifySkip(context, out passed, out info);
             if (info != null)
             {
-                info.SetDetailsName(this.Name);
+                info.SetDetailsName(this.Name); 
             }
 
             return passed;

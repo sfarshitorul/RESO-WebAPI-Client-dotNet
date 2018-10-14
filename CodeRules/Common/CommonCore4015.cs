@@ -228,7 +228,8 @@ namespace ODataValidator.Rule
                     {
                         if (navigPropNames.Contains(j.Name) && j.Value.Type == JTokenType.Array)
                         {
-                            string uri = context.DestinationBasePath + "/" + j.Name + @"/$count";
+                            //string uri = context.DestinationBasePath + "/" + j.Name + @"/$count";
+                            string uri = VerificationHelper.BuildURL(context.DestinationBasePath, j.Name + @"/$count");
                             Response resp = WebHelper.Get(uri, null, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
                             passed = null;
 

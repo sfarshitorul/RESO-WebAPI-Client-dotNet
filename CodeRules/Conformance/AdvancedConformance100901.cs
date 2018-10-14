@@ -128,16 +128,35 @@ namespace ODataValidator.Rule
                 {
                     entity = entry[navigProp].First;
                     url = entity[Constants.V4OdataId].ToString();
-                    resp = WebHelper.Get(new Uri(url), Constants.AcceptHeaderJson, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
-
-                    if (resp.StatusCode == HttpStatusCode.OK)
+                    Uri testurl = null;
+                    try
                     {
-                        passed = true;
+                        testurl = new Uri(url);
+                        
+                    }
+                    catch(Exception ex)
+                    {
+
+                    }
+
+                    if (testurl != null)
+                    {
+                        resp = WebHelper.Get(new Uri(url), Constants.AcceptHeaderJson, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
+
+                        if (resp.StatusCode == HttpStatusCode.OK)
+                        {
+                            passed = true;
+                        }
+                        else
+                        {
+                            passed = false;
+                            detail.ErrorMessage = "The service does not execute an accurate result, because the value of the annotation '@odata.id' ("+url+") is a bad link.";
+                        }
                     }
                     else
                     {
                         passed = false;
-                        detail.ErrorMessage = "The service does not execute an accurate result, because the value of the annotation '@odata.id' is a bad link.";
+                        detail.ErrorMessage = "The service does not execute an accurate result, because the value of the annotation '@odata.id' (" + url + ") is a bad link.";
                     }
                 }
             }

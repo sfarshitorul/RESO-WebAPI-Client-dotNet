@@ -197,19 +197,29 @@ namespace ODataValidator.Rule
             {
                 if (null != en[navigPropName] || JTokenType.Array == en[navigPropName].Type || en[navigPropName].Any())
                 {
-                    if (JTokenType.Object != en[navigPropName].First.Type)
+                    if (en[navigPropName].First != null)
                     {
-                        break;
+                        if (JTokenType.Object != en[navigPropName].First.Type)
+                        {
+                            break;
+                        }
+
+                        var nEntity = en[navigPropName].First as JObject;
+                        searchVal = nEntity[primitivePropertyName].ToString().Contains(" ") ?
+                            string.Format("\"{0}\"", nEntity[primitivePropertyName].ToString()) :
+                            nEntity[primitivePropertyName].ToString();
+
+                        if (!string.IsNullOrEmpty(searchVal))
+                        {
+                            break;
+                        }
                     }
-
-                    var nEntity = en[navigPropName].First as JObject;
-                    searchVal = nEntity[primitivePropertyName].ToString().Contains(" ") ?
-                        string.Format("\"{0}\"", nEntity[primitivePropertyName].ToString()) :
-                        nEntity[primitivePropertyName].ToString();
-
-                    if (!string.IsNullOrEmpty(searchVal))
+                    else
                     {
-                        break;
+                        detail.ErrorMessage = "The entity set "+ entitySet+ " with Navigation Property "+ navigPropName+ " is NULL.  Cannot find any appropriate search values in the expanded entities";
+                        info = new ExtensionRuleViolationInfo(context.Destination, context.ResponsePayload, detail);
+
+                        return passed;
                     }
                 }
             }

@@ -45,40 +45,63 @@ namespace ODataValidator.Rule.Helper
 
             try
             {
-                switch (this.propType)
+                string testx = x[this.propName].ToString();
+                string testy = y[this.propName].ToString();
+                if (testx == testy)
                 {
-                    case PrimitiveDataTypes.Binary:
-                    case PrimitiveDataTypes.Guid:
-                    case PrimitiveDataTypes.String:
-                        result = x[this.propName].ToString().CompareTo(y[this.propName].ToString());
-                        break;
-                    case PrimitiveDataTypes.Boolean:
-                        result = ((bool)x[this.propName]).CompareTo((bool)y[this.propName]);
-                        break;
-                    case PrimitiveDataTypes.Byte:
-                        result = ((byte)x[this.propName]).CompareTo((byte)y[this.propName]);
-                        break;
-                    case PrimitiveDataTypes.Decimal:
-                        result = ((decimal)x[this.propName]).CompareTo((decimal)y[this.propName]);
-                        break;
-                    case PrimitiveDataTypes.Double:
-                        result = ((double)x[this.propName]).CompareTo((double)y[this.propName]);
-                        break;
-                    case PrimitiveDataTypes.Single:
-                        result = ((Single)x[this.propName]).CompareTo((Single)y[this.propName]);
-                        break;
-                    case PrimitiveDataTypes.Int16:
-                        result = ((short)x[this.propName]).CompareTo((short)y[this.propName]);
-                        break;
-                    case PrimitiveDataTypes.Int32:
-                        result = ((int)x[this.propName]).CompareTo((int)y[this.propName]);
-                        break;
-                    case PrimitiveDataTypes.Int64:
-                        result = ((long)x[this.propName]).CompareTo((long)y[this.propName]);
-                        break;
-                    case PrimitiveDataTypes.SByte:
-                        result = ((sbyte)x[this.propName]).CompareTo((sbyte)y[this.propName]);
-                        break;
+                    result = 0;
+                }
+                else
+                {
+                    switch (this.propType)
+                    {
+                        case PrimitiveDataTypes.Binary:
+                        case PrimitiveDataTypes.Guid:
+                        case PrimitiveDataTypes.String:
+                            result = x[this.propName].ToString().CompareTo(y[this.propName].ToString());
+                            break;
+                        case PrimitiveDataTypes.Boolean:
+                            result = ((bool)x[this.propName]).CompareTo((bool)y[this.propName]);
+                            break;
+                        case PrimitiveDataTypes.Byte:
+                            result = ((byte)x[this.propName]).CompareTo((byte)y[this.propName]);
+                            break;
+                        case PrimitiveDataTypes.Decimal:
+                            result = ((decimal)x[this.propName]).CompareTo((decimal)y[this.propName]);
+                            break;
+                        case PrimitiveDataTypes.Double:
+                            result = ((double)x[this.propName]).CompareTo((double)y[this.propName]);
+                            break;
+                        case PrimitiveDataTypes.Single:
+                            result = ((Single)x[this.propName]).CompareTo((Single)y[this.propName]);
+                            break;
+                        case PrimitiveDataTypes.Int16:
+                            result = ((short)x[this.propName]).CompareTo((short)y[this.propName]);
+                            break;
+                        case PrimitiveDataTypes.Int32:
+                            try
+                            {
+                                result = ((int)x[this.propName]).CompareTo((int)y[this.propName]);
+                            }
+                            catch (Exception ex)
+                            {
+                                if (x[this.propName] == null && y[this.propName] == null)
+                                {
+                                    result = 0;
+                                }
+                                if (x[this.propName] == y[this.propName])
+                                {
+                                    result = 0;
+                                }
+                            }
+                            break;
+                        case PrimitiveDataTypes.Int64:
+                            result = ((long)x[this.propName]).CompareTo((long)y[this.propName]);
+                            break;
+                        case PrimitiveDataTypes.SByte:
+                            result = ((sbyte)x[this.propName]).CompareTo((sbyte)y[this.propName]);
+                            break;
+                    }
                 }
             }
             catch (FormatException e)

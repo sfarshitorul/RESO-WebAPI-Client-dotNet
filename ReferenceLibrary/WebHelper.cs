@@ -194,6 +194,7 @@ namespace ReferenceLibrary
                 {
                     string safeUnescaped = uri.GetComponents(UriComponents.AbsoluteUri, UriFormat.SafeUnescaped);
                     string normalized = Regex.Replace(safeUnescaped, "(?<!:)/+", "/");
+                    normalized = normalized.Replace("//", "/");
                     canonical = new Uri(normalized);
                 }
                 catch (UriFormatException)

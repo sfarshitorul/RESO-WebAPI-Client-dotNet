@@ -711,28 +711,51 @@ namespace ODataValidator.Rule.Helper
         /// <param name="totalCount">The amount of the entities.</param>
         public static void GetEntitiesCountFromFeed(Uri url, JObject feed, IEnumerable<KeyValuePair<string, string>> RequestHeaders, ref int totalCount)
         {
-            int skiptoken = 0;
-
-            foreach (var r in feed.Children<JProperty>())
+            
+            int count = 0;
+            int count2 = 0;
+            //Stuart - Not limited to integer skiptoken int skiptoken = 0;
+            string skiptoken = string.Empty;
+            try
             {
-                if (r.Name.Equals(Constants.Value, StringComparison.Ordinal) && r.Value.Type == JTokenType.Array)
+
+
+                foreach (var r in feed.Children<JProperty>())
                 {
-                    totalCount += ((JArray)r.Value).Count;
+                    count++;
+                    if (r.Name.Equals(Constants.Value, StringComparison.Ordinal) && r.Value.Type == JTokenType.Array)
+                    {
+                        totalCount += ((JArray)r.Value).Count;
+                    }
+                    if (totalCount > 100)  //causes an incorrect count and the test fails
+                    {
+                        return;
+                    }
+                    count2 = 1;
+                    // When entities are more than one page.
+                    if (r.Name.Equals(Constants.V4OdataNextLink, StringComparison.Ordinal))
+                    {
+                        count2 = 2;
+                        string[] skiptokenValues = r.Value.ToString().StripOffDoubleQuotes().Split(new string[] { "skiptoken=" }, StringSplitOptions.None);
+                        //Stuart - Not limited to integer skiptoken = Int32.Parse(skiptokenValues[1]);
+                        count2 = 3;
+                        skiptoken = skiptokenValues[1] as string;
+                        string nextLinkUrl = !url.AbsoluteUri.Contains("?$") ? url + @"?$skiptoken=" + skiptoken.ToString() : url + @"&$skiptoken=" + skiptoken.ToString();
+                        count2 = 4;
+                        Response response = WebHelper.Get(new Uri(nextLinkUrl), Constants.AcceptHeaderJson, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, RequestHeaders);
+                        count2 = 5;
+                        JObject jo;
+                        response.ResponsePayload.TryToJObject(out jo);
+                        count2 = 6;
+
+                        GetEntitiesCountFromFeed(url, jo, RequestHeaders, ref totalCount);
+                        count2 = 7;
+                    }
                 }
-
-                // When entities are more than one page.
-                if (r.Name.Equals(Constants.V4OdataNextLink, StringComparison.Ordinal))
-                {
-                    string[] skiptokenValues = r.Value.ToString().StripOffDoubleQuotes().Split(new string[] { "skiptoken=" }, StringSplitOptions.None);
-                    skiptoken = Int32.Parse(skiptokenValues[1]);
-                    string nextLinkUrl = !url.AbsoluteUri.Contains("?$") ? url + @"?$skiptoken=" + skiptoken.ToString() : url + @"&$skiptoken=" + skiptoken.ToString();
-                    Response response = WebHelper.Get(new Uri(nextLinkUrl), Constants.AcceptHeaderJson, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, RequestHeaders);
-
-                    JObject jo;
-                    response.ResponsePayload.TryToJObject(out jo);
-
-                    GetEntitiesCountFromFeed(url, jo, RequestHeaders, ref totalCount);
-                }
+            }
+            catch(Exception ex)
+            {
+                throw ex;
             }
         }
 
@@ -760,8 +783,8 @@ namespace ODataValidator.Rule.Helper
 
                 if (jProp.Name.Equals(navigPropName + Constants.V4OdataNextLink, StringComparison.Ordinal))
                 {
-                    string[] nextLinkInfo = jProp.Value.ToString().StripOffDoubleQuotes().Split(new string[] { "skip=" }, StringSplitOptions.None);
-                    string nextLinkUrl = string.Format("{0}/{1}?$skip={2}", url, navigPropName, nextLinkInfo[1]);
+                    string[] nextLinkInfo = jProp.Value.ToString().StripOffDoubleQuotes().Split(new string[] { "skiptoken=" }, StringSplitOptions.None);
+                    string nextLinkUrl = string.Format("{0}/{1}?$skiptoken={2}", url, navigPropName, nextLinkInfo[1]);
                     Response resp = WebHelper.Get(new Uri(nextLinkUrl), Constants.AcceptHeaderJson, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, requestHeaders);
                     JObject jObj;
                     resp.ResponsePayload.TryToJObject(out jObj);

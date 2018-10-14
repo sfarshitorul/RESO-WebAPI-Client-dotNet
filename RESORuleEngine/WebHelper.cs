@@ -49,9 +49,14 @@ namespace ODataValidator.RuleEngine
             {
                 reqHeaders = Headers;
             }
-            var req = WebRequest.Create(uri);
+            string checkslash = uri.OriginalString;
+            checkslash = checkslash.Replace("//", "/");
+            checkslash = checkslash.Replace("http:/", "http://");
+            checkslash = checkslash.Replace("https:/", "https://");
+            Uri newuri = new Uri(checkslash);
+            var req = WebRequest.Create(newuri);
 
-            if (!string.IsNullOrEmpty(uri.UserInfo))
+            if (!string.IsNullOrEmpty(newuri.UserInfo))
             {
                 req.Credentials = new NetworkCredential(Uri.UnescapeDataString(uri.UserInfo.Split(':')[0]), Uri.UnescapeDataString(uri.UserInfo.Split(':')[1]));
             }

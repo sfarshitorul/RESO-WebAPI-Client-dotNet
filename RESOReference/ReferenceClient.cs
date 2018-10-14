@@ -986,6 +986,13 @@ namespace RESOReference
                         return;
                     }
                 }
+                else
+                {
+                    string testurl = clientsettings.GetSetting(settings.webapi_uri);
+                    testurl = testurl.TrimEnd('/');
+                    clientsettings.SetSetting(settings.webapi_uri, testurl);
+
+                }
 
                 if (string.IsNullOrEmpty(webapi_token.Text.Trim().Replace("Loading...", string.Empty).Replace("Error", string.Empty)))
                 {
@@ -1013,8 +1020,8 @@ namespace RESOReference
                 Uri host = GetUri(url.Scheme.ToString() + "://" + url.Host);
                 //Uri uri = new Uri(host, url.AbsoluteUri);
                 
-                Uri service = GetUri(clientsettings.GetSetting(settings.webapi_uri));
-                ServiceStatus intservice = ServiceStatus.GetInstance(clientsettings.GetSetting(settings.webapi_uri), reqHeadersString);
+                Uri service = GetUri(clientsettings.GetSetting(settings.webapi_uri).TrimEnd('/')+"/");
+                ServiceStatus intservice = ServiceStatus.GetInstance(clientsettings.GetSetting(settings.webapi_uri).TrimEnd('/') + "/", reqHeadersString);
                 ServiceStatus.ReviseMetadata(metadataresponse);
                 ServiceContext ctx = new ServiceContext(url, JobID, HttpStatusCode.OK, reqHeadersString, metadataresponse, string.Empty, service, serviceresponse, metadataresponse, false, reqHeaders, ODataMetadataType.MinOnly);
 

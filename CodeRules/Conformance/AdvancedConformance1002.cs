@@ -68,7 +68,7 @@ namespace ODataValidator.Rule
 
             bool? passed = null;
 
-            string url = context.Destination.AbsoluteUri + @"/$metadata";
+            string url = context.Destination.AbsoluteUri.TrimEnd('/') + @"/$metadata";
             Response response = WebHelper.Get(new Uri(url), string.Empty, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
             ExtensionRuleResultDetail detail = new ExtensionRuleResultDetail(this.Name, url, "GET", StringHelper.MergeHeaders(string.Empty, context.RequestHeaders), response);
 
