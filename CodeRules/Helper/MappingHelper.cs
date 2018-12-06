@@ -660,7 +660,14 @@ namespace ODataValidator.Rule.Helper
                 .Where(e => "EntitySet" == e["kind"].Value<string>() && entitySetURL == e["url"].Value<string>())
                 .Select(e => e);
 
-            return null != entry && entry.Any();
+            try
+            {
+                return null != entry && entry.Any();
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         /// <summary>
@@ -691,9 +698,12 @@ namespace ODataValidator.Rule.Helper
                     var jObj = JObject.Parse(resp.ResponsePayload);
                     JArray jArr = jObj.GetValue(Constants.Value) as JArray;
                     var entity = jArr.First as JObject;
-                    foreach (var keyProp in keyProps)
+                    if (keyProps != null)
                     {
-                        keyPropVals.Add(entity[keyProp.Item1].ToString());
+                        foreach (var keyProp in keyProps)
+                        {
+                            keyPropVals.Add(entity[keyProp.Item1].ToString());
+                        }
                     }
                 }
 
@@ -717,7 +727,7 @@ namespace ODataValidator.Rule.Helper
         /// </summary>
         /// <param name="entityTypeShortName">The entity-type short name.</param>
         /// <returns>Returns the path nodes as a queue.</returns>
-        private static Queue<string> GetAccessEntitySetPathNodes(this string entityTypeShortName)
+        private static Queue<string> GetAccessEntitySetPathNodes(this string entityTypeShortName, string entityTypeShortNamechild = "")
         {
             if (string.IsNullOrEmpty(entityTypeShortName))
             {
@@ -754,6 +764,11 @@ namespace ODataValidator.Rule.Helper
                 }
 
                 etShortName = parentElem.GetAttributeValue("Name");
+                if(etShortName == entityTypeShortNamechild)
+                {
+                    //Circular References
+                    return new Queue<string>(); 
+                }
             }
             else
             {
@@ -769,7 +784,7 @@ namespace ODataValidator.Rule.Helper
 
             if (!string.IsNullOrEmpty(etShortName))
             {
-                var temp = MappingHelper.GetAccessEntitySetPathNodes(etShortName);
+                var temp = MappingHelper.GetAccessEntitySetPathNodes(etShortName, entityTypeShortName);
                 while (temp.Any())
                 {
                     queue.Enqueue(temp.Dequeue());

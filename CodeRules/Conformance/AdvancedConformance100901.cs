@@ -81,7 +81,7 @@ namespace ODataValidator.Rule
 
             string entitySet = expandRestrictions.Item1;
             string navigProp = expandRestrictions.Item3.First().NavigationPropertyName;
-            string url = string.Format("{0}/{1}", context.ServiceBaseUri, entitySet);
+            string url = string.Format("{0}/{1}", context.ServiceBaseUri.OriginalString.TrimEnd('/'), entitySet);
             var resp = WebHelper.Get(new Uri(url), Constants.V4AcceptHeaderJsonFullMetadata, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
 
             if (null == resp || HttpStatusCode.OK != resp.StatusCode)
@@ -116,6 +116,10 @@ namespace ODataValidator.Rule
             }
 
             url = string.Format("{0}?$expand={1}/$ref", entityURL, navigProp);
+            if(url.IndexOf(context.ServiceBaseUri.OriginalString) < 0)
+            {
+                url = context.ServiceBaseUri.OriginalString + url;
+            }
             resp = WebHelper.Get(new Uri(url), Constants.AcceptHeaderJson, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
             detail = new ExtensionRuleResultDetail(this.Name, url, "GET", StringHelper.MergeHeaders(Constants.AcceptHeaderJson, context.RequestHeaders), resp);
 
@@ -128,6 +132,10 @@ namespace ODataValidator.Rule
                 {
                     entity = entry[navigProp].First;
                     url = entity[Constants.V4OdataId].ToString();
+                    if (url.IndexOf(context.ServiceBaseUri.OriginalString) < 0)
+                    {
+                        url = context.ServiceBaseUri.OriginalString + url;
+                    }
                     Uri testurl = null;
                     try
                     {

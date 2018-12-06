@@ -1071,8 +1071,22 @@ namespace RESOReference
                     }
                     RuleCatalogCollection.Instance.Add(rule);
                 }
-                
-                System.IO.File.WriteAllText(clientsettings.GetSetting(settings.log_directory) + "\\rulelist.txt", sb.ToString());
+
+                try
+                {
+                    System.IO.File.WriteAllText(clientsettings.GetSetting(settings.log_directory) + "\\rulelist.txt", sb.ToString());
+                }
+                catch
+                {
+                    try
+                    {
+                        System.IO.File.WriteAllText(clientsettings.GetSetting(settings.log_directory) + "\\rulelist.txt", sb.ToString());
+                    }
+                    catch(IOException ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+                }
                 sb.Clear();
 
                 rulecontrolallfile.Append("</rulecontrols>\r\n");

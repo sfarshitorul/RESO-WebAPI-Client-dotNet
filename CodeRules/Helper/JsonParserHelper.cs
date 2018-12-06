@@ -723,9 +723,15 @@ namespace ODataValidator.Rule.Helper
                 foreach (var r in feed.Children<JProperty>())
                 {
                     count++;
-                    if (r.Name.Equals(Constants.Value, StringComparison.Ordinal) && r.Value.Type == JTokenType.Array)
+                    if (r.Name.Equals(Constants.Value, StringComparison.Ordinal) && (r.Value.Type == JTokenType.Array))
                     {
-                        totalCount += ((JArray)r.Value).Count;
+                            totalCount += ((JArray)r.Value).Count;
+                    }
+                    else
+                    {
+                        var jArr = feed.GetValue("value") as JArray;
+                        //totalCount += ((JArray)r.Value).Count;
+                        totalCount += jArr.Count;
                     }
                     if (totalCount > 100)  //causes an incorrect count and the test fails
                     {

@@ -154,8 +154,8 @@ namespace ODataValidator.Rule
 
                 return passed;
             }
-
-            Uri uri = new Uri(string.Format("{0}/{1}?$expand={2}", context.ServiceBaseUri, entitySet, navigPropName));
+            string struri = string.Format("{0}/{1}?$expand={2}", context.ServiceBaseUri.OriginalString.TrimEnd('/'), entitySet, navigPropName);
+            Uri uri = new Uri(struri);
             var response = WebHelper.Get(uri, Constants.AcceptHeaderJson, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
 
             if (HttpStatusCode.OK != response.StatusCode)

@@ -511,7 +511,12 @@ namespace ODataValidator.Rule.Helper
                     if (entries.Any())
                     {
                         string entryURL = entries.First();
-                        response = WebHelper.Get(new Uri(entryURL), Constants.AcceptHeaderJson, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
+                        string url = entryURL;
+                        if(entryURL.IndexOf(context.Destination.OriginalString) < 0)
+                        {
+                            url = context.Destination.OriginalString.TrimEnd('/') + "/" + entryURL;
+                        }
+                        response = WebHelper.Get(new Uri(url), Constants.AcceptHeaderJson, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
                         ExtensionRuleResultDetail detail2 = new ExtensionRuleResultDetail(string.Empty, entryURL, "GET", StringHelper.MergeHeaders(Constants.AcceptHeaderJson, context.RequestHeaders), response);
                         payloadFormat = response.ResponsePayload.GetFormatFromPayload();
                         payloadType = ContextHelper.GetPayloadType(response.ResponsePayload, payloadFormat, response.ResponseHeaders);
@@ -1297,7 +1302,7 @@ namespace ODataValidator.Rule.Helper
 
             if (HttpStatusCode.OK == countResponse.StatusCode)
             {
-                if (totalCountOfEntities != odataCount)
+                if ((totalCountOfEntities != odataCount) && (totalCountOfEntities < 100)) //Stuart:  We are only checking the 1st 100
                 {
                     passed = false;
                     detail.ErrorMessage = string.Format("The odata.count value is {0} and the total count of entities is {1}, they should be equal.", odataCount, totalCountOfEntities);
