@@ -95,7 +95,7 @@ namespace ODataValidator.Rule
             info = null;
             var svcStatus = ServiceStatus.GetInstance();
             string entityTypeShortName;
-            var propTypes = new string[2] { "Edm.Date", "Edm.DateTimeOffset" };
+            var propTypes = new string[1] { "Edm.DateTimeOffset" };
             var propNames = MetadataHelper.GetPropertyNames(propTypes, out entityTypeShortName);
             if (null == propNames || !propNames.Any())
             {
@@ -116,23 +116,49 @@ namespace ODataValidator.Rule
                 JObject jObj = JObject.Parse(resp.ResponsePayload);
                 JArray jArr = jObj.GetValue(Constants.Value) as JArray;
                 var entity = jArr.First as JObject;
-                var propVal = Convert.ToDateTime(entity[propName]).Second;
-                url = string.Format("{0}?$filter=second({1}) eq {2}", url, propName, propVal);
-                resp = WebHelper.Get(new Uri(url), string.Empty, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, svcStatus.DefaultHeaders);
-                var detail = new ExtensionRuleResultDetail(this.Name, url, HttpMethod.Get, string.Empty);
-                info = new ExtensionRuleViolationInfo(new Uri(url), string.Empty, detail);
-                if (null != resp && HttpStatusCode.OK == resp.StatusCode)
+                var propVal = -1;
+                for (int i = 0; i < propNames.Count - 1; i++)
                 {
-                    jObj = JObject.Parse(resp.ResponsePayload);
-                    jArr = jObj.GetValue(Constants.Value) as JArray;
-                    foreach (JObject et in jArr)
+                    try
                     {
-                        passed = Convert.ToDateTime(et[propName]).Second == propVal;
+                        if (entity[propNames[i]] != null)
+                        {
+                            propVal = Convert.ToDateTime(entity[propNames[i].ToString()]).Second;
+                        }
                     }
+                    catch
+                    {
+
+                    }
+                    if (propVal >= 0)
+                    {
+                        propName = propNames[i].ToString();
+                        break;
+                    }
+                }
+                if (propVal < 0)
+                {
+                    passed = false;
                 }
                 else
                 {
-                    passed = false;
+                    url = string.Format("{0}?$filter=second({1}) eq {2}", url, propName, propVal);
+                    resp = WebHelper.Get(new Uri(url), string.Empty, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, svcStatus.DefaultHeaders);
+                    var detail = new ExtensionRuleResultDetail(this.Name, url, HttpMethod.Get, string.Empty);
+                    info = new ExtensionRuleViolationInfo(new Uri(url), string.Empty, detail);
+                    if (null != resp && HttpStatusCode.OK == resp.StatusCode)
+                    {
+                        jObj = JObject.Parse(resp.ResponsePayload);
+                        jArr = jObj.GetValue(Constants.Value) as JArray;
+                        foreach (JObject et in jArr)
+                        {
+                            passed = Convert.ToDateTime(et[propName]).Second == propVal;
+                        }
+                    }
+                    else
+                    {
+                        passed = false;
+                    }
                 }
             }
             

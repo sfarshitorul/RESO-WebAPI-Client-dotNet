@@ -135,7 +135,7 @@ namespace ODataValidator.Rule
                 return passed;
             }
 
-            string url = string.Format("{0}/{1}?$expand={2}/{3}", context.ServiceBaseUri, entitySetUrl, navigPropName, derivedType);
+            string url = string.Format("{0}/{1}?$expand={2}/{3}", context.ServiceBaseUri.OriginalString.TrimEnd('/'), entitySetUrl, navigPropName, derivedType);
             var resp = WebHelper.Get(new Uri(url), Constants.AcceptHeaderJson, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
             detail = new ExtensionRuleResultDetail(this.Name, url, "GET", StringHelper.MergeHeaders(Constants.AcceptHeaderJson, context.RequestHeaders), resp);
 

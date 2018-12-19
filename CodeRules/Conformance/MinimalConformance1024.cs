@@ -159,7 +159,7 @@ namespace ODataValidator.Rule
                             if (entities.Count > 0 && entities[0][Constants.V4OdataId] != null)
                             {
                                 reqDataStr = @"{""" + Constants.V4OdataId + @""" : """ + entities[0][Constants.V4OdataId].ToString() + @"""}";
-                                url = string.Format("{0}/{1}/$ref", entityId, navigPropName);
+                                url = string.Format("{0}/{1}/$ref", entityId.TrimEnd('/'), navigPropName.TrimEnd('/'));
 
                                 // Verify to send a POST Http request and response with a 204 No Content status code.
                                 resp = WebHelper.CreateEntity(url, reqDataStr);

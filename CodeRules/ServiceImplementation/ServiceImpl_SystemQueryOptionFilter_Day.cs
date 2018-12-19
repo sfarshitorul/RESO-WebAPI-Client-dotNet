@@ -96,7 +96,7 @@ namespace ODataValidator.Rule
             info = null;
             var svcStatus = ServiceStatus.GetInstance();
             string entityTypeShortName;
-            var propTypes = new string[2] { "Edm.Date", "Edm.DateTimeOffset" };
+            var propTypes = new string[1] { "Edm.DateTimeOffset" };
             var propNames = MetadataHelper.GetPropertyNames(propTypes, out entityTypeShortName);
             if (null == propNames || !propNames.Any())
             {
@@ -119,20 +119,60 @@ namespace ODataValidator.Rule
                 JObject jObj = JsonConvert.DeserializeObject(resp.ResponsePayload, settings) as JObject;
                 JArray jArr = jObj.GetValue(Constants.Value) as JArray;
                 var entity = jArr.First as JObject;
-                var propVal = entity[propName].ToString();
-                int index = propVal.IndexOf('T');
-                propVal = propVal.Substring(index - 2, 2);
-                url = string.Format("{0}?$filter=day({1}) eq {2}", url, propName, propVal);
-                resp = WebHelper.Get(new Uri(url), string.Empty, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, svcStatus.DefaultHeaders);
-                var detail = new ExtensionRuleResultDetail(this.Name, url, HttpMethod.Get, string.Empty);
-                info = new ExtensionRuleViolationInfo(new Uri(url), string.Empty, detail);
-                if (null != resp && HttpStatusCode.OK == resp.StatusCode)
+                var propVal = string.Empty;
+
+                for (int i = 0; i < propNames.Count - 1; i++)
                 {
-                    jObj = JsonConvert.DeserializeObject(resp.ResponsePayload, settings) as JObject;
-                    jArr = jObj.GetValue(Constants.Value) as JArray;
-                    foreach (JObject et in jArr)
+                    try
                     {
-                        passed = et[propName].ToString().Substring(index - 2, 2) == propVal;
+                        propVal = entity[propNames[i].ToString()].ToString();
+                    }
+                    catch
+                    {
+
+                    }
+                    if (!string.IsNullOrEmpty(propVal))
+                    {
+                        propName = propNames[i].ToString();
+                        break;
+                    }
+                }
+                
+                //try
+                //{
+                //    propVal = entity[propName].ToString();
+                //}
+                //catch(Exception ex)
+                //{
+
+                //}
+                if (!string.IsNullOrEmpty(propVal))
+                {
+                    int index = propVal.IndexOf('T');
+                    if (index < 0)
+                    {
+                        passed = false;
+                    }
+                    else
+                    {
+                        propVal = propVal.Substring(index - 2, 2);
+                        url = string.Format("{0}?$filter=day({1}) eq {2}", url, propName, propVal);
+                        resp = WebHelper.Get(new Uri(url), string.Empty, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, svcStatus.DefaultHeaders);
+                        var detail = new ExtensionRuleResultDetail(this.Name, url, HttpMethod.Get, string.Empty);
+                        info = new ExtensionRuleViolationInfo(new Uri(url), string.Empty, detail);
+                        if (null != resp && HttpStatusCode.OK == resp.StatusCode)
+                        {
+                            jObj = JsonConvert.DeserializeObject(resp.ResponsePayload, settings) as JObject;
+                            jArr = jObj.GetValue(Constants.Value) as JArray;
+                            foreach (JObject et in jArr)
+                            {
+                                passed = et[propName].ToString().Substring(index - 2, 2) == propVal;
+                            }
+                        }
+                        else
+                        {
+                            passed = false;
+                        }
                     }
                 }
                 else

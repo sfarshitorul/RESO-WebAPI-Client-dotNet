@@ -113,7 +113,7 @@ namespace ODataValidator.Rule.Helper
                 return null;
             }
 
-            string url = string.Format("{0}/{1}?$expand={2}($orderby={3} {4})", context.ServiceBaseUri, entitySet, navigPropName, sortedPropName, sortedType.ToString().ToLower());
+            string url = string.Format("{0}/{1}?$expand={2}($orderby={3} {4})", context.ServiceBaseUri.OriginalString.TrimEnd('/'), entitySet, navigPropName, sortedPropName, sortedType.ToString().ToLower());
             Uri uri = new Uri(url);
             Response resp = WebHelper.Get(uri, Constants.AcceptHeaderJson, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
             detail1 = new ExtensionRuleResultDetail("", uri.AbsoluteUri, "GET", StringHelper.MergeHeaders(Constants.AcceptHeaderJson, context.RequestHeaders), resp);
@@ -207,7 +207,7 @@ namespace ODataValidator.Rule.Helper
             string entitySet = restrictions.Item1;
             string sortedPropName = restrictions.Item2.First().PropertyName;
             string sortedPropType = restrictions.Item2.First().PropertyType;
-            string url = string.Format("{0}/{1}?$orderby={2} {3}", context.ServiceBaseUri, entitySet, sortedPropName, sortedType.ToString().ToLower());
+            string url = string.Format("{0}/{1}?$orderby={2} {3}", context.ServiceBaseUri.OriginalString.TrimEnd('/'), entitySet, sortedPropName, sortedType.ToString().ToLower());
             var resp = WebHelper.Get(new Uri(url), Constants.AcceptHeaderJson, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
             detail1 = new ExtensionRuleResultDetail(string.Empty, url, "GET", StringHelper.MergeHeaders(Constants.AcceptHeaderJson, context.RequestHeaders), resp);
 
@@ -317,8 +317,8 @@ namespace ODataValidator.Rule.Helper
             JObject feed;
             JArray entities;
             string url = LambdaOperatorType.Any == lambdaOpType ?
-                string.Format(@"{0}/{1}?$expand={2}&$filter={2}/any(d:d/{3} ge 1)", context.ServiceBaseUri, entitySet, navigProp, strArr[0]) :
-                string.Format(@"{0}/{1}?$expand={2}&$filter={2}/all(d:d/{3} ge 1)", context.ServiceBaseUri, entitySet, navigProp, strArr[0]);
+                string.Format(@"{0}/{1}?$expand={2}&$filter={2}/any(d:d/{3} ge 1)", context.ServiceBaseUri.OriginalString.TrimEnd('/'), entitySet, navigProp, strArr[0]) :
+                string.Format(@"{0}/{1}?$expand={2}&$filter={2}/all(d:d/{3} ge 1)", context.ServiceBaseUri.OriginalString.TrimEnd('/'), entitySet, navigProp, strArr[0]);
             Uri destination = new Uri(url);
             Response resp = WebHelper.Get(destination, Constants.AcceptHeaderJson, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
             detail = new ExtensionRuleResultDetail("", url, "GET", StringHelper.MergeHeaders(Constants.AcceptHeaderJson, context.RequestHeaders), resp);
@@ -883,7 +883,7 @@ namespace ODataValidator.Rule.Helper
                 return null;
             }
 
-            string url = string.Format("{0}/{1}", context.ServiceBaseUri, entitySet);
+            string url = string.Format("{0}/{1}", context.ServiceBaseUri.OriginalString.TrimEnd('/'), entitySet);
             var resp = WebHelper.Get(new Uri(url), Constants.AcceptHeaderJson, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
 
             if (null == resp || HttpStatusCode.OK != resp.StatusCode)
@@ -977,7 +977,7 @@ namespace ODataValidator.Rule.Helper
             }
 
             string entitySet = countRestrictions.Item1;
-            string url = string.Format("{0}/{1}", context.ServiceBaseUri, entitySet);
+            string url = string.Format("{0}/{1}", context.ServiceBaseUri.OriginalString.TrimEnd('/'), entitySet);
             var resp = WebHelper.Get(new Uri(url), Constants.AcceptHeaderJson, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
             detail = new ExtensionRuleResultDetail(string.Empty, url, "GET", string.Empty, resp);
 
@@ -1063,7 +1063,7 @@ namespace ODataValidator.Rule.Helper
                 propNames.Add(prop.Attribute("Name").Value);
             }
 
-            string url = string.Format("{0}/{1}?$select={2}", context.DestinationBasePath, entitySetName, propNames[0]);
+            string url = string.Format("{0}/{1}?$select={2}", context.DestinationBasePath.TrimEnd('/'), entitySetName, propNames[0]);
             //var req = WebRequest.Create(url) as HttpWebRequest;
             //Response selectResponse = WebHelper.Get(req, RuleEngineSetting.Instance().DefaultMaximumPayloadSize);//REPLACE HEADER
             Response selectResponse = WebHelper.Get(url, null, RuleEngineSetting.Instance().DefaultMaximumPayloadSize,context.RequestHeaders);
@@ -1133,7 +1133,7 @@ namespace ODataValidator.Rule.Helper
             string entitySet = expandRestrictions.Item1;
             string navigProp = expandRestrictions.Item3.First().NavigationPropertyName;
 
-            string url = string.Format("{0}/{1}?$expand={2}", context.ServiceBaseUri, entitySet, navigProp);
+            string url = string.Format("{0}/{1}?$expand={2}", context.ServiceBaseUri.OriginalString.TrimEnd('/'), entitySet, navigProp);
             //Response resp = WebHelper.Get(WebRequest.Create(url), RuleEngineSetting.Instance().DefaultMaximumPayloadSize);//REPLACE HEADER
             Response resp = WebHelper.Get(url, null, RuleEngineSetting.Instance().DefaultMaximumPayloadSize,context.RequestHeaders);
             detail = new ExtensionRuleResultDetail(string.Empty, url, "GET", string.Empty, resp);
@@ -1207,7 +1207,7 @@ namespace ODataValidator.Rule.Helper
             var entitySet = countRestrictions.Item1;
 
             // Send /$count and get the Entries count of response payload.
-            var url = string.Format("{0}/{1}/$count", context.ServiceBaseUri, entitySet);
+            var url = string.Format("{0}/{1}/$count", context.ServiceBaseUri.OriginalString.TrimEnd('/'), entitySet);
             //            var req = WebRequest.Create(url) as HttpWebRequest;
             //          Response resp = WebHelper.Get(req, RuleEngineSetting.Instance().DefaultMaximumPayloadSize);
             Response resp = WebHelper.Get(url, null, RuleEngineSetting.Instance().DefaultMaximumPayloadSize,context.RequestHeaders);
@@ -1224,7 +1224,7 @@ namespace ODataValidator.Rule.Helper
 
             Random rnd = new Random();
             int topNumber = rnd.Next(0, Convert.ToInt32(resp.ResponsePayload));
-            string topUri = string.Format("{0}/{1}/?$top={2}", context.ServiceBaseUri, entitySet, topNumber);
+            string topUri = string.Format("{0}/{1}?$top={2}", context.ServiceBaseUri.OriginalString.TrimEnd('/'), entitySet, topNumber);
             Response topResponse = WebHelper.Get(new Uri(topUri), Constants.AcceptHeaderJson, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
             detail = new ExtensionRuleResultDetail(string.Empty, topUri, "GET", StringHelper.MergeHeaders(Constants.AcceptHeaderJson, context.RequestHeaders), topResponse);
 
@@ -1286,7 +1286,7 @@ namespace ODataValidator.Rule.Helper
             }
 
             string entitySet = countRestrictions.Item1;
-            string url = string.Format("{0}/{1}?$count=true", context.ServiceBaseUri, entitySet);
+            string url = string.Format("{0}/{1}?$count=true", context.ServiceBaseUri.OriginalString.TrimEnd('/'), entitySet);
             Uri uri = new Uri(url);
             Response countResponse = WebHelper.Get(uri, Constants.AcceptHeaderJson, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
             detail = new ExtensionRuleResultDetail(string.Empty, uri.AbsoluteUri, "GET", StringHelper.MergeHeaders(Constants.AcceptHeaderJson, context.RequestHeaders), countResponse);
@@ -1361,7 +1361,7 @@ namespace ODataValidator.Rule.Helper
             var entitySet = countRestrictions.Item1;
 
             // Send /$count and get the Entries count of response payload.
-            string url = string.Format("{0}/{1}/$count", context.ServiceBaseUri, entitySet);
+            string url = string.Format("{0}/{1}/$count", context.ServiceBaseUri.OriginalString.TrimEnd('/'), entitySet.TrimEnd('/'));
             //var req = WebRequest.Create(url) as HttpWebRequest;//REPLACE HEADER
             Response resp = WebHelper.Get(url, null, RuleEngineSetting.Instance().DefaultMaximumPayloadSize,context.RequestHeaders);
             detail = new ExtensionRuleResultDetail(string.Empty, url, "GET", null, resp);
@@ -1383,7 +1383,7 @@ namespace ODataValidator.Rule.Helper
                 skipNumber = rnd.Next(10, 30);
             }
 
-            string skipUri = string.Format("{0}/{1}/?$skip={2}", context.ServiceBaseUri, entitySet, skipNumber);
+            string skipUri = string.Format("{0}/{1}/?$skip={2}", context.ServiceBaseUri.OriginalString.TrimEnd('/'), entitySet, skipNumber);
             skipUri = skipUri.Replace("//", "/");
             skipUri = skipUri.Replace("http:/", "http://");
             skipUri = skipUri.Replace("https:/", "https://");
@@ -1464,7 +1464,7 @@ namespace ODataValidator.Rule.Helper
                 return null;
             }
 
-            string url = string.Format("{0}/{1}", context.DestinationBasePath, entitySetName);
+            string url = string.Format("{0}/{1}", context.DestinationBasePath.TrimEnd('/'), entitySetName);
             //var req = WebRequest.Create(url) as HttpWebRequest; //REPLACE HEADER
             //var resp = WebHelper.Get(req, RuleEngineSetting.Instance().DefaultMaximumPayloadSize);
             var resp = WebHelper.Get(url, null, RuleEngineSetting.Instance().DefaultMaximumPayloadSize,context.RequestHeaders);
@@ -1488,7 +1488,7 @@ namespace ODataValidator.Rule.Helper
             {
                 var entity = JsonParserHelper.GetEntries(feed1).First;
                 string searchVal = entity[propName].ToString().Contains(" ") ? string.Format("\"{0}\"", entity[propName].ToString()) : entity[propName].ToString();
-                url = string.Format("{0}/{1}?$search={2}", context.DestinationBasePath, entitySetName, searchVal);
+                url = string.Format("{0}/{1}?$search={2}", context.DestinationBasePath.TrimEnd('/'), entitySetName, searchVal);
                 //req = WebRequest.Create(url) as HttpWebRequest;
                 //resp = WebHelper.Get(req, RuleEngineSetting.Instance().DefaultMaximumPayloadSize);
                 //REPLACE HEADER

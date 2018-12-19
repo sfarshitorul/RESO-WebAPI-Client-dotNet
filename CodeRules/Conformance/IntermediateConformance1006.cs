@@ -76,7 +76,7 @@ namespace ODataValidator.Rule
             string[] entitySetUrls = ContextHelper.GetFeeds(serviceStatus.ServiceDocument, this.PayloadFormat.Value).ToArray();
             string entitySetName = entitySetUrls.First().MapEntitySetURLToEntitySetName();
             string entityTypeShortName = entitySetName.MapEntitySetNameToEntityTypeShortName();
-            string url = string.Format("{0}/{1}", serviceStatus.RootURL, entitySetName);
+            string url = string.Format("{0}/{1}", serviceStatus.RootURL.TrimEnd('/'), entitySetName);
             Response response = WebHelper.Get(new Uri(url), Constants.V4AcceptHeaderJsonFullMetadata, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, null);
             detail = new ExtensionRuleResultDetail(this.Name, url, HttpMethod.Get, string.Empty, response);
             if (response.StatusCode != HttpStatusCode.OK)
@@ -114,7 +114,7 @@ namespace ODataValidator.Rule
                 propNames.Add(prop.Attribute("Name").Value);
             }
 
-            url = string.Format("{0}/{1}/$value", entryUrl, propNames[0]);
+            url = string.Format("{0}/{1}/$value", entryUrl.TrimEnd('/'), propNames[0]);
             response = WebHelper.Get(url, null, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
             detail = new ExtensionRuleResultDetail(this.Name, url, HttpMethod.Get, string.Empty, response);
 

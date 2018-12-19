@@ -116,7 +116,32 @@ namespace ODataValidator.Rule
                 JObject jObj = JObject.Parse(resp.ResponsePayload);
                 JArray jArr = jObj.GetValue(Constants.Value) as JArray;
                 var entity = jArr.First as JObject;
-                var propVal = Convert.ToDateTime(entity[propName]).Minute;
+                //var propVal = Convert.ToDateTime(entity[propName]).Minute;
+                var propVal = -1;
+                for (int i = 0; i < propNames.Count - 1; i++)
+                {
+                    try
+                    {
+                        if (entity[propNames[i]] != null)
+                        {
+                            propVal = Convert.ToDateTime(entity[propNames[i]]).Minute;
+                        }
+                    }
+                    catch
+                    {
+
+                    }
+                    if (propVal >= 0)
+                    {
+                        propName = propNames[i].ToString();
+                        break;
+                    }
+                }
+                if (propVal < 0)
+                {
+                    passed = false;
+                }
+
                 url = string.Format("{0}?$filter=totaloffsetminutes({1}) eq {2}", url, propName, propVal);
                 resp = WebHelper.Get(new Uri(url), string.Empty, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, svcStatus.DefaultHeaders);
                 var detail = new ExtensionRuleResultDetail(this.Name, url, HttpMethod.Get, string.Empty);

@@ -119,25 +119,49 @@ namespace ODataValidator.Rule
                 JObject jObj = JsonConvert.DeserializeObject(resp.ResponsePayload, settings) as JObject;
                 JArray jArr = jObj.GetValue(Constants.Value) as JArray;
                 var entity = jArr.First as JObject;
-                var propVal = entity[propName].ToString();
-                int index = propVal.IndexOf('-');
-                propVal = propVal.Substring(index + 1, 2);
-                url = string.Format("{0}?$filter=month({1}) eq {2}", url, propName, propVal);
-                resp = WebHelper.Get(new Uri(url), string.Empty, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, svcStatus.DefaultHeaders);
-                var detail = new ExtensionRuleResultDetail(this.Name, url, HttpMethod.Get, string.Empty);
-                info = new ExtensionRuleViolationInfo(new Uri(url), string.Empty, detail);
-                if (null != resp && HttpStatusCode.OK == resp.StatusCode)
+                var propVal = string.Empty;
+                //Need to find one that has a value.  Previously only looked at the first attribute.
+                for (int i = 0; i < propNames.Count - 1; i++)
                 {
-                    jObj = JsonConvert.DeserializeObject(resp.ResponsePayload, settings) as JObject;
-                    jArr = jObj.GetValue(Constants.Value) as JArray;
-                    foreach (JObject et in jArr)
+                    try
                     {
-                        passed = et[propName].ToString().Substring(index + 1, 2) == propVal;
+                        propVal = entity[propNames[i].ToString()].ToString();
                     }
+                    catch
+                    {
+
+                    }
+                    if (!string.IsNullOrEmpty(propVal))
+                    {
+                        propName = propNames[i].ToString();
+                        break;
+                    }
+                }
+                int index = propVal.IndexOf('-');
+                if (index < 0)
+                {
+                    passed = false;
                 }
                 else
                 {
-                    passed = false;
+                    propVal = propVal.Substring(index + 1, 2);
+                    url = string.Format("{0}?$filter=month({1}) eq {2}", url, propName, propVal);
+                    resp = WebHelper.Get(new Uri(url), string.Empty, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, svcStatus.DefaultHeaders);
+                    var detail = new ExtensionRuleResultDetail(this.Name, url, HttpMethod.Get, string.Empty);
+                    info = new ExtensionRuleViolationInfo(new Uri(url), string.Empty, detail);
+                    if (null != resp && HttpStatusCode.OK == resp.StatusCode)
+                    {
+                        jObj = JsonConvert.DeserializeObject(resp.ResponsePayload, settings) as JObject;
+                        jArr = jObj.GetValue(Constants.Value) as JArray;
+                        foreach (JObject et in jArr)
+                        {
+                            passed = et[propName].ToString().Substring(index + 1, 2) == propVal;
+                        }
+                    }
+                    else
+                    {
+                        passed = false;
+                    }
                 }
             }
             

@@ -158,7 +158,7 @@ namespace ODataValidator.Rule
                             continue;
                         }
 
-                        url = string.Format("{0}/{1}", entityId, navigPropName);
+                        url = string.Format("{0}/{1}", entityId.TrimEnd('/'), navigPropName);
                         var additionalInfos2 = new List<AdditionalInfo>();
                         reqData = dFactory.ConstructInsertedEntityData(navigPropRelatedEntitySetName, navigPropRelatedEntityTypeShortName, null, out additionalInfos2);
                         reqDataStr = reqData.ToString();

@@ -164,7 +164,7 @@ namespace ODataValidator.Rule
                                     string odataID = entities.First[Constants.V4OdataId] != null ? entities.First[Constants.V4OdataId].Value<string>() : string.Empty;
 
                                     reqDataStr = @"{""" + Constants.V4OdataId + @""" : """ + odataID + @"""}";
-                                    url = string.Format("{0}/{1}/$ref", entityId, navigPropName);
+                                    url = string.Format("{0}/{1}/$ref", entityId.TrimEnd('/'), navigPropName.TrimEnd('/'));
                                     resp = WebHelper.CreateEntity(url, reqDataStr);
                                     detail4 = new ExtensionRuleResultDetail(this.Name, url, HttpMethod.Post, string.Empty, resp, string.Empty, reqDataStr);
 
@@ -174,7 +174,7 @@ namespace ODataValidator.Rule
 
                                         if (navigPropRoughType == NavigationRoughType.CollectionValued)
                                         {
-                                            deleteUrl = string.Format("{0}/{1}/$entity?$id={2}", entityId, navigPropName, entities[0][Constants.V4OdataId].ToString());
+                                            deleteUrl = string.Format("{0}/{1}/$entity?$id={2}", entityId.TrimEnd('/'), navigPropName.TrimEnd('/'), entities[0][Constants.V4OdataId].ToString());
                                         }
 
                                         resp = WebHelper.DeleteEntity(deleteUrl);

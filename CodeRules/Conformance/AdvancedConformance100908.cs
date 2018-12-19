@@ -96,7 +96,7 @@ namespace ODataValidator.Rule
             string entitySetName = restrictions.Item1;
             string entityTypeShortName = entitySetName.MapEntitySetNameToEntityTypeShortName();
             string[] navigPropNames = MetadataHelper.GetNavigPropNamesRecurseByLevels(entityTypeShortName, context.MetadataDocument, expectedLevels);
-            string url = string.Format("{0}/{1}?$expand=*($levels={2})", context.ServiceBaseUri, entitySetName, expectedLevels);
+            string url = string.Format("{0}/{1}?$expand=*($levels={2})", context.ServiceBaseUri.OriginalString.TrimEnd('/'), entitySetName, expectedLevels);
             var resp = WebHelper.Get(new Uri(url), Constants.AcceptHeaderJson, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
             detail = new ExtensionRuleResultDetail(this.Name, url, "GET", StringHelper.MergeHeaders(Constants.AcceptHeaderJson, context.RequestHeaders), resp);
             

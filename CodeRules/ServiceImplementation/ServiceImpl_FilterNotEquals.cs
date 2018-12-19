@@ -110,7 +110,7 @@ namespace ODataValidator.Rule
             string primitivePropName = filterRestrictions.Item2.First().PropertyName;
             string primitivePropType = filterRestrictions.Item2.First().PropertyType;
 
-            string url = string.Format("{0}/{1}", context.ServiceBaseUri, entitySet);
+            string url = string.Format("{0}/{1}", context.ServiceBaseUri.OriginalString.TrimEnd('/'), entitySet);
             var resp = WebHelper.Get(new Uri(url), Constants.AcceptHeaderJson, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
 
             if (null == resp || HttpStatusCode.OK != resp.StatusCode)
@@ -133,7 +133,7 @@ namespace ODataValidator.Rule
             string propVal = entities[0][primitivePropName].ToString();
 
             string pattern = "Edm.String" == primitivePropType ? "{0}/{1}?$filter={2} ne '{3}'" : "{0}/{1}?$filter={2} ne {3}";
-            url = string.Format(pattern, context.ServiceBaseUri, entitySet, primitivePropName, propVal);
+            url = string.Format(pattern, context.ServiceBaseUri.OriginalString.TrimEnd('/'), entitySet, primitivePropName, propVal);
             resp = WebHelper.Get(new Uri(url), Constants.AcceptHeaderJson, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
 
             detail.URI = url;

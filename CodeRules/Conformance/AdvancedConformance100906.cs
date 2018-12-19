@@ -150,7 +150,7 @@ namespace ODataValidator.Rule
             }
 
             bool? isTopQueryValidation = null;
-            string url = string.Format("{0}/{1}?$expand={2}($top=1)", context.ServiceBaseUri, entitySet, navigPropName);
+            string url = string.Format("{0}/{1}?$expand={2}($top=1)", context.ServiceBaseUri.OriginalString.TrimEnd('/'), entitySet, navigPropName);
             var response = WebHelper.Get(new Uri(url), Constants.AcceptHeaderJson, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
             detail1 = new ExtensionRuleResultDetail(this.Name, url, "GET", StringHelper.MergeHeaders(Constants.AcceptHeaderJson, context.RequestHeaders), response);
 
@@ -240,7 +240,7 @@ namespace ODataValidator.Rule
             }
 
             bool? isSkipQueryValidation = null;
-            url = string.Format("{0}/{1}?$expand={2}($skip=1)", context.ServiceBaseUri, entitySet, navigPropName);
+            url = string.Format("{0}/{1}?$expand={2}($skip=1)", context.ServiceBaseUri.OriginalString.TrimEnd('/'), entitySet, navigPropName);
             response = WebHelper.Get(new Uri(url), Constants.AcceptHeaderJson, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
             detail2 = new ExtensionRuleResultDetail(this.Name, url, "GET", StringHelper.MergeHeaders(Constants.AcceptHeaderJson, context.RequestHeaders), response);
 

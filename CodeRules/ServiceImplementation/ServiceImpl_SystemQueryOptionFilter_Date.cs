@@ -119,9 +119,30 @@ namespace ODataValidator.Rule
                 JObject jObj = JsonConvert.DeserializeObject(resp.ResponsePayload, settings) as JObject;
                 JArray jArr = jObj.GetValue(Constants.Value) as JArray;
                 var entity = jArr.First as JObject;
-                var propVal = entity[propName].ToString();
+                var propVal = string.Empty;
+
+                for (int i = 0; i < propNames.Count - 1; i++)
+                {
+                    try
+                    {
+                        propVal = entity[propNames[i].ToString()].ToString();
+                    }
+                    catch
+                    {
+
+                    }
+                    if (!string.IsNullOrEmpty(propVal))
+                    {
+                        propName = propNames[i].ToString();
+                        break;
+                    }
+                }
+
                 int index = propVal.IndexOf('T');
-                propVal = propVal.Substring(0, index);
+                if (index >= 0)
+                {
+                    propVal = propVal.Substring(0, index);
+                }
                 url = string.Format("{0}?$filter=date({1}) eq {2}", url, propName, propVal);
                 resp = WebHelper.Get(new Uri(url), string.Empty, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, svcStatus.DefaultHeaders);
                 var detail = new ExtensionRuleResultDetail(this.Name, url, HttpMethod.Get, string.Empty);

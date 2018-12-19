@@ -95,7 +95,7 @@ namespace ODataValidator.Rule
             string primitivePropName = filterRestrictions.Item2.First().PropertyName;
             string primitivePropType = filterRestrictions.Item2.First().PropertyType;
 
-            string url = string.Format("{0}/{1}", context.ServiceBaseUri, entitySet);
+            string url = string.Format("{0}/{1}", context.ServiceBaseUri.OriginalString.TrimEnd('/'), entitySet);
             var resp = WebHelper.Get(new Uri(url), Constants.AcceptHeaderJson, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
 
             if (null == resp || HttpStatusCode.OK != resp.StatusCode)

@@ -95,7 +95,7 @@ namespace ODataValidator.Rule
             info = null;
             var svcStatus = ServiceStatus.GetInstance();
             string entityTypeShortName;
-            var propTypes = new string[2] { "Edm.Date", "Edm.DateTimeOffset" };
+            var propTypes = new string[1] { "Edm.DateTimeOffset" };
             var propNames = MetadataHelper.GetPropertyNames(propTypes, out entityTypeShortName);
             if (null == propNames || !propNames.Any())
             {
@@ -116,23 +116,55 @@ namespace ODataValidator.Rule
                 JObject jObj = JObject.Parse(resp.ResponsePayload);
                 JArray jArr = jObj.GetValue(Constants.Value) as JArray;
                 var entity = jArr.First as JObject;
-                var propVal = Convert.ToDecimal(Convert.ToDateTime(entity[propName]).Millisecond) / 100.0m;
-                url = string.Format("{0}?$filter=fractionalseconds({1}) eq {2}", url, propName, propVal);
-                resp = WebHelper.Get(new Uri(url), string.Empty, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, svcStatus.DefaultHeaders);
-                var detail = new ExtensionRuleResultDetail(this.Name, url, HttpMethod.Get, string.Empty);
-                info = new ExtensionRuleViolationInfo(new Uri(url), string.Empty, detail);
-                if (null != resp && HttpStatusCode.OK == resp.StatusCode)
+
+
+                var propVal = Convert.ToDecimal(- 1.000000001);
+
+                for (int i = 0; i < propNames.Count - 1; i++)
                 {
-                    jObj = JObject.Parse(resp.ResponsePayload);
-                    jArr = jObj.GetValue(Constants.Value) as JArray;
-                    foreach (JObject et in jArr)
+                    try
                     {
-                        passed = Convert.ToDecimal(Convert.ToDateTime(entity[propName]).Millisecond) / 100.0m == propVal;
+                        if (entity[propNames[i]] != null)
+                        {
+                            propVal = Convert.ToDecimal(Convert.ToDateTime(entity[propNames[i].ToString()]).Millisecond) / 100.0m;
+                        }
                     }
+                    catch
+                    {
+
+                    }
+                    if (propVal >= 0)
+                    {
+                        propName = propNames[i].ToString();
+                        break;
+                    }
+                }
+                if (propVal < 0)
+                {
+                    passed = false;
                 }
                 else
                 {
-                    passed = false;
+                    url = string.Format("{0}?$filter=fractionalseconds({1}) eq {2}", url, propName, propVal);
+                    resp = WebHelper.Get(new Uri(url), string.Empty, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, svcStatus.DefaultHeaders);
+                    var detail = new ExtensionRuleResultDetail(this.Name, url, HttpMethod.Get, string.Empty);
+                    info = new ExtensionRuleViolationInfo(new Uri(url), string.Empty, detail);
+                    if (null != resp && HttpStatusCode.OK == resp.StatusCode)
+                    {
+                        jObj = JObject.Parse(resp.ResponsePayload);
+                        jArr = jObj.GetValue(Constants.Value) as JArray;
+                        foreach (JObject et in jArr)
+                        {
+                            if (entity[propName] != null)
+                            {
+                                passed = Convert.ToDecimal(Convert.ToDateTime(entity[propName]).Millisecond) / 100.0m == propVal;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        passed = false;
+                    }
                 }
             }
             

@@ -156,7 +156,7 @@ namespace ODataValidator.Rule
                             {
                                 // Use the HTTP method POST to link the navigation property for an entity.
                                 reqDataStr = @"{""" + Constants.V4OdataId + @""" : """ + entities[0][Constants.V4OdataId].ToString() + @"""}";
-                                url = string.Format("{0}/{1}/$ref", entityId, navigPropName);
+                                url = string.Format("{0}/{1}/$ref", entityId.TrimEnd('/'), navigPropName.TrimEnd('/'));
                                 resp = WebHelper.CreateEntity(url, reqDataStr);
                                 detail3 = new ExtensionRuleResultDetail(this.Name, url, HttpMethod.Post, string.Empty, resp, string.Empty, reqDataStr);
                                 if (null != resp && resp.StatusCode == HttpStatusCode.NoContent)

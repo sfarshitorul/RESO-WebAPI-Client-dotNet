@@ -790,11 +790,11 @@ namespace ODataValidator.Rule.Helper
                 if (jProp.Name.Equals(navigPropName + Constants.V4OdataNextLink, StringComparison.Ordinal))
                 {
                     string[] nextLinkInfo = jProp.Value.ToString().StripOffDoubleQuotes().Split(new string[] { "skiptoken=" }, StringSplitOptions.None);
-                    string nextLinkUrl = string.Format("{0}/{1}?$skiptoken={2}", url, navigPropName, nextLinkInfo[1]);
+                    string nextLinkUrl = string.Format("{0}/{1}?$skiptoken={2}", url.TrimEnd('/'), navigPropName, nextLinkInfo[1]);
                     Response resp = WebHelper.Get(new Uri(nextLinkUrl), Constants.AcceptHeaderJson, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, requestHeaders);
                     JObject jObj;
                     resp.ResponsePayload.TryToJObject(out jObj);
-                    GetEntitiesCountFromFeed(new Uri(string.Format("{0}/{1}", url, navigPropName)), jObj, requestHeaders, ref totalCount);
+                    GetEntitiesCountFromFeed(new Uri(string.Format("{0}/{1}", url.TrimEnd('/'), navigPropName)), jObj, requestHeaders, ref totalCount);
                 }
             }
         }
@@ -885,7 +885,7 @@ namespace ODataValidator.Rule.Helper
                     return false;
                 }
 
-                string url = string.Format("{0}/{1}?$top=1", svcStatus.RootURL, entitySetUrl);
+                string url = string.Format("{0}/{1}?$top=1", svcStatus.RootURL.TrimEnd('/'), entitySetUrl);
                 Response response = WebHelper.Get(new Uri(url), Constants.V4AcceptHeaderJsonFullMetadata, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, svcStatus.DefaultHeaders);
                 payloadFormat = response.ResponsePayload.GetFormatFromPayload();
                 var payloadType = ContextHelper.GetPayloadType(response.ResponsePayload, payloadFormat, response.ResponseHeaders);

@@ -185,7 +185,7 @@ namespace ODataValidator.Rule
                         compareVal = "'" + propVal + "'";
                     }
 
-                    string url = string.Format("{0}/{1}?$expand={2}($filter={3} eq {4})", context.ServiceBaseUri, entitySet, navigPropName, primitivePropertyName, compareVal);
+                    string url = string.Format("{0}/{1}?$expand={2}($filter={3} eq {4})", context.ServiceBaseUri.OriginalString.TrimEnd('/'), entitySet, navigPropName, primitivePropertyName, compareVal);
                     var resp = WebHelper.Get(new Uri(url), Constants.AcceptHeaderJson, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
                     detail = new ExtensionRuleResultDetail(this.Name, url, "GET", StringHelper.MergeHeaders(Constants.AcceptHeaderJson, context.RequestHeaders), resp);
 

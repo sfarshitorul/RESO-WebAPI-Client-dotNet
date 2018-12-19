@@ -169,7 +169,7 @@ namespace ODataValidator.Rule
                             v4OdataIdVal = entities.First[Constants.V4OdataId].ToString();
                         }
 
-                        url = string.Format("{0}/{1}/$ref", entityId, navigPropName);
+                        url = string.Format("{0}/{1}/$ref", entityId.TrimEnd('/'), navigPropName.TrimEnd('/'));
                         reqDataStr =
                         @"{
                                 """ + Constants.V4OdataId + @""" : """ + v4OdataIdVal + @"""

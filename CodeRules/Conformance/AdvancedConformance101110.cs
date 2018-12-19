@@ -88,7 +88,7 @@ namespace ODataValidator.Rule
             KeyValuePair<string, IEnumerable<string>> entityUrls;
             if (JsonParserHelper.GetBatchSupportedEntityUrls(out entityUrls))
             {
-                feedUrl = string.Format("{0}/{1}", context.ServiceBaseUri, entityUrls.Key);
+                feedUrl = string.Format("{0}/{1}", context.ServiceBaseUri.OriginalString.TrimEnd('/'), entityUrls.Key);
                 entityUrl = entityUrls.Value.First();
             }
 

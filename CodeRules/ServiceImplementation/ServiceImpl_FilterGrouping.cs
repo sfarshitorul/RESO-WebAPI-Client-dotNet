@@ -114,7 +114,7 @@ namespace ODataValidator.Rule
             string entitySet = filterRestrictions.Item1;
             string primitivePropName = filterRestrictions.Item2.First().PropertyName;
 
-            string url = string.Format("{0}/{1}", context.ServiceBaseUri, entitySet);
+            string url = string.Format("{0}/{1}", context.ServiceBaseUri.OriginalString.TrimEnd('/'), entitySet);
             var resp = WebHelper.Get(new Uri(url), Constants.AcceptHeaderJson, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
 
             if (null == resp || HttpStatusCode.OK != resp.StatusCode)
@@ -137,7 +137,7 @@ namespace ODataValidator.Rule
             Int64 propVal = entities[0].Value<Int64>(primitivePropName) - 1;
 
             string pattern = "{0}/{1}?$filter=(1 add 0) mul {2} sub {3} lt 2";
-            url = string.Format(pattern, context.ServiceBaseUri, entitySet, primitivePropName, propVal);
+            url = string.Format(pattern, context.ServiceBaseUri.OriginalString.TrimEnd('/'), entitySet, primitivePropName, propVal);
             resp = WebHelper.Get(new Uri(url), Constants.AcceptHeaderJson, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
 
             detail.URI = url;

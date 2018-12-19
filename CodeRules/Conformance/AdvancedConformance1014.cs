@@ -91,7 +91,7 @@ namespace ODataValidator.Rule
                 return passed;
             }
 
-            string url = string.Format("{0}/{1}", context.ServiceBaseUri, restrictions.Item1);
+            string url = string.Format("{0}/{1}", context.ServiceBaseUri.OriginalString.TrimEnd('/'), restrictions.Item1);
             List<KeyValuePair<string, string>> requestHeaders = new List<KeyValuePair<string,string>>();
 
             foreach (KeyValuePair<string, string> kvp in context.RequestHeaders)

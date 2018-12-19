@@ -76,7 +76,7 @@ namespace ODataValidator.Rule
             HttpStatusCode? selectResult = VerificationHelper.VerifySelect(context, out result, out info1);
             if (info1 != null)
             {
-                info1.SetDetailsName(this.Name);
+                info1.SetDetailsName(this.Name+ ": VerifySelect");
                 details.AddRange(info1.Details);
             }
             if (false == result || !(selectResult.HasValue && (selectResult.Value == HttpStatusCode.OK || selectResult.Value == HttpStatusCode.NotImplemented)))
@@ -88,7 +88,7 @@ namespace ODataValidator.Rule
             HttpStatusCode? searchResult = VerificationHelper.VerifySearch(context, out result, out info2);
             if (info2 != null)
             {
-                info2.SetDetailsName(this.Name);
+                info2.SetDetailsName(this.Name+ ": VerifySearch");
                 details.AddRange(info2.Details);
             }
             if (false == result || !(searchResult.HasValue && (searchResult.Value == HttpStatusCode.OK || searchResult.Value == HttpStatusCode.NotImplemented)))
@@ -100,7 +100,7 @@ namespace ODataValidator.Rule
             HttpStatusCode? filterResult = VerificationHelper.VerifyLambdaOperators(context, LambdaOperatorType.All, out result, out info3);
             if (info3 != null)
             {
-                info3.SetDetailsName(this.Name);
+                info3.SetDetailsName(this.Name + ": VerifyLambdaOperators");
                 details.AddRange(info3.Details);
             }
             if (false == result || !(filterResult.HasValue && (filterResult.Value == HttpStatusCode.OK || filterResult.Value == HttpStatusCode.NotImplemented)))
@@ -112,7 +112,7 @@ namespace ODataValidator.Rule
             HttpStatusCode? countResult = VerificationHelper.VerifyCount(context, out result, out info4);
             if (info4 != null)
             {
-                info4.SetDetailsName(this.Name);
+                info4.SetDetailsName(this.Name + ": VerifyCount" );
                 details.AddRange(info4.Details);
             }
             if (false == result || !(countResult.HasValue && (countResult.Value == HttpStatusCode.OK || countResult.Value == HttpStatusCode.NotImplemented)))
@@ -124,7 +124,7 @@ namespace ODataValidator.Rule
             HttpStatusCode? skipResult = VerificationHelper.VerifySkip(context, out result, out info5);
             if (info5 != null)
             {
-                info5.SetDetailsName(this.Name);
+                info5.SetDetailsName(this.Name + ": VerifySkip");
                 details.AddRange(info5.Details);
             }
             if (false == result || !(skipResult.HasValue && (skipResult.Value == HttpStatusCode.OK || skipResult.Value == HttpStatusCode.NotImplemented)))
@@ -136,7 +136,7 @@ namespace ODataValidator.Rule
             HttpStatusCode? topResult = VerificationHelper.VerifyTop(context, out result, out info6);
             if (info6 != null)
             {
-                info6.SetDetailsName(this.Name);
+                info6.SetDetailsName(this.Name+ ": VerifyTop");
                 details.AddRange(info6.Details);
             }
             if (false == result || !(topResult.HasValue && (topResult.Value == HttpStatusCode.OK || topResult.Value == HttpStatusCode.NotImplemented)))
@@ -148,7 +148,7 @@ namespace ODataValidator.Rule
             HttpStatusCode? orderbyResult = VerificationHelper.VerifySortEntities(context, SortedType.ASC, out result, out info7);
             if (info7 != null)
             {
-                info7.SetDetailsName(this.Name);
+                info7.SetDetailsName(this.Name+ ": VerifySortEntities");
                 details.AddRange(info7.Details);
             }
             if (false == result || !(orderbyResult.HasValue && (orderbyResult.Value == HttpStatusCode.OK || orderbyResult.Value == HttpStatusCode.NotImplemented)))

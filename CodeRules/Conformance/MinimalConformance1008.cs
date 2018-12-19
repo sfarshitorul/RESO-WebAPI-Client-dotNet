@@ -73,7 +73,7 @@ namespace ODataValidator.Rule
             var payloadFormat = context.ServiceDocument.GetFormatFromPayload();
             string[] feeds = ContextHelper.GetFeeds(context.ServiceDocument, payloadFormat).ToArray();
             string entitySetName = feeds.First().MapEntitySetURLToEntitySetName();
-            Uri firstFeedFullUrl = new Uri(string.Format("{0}/{1}", context.DestinationBasePath, entitySetName));
+            Uri firstFeedFullUrl = new Uri(string.Format("{0}/{1}", context.DestinationBasePath.TrimEnd('/'), entitySetName));
             Response response = WebHelper.Get(firstFeedFullUrl, Constants.V4AcceptHeaderJsonFullMetadata, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
             detail = new ExtensionRuleResultDetail(this.Name, firstFeedFullUrl.AbsoluteUri, "GET", StringHelper.MergeHeaders(Constants.V4AcceptHeaderJsonFullMetadata, context.RequestHeaders), response);
             
