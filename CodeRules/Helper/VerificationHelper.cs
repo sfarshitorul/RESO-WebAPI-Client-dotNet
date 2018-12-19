@@ -62,37 +62,57 @@ namespace ODataValidator.Rule.Helper
                 }
 
                 bool flag = false;
-
+                int errorcode = 0;
                 foreach (var np in r.Value.Item2)
                 {
-                    if (NavigationRoughType.CollectionValued == np.NavigationRoughType)
+                    try
                     {
-                        var nEntityTypeShortName = np.NavigationPropertyType.RemoveCollectionFlag().GetLastSegment();
-                        var nEntitySetName = nEntityTypeShortName.MapEntityTypeShortNameToEntitySetName();
-                        var funcs = new List<Func<string, string, string, List<NormalProperty>, List<NavigProperty>, bool>>()
+                        if (NavigationRoughType.CollectionValued == np.NavigationRoughType)
                         {
+                            errorcode = 1;
+                            var nEntityTypeShortName = np.NavigationPropertyType.RemoveCollectionFlag().GetLastSegment();
+                            errorcode = 2;
+                            var nEntitySetName = nEntityTypeShortName.MapEntityTypeShortNameToEntitySetName();
+                            errorcode = 3;
+                            var funcs = new List<Func<string, string, string, List<NormalProperty>, List<NavigProperty>, bool>>()
+                            {
                             AnnotationsHelper.GetFilterRestrictions
                         };
-                        List<string> sortedPropTypes = new List<string>()
+                            List<string> sortedPropTypes = new List<string>()
                         {
+
                             PrimitiveDataTypes.Binary, PrimitiveDataTypes.Boolean, PrimitiveDataTypes.Byte, PrimitiveDataTypes.Decimal,
                             PrimitiveDataTypes.Double, PrimitiveDataTypes.Guid, PrimitiveDataTypes.Int16, PrimitiveDataTypes.Int32,
                             PrimitiveDataTypes.Int64, PrimitiveDataTypes.SByte, PrimitiveDataTypes.Single, PrimitiveDataTypes.String
                         };
-                        var filterRestrictions = nEntitySetName.GetRestrictions(context.MetadataDocument, context.VocCapabilities, funcs, sortedPropTypes);
+                            var filterRestrictions = nEntitySetName.GetRestrictions(context.MetadataDocument, context.VocCapabilities, funcs, sortedPropTypes);
+                            errorcode = 4;
+                            if ((!string.IsNullOrEmpty(filterRestrictions.Item1) ||
+                                null != filterRestrictions.Item2 || filterRestrictions.Item2.Any() ||  
+                                null != filterRestrictions.Item3 || filterRestrictions.Item3.Any()) && (filterRestrictions.Item2.Count > 0))
+                            {
+                                errorcode = 5;
+                                flag = true;
+                                entitySet = r.Key;
+                                navigPropName = np.NavigationPropertyName;
+                                errorcode = 6;
+                                if (filterRestrictions.Item2.Count > 0)
+                                {
+                                    sortedPropName = filterRestrictions.Item2.First().PropertyName;
+                                    sortedPropType = filterRestrictions.Item2.First().PropertyType;
+                                }
+                                else
+                                {
 
-                        if (!string.IsNullOrEmpty(filterRestrictions.Item1) ||
-                            null != filterRestrictions.Item2 || filterRestrictions.Item2.Any() ||
-                            null != filterRestrictions.Item3 || filterRestrictions.Item3.Any())
-                        {
-                            flag = true;
-                            entitySet = r.Key;
-                            navigPropName = np.NavigationPropertyName;
-                            sortedPropName = filterRestrictions.Item2.First().PropertyName;
-                            sortedPropType = filterRestrictions.Item2.First().PropertyType;
-
-                            break;
+                                }
+                                errorcode = 7;
+                                break;
+                            }
                         }
+                    }
+                    catch(Exception ex)
+                    {
+                        throw ex;
                     }
                 }
 
@@ -454,7 +474,7 @@ namespace ODataValidator.Rule.Helper
             payloadFormat = response.ResponsePayload.GetFormatFromPayload();
             var payloadType = ContextHelper.GetPayloadType(response.ResponsePayload, payloadFormat, response.ResponseHeaders);
 
-            if (payloadType == RuleEngine.PayloadType.Error)
+            if (payloadType == RuleEngine.PayloadType.None)
             {
                 result = true;
             }

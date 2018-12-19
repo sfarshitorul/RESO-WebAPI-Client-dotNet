@@ -98,7 +98,7 @@ namespace ODataValidator.Rule
             {
                 string entityTypeShortName = entitySetUrl.MapEntitySetNameToEntityTypeShortName();
                 Tuple<string,string> key = MetadataHelper.GetKeyProperty(entityTypeShortName);
-                Response resp = WebHelper.Get(new Uri(context.ServiceBaseUri + "/" + entitySetUrl), Constants.AcceptHeaderJson, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
+                Response resp = WebHelper.Get(new Uri(context.ServiceBaseUri.OriginalString.TrimEnd('/') + @"/" + entitySetUrl), Constants.AcceptHeaderJson, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
 
                 if (null == resp || HttpStatusCode.OK != resp.StatusCode)
                 {
@@ -116,7 +116,7 @@ namespace ODataValidator.Rule
                 JArray entities = JsonParserHelper.GetEntries(feed);
                 string identity = entities[0][key.Item1].ToString();
 
-                string url = context.ServiceBaseUri + "/" + entitySetUrl + "(" + (key.Item2.Equals("Edm.String") ? "\'" + identity + "\'" : identity) + ")/" + key.Item1;
+                string url = context.ServiceBaseUri.OriginalString.TrimEnd('/') + @"/" + entitySetUrl + "(" + (key.Item2.Equals("Edm.String") ? "\'" + identity + "\'" : identity) + ")/" + key.Item1;
 
                 resp = WebHelper.Get(new Uri(url), Constants.AcceptHeaderJson, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
                 detail = new ExtensionRuleResultDetail(this.Name, url, HttpMethod.Get, "");

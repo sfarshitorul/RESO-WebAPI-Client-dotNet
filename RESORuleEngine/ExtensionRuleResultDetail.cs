@@ -26,6 +26,13 @@
         /// <param name="errorMessage"></param>
         public ExtensionRuleResultDetail(string ruleName, string uri, string httpMethod, string requestHeaders, string responseStatusCode = "", string responseHeaders = "", string responsePayload = "", string errorMessage = "", string requestData = "")
         {
+            
+            string checkslash = uri;
+            int doubleslash = checkslash.Replace("https://", string.Empty).Replace("http://", string.Empty).IndexOf("//");
+            if (doubleslash >= 0)
+            {
+
+            }
             this.RuleName = ruleName;
             this.URI = uri;
             this.HTTPMethod = httpMethod;

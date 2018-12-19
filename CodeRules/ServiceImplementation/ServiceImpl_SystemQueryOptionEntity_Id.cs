@@ -118,7 +118,7 @@ namespace ODataValidator.Rule
             var jObj = JObject.Parse(resp.ResponsePayload);
             string keyPropVal = jObj.GetValue(Constants.Value).First[keyPropName].ToString();
             string pattern = "Edm.String" == keyPropType ? "{0}/$entity?$id={1}('{2}')" : "{0}/$entity?$id={1}({2})";
-            url = string.Format(pattern, svcStatus.RootURL, svcStatus.RootURL.TrimEnd('/') + "/" + entitySetUrl, keyPropVal);
+            url = string.Format(pattern, svcStatus.RootURL.TrimEnd('/'), svcStatus.RootURL.TrimEnd('/') + "/" + entitySetUrl, keyPropVal);
             resp = WebHelper.Get(new Uri(url), string.Empty, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, svcStatus.DefaultHeaders);
             var detail = new ExtensionRuleResultDetail("ServiceImpl_SystemQueryOptionEntity_Id", url, HttpMethod.Get, string.Empty);
             info = new ExtensionRuleViolationInfo(new Uri(url), string.Empty, detail);

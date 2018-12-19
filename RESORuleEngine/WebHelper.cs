@@ -49,7 +49,10 @@ namespace ODataValidator.RuleEngine
             {
                 reqHeaders = Headers;
             }
+            
             string checkslash = uri.OriginalString;
+            
+            CheckDoubleSlash(uri.OriginalString);
             checkslash = checkslash.Replace("//", "/");
             checkslash = checkslash.Replace("http:/", "http://");
             checkslash = checkslash.Replace("https:/", "https://");
@@ -80,6 +83,16 @@ namespace ODataValidator.RuleEngine
             }
 
             return WebHelper.Get(reqHttp, maximumPayloadSize);
+        }
+
+        private static void CheckDoubleSlash(string checkslash)
+        {
+            int doubleslash = checkslash.Replace("https://", string.Empty).Replace("http://", string.Empty).IndexOf("//");
+            if (doubleslash >= 0)
+            {
+
+            }
+
         }
 
         /// <summary>
@@ -257,7 +270,7 @@ namespace ODataValidator.RuleEngine
             {
                 throw new ArgumentNullException("request");
             }
-
+            CheckDoubleSlash(request.Url);
             var req = WebRequest.Create(new Uri(request.Url));
             var httpReq = req as HttpWebRequest;
             httpReq.Method = request.HttpMethod;
@@ -435,6 +448,7 @@ namespace ODataValidator.RuleEngine
             }
 
             headers.Add("Prefer", "odata.track-changes");
+            CheckDoubleSlash(url);
 
             var req = WebRequest.Create(uri);
 
@@ -1117,6 +1131,7 @@ namespace ODataValidator.RuleEngine
                 byte[] image = File.ReadAllBytes(imagePath);
                 if (null != image && 0 != image.Length)
                 {
+                    CheckDoubleSlash(url);
                     var req = WebRequest.Create(url) as HttpWebRequest;
                     req.Method = HttpMethod.Post;
                     req.Headers = headers;
@@ -1177,6 +1192,7 @@ namespace ODataValidator.RuleEngine
                 byte[] image = File.ReadAllBytes(imagePath);
                 if (null != image && 0 != image.Length)
                 {
+                    CheckDoubleSlash(url);
                     var req = WebRequest.Create(url) as HttpWebRequest;
                     req.Method = HttpMethod.Put;
                     req.Headers = headers;

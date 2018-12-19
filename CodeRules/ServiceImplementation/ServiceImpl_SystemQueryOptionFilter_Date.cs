@@ -139,29 +139,33 @@ namespace ODataValidator.Rule
                 }
 
                 int index = propVal.IndexOf('T');
-                if (index >= 0)
+                if (index < 0)
                 {
-                    propVal = propVal.Substring(0, index);
-                }
-                url = string.Format("{0}?$filter=date({1}) eq {2}", url, propName, propVal);
-                resp = WebHelper.Get(new Uri(url), string.Empty, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, svcStatus.DefaultHeaders);
-                var detail = new ExtensionRuleResultDetail(this.Name, url, HttpMethod.Get, string.Empty);
-                info = new ExtensionRuleViolationInfo(new Uri(url), string.Empty, detail);
-                if (null != resp && HttpStatusCode.OK == resp.StatusCode)
-                {
-                    jObj = JsonConvert.DeserializeObject(resp.ResponsePayload, settings) as JObject;
-                    jArr = jObj.GetValue(Constants.Value) as JArray;
-                    foreach (JObject et in jArr)
-                    {
-                        var actualVal = et[propName].ToString();
-                        index = actualVal.IndexOf('T');
-                        actualVal = actualVal.Substring(0, index);
-                        passed = actualVal == propVal;
-                    }
+                    passed = false;
                 }
                 else
                 {
-                    passed = false;
+                    propVal = propVal.Substring(0, index);
+                    url = string.Format("{0}?$filter=date({1}) eq {2}", url, propName, propVal);
+                    resp = WebHelper.Get(new Uri(url), string.Empty, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, svcStatus.DefaultHeaders);
+                    var detail = new ExtensionRuleResultDetail(this.Name, url, HttpMethod.Get, string.Empty);
+                    info = new ExtensionRuleViolationInfo(new Uri(url), string.Empty, detail);
+                    if (null != resp && HttpStatusCode.OK == resp.StatusCode)
+                    {
+                        jObj = JsonConvert.DeserializeObject(resp.ResponsePayload, settings) as JObject;
+                        jArr = jObj.GetValue(Constants.Value) as JArray;
+                        foreach (JObject et in jArr)
+                        {
+                            var actualVal = et[propName].ToString();
+                            index = actualVal.IndexOf('T');
+                            actualVal = actualVal.Substring(0, index);
+                            passed = actualVal == propVal;
+                        }
+                    }
+                    else
+                    {
+                        passed = false;
+                    }
                 }
             }
             

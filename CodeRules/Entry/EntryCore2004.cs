@@ -190,7 +190,7 @@ namespace ODataValidator.Rule
                 XElement entry;
                 context.ResponsePayload.TryToXElement(out entry);
                 var m = entry.XPathSelectElement("//atom:link[@rel='edit-media' and @href]", ODataNamespaceManager.Instance);
-                var targetMedia = context.ServiceBaseUri + m.GetAttributeValue("href");
+                var targetMedia = context.ServiceBaseUri.OriginalString.TrimEnd('/') + @"/" + m.GetAttributeValue("href");
 
                 var etag = WebResponseHelper.GetETagOfEntry(targetMedia, Constants.AcceptHeaderAtom);
                 string rngSchema = string.Format(EntryCore2004.rngSchemaFormat, HttpUtility.HtmlEncode(etag));

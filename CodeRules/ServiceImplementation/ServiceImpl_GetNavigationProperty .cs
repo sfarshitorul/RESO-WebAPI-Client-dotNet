@@ -111,7 +111,7 @@ namespace ODataValidator.Rule
 
                 List<XElement> properties = MetadataHelper.GetAllPropertiesOfEntity(ServiceStatus.GetInstance().MetadataDocument, entityTypeShortName,MatchPropertyType.Navigations);
 
-                Response resp = WebHelper.Get(new Uri(context.ServiceBaseUri + "/" + entitySetUrl), Constants.AcceptHeaderJson, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
+                Response resp = WebHelper.Get(new Uri(context.ServiceBaseUri.OriginalString.TrimEnd('/') + @"/" + entitySetUrl), Constants.AcceptHeaderJson, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
 
                 if (null == resp || HttpStatusCode.OK != resp.StatusCode)
                 {
@@ -137,7 +137,7 @@ namespace ODataValidator.Rule
                             continue;
                         }
 
-                        string url = context.ServiceBaseUri + "/" + entitySetUrl + "(" + (key.Item2.Equals("Edm.String") ? "\'" + identity + "\'" : identity) + ")/" + property.Attribute("Name").Value;
+                        string url = context.ServiceBaseUri.OriginalString.TrimEnd('/') + @"/" + entitySetUrl + "(" + (key.Item2.Equals("Edm.String") ? "\'" + identity + "\'" : identity) + ")/" + property.Attribute("Name").Value;
 
                         resp = WebHelper.Get(new Uri(url), Constants.AcceptHeaderJson, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
                         detail = new ExtensionRuleResultDetail(this.Name, url, HttpMethod.Get, "");

@@ -215,7 +215,7 @@ DELETE {0} HTTP/1.1
 --batch_4e1a76dc-b738-4aa4-9f93-df661d0a4c9f--
 ", entityId, reqDataStr);
                     resp = WebHelper.BatchOperation(serviceStatus.RootURL, batchReqData, boundary);
-                    detail2 = new ExtensionRuleResultDetail(this.Name, serviceStatus.RootURL, HttpMethod.Post, string.Empty, resp, string.Empty, batchReqData);
+                    detail2 = new ExtensionRuleResultDetail(this.Name, serviceStatus.RootURL.TrimEnd('/'), HttpMethod.Post, string.Empty, resp, string.Empty, batchReqData);
 
                     if (null != resp && HttpStatusCode.OK == resp.StatusCode)
                     {

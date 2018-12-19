@@ -129,13 +129,13 @@ GET {0} HTTP/1.1
 
             string boundary = @"batch_36522ad7-fc75-4b56-8c71-56071383e77b";
             Response format1Response = WebHelper.BatchOperation(serviceStatus.RootURL.TrimEnd('/') + @"/", format1Request, boundary);
-            detail1 = new ExtensionRuleResultDetail(this.Name, feedUrl + "/$batch", HttpMethod.Post, string.Empty, format1Response, string.Empty, format1Request);
+            detail1 = new ExtensionRuleResultDetail(this.Name, feedUrl.TrimEnd('/') + "/$batch", HttpMethod.Post, string.Empty, format1Response, string.Empty, format1Request);
 
             Response format2Response = WebHelper.BatchOperation(serviceStatus.RootURL.TrimEnd('/') + @"/", format2Request, boundary);
-            detail2 = new ExtensionRuleResultDetail(this.Name, feedUrl + "/$batch", HttpMethod.Post, string.Empty, format2Response, string.Empty, format2Request);
+            detail2 = new ExtensionRuleResultDetail(this.Name, feedUrl.TrimEnd('/') + "/$batch", HttpMethod.Post, string.Empty, format2Response, string.Empty, format2Request);
 
             Response format3Response = WebHelper.BatchOperation(serviceStatus.RootURL.TrimEnd('/') + @"/", format3Reuqest, boundary);
-            detail3 = new ExtensionRuleResultDetail(this.Name, feedUrl + "/$batch", HttpMethod.Post, string.Empty, format3Response, string.Empty, format3Reuqest);
+            detail3 = new ExtensionRuleResultDetail(this.Name, feedUrl.TrimEnd('/') + "/$batch", HttpMethod.Post, string.Empty, format3Response, string.Empty, format3Reuqest);
 
             if (format1Response != null && !string.IsNullOrEmpty(format1Response.ResponsePayload))
             {

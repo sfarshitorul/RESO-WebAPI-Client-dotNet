@@ -92,10 +92,10 @@ namespace ODataValidator.Rule
 
             bool? passed = null;
 
-            Response resp = WebHelper.Get(new Uri(context.ServiceBaseUri + "/$all"), Constants.AcceptHeaderJson, 
+            Response resp = WebHelper.Get(new Uri(context.ServiceBaseUri.OriginalString.TrimEnd('/') + @"/" + "$all"), Constants.AcceptHeaderJson, 
                 RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
 
-            ExtensionRuleResultDetail detail = new ExtensionRuleResultDetail(this.Name, context.ServiceBaseUri + "/$all",
+            ExtensionRuleResultDetail detail = new ExtensionRuleResultDetail(this.Name, context.ServiceBaseUri.OriginalString.TrimEnd('/') + @"/" + "$all",
                 HttpMethod.Get, context.RequestHeaders.ToString());
             info = new ExtensionRuleViolationInfo(context.Destination, context.ResponsePayload, detail);
 
@@ -123,7 +123,7 @@ namespace ODataValidator.Rule
                 string entityTypeShortName = entitySetUrl.MapEntitySetNameToEntityTypeShortName();
                 Tuple<string,string> key = MetadataHelper.GetKeyProperty(entityTypeShortName);
 
-                resp = WebHelper.Get(new Uri(context.ServiceBaseUri + "/" + entitySetUrl), 
+                resp = WebHelper.Get(new Uri(context.ServiceBaseUri.OriginalString.TrimEnd('/') + @"/" + entitySetUrl), 
                     Constants.AcceptHeaderJson, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
                 
                 if (null == resp || HttpStatusCode.OK != resp.StatusCode)

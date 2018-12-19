@@ -138,14 +138,7 @@ namespace ODataValidator.Rule
                     }
                 }
                 
-                //try
-                //{
-                //    propVal = entity[propName].ToString();
-                //}
-                //catch(Exception ex)
-                //{
-
-                //}
+               
                 if (!string.IsNullOrEmpty(propVal))
                 {
                     int index = propVal.IndexOf('T');

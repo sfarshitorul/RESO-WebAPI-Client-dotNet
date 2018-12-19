@@ -570,7 +570,7 @@ namespace ODataValidator.RuleEngine
                         }
                     }
                 }
-                catch (XmlException)
+                catch (XmlException ex)
                 {
                 }
             }

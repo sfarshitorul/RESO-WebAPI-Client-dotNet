@@ -127,7 +127,7 @@ namespace ODataValidator.Rule
 
                     string entitySetUrl = entityType.Attributes["Name"].Value.MapEntityTypeShortNameToEntitySetName();
                     
-                    Response resp = WebHelper.Get(new Uri(context.ServiceBaseUri + "/" + entitySetUrl), Constants.AcceptHeaderJson, 
+                    Response resp = WebHelper.Get(new Uri(context.ServiceBaseUri.OriginalString.TrimEnd('/') + @"/" + entitySetUrl), Constants.AcceptHeaderJson, 
                         RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
 
                     if (null == resp || HttpStatusCode.OK != resp.StatusCode)
@@ -146,7 +146,7 @@ namespace ODataValidator.Rule
                     JArray entities = JsonParserHelper.GetEntries(feed);
                     string enumValue = entities[0][properties[0].Split(',')[0]].ToString();
 
-                    string url = context.ServiceBaseUri + "/" + entitySetUrl + "?$filter=" + properties[0].Split(',')[0] + " has " +
+                    string url = context.ServiceBaseUri.OriginalString.TrimEnd('/') + @"/" + entitySetUrl + "?$filter=" + properties[0].Split(',')[0] + " has " +
                         typeNames[0] + "\'" + enumValue + "\'";
 
                     resp = WebHelper.Get(new Uri(url), Constants.AcceptHeaderJson, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
