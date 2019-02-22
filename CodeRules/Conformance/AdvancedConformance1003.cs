@@ -87,12 +87,15 @@ namespace ODataValidator.Rule
             {
                 details.AddRange(infoForOne.Details);
             }
+            
+            feedAndEntryResult = true;//Test Removed - Stuart.  Delete this line if the test is restored.
+                                      //feedAndEntryResult = VerificationHelper.VerifyFeedAndEntry(context, out infoForOne);
+                                      //if (infoForOne != null)
+                                      //{
+                                      //    details.AddRange(infoForOne.Details);
+                                      //}
 
-            feedAndEntryResult = VerificationHelper.VerifyFeedAndEntry(context, out infoForOne);
-            if (infoForOne != null)
-            {
-                details.AddRange(infoForOne.Details);
-            }
+
 
             info = new ExtensionRuleViolationInfo(context.Destination, context.ResponsePayload, details);
             info.SetDetailsName(this.Name);

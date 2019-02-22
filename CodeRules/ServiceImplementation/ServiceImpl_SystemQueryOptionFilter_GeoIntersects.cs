@@ -118,6 +118,15 @@ namespace ODataValidator.Rule
                 JObject jObj = JObject.Parse(resp.ResponsePayload);
                 JArray jArr = jObj.GetValue(Constants.Value) as JArray;
                 var entity = jArr.First as JObject;
+                var detail = new ExtensionRuleResultDetail(this.Name, url, HttpMethod.Get, string.Empty);
+                if (entity[propName] == null)
+                {
+                    detail = new ExtensionRuleResultDetail(this.Name, url, HttpMethod.Get, string.Empty, Convert.ToString(resp.StatusCode), propName + "is null", resp.ResponsePayload);
+                    info = new ExtensionRuleViolationInfo(new Uri(url), string.Empty, detail);
+
+                    passed = false;
+                    return passed;
+                }
                 var propVal = entity[propName]["coordinates"] as JArray;
                 var pt = new Point(Convert.ToDouble(propVal[0]), Convert.ToDouble(propVal[1]));
                 var pts = new Point[4] 
@@ -129,7 +138,7 @@ namespace ODataValidator.Rule
                 };
                 url = string.Format("{0}?$filter=geo.intersects({1}, geography'POLYGON(({2}, {3}, {4}, {5}, {6}))')", url, propName, pts[0], pts[1], pts[2], pts[3], pts[0]);
                 resp = WebHelper.Get(new Uri(url), string.Empty, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, svcStatus.DefaultHeaders);
-                var detail = new ExtensionRuleResultDetail(this.Name, url, HttpMethod.Get, string.Empty);
+                detail = new ExtensionRuleResultDetail(this.Name, url, HttpMethod.Get, string.Empty);
                 info = new ExtensionRuleViolationInfo(new Uri(url), string.Empty, detail);
                 if (null != resp && HttpStatusCode.OK == resp.StatusCode)
                 {

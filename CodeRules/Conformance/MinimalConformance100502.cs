@@ -84,7 +84,20 @@ namespace ODataValidator.Rule
 
             if (null != resp && HttpStatusCode.OK == resp.StatusCode)
             {
-                string odataVersion = resp.ResponseHeaders.GetHeaderValue(Constants.ODataVersion).Trim();
+                //string odataVersion = resp.ResponseHeaders.GetHeaderValue(Constants.ODataVersion).Trim();
+                string odataVersion = resp.ResponseHeaders.GetHeaderValue(Constants.ODataVersion);
+                if(!string.IsNullOrEmpty(odataVersion))
+                {
+                    odataVersion = odataVersion.Trim();
+                }
+                else
+                {
+                    detail1.ErrorMessage = string.Format("The Header {0} was not found in the header.  This is case sensitive", Constants.ODataVersion);
+                    info = new ExtensionRuleViolationInfo(context.Destination, context.ResponsePayload, detail1);
+
+                    return false;
+
+                }
                 double versionNumber = 0.0;
 
                 try
@@ -92,6 +105,13 @@ namespace ODataValidator.Rule
                     versionNumber = Convert.ToDouble(odataVersion);
                 }
                 catch (Exception)
+                {
+                    detail1.ErrorMessage = string.Format("Parse value {0} of OData-Version to a number failed from response header", odataVersion);
+                    info = new ExtensionRuleViolationInfo(context.Destination, context.ResponsePayload, detail1);
+
+                    return false;
+                }
+                if(versionNumber == 0)
                 {
                     detail1.ErrorMessage = string.Format("Parse value {0} of OData-Version to a number failed from response header", odataVersion);
                     info = new ExtensionRuleViolationInfo(context.Destination, context.ResponsePayload, detail1);

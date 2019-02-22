@@ -550,18 +550,20 @@ namespace ODataValidator.Rule.Helper
                             // Otherwise, it will get the first entity from the feed.
                             entity = !string.IsNullOrEmpty(actualEntityTypeShortName) && actualEntityTypeShortName.IsSpecifiedEntityTypeShortNameExist() ?
                             this.GetDerivedEntity(entries, actualEntityTypeShortName) : entries.First as JObject;
+                            if (entity != null)
+                            {
+                                // Set the new key value for the selected entity.
+                                object keyValTemp = IntKeyPropertyTypes.Contains(keyProperty.PropertyType)
+                                    ? this.GetMaxEntityKey(entries, keyProperty.PropertyName)
+                                    : entity[keyProperty.PropertyName];
+                                object keyVal = this.GenerateEntityID(keyProperty.PropertyType, keyValTemp);
+                                entity[keyProperty.PropertyName] = new JValue(keyVal);
+                                string pattern = "Edm.String" == keyProperty.PropertyType ? "{0}('{1}')" : "{0}({1})";
+                                entity[Constants.V4OdataId] = new JValue(string.Format(pattern, url, keyVal.ToString()));
 
-                            // Set the new key value for the selected entity.
-                            object keyValTemp = IntKeyPropertyTypes.Contains(keyProperty.PropertyType)
-                                ? this.GetMaxEntityKey(entries, keyProperty.PropertyName)
-                                : entity[keyProperty.PropertyName];
-                            object keyVal = this.GenerateEntityID(keyProperty.PropertyType, keyValTemp);
-                            entity[keyProperty.PropertyName] = new JValue(keyVal);
-                            string pattern = "Edm.String" == keyProperty.PropertyType ? "{0}('{1}')" : "{0}({1})";
-                            entity[Constants.V4OdataId] = new JValue(string.Format(pattern, url, keyVal.ToString()));
-
-                            string serviceNamespace = this.GetNamespace(targetShortName, "EntityType");
-                            entity[Constants.V4OdataType] = new JValue(string.Format("#{0}.{1}", serviceNamespace, targetShortName));
+                                string serviceNamespace = this.GetNamespace(targetShortName, "EntityType");
+                                entity[Constants.V4OdataType] = new JValue(string.Format("#{0}.{1}", serviceNamespace, targetShortName));
+                            }
                         }
                     }
                 }
@@ -657,11 +659,15 @@ namespace ODataValidator.Rule.Helper
             {
                 foreach (var entry in entries)
                 {
-                    string odataType = entry[Constants.V4OdataType].ToString();
-                    if (odataType.EndsWith(actualEntityTypeShortName))
+                    if (entry[Constants.V4OdataType] != null)
                     {
-                        entity = entry as JObject;
-                        break;
+                        string odataType = entry[Constants.V4OdataType].ToString();
+
+                        if (odataType.EndsWith(actualEntityTypeShortName))
+                        {
+                            entity = entry as JObject;
+                            break;
+                        }
                     }
                 }
             }
