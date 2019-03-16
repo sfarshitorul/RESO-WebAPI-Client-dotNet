@@ -70,12 +70,24 @@ namespace ODataValidator.Rule
             bool? passed = null;
             List<ExtensionRuleResultDetail> details = new List<ExtensionRuleResultDetail>();
             ExtensionRuleResultDetail detail1 = new ExtensionRuleResultDetail(this.Name);
-            var filterRestrictions = AnnotationsHelper.GetFilterRestrictions(context.MetadataDocument, context.VocCapabilities);
+            Tuple<string, List<NormalProperty>, List<NavigProperty>> filterRestrictions = null;
+            try
+            {
+                filterRestrictions = AnnotationsHelper.GetFilterRestrictions(context.MetadataDocument, context.VocCapabilities);
+            }
+            catch
+            {
+                detail1.ErrorMessage = "The Metadata is malformed.  Cannot determine the entity-set that supports $filter";
+                info = new ExtensionRuleViolationInfo(context.Destination, context.ResponsePayload, detail1);
+                passed = false;
+                return passed;
+            }
+
 
             if (string.IsNullOrEmpty(filterRestrictions.Item1) ||
                 null == filterRestrictions.Item2 || !filterRestrictions.Item2.Any())
             {
-                detail1.ErrorMessage = "Cannot find an appropriate entity-set which supports $filter system query options in the service.";
+                detail1.ErrorMessage = "Cannot find an appropriate entity-set which supports $filter system query options in the service.  Check for Malformed Metadata";
                 info = new ExtensionRuleViolationInfo(context.Destination, context.ResponsePayload, detail1);
 
                 return passed;

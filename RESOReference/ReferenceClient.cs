@@ -16,6 +16,7 @@ using ODataValidator.RuleEngine;
 
 using System.Net;
 using ODataValidator.Rule;
+using ODataValidator.Rule.Helper;
 
 //using ODataValidator.Rule;
 
@@ -733,7 +734,10 @@ namespace RESOReference
         }
         void webapitestcomplete(string name, int numberofrules, int count)
         {
-
+            if(numberofrules <= 0)
+            {
+                return;
+            }
             webapicurrentrule.Text = name;
             webapicurrentrule.Update();
             this.webapiprogressBar.Value = (int)((100 * count) / numberofrules);
@@ -1027,6 +1031,25 @@ namespace RESOReference
 
 
                 finderror = 2;
+                bool metadatagood = true;
+                Tuple<string, List<NormalProperty>, List<NavigProperty>> filterRestrictions = null;
+                try
+                {
+                    filterRestrictions = AnnotationsHelper.GetFilterRestrictions(ctx.MetadataDocument, ctx.VocCapabilities);
+                }
+                catch
+                {
+                    metadatagood = false;
+                }
+
+                if(!metadatagood)
+                {
+                    DialogResult dialogResult = MessageBox.Show("The Metadata is malformed.  Many of the test will fail.  Whould you like to continue?", "Malformed Metadata", MessageBoxButtons.YesNo);
+                    if (dialogResult == DialogResult.No)
+                    {
+                        return;
+                    }
+                }
 
                 int count = 0;
                 TestControl testcontrol = new TestControl();
