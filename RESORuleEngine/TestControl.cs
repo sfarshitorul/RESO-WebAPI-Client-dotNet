@@ -6,6 +6,7 @@ using System.Xml;
 using Newtonsoft.Json;
 using System.Collections;
 using RESOClientLibrary;
+using System;
 
 namespace ODataValidator.RuleEngine
 {
@@ -13,10 +14,10 @@ namespace ODataValidator.RuleEngine
     {
         public Hashtable rulecontrol = new Hashtable();
 
-        public void BuildRuleControlList(RESOClientSettings settings)
+        public void BuildRuleControlList(RESOClientSettings clientsettings)
         {
             XmlDocument doc = new XmlDocument();
-            doc.Load(settings.GetSetting(RESOClientLibrary.settings.rulescontrolfile));
+            doc.Load(clientsettings.GetSetting(RESOClientLibrary.settings.rulescontrolfile));
 
             //XmlNode node = doc.DocumentElement.SelectSingleNode("/rulescontrol");
             RuleControl record = null;
@@ -130,5 +131,110 @@ namespace ODataValidator.RuleEngine
         }
 
 
+        public void BuildRuleControlList(string rulestorun, RESOClientSettings clientsettings)
+        {
+            XmlDocument doc = new XmlDocument();
+            doc.Load(clientsettings.GetSetting(RESOClientLibrary.settings.rulescontrolfile));
+            Hashtable hshrules = new Hashtable();
+            string[] rulestorunarray = rulestorun.Split(',');
+            for (int n = 0; n < rulestorunarray.Length; n++)
+            {
+                if(string.IsNullOrEmpty(rulestorunarray[n]))
+                {
+                    break;
+                }
+                hshrules[rulestorunarray[n]] = rulestorunarray[n] as string;
+            }
+
+            RuleControl record = null;
+            foreach (XmlNode node in doc.DocumentElement.ChildNodes)
+            {
+                if (node.HasChildNodes)
+                {
+                    foreach (XmlNode childnode in node)
+                    {
+                        string name = childnode.Name;
+                        string value = childnode.InnerText;
+                        if (hshrules != null && hshrules.Count > 0 && hshrules[value] == null)
+                        {
+                            continue;
+                        }
+                        if (name == "rulename")
+                        {
+                            if (record != null)
+                            {
+                                rulecontrol[value] = record;
+                            }
+                            else
+                            {
+                                record = new RuleControl();
+                                record.rulename = value;
+                                rulecontrol[value] = record;
+                            }
+                        }
+                        if (name == "notes")
+                        {
+                            record.notes = value;
+                        }
+                        if (name == "cert_tr")
+                        {
+                            record.cert_tr = value;
+                        }
+                        if (name == "cert_impact")
+                        {
+                            record.cert_impact = value;
+                        }
+                        if (name == "ttt_testing_results")
+                        {
+                            record.ttt_testing_results = value;
+                        }
+                        if (name == "category")
+                        {
+                            record.category = value;
+                        }
+                        if (name == "RESOVersion")
+                        {
+                            record.RESOVersion = value;
+                        }
+                        if (name == "Description")
+                        {
+                            record.Description = value;
+                        }
+                        if (name == "ErrorMessage")
+                        {
+                            record.ErrorMessage = value;
+                        }
+                        if (name == "ODataSpecification")
+                        {
+                            record.ODataSpecification = value;
+                        }
+                        if (name == "V4ODataSpecification")
+                        {
+                            record.V4ODataSpecification = value;
+                        }
+                        if (name == "V4Specification")
+                        {
+                            record.V4Specification = value;
+                        }
+                        if (name == "ODataVersion")
+                        {
+                            record.ODataVersion = value;
+                        }
+                        if (name == "PayloadType")
+                        {
+                            record.PayloadType = value;
+                        }
+                        if (name == "PayloadFormat")
+                        {
+                            record.PayloadFormat = value;
+                        }
+                        if (name == "HelpLink")
+                        {
+                            record.HelpLink = value;
+                        }
+                    }
+                }
+            }
+        }
     }
 }

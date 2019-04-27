@@ -80,6 +80,8 @@
             this.edit_BearerToken = new System.Windows.Forms.TextBox();
             this.lbl_BearerToken = new System.Windows.Forms.Label();
             this.btn_RunValidationTest = new System.Windows.Forms.Button();
+            this.TestsToRun = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btn_SelectResultsDirectory
@@ -153,7 +155,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.webapiprogressBar.Location = new System.Drawing.Point(605, 40);
             this.webapiprogressBar.Name = "webapiprogressBar";
-            this.webapiprogressBar.Size = new System.Drawing.Size(308, 23);
+            this.webapiprogressBar.Size = new System.Drawing.Size(311, 23);
             this.webapiprogressBar.TabIndex = 99;
             // 
             // ServerVersion
@@ -443,7 +445,7 @@
             this.serviceresponsedata.Multiline = true;
             this.serviceresponsedata.Name = "serviceresponsedata";
             this.serviceresponsedata.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.serviceresponsedata.Size = new System.Drawing.Size(308, 73);
+            this.serviceresponsedata.Size = new System.Drawing.Size(311, 73);
             this.serviceresponsedata.TabIndex = 138;
             this.serviceresponsedata.TabStop = false;
             // 
@@ -455,7 +457,7 @@
             this.webapi_metadata.Multiline = true;
             this.webapi_metadata.Name = "webapi_metadata";
             this.webapi_metadata.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.webapi_metadata.Size = new System.Drawing.Size(308, 97);
+            this.webapi_metadata.Size = new System.Drawing.Size(311, 97);
             this.webapi_metadata.TabIndex = 137;
             this.webapi_metadata.TabStop = false;
             // 
@@ -476,7 +478,7 @@
             this.webapi_token.Multiline = true;
             this.webapi_token.Name = "webapi_token";
             this.webapi_token.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.webapi_token.Size = new System.Drawing.Size(308, 91);
+            this.webapi_token.Size = new System.Drawing.Size(311, 91);
             this.webapi_token.TabIndex = 135;
             this.webapi_token.TabStop = false;
             // 
@@ -487,7 +489,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.openid_code.Location = new System.Drawing.Point(605, 69);
             this.openid_code.Name = "openid_code";
-            this.openid_code.Size = new System.Drawing.Size(308, 20);
+            this.openid_code.Size = new System.Drawing.Size(311, 20);
             this.openid_code.TabIndex = 134;
             this.openid_code.TabStop = false;
             // 
@@ -566,11 +568,33 @@
             this.btn_RunValidationTest.UseVisualStyleBackColor = true;
             this.btn_RunValidationTest.Click += new System.EventHandler(this.ValidationTest_Click);
             // 
+            // TestsToRun
+            // 
+            this.TestsToRun.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.TestsToRun.Location = new System.Drawing.Point(629, 480);
+            this.TestsToRun.Name = "TestsToRun";
+            this.TestsToRun.Size = new System.Drawing.Size(292, 20);
+            this.TestsToRun.TabIndex = 153;
+            this.TestsToRun.TabStop = false;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(407, 480);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(216, 13);
+            this.label1.TabIndex = 154;
+            this.label1.Text = "Comma Seperated List of RuleNames to run:";
+            // 
             // ReferenceClient
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(946, 490);
+            this.ClientSize = new System.Drawing.Size(949, 512);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.TestsToRun);
             this.Controls.Add(this.btn_RunValidationTest);
             this.Controls.Add(this.btn_LoadTestScript);
             this.Controls.Add(this.scriptfile);
@@ -684,6 +708,8 @@
         private System.Windows.Forms.TextBox edit_BearerToken;
         private System.Windows.Forms.Label lbl_BearerToken;
         private System.Windows.Forms.Button btn_RunValidationTest;
+        private System.Windows.Forms.TextBox TestsToRun;
+        private System.Windows.Forms.Label label1;
     }
 }
 

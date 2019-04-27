@@ -564,7 +564,12 @@ namespace RESOReference
             ODataMetadataTransaction metadata = new ODataMetadataTransaction(app.clientsettings);
             if (!metadata.ExecuteEvent(app))
             {
-                webapi_metadata.Text = "Error";
+
+                webapi_metadata.Text = app.ClientLog.ToString() ;
+                if(string.IsNullOrEmpty(webapi_metadata.Text))
+                {
+                    webapi_metadata.Text = "Error:  No log information on metadata.ExecuteEvent";
+                }
                 this.Update();
                 return false;
             }
@@ -622,7 +627,15 @@ namespace RESOReference
                 MessageOutput("Please load a Script File");
                 return;
             }
-            testproperties.ReadFile(scriptfiledata);
+            if (File.Exists(scriptfiledata))
+            {
+                testproperties.ReadFile(scriptfiledata);
+            }
+            else
+            {
+                MessageBox.Show(scriptfiledata + " Does not exist");
+                return;
+            }
             if (testproperties.IsLoaded())
             {
                 loadclientpropertiesfile(scriptfiledata);
@@ -632,8 +645,11 @@ namespace RESOReference
 
             if (string.IsNullOrWhiteSpace(clientsettings.GetSetting(settings.oauth_authorizationuri)))
             {
-                loadclientpropertiesfile();
-                clientsettings = GetSettings();
+                if (string.IsNullOrWhiteSpace(clientsettings.GetSetting(settings.bearertoken)))
+                {
+                    loadclientpropertiesfile();
+                    clientsettings = GetSettings();
+                }
             }
             RESOClient app = new RESOClient(clientsettings, OutputLog);
             if (!Login(ref app, ref clientsettings))
@@ -1052,8 +1068,10 @@ namespace RESOReference
                 }
 
                 int count = 0;
+                
+
                 TestControl testcontrol = new TestControl();
-                testcontrol.BuildRuleControlList(clientsettings);
+                testcontrol.BuildRuleControlList(TestsToRun.Text, clientsettings);
                 RuleCatalogCollection.Instance.Clear();
 
                 StringBuilder rulecontrolallfile = new StringBuilder();
@@ -1613,7 +1631,6 @@ namespace RESOReference
 
             sb.Append("\r\n");
         }
-
     }
 
     public class AuthenticationTypeData

@@ -222,49 +222,75 @@ namespace ODataValidator.Rule.Helper
             {
                 detail1.ErrorMessage = "Cannot find any appropriate entity-sets which support system query options $filter in the service.";
                 info = new ExtensionRuleViolationInfo(context.Destination, context.ResponsePayload, detail1);
+                passed = false;
             }
 
             string entitySet = restrictions.Item1;
-            string sortedPropName = restrictions.Item2.First().PropertyName;
-            string sortedPropType = restrictions.Item2.First().PropertyType;
-            string url = string.Format("{0}/{1}?$orderby={2} {3}", context.ServiceBaseUri.OriginalString.TrimEnd('/'), entitySet, sortedPropName, sortedType.ToString().ToLower());
-            var resp = WebHelper.Get(new Uri(url), Constants.AcceptHeaderJson, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
-            detail1 = new ExtensionRuleResultDetail(string.Empty, url, "GET", StringHelper.MergeHeaders(Constants.AcceptHeaderJson, context.RequestHeaders), resp);
-
-            if (resp != null && resp.StatusCode == HttpStatusCode.OK)
+            Response resp = null;
+            if (!string.IsNullOrEmpty(entitySet))
             {
-                JObject feed;
-                resp.ResponsePayload.TryToJObject(out feed);
+                try
+                {
+                    string sortedPropName = restrictions.Item2.First().PropertyName;
+                    string sortedPropType = restrictions.Item2.First().PropertyType;
+                    string url = string.Format("{0}/{1}?$orderby={2} {3}", context.ServiceBaseUri.OriginalString.TrimEnd('/'), entitySet, sortedPropName, sortedType.ToString().ToLower());
+                    resp = WebHelper.Get(new Uri(url), Constants.AcceptHeaderJson, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
+                    detail1 = new ExtensionRuleResultDetail(string.Empty, url, "GET", StringHelper.MergeHeaders(Constants.AcceptHeaderJson, context.RequestHeaders), resp);
 
-                if (feed == null || VerifySortedEntitiesSequence(feed, sortedPropName, sortedPropType, sortedType) != true)
+                    if (resp != null && resp.StatusCode == HttpStatusCode.OK)
+                    {
+                        JObject feed;
+                        resp.ResponsePayload.TryToJObject(out feed);
+
+                        if (feed == null || VerifySortedEntitiesSequence(feed, sortedPropName, sortedPropType, sortedType) != true)
+                        {
+                            passed = false;
+                            detail1.ErrorMessage = string.Format("The service does not execute an accurate result on the system query option $orderby {0} on individual properties.", sortedType == SortedType.ASC ? "asc" : "desc");
+                        }
+                        else
+                        {
+                            passed = true;
+                        }
+                    }
+                    else
+                    {
+                        passed = false;
+                        detail1.ErrorMessage = "The service does not support the system query option '$orderby'.";
+                    }
+                }
+                catch (Exception ex)
                 {
                     passed = false;
-                    detail1.ErrorMessage = string.Format("The service does not execute an accurate result on the system query option $orderby {0} on individual properties.", sortedType == SortedType.ASC ? "asc" : "desc");
-                }
-                else
-                {
-                    passed = true;
+                    detail1.ErrorMessage = "The service does not support the system query option '$orderby'.";
                 }
             }
             else
             {
+                detail1.ErrorMessage = "Cannot find any appropriate entity-sets which support system query options $filter in the service.";
+                info = new ExtensionRuleViolationInfo(context.Destination, context.ResponsePayload, detail1);
                 passed = false;
-                detail1.ErrorMessage = "The service does not support the system query option '$orderby'.";
+
             }
 
             info = new ExtensionRuleViolationInfo(context.Destination, context.ResponsePayload, detail1);
-            respStatusCode = resp != null ? resp.StatusCode : null;
 
-            if (SortedType.ASC == sortedType)
+            if (resp != null)
             {
-                context.ServiceVerResult.AscSortVerResult = new ServiceVerificationResult(passed, info, respStatusCode);
-            }
-            else if (SortedType.DESC == sortedType)
-            {
-                context.ServiceVerResult.DescSortVerResult = new ServiceVerificationResult(passed, info, respStatusCode);
-            }
+                
+                respStatusCode = resp != null ? resp.StatusCode : null;
 
-            return respStatusCode;
+                if (SortedType.ASC == sortedType)
+                {
+                    context.ServiceVerResult.AscSortVerResult = new ServiceVerificationResult(passed, info, respStatusCode);
+                }
+                else if (SortedType.DESC == sortedType)
+                {
+                    context.ServiceVerResult.DescSortVerResult = new ServiceVerificationResult(passed, info, respStatusCode);
+                }
+
+                return respStatusCode;
+            }
+            return HttpStatusCode.NotAcceptable;
         }
 
         /// <summary>
@@ -582,12 +608,20 @@ namespace ODataValidator.Rule.Helper
             var payloadFormat = context.ServiceDocument.GetFormatFromPayload();
             string[] feeds = ContextHelper.GetFeeds(context.ServiceDocument, payloadFormat).ToArray();
             ExtensionRuleResultDetail detail = new ExtensionRuleResultDetail();
-
-            string propertyURL = MetadataHelper.GenerateIndividualPropertyURL(context.MetadataDocument, context.ServiceDocument, context.ServiceBaseUri.AbsoluteUri, new List<string>() { PrimitiveDataTypes.Boolean, PrimitiveDataTypes.String, PrimitiveDataTypes.Int32 });
+            string propertyURL = string.Empty;
+            string ErrorMessage = "Can not generate property URI from this service.";
+            try
+            {
+                propertyURL = MetadataHelper.GenerateIndividualPropertyURL(context.MetadataDocument, context.ServiceDocument, context.ServiceBaseUri.AbsoluteUri, new List<string>() { PrimitiveDataTypes.Boolean, PrimitiveDataTypes.String, PrimitiveDataTypes.Int32 });
+            }
+            catch(ArgumentException ex)
+            {
+                ErrorMessage = "Can not generate property URI from this service. " + ex.Message;
+            }
 
             if (string.IsNullOrEmpty(propertyURL))
             {
-                detail.ErrorMessage = "Can not generate property URI from this service.";
+                detail.ErrorMessage = ErrorMessage;
             }
             else
             {
@@ -718,12 +752,21 @@ namespace ODataValidator.Rule.Helper
         public static bool VerifyMediaStream(ServiceContext context, out ExtensionRuleViolationInfo info)
         {
             bool result = false;
-            string mediaStreamURL = MetadataHelper.GenerateMediaStreamURL(context.MetadataDocument, context.ServiceDocument, context.ServiceBaseUri.AbsoluteUri);
+            string mediaStreamURL = string.Empty;
+            string ErrorMessage = "There is no usable URI to address the Media Stream of a Media Entity.";
+            try
+            {
+                mediaStreamURL = MetadataHelper.GenerateMediaStreamURL(context.MetadataDocument, context.ServiceDocument, context.ServiceBaseUri.AbsoluteUri);
+            }
+            catch(ArgumentException ex)
+            {
+                ErrorMessage += " " + ex.Message;
+            }
             ExtensionRuleResultDetail detail = new ExtensionRuleResultDetail();
 
             if (string.IsNullOrEmpty(mediaStreamURL))
             {
-                detail.ErrorMessage = "There is no usable URI to address the Media Stream of a Media Entity.";
+                detail.ErrorMessage = ErrorMessage;
             }
             else
             {
@@ -1073,8 +1116,17 @@ namespace ODataValidator.Rule.Helper
 
                 return null;
             }
-
-            string entitySetName = entitySetUrls.First().MapEntitySetURLToEntitySetName();
+            string entitySetName = string.Empty;
+            try
+            {
+                entitySetName = entitySetUrls.First().MapEntitySetURLToEntitySetName();
+            }
+            catch(ArgumentException ex)
+            {
+                detail.ErrorMessage = "The service does not support '$select' system query option.  " + ex.Message;
+                info = new ExtensionRuleViolationInfo(context.Destination, context.ResponsePayload, detail);
+                return HttpStatusCode.NotAcceptable;
+            }
             string entityTypeShortName = entitySetName.MapEntitySetNameToEntityTypeShortName();
             var props = MetadataHelper.GetAllPropertiesOfEntity(context.MetadataDocument, entityTypeShortName, MatchPropertyType.Normal);
             List<string> propNames = new List<string>();

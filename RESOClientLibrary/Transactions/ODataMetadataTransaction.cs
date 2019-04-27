@@ -16,6 +16,12 @@ namespace RESOClientLibrary.Transactions
                 responsedata = app.GetData(clientsettings.GetSetting(settings.webapi_uri).TrimEnd('/') + "/$metadata");
                 app.LogData("Response Data");
                 app.LogData("METADATA", responsedata);
+                if (responsedata.IndexOf("\"error\":{") >= 0)
+                {
+                    app.LogData("ERROR", responsedata);
+                    return false;
+                }
+
             }
             catch (Exception ex)
             {
