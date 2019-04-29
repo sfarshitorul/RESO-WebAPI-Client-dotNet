@@ -1524,7 +1524,19 @@ namespace ODataValidator.Rule.Helper
                 return null;
             }
 
-            string entitySetName = entitySetUrls.First().MapEntitySetURLToEntitySetName();
+            string entitySetName = string.Empty;
+            try
+            {
+                entitySetName = entitySetUrls.First().MapEntitySetURLToEntitySetName();
+            }
+            catch (ArgumentException ex)
+            {
+                detail.ErrorMessage = "Cannot find an appropriate primitive properties of entity type in the service.  " + ex.Message;
+                info = new ExtensionRuleViolationInfo(context.Destination, context.ResponsePayload, detail);
+                return HttpStatusCode.NotAcceptable;
+            }
+
+            //string entitySetName = entitySetUrls.First().MapEntitySetURLToEntitySetName();
             string entityTypeShortName = entitySetName.MapEntitySetNameToEntityTypeShortName();
             var props = MetadataHelper.GetPropertiesWithSpecifiedTypeFromEntityType(entityTypeShortName, context.MetadataDocument, new List<string>() { PrimitiveDataTypes.String });
             if (props == null || !props.Any())

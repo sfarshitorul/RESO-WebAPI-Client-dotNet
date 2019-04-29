@@ -647,8 +647,11 @@ namespace RESOReference
             {
                 if (string.IsNullOrWhiteSpace(clientsettings.GetSetting(settings.bearertoken)))
                 {
-                    loadclientpropertiesfile();
-                    clientsettings = GetSettings();
+                    if (string.IsNullOrWhiteSpace(clientsettings.GetSetting(settings.testscript)))
+                    {
+                        loadclientpropertiesfile();
+                        clientsettings = GetSettings();
+                    }
                 }
             }
             RESOClient app = new RESOClient(clientsettings, OutputLog);
@@ -682,7 +685,7 @@ namespace RESOReference
                 {
                     Directory.CreateDirectory(outputdirectory);
                 }
-            }
+            } 
             ResultsDirectory.Text = outputdirectory;
             clientsettings.SetSetting(settings.outputdirectory, outputdirectory);
             DebugLogData(outputdirectory);
