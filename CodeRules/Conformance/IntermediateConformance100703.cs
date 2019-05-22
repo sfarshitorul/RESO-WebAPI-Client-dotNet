@@ -112,11 +112,10 @@ namespace ODataValidator.Rule
             if (feed != null && JTokenType.Object == feed.Type)
             {
                 var entities = JsonParserHelper.GetEntries(feed);
-                string propVal = "Edm.String" == primitivePropType ? string.Format("'{0}'", entities[0][primitivePropName].ToString()) : entities[0][primitivePropName].ToString();
+                string propVal = "Edm.String" == primitivePropType ? string.Format("{0}", entities[0][primitivePropName].ToString()) : entities[0][primitivePropName].ToString();
 
                 #region Equal operation on filter.
-                // The comparison operators does not contain "undefined".
-                url = string.Format("{0}?$filter={1} undefined {2}", url, primitivePropName, propVal);
+                url = string.Format("{0}?$filter={1} eq '{2}'", url, primitivePropName, propVal);
                 resp = WebHelper.Get(new Uri(url), Constants.AcceptHeaderJson, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
                 detail = new ExtensionRuleResultDetail(this.Name, url, "GET", StringHelper.MergeHeaders(Constants.AcceptHeaderJson, context.RequestHeaders), resp);
 
