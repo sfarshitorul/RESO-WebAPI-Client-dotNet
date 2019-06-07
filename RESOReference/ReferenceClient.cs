@@ -1050,29 +1050,13 @@ namespace RESOReference
 
 
                 finderror = 2;
-                bool metadatagood = true;
-                Tuple<string, List<NormalProperty>, List<NavigProperty>> filterRestrictions = null;
-                try
+                if(CheckForErrors(ctx))
                 {
-                    filterRestrictions = AnnotationsHelper.GetFilterRestrictions(ctx.MetadataDocument, ctx.VocCapabilities);
-                }
-                catch
-                {
-                    metadatagood = false;
+                    return;
                 }
 
-                if(!metadatagood)
-                {
-                    DialogResult dialogResult = MessageBox.Show("The Metadata is malformed.  Many of the test will fail.  Whould you like to continue?", "Malformed Metadata", MessageBoxButtons.YesNo);
-                    if (dialogResult == DialogResult.No)
-                    {
-                        return;
-                    }
-                }
 
-                int count = 0;
-                
-
+                finderror = 23;
                 TestControl testcontrol = new TestControl();
                 testcontrol.BuildRuleControlList(TestsToRun.Text, clientsettings);
                 RuleCatalogCollection.Instance.Clear();
@@ -1096,7 +1080,7 @@ namespace RESOReference
                 //    //}
                 //    RuleCatalogCollection.Instance.Add(rule);
                 //}
-
+                int count = 0;
                 ExtensionRuleStore extensionStore = new ExtensionRuleStore("extensions", logger);
                 foreach (var rule in extensionStore.GetRules())
                 {
@@ -1115,7 +1099,7 @@ namespace RESOReference
                     }
                     RuleCatalogCollection.Instance.Add(rule);
                 }
-
+                
                 try
                 {
                     System.IO.File.WriteAllText(clientsettings.GetSetting(settings.log_directory) + "\\rulelist.txt", sb.ToString());
@@ -1205,6 +1189,52 @@ namespace RESOReference
             OutputLogCapture();
         }
 
+        private bool CheckForErrors(ServiceContext ctx)
+        {
+
+            bool metadatagood = true;
+            Tuple<string, List<NormalProperty>, List<NavigProperty>> filterRestrictions = null;
+            try
+            {
+                filterRestrictions = AnnotationsHelper.GetFilterRestrictions(ctx.MetadataDocument, ctx.VocCapabilities);
+            }
+            catch
+            {
+                metadatagood = false;
+            }
+
+            if (!metadatagood)
+            {
+                DialogResult dialogResult = MessageBox.Show("The Metadata is malformed.  Many of the test will fail.  Whould you like to continue?", "Malformed Metadata", MessageBoxButtons.YesNo);
+                if (dialogResult == DialogResult.No)
+                {
+                    return true;
+                }
+            }
+
+            bool servicegood = true;
+            List<string> entitySetURLs = null;
+            try
+            {
+                entitySetURLs = MetadataHelper.GetEntitySetURLs();
+            }
+            catch (Exception ex)
+            {
+                servicegood = false;
+            }
+
+            
+            if (!servicegood)
+            {
+                DialogResult dialogResult = MessageBox.Show("The Service Document is malformed.  There are two attributes required in the document for each EntitySet:  \"url\" and \"kind\".  Many of the test will fail.  Whould you like to continue?", "Malformed Service Document", MessageBoxButtons.YesNo);
+                if (dialogResult == DialogResult.No)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         private string EscapeXML(string data)
         {
             if(string.IsNullOrEmpty(data))
@@ -1254,6 +1284,41 @@ namespace RESOReference
                 return false;
             }
             if (testcontrol == null)
+            {
+                return false;
+            }
+            if (metadatatests.Checked)
+            {
+                if (rule.Name.IndexOf("Metadata") >= 0)
+                {
+                    if (string.IsNullOrEmpty(TestsToRun.Text))
+                    {
+                        return true;
+                    }
+                    else if(rule.Name == TestsToRun.Text)
+                    {
+                        return true;
+                    }
+                    
+                }
+            }
+            if (servicedoctests.Checked)
+            {
+                if (rule.Name.IndexOf("SvcDoc") >= 0)
+                {
+                    if (string.IsNullOrEmpty(TestsToRun.Text))
+                    {
+                        return true;
+                    }
+                    else if (rule.Name == TestsToRun.Text)
+                    {
+                        return true;
+                    }
+
+                }
+            }
+
+            if(!rulecontrolfile.Checked)
             {
                 return false;
             }
@@ -1307,7 +1372,7 @@ namespace RESOReference
             //{
             //    return false;
             //}
-       
+
             RuleControl control = testcontrol.rulecontrol[rule.Name] as RuleControl;
             if (control != null)
             {

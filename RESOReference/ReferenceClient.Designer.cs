@@ -82,6 +82,9 @@
             this.btn_RunValidationTest = new System.Windows.Forms.Button();
             this.TestsToRun = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.rulecontrolfile = new System.Windows.Forms.CheckBox();
+            this.metadatatests = new System.Windows.Forms.CheckBox();
+            this.servicedoctests = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // btn_SelectResultsDirectory
@@ -588,11 +591,44 @@
             this.label1.TabIndex = 154;
             this.label1.Text = "Comma Seperated List of RuleNames to run:";
             // 
+            // rulecontrolfile
+            // 
+            this.rulecontrolfile.AutoSize = true;
+            this.rulecontrolfile.Location = new System.Drawing.Point(74, 482);
+            this.rulecontrolfile.Name = "rulecontrolfile";
+            this.rulecontrolfile.Size = new System.Drawing.Size(103, 17);
+            this.rulecontrolfile.TabIndex = 155;
+            this.rulecontrolfile.Text = "Rule Control File";
+            this.rulecontrolfile.UseVisualStyleBackColor = true;
+            // 
+            // metadatatests
+            // 
+            this.metadatatests.AutoSize = true;
+            this.metadatatests.Location = new System.Drawing.Point(183, 482);
+            this.metadatatests.Name = "metadatatests";
+            this.metadatatests.Size = new System.Drawing.Size(71, 17);
+            this.metadatatests.TabIndex = 156;
+            this.metadatatests.Text = "Metadata";
+            this.metadatatests.UseVisualStyleBackColor = true;
+            // 
+            // servicedoctests
+            // 
+            this.servicedoctests.AutoSize = true;
+            this.servicedoctests.Location = new System.Drawing.Point(260, 482);
+            this.servicedoctests.Name = "servicedoctests";
+            this.servicedoctests.Size = new System.Drawing.Size(82, 17);
+            this.servicedoctests.TabIndex = 157;
+            this.servicedoctests.Text = "ServiceDoc";
+            this.servicedoctests.UseVisualStyleBackColor = true;
+            // 
             // ReferenceClient
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(949, 512);
+            this.Controls.Add(this.servicedoctests);
+            this.Controls.Add(this.metadatatests);
+            this.Controls.Add(this.rulecontrolfile);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.TestsToRun);
             this.Controls.Add(this.btn_RunValidationTest);
@@ -648,7 +684,7 @@
             this.Controls.Add(this.edit_BearerToken);
             this.Controls.Add(this.lbl_BearerToken);
             this.Name = "ReferenceClient";
-            this.Text = "RESO Reference Client v3.1.19";
+            this.Text = "RESO Reference Client v3.1.20";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -710,6 +746,9 @@
         private System.Windows.Forms.Button btn_RunValidationTest;
         private System.Windows.Forms.TextBox TestsToRun;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.CheckBox rulecontrolfile;
+        private System.Windows.Forms.CheckBox metadatatests;
+        private System.Windows.Forms.CheckBox servicedoctests;
     }
 }
 

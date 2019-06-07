@@ -93,8 +93,17 @@ namespace ODataValidator.Rule
             bool? passed = null;
 
             List<ExtensionRuleResultDetail> details = new List<ExtensionRuleResultDetail>();
-
-            List<string> entitySetURLs = MetadataHelper.GetEntitySetURLs();
+            List<string> entitySetURLs = null;
+            try
+            {
+                entitySetURLs = MetadataHelper.GetEntitySetURLs();
+            }
+            catch(Exception ex)
+            {
+                details.Add(new ExtensionRuleResultDetail(this.Name, string.Empty, HttpMethod.Get, "Please check the Service Document.  One of the attributes are missing for EntitySet.  Required url and kind"));
+                info = new ExtensionRuleViolationInfo(context.Destination, context.ResponsePayload, details);
+                return false;
+            }
             foreach (string entitySetUrl in entitySetURLs)
             {
                 string entityTypeShortName;
