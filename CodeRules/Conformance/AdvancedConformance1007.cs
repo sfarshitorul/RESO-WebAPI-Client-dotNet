@@ -15,7 +15,7 @@ namespace ODataValidator.Rule
     /// Class of extension rule for Advanced.Conformance.1007
     /// </summary>
     [Export(typeof(ExtensionRule))]
-    public class AdvancedConformance1007 : ConformanceAdvancedExtensionRule
+    public class AdvancedConformance1007 : ConformanceAdvancedExtensionRule 
     {
         /// <summary>
         /// Gets rule name
