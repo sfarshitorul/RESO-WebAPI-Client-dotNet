@@ -1205,7 +1205,7 @@ namespace RESOReference
 
             if (!metadatagood)
             {
-                DialogResult dialogResult = MessageBox.Show("The Metadata is malformed.  Many of the test will fail.  Whould you like to continue?", "Malformed Metadata", MessageBoxButtons.YesNo);
+                DialogResult dialogResult = MessageBox.Show("The Metadata is malformed.  Many of the test will fail.  Would you like to continue?", "Malformed Metadata", MessageBoxButtons.YesNo);
                 if (dialogResult == DialogResult.No)
                 {
                     return true;
@@ -1226,7 +1226,7 @@ namespace RESOReference
             
             if (!servicegood)
             {
-                DialogResult dialogResult = MessageBox.Show("The Service Document is malformed.  There are two attributes required in the document for each EntitySet:  \"url\" and \"kind\".  Many of the test will fail.  Whould you like to continue?", "Malformed Service Document", MessageBoxButtons.YesNo);
+                DialogResult dialogResult = MessageBox.Show("The Service Document is malformed.  There are two attributes required in the document for each EntitySet:  \"url\" and \"kind\".  Many of the test will fail.  Would you like to continue?", "Malformed Service Document", MessageBoxButtons.YesNo);
                 if (dialogResult == DialogResult.No)
                 {
                     return true;
