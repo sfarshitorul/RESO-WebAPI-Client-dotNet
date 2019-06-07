@@ -76,7 +76,8 @@ namespace ODataValidator.Rule
 
             bool? passed = null;
 
-            string url = string.Format("{0}/?$find=*", context.Destination);
+            //string url = string.Format("{0}/?$find=*", context.Destination);
+            string url = context.Destination.ToString().TrimEnd('/') + "@/?$find=*";
             //var req = WebRequest.Create(url) as HttpWebRequest;
             //Response response = WebHelper.Get(req, RuleEngineSetting.Instance().DefaultMaximumPayloadSize);//REPLACE HEADER
             Response response = WebHelper.Get(url, null, RuleEngineSetting.Instance().DefaultMaximumPayloadSize,context.RequestHeaders);

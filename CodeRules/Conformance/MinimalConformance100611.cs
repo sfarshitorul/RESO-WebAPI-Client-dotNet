@@ -92,7 +92,7 @@ namespace ODataValidator.Rule
                 selectedName = functionactionName + "New";
             }
 
-            string url = string.Format("{0}/?$select={1}.{2}", context.Destination, appropriateNamespace[0], selectedName);
+            string url = string.Format("{0}/?$select={1}.{2}", context.Destination.ToString().TrimEnd('/'), appropriateNamespace[0], selectedName);
             //var req = WebRequest.Create(url) as HttpWebRequest;
             //var response = WebHelper.Get(req, RuleEngineSetting.Instance().DefaultMaximumPayloadSize);//REPLACE HEADER
             var response = WebHelper.Get(url,null, RuleEngineSetting.Instance().DefaultMaximumPayloadSize,context.RequestHeaders);

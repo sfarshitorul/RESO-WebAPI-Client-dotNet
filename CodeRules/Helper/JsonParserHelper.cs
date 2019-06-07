@@ -872,11 +872,19 @@ namespace ODataValidator.Rule.Helper
                 string entitySetUrl = string.Empty;
                 foreach (var setUrl in entitySetUrls)
                 {
-                    string entityTypeShortName = setUrl.MapEntitySetURLToEntityTypeShortName();
-                    if (batchSupportedEntitySetUrls.Contains(setUrl) && !entityTypeShortName.IsMediaType())
+                    try
                     {
-                        entitySetUrl = setUrl;
-                        break;
+                        string entityTypeShortName = setUrl.MapEntitySetURLToEntityTypeShortName();
+                        if (batchSupportedEntitySetUrls.Contains(setUrl) && !entityTypeShortName.IsMediaType())
+                        {
+                            entitySetUrl = setUrl;
+                            break;
+                        }
+                    }
+                    catch(Exception ex)
+                    {
+                        throw ex;
+                        string test = ex.Message;
                     }
                 }
 

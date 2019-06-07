@@ -83,15 +83,29 @@ namespace ODataValidator.Rule
             var detail1 = new ExtensionRuleResultDetail(this.Name);
             var detail2 = new ExtensionRuleResultDetail(this.Name);
             var detail3 = new ExtensionRuleResultDetail(this.Name);
+            var detail4 = new ExtensionRuleResultDetail(this.Name);
             string feedUrl = string.Empty;
             string entityUrl = string.Empty;
 
             KeyValuePair<string, IEnumerable<string>> entityUrls;
-            if (JsonParserHelper.GetBatchSupportedEntityUrls(out entityUrls))
+            try
             {
-                feedUrl = string.Format("{0}/{1}", serviceStatus.RootURL.TrimEnd('/'), entityUrls.Key);
-                entityUrl = entityUrls.Value.First();
+                if (JsonParserHelper.GetBatchSupportedEntityUrls(out entityUrls))
+                {
+                    feedUrl = string.Format("{0}/{1}", serviceStatus.RootURL.TrimEnd('/'), entityUrls.Key);
+                    entityUrl = entityUrls.Value.First();
+                }
             }
+            catch(Exception ex)
+            {
+                passed = false;
+                detail4.ErrorMessage = ex.Message+" Your service document should identify the EntitySet like this:  {\"name\":\"Property\",\"url\":\"Property\",\"kind\":\"EntitySet\"}";
+                List<ExtensionRuleResultDetail> details2 = new List<ExtensionRuleResultDetail>() { detail4 };
+                info = new ExtensionRuleViolationInfo(new Uri(serviceStatus.RootURL), serviceStatus.ServiceDocument, details2);
+
+                return passed;
+            }
+
 
             string relativeUrl = new Uri(entityUrl).LocalPath;
             string host = entityUrl.Remove(entityUrl.IndexOf(relativeUrl));

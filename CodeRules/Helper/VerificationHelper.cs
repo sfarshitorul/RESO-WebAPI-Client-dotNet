@@ -843,7 +843,7 @@ namespace ODataValidator.Rule.Helper
         {
             bool result = false;
 
-            string allEntitiesURL = context.Destination.AbsoluteUri + @"/$all";
+            string allEntitiesURL = context.Destination.AbsoluteUri.TrimEnd('/') + @"/$all";
             Response response = WebHelper.Get(new Uri(allEntitiesURL), Constants.V4AcceptHeaderJsonFullMetadata, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
             ExtensionRuleResultDetail detail = new ExtensionRuleResultDetail(string.Empty, allEntitiesURL, "GET", StringHelper.MergeHeaders(Constants.V4AcceptHeaderJsonFullMetadata, context.RequestHeaders), response);
 
