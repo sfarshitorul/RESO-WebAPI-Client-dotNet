@@ -101,11 +101,11 @@ namespace ODataValidator.Rule
             if (feed != null && JTokenType.Object == feed.Type)
             {
                 var entities = JsonParserHelper.GetEntries(feed);
-                string propVal = "Edm.String" == primitivePropType ? string.Format("'{0}'", entities[0][primitivePropName].ToString()) : entities[0][primitivePropName].ToString();
+                string propVal = "Edm.String" == primitivePropType ? string.Format("{0}", entities[0][primitivePropName].ToString()) : entities[0][primitivePropName].ToString();
                 //var req = WebRequest.Create(string.Format("{0}?$filter={1} eq @test1&@test1={2}", url, primitivePropName, propVal)) as HttpWebRequest;;
                 //resp = WebHelper.Get(req, RuleEngineSetting.Instance().DefaultMaximumPayloadSize); //REPLACE HEADER
 
-                string requri = string.Format("{0}?$filter={1} eq @test1&@test1={2}", url, primitivePropName, propVal);
+                string requri = string.Format("{0}?$filter={1} eq @test1&@test1='{2}'", url, primitivePropName, propVal);
                 resp = WebHelper.Get(requri, null, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
                 detail = new ExtensionRuleResultDetail(this.Name, requri, "GET", string.Empty, resp);
 
