@@ -120,7 +120,7 @@ namespace ODataValidator.Rule
             if (null == resp || HttpStatusCode.OK != resp.StatusCode)
             {
                 detail.ErrorMessage = JsonParserHelper.GetErrorMessage(resp.ResponsePayload);
-
+                passed = false;
                 return passed;
             }
 

@@ -64,13 +64,13 @@
     <Compile Include="OutputForm.Designer.cs">
       <DependentUpon>OutputForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ReferencePropertiesFile.cs" />
     <Compile Include="ReferenceClient.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ReferenceClient.Designer.cs">
       <DependentUpon>ReferenceClient.cs</DependentUpon>
     </Compile>
+    <Compile Include="ReferencePropertiesFile.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="LoginBrowser.resx">
@@ -82,9 +82,6 @@
     <EmbeddedResource Include="OutputForm.resx">
       <DependentUpon>OutputForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ReferenceClient.resx">
-      <DependentUpon>ReferenceClient.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -95,6 +92,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="ReferenceClient.resx">
+      <DependentUpon>ReferenceClient.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

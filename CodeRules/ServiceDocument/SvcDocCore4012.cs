@@ -166,6 +166,10 @@ namespace ODataValidator.Rule
             info = null;
             JObject allobject;
             context.ResponsePayload.TryToJObject(out allobject);
+            if (allobject == null)
+            {
+                return passed;
+            }
 
             foreach (JObject val in (JArray)allobject[Constants.Value])
             {

@@ -3046,13 +3046,17 @@ namespace ODataValidator.Rule.Helper
             string keyPropName = propRefElems.First().GetAttributeValue("Name");
             xPath = string.Format("./*[local-name()='Property' and @Name='{0}']", keyPropName);
             var propElem = etElem.XPathSelectElement(xPath, ODataNamespaceManager.Instance);
-            if (null != propElem.Attribute("Name") &&
-                null != propElem.Attribute("Type") &&
-                MetadataHelper.IsKeyPropertyType(propElem.GetAttributeValue("Type")))
+            if(propElem != null)
             {
-                return new Tuple<string, string>(propElem.GetAttributeValue("Name"), propElem.GetAttributeValue("Type"));
-            }
 
+            
+                if (null != propElem.Attribute("Name") &&
+                    null != propElem.Attribute("Type") &&
+                    MetadataHelper.IsKeyPropertyType(propElem.GetAttributeValue("Type")))
+                {
+                    return new Tuple<string, string>(propElem.GetAttributeValue("Name"), propElem.GetAttributeValue("Type"));
+                }
+            }
             return null;
         }
 

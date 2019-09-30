@@ -119,7 +119,7 @@ namespace ODataValidator.Rule
                     return false;
                 }
 
-                if (versionNumber <= 4.0)
+                if (versionNumber <= 4.01)
                 {
                     passed = true;
                 }

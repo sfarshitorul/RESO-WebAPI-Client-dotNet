@@ -32,7 +32,7 @@ namespace RESOReference
         public string serviceresponse { get; set; }
         public string openidcode { get; set; }
         public string responseheaders { get; set; }
-
+        public RESOClientSettings clientsettings;
         public Hashtable commandlinefunctions = new Hashtable();
         public ReferenceClient()
         {
@@ -101,6 +101,7 @@ namespace RESOReference
         {
             FolderBrowserDialog SelectDirectoryDialog = new FolderBrowserDialog();
             string currentpath = this.ResultsDirectory.Text;
+            
             if (string.IsNullOrEmpty(currentpath))
             {
                 //ResultsDirectory.Text = System.IO.Path.Combine(executepath, @"Results");
@@ -115,6 +116,7 @@ namespace RESOReference
             if (SelectDirectoryDialog.ShowDialog() == DialogResult.OK)
             {
                 this.ResultsDirectory.Text = SelectDirectoryDialog.SelectedPath.ToString();
+                clientproperties.setProperty("ResultsDirectory",SelectDirectoryDialog.SelectedPath.ToString());
             }
         }
 
@@ -128,7 +130,7 @@ namespace RESOReference
         private void loadclientpropertiesfile()
         {
             OpenFileDialog testfile = new OpenFileDialog();
-            testfile.Filter = "Client Settings Files (*.resocs)|*.resocs|Property Files (*.properties)|*.properties|RESOS Script (*.resoscript)|*.resoscript|All files (*.*)|*.*";
+            testfile.Filter = "RESOS Script (*.resoscript)|*.resoscript|All files (*.*)|*.*";
             testfile.FilterIndex = 1;
             testfile.RestoreDirectory = true;
             testfile.FileName = RESOReference.Properties.Settings.Default.Folder_Path;
@@ -191,7 +193,7 @@ namespace RESOReference
             try
             {
                 DebugLogLabel("ReferenceClient:resetsessionvalues()");
-                RESOClientSettings clientsettings = GetSettings();
+                RESOClientSettings clientsettings = GetSettings(true);
                 this.openid_code.Text = string.Empty;
                 this.webapi_token.Text = string.Empty;
                 this.webapi_metadata.Text = string.Empty;
@@ -212,13 +214,36 @@ namespace RESOReference
                 DebugLogLabel("ReferenceClient:resetsessionvalues():ERROR:" + ex.Message);
             }
         }
-
         private RESOClientSettings GetSettings()
+        {
+            return GetSettings(false);
+        }
+        private RESOClientSettings GetSettings(bool reset)
         {
             try
             {
                 DebugLogLabel("ReferenceClient:GetSettings()");
-                RESOClientSettings clientsettings = new RESOClientSettings();
+                if(clientsettings == null)
+                {
+                    clientsettings = new RESOClientSettings();
+                }
+                if(reset)
+                {
+                    clientsettings.are_set = false;
+                }
+
+                if(clientsettings.are_set)
+                {
+                    if (string.IsNullOrEmpty(clientsettings.GetSetting(settings.webapi_uri)))
+                    {
+                        clientsettings.are_set = false;
+                    }
+                    else
+                    {
+                        return clientsettings;
+                    }
+                }
+                
 
                 clientsettings.SetSetting(settings.rulecontroloutput, System.IO.Path.Combine(executepath, @"config"));
                 clientsettings.SetSetting(settings.rulecontrolinput, System.IO.Path.Combine(executepath, @"config"));
@@ -276,27 +301,18 @@ namespace RESOReference
                 clientsettings.SetSetting(settings.password, edit_Password.Text);
                 clientsettings.SetSetting(settings.useragent, "webapiclient/1.0");
 
-                string resultsdirectory = ResultsDirectory.Text;
-                if (string.IsNullOrWhiteSpace(resultsdirectory))
-                {
-                    resultsdirectory = System.IO.Path.Combine(executepath, @"Results");
-                    ResultsDirectory.Text = resultsdirectory;
+                clientsettings.SetSetting(settings.results_directory,ResultsDirectory.Text);
+                VerifyResultsDirectory(clientsettings);
+                string resultsdirectory = clientsettings.GetSetting(settings.results_directory);
+                ResultsDirectory.Text = resultsdirectory;
 
-                }
                 clientsettings.SetSetting(settings.results_directory, resultsdirectory);
-                string logdirectory = LogDirectory.Text;
-                if (string.IsNullOrWhiteSpace(logdirectory))
-                {
-                    logdirectory = System.IO.Path.Combine(executepath, @"Logs");
-                    LogDirectory.Text = logdirectory;
-
-                }
-                clientsettings.SetSetting(settings.log_directory, logdirectory);
-
-                //LogDirectory.Text = System.IO.Path.Combine(executepath, @"Logs");
-                //ResultsDirectory.Text = System.IO.Path.Combine(executepath, @"Results");
-                clientsettings.SetSetting(settings.outputdirectory, resultsdirectory);
-
+                
+                clientsettings.SetSetting(settings.log_directory, LogDirectory.Text);
+                VerifyLogDirectory(clientsettings);
+                string logdirectory = clientsettings.GetSetting(settings.log_directory);
+                LogDirectory.Text = logdirectory;
+                clientsettings.are_set = true;
                 return clientsettings;
             }
             catch (Exception ex)
@@ -685,9 +701,12 @@ namespace RESOReference
                 {
                     Directory.CreateDirectory(outputdirectory);
                 }
-            } 
-            ResultsDirectory.Text = outputdirectory;
-            clientsettings.SetSetting(settings.outputdirectory, outputdirectory);
+            }
+            clientsettings.SetSetting(settings.outputdirectory, ResultsDirectory.Text);
+            
+            VerifyResultsDirectory(clientsettings);
+            ResultsDirectory.Text = clientsettings.GetSetting(settings.results_directory);
+
             DebugLogData(outputdirectory);
             
             int currcount = 0;
@@ -842,11 +861,13 @@ namespace RESOReference
                 AuthenticationTypeData combodata = this.oauth_granttype.SelectedItem as AuthenticationTypeData;
                 this.oauth_granttype.Text = combodata.Name;
 
-                
-                
+
+
 
                 //OData
-                this.scriptfile.Text = clientproperties.getProperty("textScriptFile");
+
+                this.scriptfile.Text = filename;//clientproperties.getProperty("textScriptFile");
+                clientproperties.setProperty("textScriptFile",filename);
                 if (string.IsNullOrEmpty(scriptfile.Text))
                 {
                     scriptfile.Text = System.IO.Path.Combine(executepath, @"webapitestscript") + "\\TestScript.resoscript";
@@ -871,8 +892,10 @@ namespace RESOReference
                 this.edit_BearerToken.Text = clientproperties.getProperty("BearerToken");
                 this.edit_Password.Text = clientproperties.getProperty("Password");
                 //Global
-                this.LogDirectory.Text = clientproperties.getProperty("transactionlogdirectory");
-                this.ResultsDirectory.Text = clientproperties.getProperty("resultsdirectory");
+
+                this.LogDirectory.Text = VerifyLogDirectory(clientproperties.getProperty("transactionlogdirectory"));
+                
+                this.ResultsDirectory.Text = VerifyResultsDirectory(clientproperties.getProperty("resultsdirectory"));
             }
             catch (Exception ex)
             {
@@ -987,7 +1010,6 @@ namespace RESOReference
             int finderror = 0;
             System.Guid JobID = System.Guid.NewGuid();
             ResultsProvider resultProvider = new ResultsProvider(JobID);
-
             ILogger logger = resultProvider as ILogger;
             try
             {
@@ -1099,7 +1121,9 @@ namespace RESOReference
                     }
                     RuleCatalogCollection.Instance.Add(rule);
                 }
-                
+
+                VerifyLogDirectory(clientsettings);
+                VerifyResultsDirectory(clientsettings);
                 try
                 {
                     System.IO.File.WriteAllText(clientsettings.GetSetting(settings.log_directory) + "\\rulelist.txt", sb.ToString());
@@ -1168,10 +1192,14 @@ namespace RESOReference
                     BuildResultsOutput(ref sbresults, result, ref sbLogAll, logitemshash);
                 }
                 finderror = 8;
+                VerifyLogDirectory(clientsettings);
+                VerifyResultsDirectory(clientsettings);
+
                 using (System.IO.StreamWriter file = new System.IO.StreamWriter(clientsettings.GetSetting(settings.log_directory) + "\\" + "outputlog" + ".txt", false))
                 {
                     file.Write(sbLogAll.ToString());
                 }
+
                 finderror = 9;
                 using (System.IO.StreamWriter file = new System.IO.StreamWriter(clientsettings.GetSetting(settings.results_directory) + "\\" + "results" + ".txt", false))
                 {
@@ -1187,6 +1215,48 @@ namespace RESOReference
             }
 
             OutputLogCapture();
+        }
+
+        private void VerifyResultsDirectory(RESOClientSettings clientsettings)
+        {
+            string result = VerifyResultsDirectory(clientsettings.GetSetting(settings.results_directory));
+            clientsettings.SetSetting(settings.results_directory,result);
+        }
+
+        private string VerifyResultsDirectory(string directory)
+        {
+            string result = directory;
+            if (!Directory.Exists(result))
+            {
+                result = @"C:\results";
+                if (!Directory.Exists(result))
+                {
+                    Directory.CreateDirectory(@"C:\results");
+                }
+            }
+            return result;
+
+        }
+
+        private void VerifyLogDirectory(RESOClientSettings clientsettings)
+        {
+            string result = VerifyLogDirectory(clientsettings.GetSetting(settings.log_directory));
+            clientsettings.SetSetting(settings.log_directory, result);
+        }
+
+        private string VerifyLogDirectory(string directory)
+        {
+            string result = directory;
+            if (!Directory.Exists(result))
+            {
+                result = @"C:\Logs";
+                if (!Directory.Exists(result))
+                {
+                    Directory.CreateDirectory(@"C:\results");
+                }
+            }
+            return result;
+
         }
 
         private bool CheckForErrors(ServiceContext ctx)
@@ -1291,28 +1361,63 @@ namespace RESOReference
             {
                 if (rule.Name.IndexOf("Metadata") >= 0)
                 {
-                    if (string.IsNullOrEmpty(TestsToRun.Text))
+                    if ((rule.Version == ODataValidator.RuleEngine.ODataVersion.V3_V4) ||
+                        (rule.Version == ODataValidator.RuleEngine.ODataVersion.V4) ||
+                        (rule.Version == ODataValidator.RuleEngine.ODataVersion.V_All))
                     {
-                        return true;
+                        if (string.IsNullOrEmpty(TestsToRun.Text))
+                        {
+                            return true;
+                        }
+                        else if (rule.Name == TestsToRun.Text)
+                        {
+                            return true;
+                        }
+
                     }
-                    else if(rule.Name == TestsToRun.Text)
+                    if ((rule.Version == ODataValidator.RuleEngine.ODataVersion.UNKNOWN))
                     {
-                        return true;
+                        if (string.IsNullOrEmpty(TestsToRun.Text))
+                        {
+                            return true;
+                        }
+                        else if (rule.Name == TestsToRun.Text)
+                        {
+                            return true;
+                        }
+
                     }
-                    
                 }
             }
             if (servicedoctests.Checked)
             {
                 if (rule.Name.IndexOf("SvcDoc") >= 0)
                 {
-                    if (string.IsNullOrEmpty(TestsToRun.Text))
+                    if ((rule.Version == ODataValidator.RuleEngine.ODataVersion.V3_V4) ||
+                        (rule.Version == ODataValidator.RuleEngine.ODataVersion.V4) ||
+                        (rule.Version == ODataValidator.RuleEngine.ODataVersion.V_All))
                     {
-                        return true;
+                        if (string.IsNullOrEmpty(TestsToRun.Text))
+                        {
+                            return true;
+                        }
+                        else if (rule.Name == TestsToRun.Text)
+                        {
+                            return true;
+                        }
+
                     }
-                    else if (rule.Name == TestsToRun.Text)
+                    if ((rule.Version == ODataValidator.RuleEngine.ODataVersion.UNKNOWN))
                     {
-                        return true;
+                        if (string.IsNullOrEmpty(TestsToRun.Text))
+                        {
+                            return true;
+                        }
+                        else if (rule.Name == TestsToRun.Text)
+                        {
+                            return true;
+                        }
+
                     }
 
                 }

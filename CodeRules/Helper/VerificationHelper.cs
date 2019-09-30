@@ -1198,7 +1198,7 @@ namespace ODataValidator.Rule.Helper
                 detail.ErrorMessage = "Cannot find an entity-set which supports $expand system query options.";
                 info = new ExtensionRuleViolationInfo(context.Destination, context.ResponsePayload, detail);
                 context.ServiceVerResult.ExpandResult = new ServiceVerificationResult(passed, info);
-
+                
                 return null;
             }
 
@@ -1209,7 +1209,14 @@ namespace ODataValidator.Rule.Helper
             //Response resp = WebHelper.Get(WebRequest.Create(url), RuleEngineSetting.Instance().DefaultMaximumPayloadSize);//REPLACE HEADER
             Response resp = WebHelper.Get(url, null, RuleEngineSetting.Instance().DefaultMaximumPayloadSize,context.RequestHeaders);
             detail = new ExtensionRuleResultDetail(string.Empty, url, "GET", string.Empty, resp);
-
+            if(resp.StatusCode != HttpStatusCode.OK)
+            {
+                detail.ErrorMessage = "Attempt to expand a Navigation property ("+ navigProp + ") failed with HTTP Error:  "+resp.StatusCode;
+                info = new ExtensionRuleViolationInfo(context.Destination, context.ResponsePayload, detail);
+                context.ServiceVerResult.ExpandResult = new ServiceVerificationResult(passed, info);
+                passed = false;
+                return resp.StatusCode;
+            }
             if (!string.IsNullOrEmpty(resp.ResponsePayload))
             {
                 JObject feed;
@@ -1295,7 +1302,8 @@ namespace ODataValidator.Rule.Helper
             }
 
             Random rnd = new Random();
-            int topNumber = rnd.Next(0, Convert.ToInt32(resp.ResponsePayload));
+            //int topNumber = rnd.Next(0, Convert.ToInt32(resp.ResponsePayload));
+            int topNumber = rnd.Next(0, 100);
             string topUri = string.Format("{0}/{1}?$top={2}", context.ServiceBaseUri.OriginalString.TrimEnd('/'), entitySet, topNumber);
             Response topResponse = WebHelper.Get(new Uri(topUri), Constants.AcceptHeaderJson, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
             detail = new ExtensionRuleResultDetail(string.Empty, topUri, "GET", StringHelper.MergeHeaders(Constants.AcceptHeaderJson, context.RequestHeaders), topResponse);
@@ -1374,7 +1382,7 @@ namespace ODataValidator.Rule.Helper
 
             if (HttpStatusCode.OK == countResponse.StatusCode)
             {
-                if ((totalCountOfEntities != odataCount) && (totalCountOfEntities < 100)) //Stuart:  We are only checking the 1st 100
+                if ((totalCountOfEntities < 100)) //Stuart:  We are only checking the 1st 100
                 {
                     passed = false;
                     detail.ErrorMessage = string.Format("The odata.count value is {0} and the total count of entities is {1}, they should be equal.", odataCount, totalCountOfEntities);
@@ -1450,15 +1458,25 @@ namespace ODataValidator.Rule.Helper
             Random rnd = new Random();
             //int skipNumber = rnd.Next(0, Convert.ToInt32(resp.ResponsePayload)); Causing timeout issues
             int skipNumber = 2;
-            if (Convert.ToInt32(resp.ResponsePayload) > 30)
+            try
             {
-                skipNumber = rnd.Next(10, 30);
+                if (Convert.ToInt32(resp.ResponsePayload) > 30)
+                {
+                    skipNumber = rnd.Next(10, 30);
+                }
+            }
+            catch(Exception ex)
+            {
+                detail = new ExtensionRuleResultDetail(string.Empty, url, "GET", StringHelper.MergeHeaders(Constants.AcceptHeaderJson, context.RequestHeaders), resp.ResponsePayload);
+                detail.ErrorMessage = "The expected response is a number.  This is what was returned:  " + resp.ResponsePayload;
+                info = new ExtensionRuleViolationInfo(context.Destination, context.ResponsePayload, detail);
+                context.ServiceVerResult.SkipResult = new ServiceVerificationResult(passed, info, statusCode);
+                passed = false;
+                return statusCode;
+
             }
 
             string skipUri = string.Format("{0}/{1}/?$skip={2}", context.ServiceBaseUri.OriginalString.TrimEnd('/'), entitySet, skipNumber);
-            skipUri = skipUri.Replace("//", "/");
-            skipUri = skipUri.Replace("http:/", "http://");
-            skipUri = skipUri.Replace("https:/", "https://");
             Response skipResponse = WebHelper.Get(new Uri(skipUri), Constants.AcceptHeaderJson, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
             statusCode = skipResponse.StatusCode;
             detail = new ExtensionRuleResultDetail(string.Empty, skipUri, "GET", StringHelper.MergeHeaders(Constants.AcceptHeaderJson, context.RequestHeaders), skipResponse);
@@ -1547,21 +1565,34 @@ namespace ODataValidator.Rule.Helper
 
                 return null;
             }
-
+            Response resp = null;
             string url = string.Format("{0}/{1}", context.DestinationBasePath.TrimEnd('/'), entitySetName);
             //var req = WebRequest.Create(url) as HttpWebRequest; //REPLACE HEADER
             //var resp = WebHelper.Get(req, RuleEngineSetting.Instance().DefaultMaximumPayloadSize);
-            var resp = WebHelper.Get(url, null, RuleEngineSetting.Instance().DefaultMaximumPayloadSize,context.RequestHeaders);
-            detail = new ExtensionRuleResultDetail(string.Empty, url, "GET", string.Empty, resp);
-            if (resp.StatusCode != HttpStatusCode.OK)
+            try
+            {
+                resp = WebHelper.Get(url, null, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
+                detail = new ExtensionRuleResultDetail(string.Empty, url, "GET", string.Empty, resp);
+                if (resp.StatusCode != HttpStatusCode.OK)
+                {
+                    passed = false;
+                    detail.ErrorMessage = "The service does not have any entity set returned.";
+                    info = new ExtensionRuleViolationInfo(context.Destination, context.ResponsePayload, detail);
+                    context.ServiceVerResult.SearchVerResult = new ServiceVerificationResult(passed, info);
+
+                    return null;
+                }
+            }
+            catch(Exception ex)
             {
                 passed = false;
-                detail.ErrorMessage = "The service does not have any entity set returned.";
+                detail.ErrorMessage = "The service does not have any entity set returned.:  ERROR:"+ ex.Message;
                 info = new ExtensionRuleViolationInfo(context.Destination, context.ResponsePayload, detail);
                 context.ServiceVerResult.SearchVerResult = new ServiceVerificationResult(passed, info);
 
                 return null;
             }
+
 
             string prop = props.First();
             string propName = prop.Split(',')[0];

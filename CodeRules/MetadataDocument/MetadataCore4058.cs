@@ -202,9 +202,26 @@ namespace ODataValidator.Rule
                     metadata.LoadXml(context.MergedMetadataDocument);
                 }
                 XmlNodeList customTypes = metadata.SelectNodes(customTypePath, ODataNamespaceManager.Instance);
-
+                int count = 0;
                 foreach (XmlNode customType in customTypes)
                 {
+                    count++;
+                    var test1 = customType.ParentNode.Attributes["Namespace"];
+                    var test2 = customType.ParentNode.Attributes["Namespace"].Value.Equals(ns);
+                    var test3A = customType.ParentNode.Attributes["Alias"];
+                    if(test3A == null)
+                    {
+                        ServiceStatus serviceStatus = ServiceStatus.GetInstance();
+                        var detail = new ExtensionRuleResultDetail(this.Name, serviceStatus.RootURL, HttpMethod.Get, string.Empty);
+                        detail.ErrorMessage = "There is no Alias for this Schema";
+                        info = new ExtensionRuleViolationInfo(new Uri(serviceStatus.RootURL), serviceStatus.ServiceDocument, detail);
+                        passed = false;
+                        return passed;
+                    }
+                    var test3 = customType.ParentNode.Attributes["Alias"].Value.Equals(ns);
+                    var test4 = customType.Attributes["Name"];
+                    var test5 = customType.Attributes["Name"].Value.Equals(shortName);
+
                     if (customType.ParentNode.Attributes["Namespace"] != null
                         && (customType.ParentNode.Attributes["Namespace"].Value.Equals(ns)||customType.ParentNode.Attributes["Alias"].Value.Equals(ns))
                         && customType.Attributes["Name"] != null
@@ -219,7 +236,7 @@ namespace ODataValidator.Rule
                     break;
                 }
             }
-
+            
             info = new ExtensionRuleViolationInfo(this.ErrorMessage, context.Destination, context.ResponsePayload);
             return passed;
         }

@@ -117,6 +117,33 @@ namespace ODataValidator.Rule
                 JObject jObj = JObject.Parse(resp.ResponsePayload);
                 JArray jArr = jObj.GetValue(Constants.Value) as JArray;
                 var entity = jArr.First as JObject;
+                var datatest = Convert.ToString(entity[propName]);
+                if (string.IsNullOrEmpty(datatest))
+                {
+                    for (int n = 1; n < props.Count; n++)
+                    {
+                        propName = props[n].Item1;
+                        if (entity[propName] != null)
+                        {
+                            datatest = Convert.ToString(entity[propName]);
+                            if (!string.IsNullOrEmpty(datatest))
+                            {
+                                propType = props[n].Item2;
+                                break;
+                            }
+                        }
+                        propName = string.Empty;
+                    }
+                }
+                if (string.IsNullOrEmpty(propName))
+                {
+                    var detail3 = new ExtensionRuleResultDetail(this.Name, url, HttpMethod.Get, string.Empty);
+                    detail3.ErrorMessage = "None of the properties of type Edm.Double or Edm.Decimal had any data to test for entity " + entityTypeShortName;
+                    info = new ExtensionRuleViolationInfo(new Uri(url), string.Empty, detail3);
+                    passed = false;
+                    return passed;
+
+                }
                 if ("Edm.Double" == propType)
                 {
                     var propVal = Math.Floor(Convert.ToDouble(entity[propName]));

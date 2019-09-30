@@ -117,8 +117,45 @@ namespace ODataValidator.Rule
                 JObject jObj = JObject.Parse(resp.ResponsePayload);
                 JArray jArr = jObj.GetValue(Constants.Value) as JArray;
                 var entity = jArr.First as JObject;
+                var datatest = Convert.ToString(entity[propName]);
+                if (string.IsNullOrEmpty(datatest))
+                {
+                    for (int n = 1; n < props.Count; n++)
+                    {
+                        propName = props[n].Item1;
+                        if (entity[propName] != null)
+                        {
+                            datatest = Convert.ToString(entity[propName]); 
+                            if (!string.IsNullOrEmpty(datatest))
+                            {
+                                propType = props[n].Item2;
+                                break;
+                            }
+                        }
+                        propName = string.Empty;
+                    }
+                }
+                if(string.IsNullOrEmpty(propName))
+                {
+                    var detail3 = new ExtensionRuleResultDetail(this.Name, url, HttpMethod.Get, string.Empty);
+                    detail3.ErrorMessage = "None of the properties of type Edm.Double or Edm.Decimal had any data to test for entity "+ entityTypeShortName;
+                    info = new ExtensionRuleViolationInfo(new Uri(url), string.Empty, detail3);
+                    passed = false;
+                    return passed;
+
+                }
                 if ("Edm.Double" == propType)
                 {
+                    if (entity[propName] == null)
+                    {
+                        var detail2 = new ExtensionRuleResultDetail(this.Name, url, HttpMethod.Get, string.Empty);
+                        detail2.ErrorMessage = "An attempt to calculate Ceiling failed:  Math.Ceiling(Convert.ToDecimal(entity[propName])) where propName is " + propName + " and entity is " + entityTypeShortName + ".  The propName did not exist in the Entity Data that was returned.";
+                        info = new ExtensionRuleViolationInfo(new Uri(url), string.Empty, detail2);
+                        passed = false;
+                        return passed;
+
+                    }
+
                     var propVal = Math.Ceiling(Convert.ToDouble(entity[propName]));
                     url = string.Format("{0}?$filter=ceiling({1}) eq {2}", url, propName, propVal);
                     resp = WebHelper.Get(new Uri(url), string.Empty, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, svcStatus.DefaultHeaders);
@@ -148,6 +185,15 @@ namespace ODataValidator.Rule
                 }
                 else // The property type is Edm.Decimal.
                 {
+                    if(entity[propName] == null)
+                    {
+                        var detail2 = new ExtensionRuleResultDetail(this.Name, url, HttpMethod.Get, string.Empty);
+                        detail2.ErrorMessage = "An attempt to calculate Ceiling failed:  Math.Ceiling(Convert.ToDecimal(entity[propName])) where propName is " + propName + " and entity is " + entityTypeShortName + ".  The propName did not exist in the Entity Data that was returned.";
+                        info = new ExtensionRuleViolationInfo(new Uri(url), string.Empty, detail2);
+                        passed = false;
+                        return passed;
+
+                    }
                     var propVal = Math.Ceiling(Convert.ToDecimal(entity[propName]));
                     url = string.Format("{0}?$filter=ceiling({1}) eq {2}", url, propName, propVal);
                     resp = WebHelper.Get(new Uri(url), string.Empty, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, svcStatus.DefaultHeaders);
