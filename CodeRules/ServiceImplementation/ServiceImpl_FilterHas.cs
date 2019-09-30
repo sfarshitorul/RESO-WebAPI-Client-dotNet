@@ -116,7 +116,8 @@ namespace ODataValidator.Rule
                     typeNames.Add(enumType.ParentNode.Attributes["Alias"].Value + "." + enumType.Attributes["Name"].Value);
                 }
                 List<string> properties = null;
-                foreach(XmlNode entityType in entityTypes)
+                Uri req_entity = null;
+                foreach (XmlNode entityType in entityTypes)
                 {
                     properties = MetadataHelper.GetPropertiesWithSpecifiedTypeFromEntityType(entityType.Attributes["Name"].Value, 
                         ServiceStatus.GetInstance().MetadataDocument, typeNames);
@@ -126,8 +127,9 @@ namespace ODataValidator.Rule
                     }
 
                     string entitySetUrl = entityType.Attributes["Name"].Value.MapEntityTypeShortNameToEntitySetName();
-                    
-                    Response resp = WebHelper.Get(new Uri(context.ServiceBaseUri.OriginalString.TrimEnd('/') + @"/" + entitySetUrl), Constants.AcceptHeaderJson, 
+
+                    req_entity = new Uri(context.ServiceBaseUri.OriginalString.TrimEnd('/') + @"/" + entitySetUrl);
+                    Response resp = WebHelper.Get(req_entity, Constants.AcceptHeaderJson, 
                         RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
 
                     if (null == resp || HttpStatusCode.OK != resp.StatusCode)
@@ -144,7 +146,19 @@ namespace ODataValidator.Rule
                     }
 
                     JArray entities = JsonParserHelper.GetEntries(feed);
-                    string enumValue = entities[0][properties[0].Split(',')[0]].ToString();
+                    var test1 = entities[0];
+                    var test2 = test1[properties[0]];
+                    string enumValue = string.Empty;
+                    try
+                    {
+                        enumValue = entities[0][properties[0].Split(',')[0]].ToString();
+                    }
+                    catch(Exception ex)
+                    {
+                        string error = properties[0].Split(',')[0] + " is missing from the response " + resp.ResponsePayload;
+                        details.Add(new ExtensionRuleResultDetail(this.Name, req_entity.ToString(), HttpMethod.Get, ""));
+                        passed = false; break;
+                    }
 
                     string url = context.ServiceBaseUri.OriginalString.TrimEnd('/') + @"/" + entitySetUrl + "?$filter=" + properties[0].Split(',')[0] + " has " +
                         typeNames[0] + "\'" + enumValue + "\'";

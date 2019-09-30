@@ -95,8 +95,17 @@ namespace ODataValidator.Rule
                     feedUrl = string.Format("{0}/{1}", serviceStatus.RootURL.TrimEnd('/'), entityUrls.Key);
                     entityUrl = entityUrls.Value.First();
                 }
+                else
+                {
+                    var infoerror = new ExtensionRuleResultDetail(this.Name, context.ServiceBaseUri.OriginalString + "/$batch", HttpMethod.Post, string.Empty, string.Empty, string.Empty, string.Empty);
+                    passed = false;
+                    infoerror.ErrorMessage = string.Format("This server does have any entities that support batch request");
+                    return passed;
+
+                }
+
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 passed = false;
                 detail4.ErrorMessage = ex.Message+" Your service document should identify the EntitySet like this:  {\"name\":\"Property\",\"url\":\"Property\",\"kind\":\"EntitySet\"}";

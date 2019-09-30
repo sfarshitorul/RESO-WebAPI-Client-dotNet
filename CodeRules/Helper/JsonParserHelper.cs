@@ -745,17 +745,21 @@ namespace ODataValidator.Rule.Helper
                         string[] skiptokenValues = r.Value.ToString().StripOffDoubleQuotes().Split(new string[] { "skiptoken=" }, StringSplitOptions.None);
                         //Stuart - Not limited to integer skiptoken = Int32.Parse(skiptokenValues[1]);
                         count2 = 3;
-                        skiptoken = skiptokenValues[1] as string;
-                        string nextLinkUrl = !url.AbsoluteUri.Contains("?$") ? url + @"?$skiptoken=" + skiptoken.ToString() : url + @"&$skiptoken=" + skiptoken.ToString();
-                        count2 = 4;
-                        Response response = WebHelper.Get(new Uri(nextLinkUrl), Constants.AcceptHeaderJson, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, RequestHeaders);
-                        count2 = 5;
-                        JObject jo;
-                        response.ResponsePayload.TryToJObject(out jo);
-                        count2 = 6;
+                        if(skiptokenValues.Length >= 2)
+                        {
+                            skiptoken = skiptokenValues[1] as string;
+                            string nextLinkUrl = !url.AbsoluteUri.Contains("?$") ? url + @"?$skiptoken=" + skiptoken.ToString() : url + @"&$skiptoken=" + skiptoken.ToString();
+                            count2 = 4;
+                            Response response = WebHelper.Get(new Uri(nextLinkUrl), Constants.AcceptHeaderJson, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, RequestHeaders);
+                            count2 = 5;
+                            JObject jo;
+                            response.ResponsePayload.TryToJObject(out jo);
+                            count2 = 6;
 
-                        GetEntitiesCountFromFeed(url, jo, RequestHeaders, ref totalCount);
-                        count2 = 7;
+                            GetEntitiesCountFromFeed(url, jo, RequestHeaders, ref totalCount);
+                            count2 = 7;
+                        }
+
                     }
                 }
             }
@@ -831,16 +835,28 @@ namespace ODataValidator.Rule.Helper
             else if (responsePayload.IsJsonPayload())
             {
                 var payload = JToken.Parse(responsePayload);
-
+                string newmessage = string.Empty;
                 try
                 {
                     var errorBody = ((JObject)payload)["error"];
-                    var message = ((JObject)errorBody)["message"];
-                    result = message.ToString();
+                    if(errorBody == null)
+                    {
+                        result = "missing error message in the JSON that was returned.  The message that is returned should have an error object in the JSON.";
+                    }
+                    else
+                    {
+                        var message = ((JObject)errorBody)["message"];
+                        result = message.ToString();
+                    }
+                    
                 }
                 catch (FormatException e)
                 {
                     throw new FormatException("This JSON format of error message is unknown.", e.InnerException);
+                }
+                catch(Exception ex)
+                {
+
                 }
             }
             else

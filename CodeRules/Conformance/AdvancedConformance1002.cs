@@ -73,24 +73,33 @@ namespace ODataValidator.Rule
             ExtensionRuleResultDetail detail = new ExtensionRuleResultDetail(this.Name, url, "GET", StringHelper.MergeHeaders(string.Empty, context.RequestHeaders), response);
 
             // Get EntityContainer from metadata response payload.
-            string xpath = @"//*[local-name()='EntityContainer']";
-            XElement metadata = XElement.Parse(response.ResponsePayload);
-            IEnumerable<XElement> entityContainer = metadata.XPathSelectElements(xpath, ODataNamespaceManager.Instance);
-            List<string> propNames = new List<string>();
-
-            foreach (var prop in entityContainer)
+            try
             {
-                propNames.Add(prop.Attribute("Name").Value);
-            }
+                string xpath = @"//*[local-name()='EntityContainer']";
+                XElement metadata = XElement.Parse(response.ResponsePayload);
+                IEnumerable<XElement> entityContainer = metadata.XPathSelectElements(xpath, ODataNamespaceManager.Instance);
+                List<string> propNames = new List<string>();
 
-            if (propNames.Count > 0)
-            {
-                passed = true;
+                foreach (var prop in entityContainer)
+                {
+                    propNames.Add(prop.Attribute("Name").Value);
+                }
+
+                if (propNames.Count > 0)
+                {
+                    passed = true;
+                }
+                else
+                {
+                    passed = false;
+                    detail.ErrorMessage = "There is no EntityContainer in metadata document.";
+                }
             }
-            else
+            catch(Exception ex)
             {
                 passed = false;
-                detail.ErrorMessage = "There is no EntityContainer in metadat document.";
+                detail.ErrorMessage = "There is no EntityContainer in metadata document.  " + ex.Message +" "+ response.ResponsePayload;
+
             }
 
             info = new ExtensionRuleViolationInfo(context.Destination, context.ResponsePayload, detail);

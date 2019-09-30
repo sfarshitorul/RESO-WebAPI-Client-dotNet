@@ -120,6 +120,15 @@ namespace ODataValidator.Rule
                 JObject jObj = JsonConvert.DeserializeObject(resp.ResponsePayload, settings) as JObject;
                 JArray jArr = jObj.GetValue(Constants.Value) as JArray;
                 var entity = jArr.First as JObject;
+
+                if(entity[propName] == null)
+                {
+                    var detail = new ExtensionRuleResultDetail(this.Name, url, HttpMethod.Get, string.Empty);
+                    detail.ErrorMessage = "The Attribute (" + propName + ") does not exist in the entity response:  " + entity.ToString();
+                    info = new ExtensionRuleViolationInfo(new Uri(url), string.Empty, detail);
+                    passed = false;
+                    return passed;
+                }
                 var propVal = entity[propName].ToString();
                 int index = propVal.IndexOf('-');
                 if (index >= 0)

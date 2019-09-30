@@ -42,7 +42,12 @@ namespace RESOClientLibrary
     {
         public Hashtable settingvalues = new Hashtable();
         public NameValueCollection accessurls = new NameValueCollection();
+        public bool are_set;
 
+        public RESOClientSettings()
+        {
+            are_set = false;
+        }
         public string GetSetting(settings setting)
         {
             if (settingvalues[setting] != null)

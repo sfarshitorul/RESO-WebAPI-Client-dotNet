@@ -114,6 +114,7 @@ namespace ODataValidator.RuleEngine
             this.OdataMetadataType = odataMetadata;
             this.JsonFullMetadataPayload = jsonFullmetadataPayload;
             this.MetadataDocument = metadataDocument;
+            int test = responsePayload.Length;
             this.ResponsePayload = responsePayload;
             this.EntityTypeFullName = entityType;
             this.ServiceBaseUri = serviceBaseUri;

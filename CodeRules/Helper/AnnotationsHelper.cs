@@ -2351,10 +2351,17 @@ namespace ODataValidator.Rule.Helper
 
             foreach (var p in properties)
             {
-                if (primitiveTypes.Contains(p.PropertyType))
+                if (!p.IsKey)
                 {
-                    flag = true;
-                    props.Add(p);
+                    if (primitiveTypes.Contains(p.PropertyType))
+                    {
+                        flag = true;
+                        props.Add(p);
+                    }
+                }
+                else
+                {
+
                 }
             }
 

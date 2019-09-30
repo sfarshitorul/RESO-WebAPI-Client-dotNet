@@ -77,7 +77,7 @@ namespace ODataValidator.Rule
             Response response = WebHelper.Get(firstFeedFullUrl, Constants.V4AcceptHeaderJsonFullMetadata, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
             detail = new ExtensionRuleResultDetail(this.Name, firstFeedFullUrl.AbsoluteUri, "GET", StringHelper.MergeHeaders(Constants.V4AcceptHeaderJsonFullMetadata, context.RequestHeaders), response);
             
-            if (response != null && response.StatusCode != null)
+            if (response != null && response.StatusCode == HttpStatusCode.OK)
             {
                 JObject feed;
                 response.ResponsePayload.TryToJObject(out feed);
@@ -124,7 +124,7 @@ namespace ODataValidator.Rule
             else
             {
                 passed = false;
-                detail.ErrorMessage = string.Format(Constants.ErrorURI, "GET", firstFeedFullUrl.AbsoluteUri, "failed");
+                detail.ErrorMessage = string.Format(Constants.ErrorURI, "GET", firstFeedFullUrl.AbsoluteUri, JsonParserHelper.GetErrorMessage(response.ResponsePayload));
             }
 
             info = new ExtensionRuleViolationInfo(context.Destination, context.ResponsePayload, detail);

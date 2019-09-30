@@ -17,7 +17,7 @@
         /// <summary>
         /// The data member of maximum payload size
         /// </summary>
-        private int defaultMaximumPayloadSize = 1024 * 1024;
+        private int defaultMaximumPayloadSize = 10 * 1024 * 1024;
 
         /// <summary>
         /// Creates an instahnce of RuleEngineSetting.

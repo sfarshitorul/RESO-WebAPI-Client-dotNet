@@ -130,41 +130,54 @@ namespace ODataValidator.Rule
 
                 if (entry != null && JTokenType.Object == entry.Type)
                 {
-                    entity = entry[navigProp].First;
-                    url = entity[Constants.V4OdataId].ToString();
-                    if (url.IndexOf(context.ServiceBaseUri.OriginalString) < 0)
-                    {
-                        url = context.ServiceBaseUri.OriginalString + url;
-                    }
-                    Uri testurl = null;
+                    bool entity_error = false;
                     try
                     {
-                        testurl = new Uri(url);
-                        
+                        entity = entry[navigProp].First;
                     }
-                    catch(Exception ex)
+                    catch
                     {
-
+                        entity_error = true;
+                        passed = false;
+                        detail.ErrorMessage = "The service does not execute an accurate result, because the value of the Navigation ("+ navigProp+") does not exist in the entity.  Request attempted: " + url +" Response:  "+ resp.ResponsePayload;
                     }
-
-                    if (testurl != null)
+                    if (!entity_error)
                     {
-                        resp = WebHelper.Get(new Uri(url), Constants.AcceptHeaderJson, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
-
-                        if (resp.StatusCode == HttpStatusCode.OK)
+                        url = entity[Constants.V4OdataId].ToString();
+                        if (url.IndexOf(context.ServiceBaseUri.OriginalString) < 0)
                         {
-                            passed = true;
+                            url = context.ServiceBaseUri.OriginalString + url;
+                        }
+                        Uri testurl = null;
+                        try
+                        {
+                            testurl = new Uri(url);
+
+                        }
+                        catch (Exception ex)
+                        {
+
+                        }
+
+                        if (testurl != null)
+                        {
+                            resp = WebHelper.Get(new Uri(url), Constants.AcceptHeaderJson, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
+
+                            if (resp.StatusCode == HttpStatusCode.OK)
+                            {
+                                passed = true;
+                            }
+                            else
+                            {
+                                passed = false;
+                                detail.ErrorMessage = "The service does not execute an accurate result, because the value of the annotation '@odata.id' (" + url + ") is a bad link.";
+                            }
                         }
                         else
                         {
                             passed = false;
-                            detail.ErrorMessage = "The service does not execute an accurate result, because the value of the annotation '@odata.id' ("+url+") is a bad link.";
+                            detail.ErrorMessage = "The service does not execute an accurate result, because the value of the annotation '@odata.id' (" + url + ") is a bad link.";
                         }
-                    }
-                    else
-                    {
-                        passed = false;
-                        detail.ErrorMessage = "The service does not execute an accurate result, because the value of the annotation '@odata.id' (" + url + ") is a bad link.";
                     }
                 }
             }

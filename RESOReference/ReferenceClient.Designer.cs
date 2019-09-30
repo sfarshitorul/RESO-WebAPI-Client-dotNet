@@ -594,6 +594,8 @@
             // rulecontrolfile
             // 
             this.rulecontrolfile.AutoSize = true;
+            this.rulecontrolfile.Checked = true;
+            this.rulecontrolfile.CheckState = System.Windows.Forms.CheckState.Checked;
             this.rulecontrolfile.Location = new System.Drawing.Point(74, 482);
             this.rulecontrolfile.Name = "rulecontrolfile";
             this.rulecontrolfile.Size = new System.Drawing.Size(103, 17);
@@ -684,7 +686,7 @@
             this.Controls.Add(this.edit_BearerToken);
             this.Controls.Add(this.lbl_BearerToken);
             this.Name = "ReferenceClient";
-            this.Text = "RESO Reference Client v3.1.20";
+            this.Text = "RESO Reference Client v3.1.21";
             this.ResumeLayout(false);
             this.PerformLayout();
 

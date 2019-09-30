@@ -169,6 +169,10 @@ namespace ODataValidator.Rule
             JObject allobject;
             context.ResponsePayload.TryToJObject(out allobject);
 
+            if(allobject == null)
+            {
+                return passed;
+            }
             string xpath = @"//*[local-name()='EntityContainer']/*[local-name()='EntitySet']";
             List<string> entitySetNames = MetadataHelper.GetPropertyValues(context, xpath, "Name");
 

@@ -91,6 +91,15 @@ namespace ODataValidator.Rule
                 feedUrl = string.Format("{0}/{1}", context.ServiceBaseUri.OriginalString.TrimEnd('/'), entityUrls.Key);
                 entityUrl = entityUrls.Value.First();
             }
+            else
+            {
+                var detail2 = new ExtensionRuleResultDetail(this.Name, context.ServiceBaseUri.OriginalString + "/$batch", HttpMethod.Post, string.Empty, string.Empty, string.Empty, string.Empty);
+                passed = false;
+                detail2.ErrorMessage = string.Format("This server does have any entities that support batch request");
+                info = new ExtensionRuleViolationInfo(detail2.ErrorMessage, context.ServiceBaseUri, detail2.ErrorMessage);
+                return passed;
+
+            }
 
             string relativeUrl = new Uri(entityUrl).LocalPath;
             string host = entityUrl.Remove(entityUrl.IndexOf(relativeUrl));

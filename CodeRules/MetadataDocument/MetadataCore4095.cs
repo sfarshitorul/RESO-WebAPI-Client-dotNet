@@ -175,7 +175,7 @@ namespace ODataValidator.Rule
 
                 WebRequest req = WebRequest.Create(new Uri("http://www.epsg-registry.org/query.htm?urn=*:" + property.Value));
                 req.Method = "POST";
-                Response res = WebHelper.Get(req, 1024 * 1024);
+                Response res = WebHelper.Get(req, 10 * 1024 * 1024);
 
                 if (res.StatusCode != HttpStatusCode.OK)
                 {
