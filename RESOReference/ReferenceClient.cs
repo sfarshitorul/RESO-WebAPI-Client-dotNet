@@ -32,7 +32,7 @@ namespace RESOReference
         public string serviceresponse { get; set; }
         public string openidcode { get; set; }
         public string responseheaders { get; set; }
-        public RESOClientSettings clientsettings;
+        public RESOClientSettings clientsettings_global;
         public Hashtable commandlinefunctions = new Hashtable();
         public ReferenceClient()
         {
@@ -223,40 +223,40 @@ namespace RESOReference
             try
             {
                 DebugLogLabel("ReferenceClient:GetSettings()");
-                if(clientsettings == null)
+                if(clientsettings_global == null)
                 {
-                    clientsettings = new RESOClientSettings();
+                    clientsettings_global = new RESOClientSettings();
                 }
                 if(reset)
                 {
-                    clientsettings.are_set = false;
+                    clientsettings_global.are_set = false;
                 }
 
-                if(clientsettings.are_set)
+                if(clientsettings_global.are_set)
                 {
-                    if (string.IsNullOrEmpty(clientsettings.GetSetting(settings.webapi_uri)))
+                    if (string.IsNullOrEmpty(clientsettings_global.GetSetting(settings.webapi_uri)))
                     {
-                        clientsettings.are_set = false;
+                        clientsettings_global.are_set = false;
                     }
                     else
                     {
-                        return clientsettings;
+                        return clientsettings_global;
                     }
                 }
-                
 
-                clientsettings.SetSetting(settings.rulecontroloutput, System.IO.Path.Combine(executepath, @"config"));
-                clientsettings.SetSetting(settings.rulecontrolinput, System.IO.Path.Combine(executepath, @"config"));
-                clientsettings.SetSetting(settings.rulescontrolfile, System.IO.Path.Combine(executepath, @"config") + "\\rulecontrol.xml");
-                clientsettings.SetSetting(settings.certificatepath, System.IO.Path.Combine(executepath, @"Certificate") + "\\FiddlerRoot.cer");
 
-                clientsettings.SetSetting(settings.log_directory, System.IO.Path.Combine(executepath, @"Logs"));
+                clientsettings_global.SetSetting(settings.rulecontroloutput, System.IO.Path.Combine(executepath, @"config"));
+                clientsettings_global.SetSetting(settings.rulecontrolinput, System.IO.Path.Combine(executepath, @"config"));
+                clientsettings_global.SetSetting(settings.rulescontrolfile, System.IO.Path.Combine(executepath, @"config") + "\\rulecontrol.xml");
+                clientsettings_global.SetSetting(settings.certificatepath, System.IO.Path.Combine(executepath, @"Certificate") + "\\FiddlerRoot.cer");
+
+                clientsettings_global.SetSetting(settings.log_directory, System.IO.Path.Combine(executepath, @"Logs"));
 
 
                 if (this.ServerVersion.Text == "RETS 1.8")
                 {
-                    clientsettings.SetSetting(settings.version, "1.8");
-                    clientsettings.SetSetting(settings.standard, "RETS");
+                    clientsettings_global.SetSetting(settings.version, "1.8");
+                    clientsettings_global.SetSetting(settings.standard, "RETS");
 
                 }
                 else
@@ -267,8 +267,8 @@ namespace RESOReference
                         if (dataversion.IndexOf("/") > 0)
                         {
                             string[] version = dataversion.Split('/');
-                            clientsettings.SetSetting(settings.version, version[0]);
-                            clientsettings.SetSetting(settings.standard, version[1]);
+                            clientsettings_global.SetSetting(settings.version, version[0]);
+                            clientsettings_global.SetSetting(settings.standard, version[1]);
                         }
                     }
                 }
@@ -277,43 +277,43 @@ namespace RESOReference
                     scriptfile.Text = System.IO.Path.Combine(executepath, @"webapitestscript") + "\\TestScript.xml";
                 }
 
-                clientsettings.SetSetting(settings.testscript, scriptfile.Text);
-                clientsettings.SetSetting(settings.oauth_authorizationuri, edit_AuthorizationURI.Text);
-                clientsettings.SetSetting(settings.oauth_clientidentification, edit_ClientID.Text);
-                clientsettings.SetSetting(settings.oauth_redirecturi, edit_RedirectURI.Text);
-                clientsettings.SetSetting(settings.oauth_clientscope, edit_Scope.Text);
-                clientsettings.SetSetting(settings.oauth_clientsecret, edit_ClientSecret.Text);
-                clientsettings.SetSetting(settings.oauth_tokenuri, edit_AccessTokenURI.Text);
-                clientsettings.SetSetting(settings.webapi_uri, edit_WebAPIEndPointURI.Text);
+                clientsettings_global.SetSetting(settings.testscript, scriptfile.Text);
+                clientsettings_global.SetSetting(settings.oauth_authorizationuri, edit_AuthorizationURI.Text);
+                clientsettings_global.SetSetting(settings.oauth_clientidentification, edit_ClientID.Text);
+                clientsettings_global.SetSetting(settings.oauth_redirecturi, edit_RedirectURI.Text);
+                clientsettings_global.SetSetting(settings.oauth_clientscope, edit_Scope.Text);
+                clientsettings_global.SetSetting(settings.oauth_clientsecret, edit_ClientSecret.Text);
+                clientsettings_global.SetSetting(settings.oauth_tokenuri, edit_AccessTokenURI.Text);
+                clientsettings_global.SetSetting(settings.webapi_uri, edit_WebAPIEndPointURI.Text);
                 AuthenticationTypeData combodata = oauth_granttype.SelectedItem as AuthenticationTypeData;
                 if (combodata != null)
                 {
-                    clientsettings.SetSetting(settings.oauth_granttype, combodata.Value);
+                    clientsettings_global.SetSetting(settings.oauth_granttype, combodata.Value);
                 }
                 else
                 {
                     oauth_granttype.SelectedValue = "authorization_code";
-                    clientsettings.SetSetting(settings.oauth_granttype, "authorization_code");
+                    clientsettings_global.SetSetting(settings.oauth_granttype, "authorization_code");
                 }
-                clientsettings.SetSetting(settings.username, edit_UserName.Text);
-                clientsettings.SetSetting(settings.bearertoken, edit_BearerToken.Text);
-                
-                clientsettings.SetSetting(settings.password, edit_Password.Text);
-                clientsettings.SetSetting(settings.useragent, "webapiclient/1.0");
+                clientsettings_global.SetSetting(settings.username, edit_UserName.Text);
+                clientsettings_global.SetSetting(settings.bearertoken, edit_BearerToken.Text);
 
-                clientsettings.SetSetting(settings.results_directory,ResultsDirectory.Text);
-                VerifyResultsDirectory(clientsettings);
-                string resultsdirectory = clientsettings.GetSetting(settings.results_directory);
+                clientsettings_global.SetSetting(settings.password, edit_Password.Text);
+                clientsettings_global.SetSetting(settings.useragent, "webapiclient/1.0");
+
+                clientsettings_global.SetSetting(settings.results_directory,ResultsDirectory.Text);
+                VerifyResultsDirectory(clientsettings_global);
+                string resultsdirectory = clientsettings_global.GetSetting(settings.results_directory);
                 ResultsDirectory.Text = resultsdirectory;
 
-                clientsettings.SetSetting(settings.results_directory, resultsdirectory);
-                
-                clientsettings.SetSetting(settings.log_directory, LogDirectory.Text);
-                VerifyLogDirectory(clientsettings);
-                string logdirectory = clientsettings.GetSetting(settings.log_directory);
+                clientsettings_global.SetSetting(settings.results_directory, resultsdirectory);
+
+                clientsettings_global.SetSetting(settings.log_directory, LogDirectory.Text);
+                VerifyLogDirectory(clientsettings_global);
+                string logdirectory = clientsettings_global.GetSetting(settings.log_directory);
                 LogDirectory.Text = logdirectory;
-                clientsettings.are_set = true;
-                return clientsettings;
+                clientsettings_global.are_set = true;
+                return clientsettings_global;
             }
             catch (Exception ex)
             {
@@ -652,10 +652,12 @@ namespace RESOReference
                 MessageBox.Show(scriptfiledata + " Does not exist");
                 return;
             }
-            if (testproperties.IsLoaded())
+            if (!testproperties.IsLoaded())
             {
                 loadclientpropertiesfile(scriptfiledata);
+                
                 clientproperties.setProperty("textScriptFile", scriptfiledata);
+                clientsettings = GetSettings(true);
                 scriptfile.Text = scriptfiledata;
             }
 
