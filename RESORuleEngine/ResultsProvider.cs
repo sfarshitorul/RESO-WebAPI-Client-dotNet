@@ -92,7 +92,7 @@ namespace ODataValidator.RuleEngine
             testResult.LineNumberInError = Convert.ToInt32(result.LineNumberInError.ToString(CultureInfo.CurrentCulture));
 
             this.resultsToSave.Add(testResult);
-
+            //POTIENTIAL LOGGING STUART
             if (result.Details != null)
             {
                 foreach (ExtensionRuleResultDetail detail in result.Details)

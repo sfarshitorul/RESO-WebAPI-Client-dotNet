@@ -127,6 +127,19 @@ namespace ODataValidator.Rule
                     passed = false;
                     return passed;
                 }
+                try
+                {
+                    var test = entity[propName]["coordinates"] as JArray;
+                }
+                catch (Exception ex2)
+                {
+                    detail = new ExtensionRuleResultDetail(this.Name, url, HttpMethod.Get, string.Empty, Convert.ToString(resp.StatusCode), propName + " coordinates is null or missing.  Review for format and include the coordinate attribute.  This is the call that is failing:  var propVal = entity[propName][\"coordinates\"] as JArray;", resp.ResponsePayload);
+                    info = new ExtensionRuleViolationInfo(new Uri(url), string.Empty, detail);
+
+                    passed = false;
+                    return passed;
+
+                }
                 var propVal = entity[propName]["coordinates"] as JArray;
                 var pt = new Point(Convert.ToDouble(propVal[0]), Convert.ToDouble(propVal[1]));
                 var pts = new Point[4] 

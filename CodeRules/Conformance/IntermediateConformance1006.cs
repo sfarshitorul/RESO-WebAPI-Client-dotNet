@@ -81,7 +81,7 @@ namespace ODataValidator.Rule
             detail = new ExtensionRuleResultDetail(this.Name, url, HttpMethod.Get, string.Empty, response);
             if (response.StatusCode != HttpStatusCode.OK)
             {
-                detail.ErrorMessage = "The service does not have any entity.";
+                detail.ErrorMessage = "HTTP Error was returned:  "+ response.StatusCode.ToString() + " with Reponse Body:  "+response.ResponsePayload;
                 info = new ExtensionRuleViolationInfo(new Uri(serviceStatus.RootURL), serviceStatus.ServiceDocument, detail);
 
                 return passed;
@@ -103,6 +103,19 @@ namespace ODataValidator.Rule
 
                 return passed;
             }
+
+            try
+            {
+                Uri testuri = new Uri(entryUrl);
+            }
+            catch
+            {
+                detail.ErrorMessage = "The entity URL provided by @odata.id is not a valid URL.  This is what was returned:  "+entryUrl;
+                info = new ExtensionRuleViolationInfo(new Uri(serviceStatus.RootURL), serviceStatus.ServiceDocument, detail);
+                passed = false;
+                return passed;
+            }
+
 
             // Use the XPath query language to access the metadata document and get all NavigationProperty.
             XElement metadata = XElement.Parse(serviceStatus.MetadataDocument);

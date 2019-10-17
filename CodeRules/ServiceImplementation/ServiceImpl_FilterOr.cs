@@ -141,50 +141,85 @@ namespace ODataValidator.Rule
                     else
                     {
                         var entities = JsonParserHelper.GetEntries(feed);
-                        Int64 propVal = entities[0][primitivePropName].Value<Int64>();
+                        
+                        Int64 propVal = 0;
+                        for (int n = 0; n < entities.Count; n++)
+                        {
+                            try
+                            {
+                                bool test = false;
+                                foreach (var t in filterRestrictions.Item2)
+                                {
+                                    test = entities[n][t.PropertyName].HasValues;
+                                    if (test)
+                                    {
+                                        primitivePropName = t.PropertyName;
+                                        break;
+                                    }
+                                }
+                                if (!test)
+                                {
+                                    continue;
+                                }
+                                propVal = entities[0][primitivePropName].Value<Int64>();
+                                break;
+                            }
+                            catch (Exception ex)
+                            {
 
-                        string pattern = "{0}/{1}?$filter={2} lt {3} or {2} eq {3}";
-                        url = string.Format(pattern, context.ServiceBaseUri.OriginalString.TrimEnd('/'), entitySet, primitivePropName, propVal);
-                        resp = WebHelper.Get(new Uri(url), Constants.AcceptHeaderJson, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
-
-                        detail.URI = url;
-                        detail.HTTPMethod = "GET";
-                        detail.RequestHeaders = StringHelper.MergeHeaders(Constants.AcceptHeaderJson, context.RequestHeaders);
-                        detail.ResponseStatusCode = resp != null && resp.StatusCode.HasValue ? resp.StatusCode.Value.ToString() : "";
-                        detail.ResponseHeaders = string.IsNullOrEmpty(resp.ResponseHeaders) ? "" : resp.ResponseHeaders;
-                        detail.ResponsePayload = string.IsNullOrEmpty(resp.ResponsePayload) ? "" : resp.ResponsePayload;
-
-                        if (resp.StatusCode != HttpStatusCode.OK)
+                            }
+                        }
+                        if (propVal == 0)
                         {
                             passed = false;
-                            detail.ErrorMessage = "Request failed with system query option $filter or.";
+                            detail.ErrorMessage = "The service does not return a valid response for system query option $filter or.";
+                            return passed;
                         }
                         else
                         {
-                            JObject feed1;
-                            resp.ResponsePayload.TryToJObject(out feed1);
+                            string pattern = "{0}/{1}?$filter={2} lt {3} or {2} eq {3}";
+                            url = string.Format(pattern, context.ServiceBaseUri.OriginalString.TrimEnd('/'), entitySet, primitivePropName, propVal);
+                            resp = WebHelper.Get(new Uri(url), Constants.AcceptHeaderJson, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
 
-                            if (feed1 == null || JTokenType.Object != feed1.Type)
+                            detail.URI = url;
+                            detail.HTTPMethod = "GET";
+                            detail.RequestHeaders = StringHelper.MergeHeaders(Constants.AcceptHeaderJson, context.RequestHeaders);
+                            detail.ResponseStatusCode = resp != null && resp.StatusCode.HasValue ? resp.StatusCode.Value.ToString() : "";
+                            detail.ResponseHeaders = string.IsNullOrEmpty(resp.ResponseHeaders) ? "" : resp.ResponseHeaders;
+                            detail.ResponsePayload = string.IsNullOrEmpty(resp.ResponsePayload) ? "" : resp.ResponsePayload;
+
+                            if (resp.StatusCode != HttpStatusCode.OK)
                             {
                                 passed = false;
-                                detail.ErrorMessage = "The service does not return a valid response for system query option $filter or.";
+                                detail.ErrorMessage = "Request failed with system query option $filter or.";
                             }
                             else
                             {
-                                var entities1 = JsonParserHelper.GetEntries(feed1).ToList();
-                                var temp = entities1.FindAll(en => (en[primitivePropName].Value<Int64>() <= propVal) ).Select(en => en);
+                                JObject feed1;
+                                resp.ResponsePayload.TryToJObject(out feed1);
 
-                                if (entities1.Count() == temp.Count())
+                                if (feed1 == null || JTokenType.Object != feed1.Type)
                                 {
-                                    passed = true;
+                                    passed = false;
+                                    detail.ErrorMessage = "The service does not return a valid response for system query option $filter or.";
                                 }
                                 else
                                 {
-                                    passed = false;
-                                    detail.ErrorMessage = "The service does not execute an accurate result with system query option $filter or.";
-                                }
-                            }
+                                    var entities1 = JsonParserHelper.GetEntries(feed1).ToList();
+                                    var temp = entities1.FindAll(en => (en[primitivePropName].Value<Int64>() <= propVal)).Select(en => en);
 
+                                    if (entities1.Count() == temp.Count())
+                                    {
+                                        passed = true;
+                                    }
+                                    else
+                                    {
+                                        passed = false;
+                                        detail.ErrorMessage = "The service does not execute an accurate result with system query option $filter or.";
+                                    }
+                                }
+
+                            }
                         }
                     }
                 }
@@ -236,50 +271,84 @@ namespace ODataValidator.Rule
                     else
                     {
                         var entities = JsonParserHelper.GetEntries(feed);
-                        string propVal = entities[0][primitivePropName].Value<string>();
+                        string propVal = string.Empty;
+                        for (int n = 0; n < entities.Count; n++)
+                        {
+                            try
+                            {
+                                bool test = false;
+                                foreach (var t in filterRestrictions.Item2)
+                                {
+                                    test = entities[n][t.PropertyName].HasValues;
+                                    if (test)
+                                    {
+                                        primitivePropName = t.PropertyName;
+                                        break;
+                                    }
+                                }
+                                if (!test)
+                                {
+                                    continue;
+                                }
+                                propVal = entities[0][primitivePropName].Value<string>();
+                                break;
+                            }
+                            catch (Exception ex)
+                            {
 
-                        string pattern = "{0}/{1}?$filter=startswith({2},'{3}') or endswith({2},'{3}')";
-                        url = string.Format(pattern, context.ServiceBaseUri.OriginalString.TrimEnd('/'), entitySet, primitivePropName, propVal);
-                        resp = WebHelper.Get(new Uri(url), Constants.AcceptHeaderJson, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
-
-                        detail.URI = url;
-                        detail.HTTPMethod = "GET";
-                        detail.RequestHeaders = StringHelper.MergeHeaders(Constants.AcceptHeaderJson, context.RequestHeaders);
-                        detail.ResponseStatusCode = resp != null && resp.StatusCode.HasValue ? resp.StatusCode.Value.ToString() : "";
-                        detail.ResponseHeaders = string.IsNullOrEmpty(resp.ResponseHeaders) ? "" : resp.ResponseHeaders;
-                        detail.ResponsePayload = string.IsNullOrEmpty(resp.ResponsePayload) ? "" : resp.ResponsePayload;
-
-                        if (resp.StatusCode != HttpStatusCode.OK)
+                            }
+                        }
+                        if (string.IsNullOrEmpty(propVal))
                         {
                             passed = false;
-                            detail.ErrorMessage = "Request failed with system query option $filter or.";
+                            detail.ErrorMessage = "The service does not execute an accurate result with system query option $filter or.";
+                            return passed;
                         }
                         else
                         {
-                            JObject feed1;
-                            resp.ResponsePayload.TryToJObject(out feed1);
+                            string pattern = "{0}/{1}?$filter=startswith({2},'{3}') or endswith({2},'{3}')";
+                            url = string.Format(pattern, context.ServiceBaseUri.OriginalString.TrimEnd('/'), entitySet, primitivePropName, propVal);
+                            resp = WebHelper.Get(new Uri(url), Constants.AcceptHeaderJson, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
 
-                            if (feed1 == null || JTokenType.Object != feed1.Type)
+                            detail.URI = url;
+                            detail.HTTPMethod = "GET";
+                            detail.RequestHeaders = StringHelper.MergeHeaders(Constants.AcceptHeaderJson, context.RequestHeaders);
+                            detail.ResponseStatusCode = resp != null && resp.StatusCode.HasValue ? resp.StatusCode.Value.ToString() : "";
+                            detail.ResponseHeaders = string.IsNullOrEmpty(resp.ResponseHeaders) ? "" : resp.ResponseHeaders;
+                            detail.ResponsePayload = string.IsNullOrEmpty(resp.ResponsePayload) ? "" : resp.ResponsePayload;
+
+                            if (resp.StatusCode != HttpStatusCode.OK)
                             {
                                 passed = false;
-                                detail.ErrorMessage = "The service does not return a valid response for system query option $filter or.";
+                                detail.ErrorMessage = "Request failed with system query option $filter or.";
                             }
                             else
                             {
-                                var entities1 = JsonParserHelper.GetEntries(feed1).ToList();
-                                var temp = entities1.FindAll(en => (en[primitivePropName].Value<string>().StartsWith(propVal)) || (en[primitivePropName].Value<string>().EndsWith(propVal))).Select(en => en);
+                                JObject feed1;
+                                resp.ResponsePayload.TryToJObject(out feed1);
 
-                                if (entities1.Count() == temp.Count())
+                                if (feed1 == null || JTokenType.Object != feed1.Type)
                                 {
-                                    passed = true;
+                                    passed = false;
+                                    detail.ErrorMessage = "The service does not return a valid response for system query option $filter or.";
                                 }
                                 else
                                 {
-                                    passed = false;
-                                    detail.ErrorMessage = "The service does not execute an accurate result with system query option $filter or.";
-                                }
-                            }
+                                    var entities1 = JsonParserHelper.GetEntries(feed1).ToList();
+                                    var temp = entities1.FindAll(en => (en[primitivePropName].Value<string>().StartsWith(propVal)) || (en[primitivePropName].Value<string>().EndsWith(propVal))).Select(en => en);
 
+                                    if (entities1.Count() == temp.Count())
+                                    {
+                                        passed = true;
+                                    }
+                                    else
+                                    {
+                                        passed = false;
+                                        detail.ErrorMessage = "The service does not execute an accurate result with system query option $filter or.";
+                                    }
+                                }
+
+                            }
                         }
                     }
                 }

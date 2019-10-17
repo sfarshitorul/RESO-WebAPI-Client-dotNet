@@ -120,15 +120,27 @@ namespace ODataValidator.Rule
                 var propVal2 = entity[propName2].ToString();
                 url = string.Format("{0}?$filter=concat(concat({1}, ': '), {2}) eq '{3}: {4}'", url, propName1, propName2, propVal1, propVal2);
                 resp = WebHelper.Get(new Uri(url), string.Empty, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, svcStatus.DefaultHeaders);
-                var detail = new ExtensionRuleResultDetail(this.Name, url, HttpMethod.Get, string.Empty);
+                var detail = new ExtensionRuleResultDetail(this.Name, url, HttpMethod.Get, resp.ResponseHeaders, resp);
                 info = new ExtensionRuleViolationInfo(new Uri(url), string.Empty, detail);
                 if (null != resp && HttpStatusCode.OK == resp.StatusCode)
                 {
                     jObj = JObject.Parse(resp.ResponsePayload);
                     jArr = jObj.GetValue(Constants.Value) as JArray;
+                    bool passtest = false;
                     foreach (JObject et in jArr)
                     {
-                        passed = string.Format("{0}: {1}", et[propName1].ToString(), et[propName2].ToString()) == string.Format("{0}: {1}", propVal1, propVal2);
+                        string test1 = string.Format("{0}: {1}", et[propName1].ToString(), et[propName2].ToString());
+                        string test2 = string.Format("{0}: {1}", propVal1, propVal2);
+
+                        passtest = (string.Format("{0}: {1}", et[propName1].ToString(), et[propName2].ToString()) == string.Format("{0}: {1}", propVal1, propVal2));
+                        if(!passtest)
+                        {
+                            var errordetail = new ExtensionRuleResultDetail(this.Name, url, HttpMethod.Get, resp.ResponseHeaders, resp,"The concatination did not match: "+test1+ " not equal to "+test2);
+                            info.AddDetail(errordetail);
+                            passed = false;
+                        }
+
+                        
                     }
                 }
                 else

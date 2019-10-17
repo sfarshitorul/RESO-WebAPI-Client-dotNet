@@ -101,9 +101,23 @@ namespace ODataValidator.Rule
 
             }
 
-            string relativeUrl = new Uri(entityUrl).LocalPath;
+            string relativeUrl = string.Empty;
+            try
+            {
+                relativeUrl = new Uri(entityUrl).LocalPath; 
+            }
+            catch
+            {
+                passed = false;
+                var detail33 = new ExtensionRuleResultDetail(this.Name, context.ServiceBaseUri.OriginalString.TrimEnd('/') + "/$batch", HttpMethod.Post, string.Empty, string.Empty, string.Empty, string.Empty);
+                detail33.ErrorMessage = "The entity URL is not valid:  " + entityUrl;
+                info = new ExtensionRuleViolationInfo(detail33.ErrorMessage, context.ServiceBaseUri, detail33.ErrorMessage);
+                return passed;
+
+            }
             string host = entityUrl.Remove(entityUrl.IndexOf(relativeUrl));
 
+            
             string batchRequest = string.Format(@"
 --batch_36522ad7-fc75-4b56-8c71-56071383e77b
 Content-Type: application/http 

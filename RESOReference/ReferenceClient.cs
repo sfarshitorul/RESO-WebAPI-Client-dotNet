@@ -24,6 +24,7 @@ namespace RESOReference
 {
     public partial class ReferenceClient : Form
     {
+        StringBuilder sbLogAll = new StringBuilder();
         RESOLogging debuglog = null;
         public string executepath { get; set; }
         ReferencePropertiesFile clientproperties = new ReferencePropertiesFile();
@@ -1153,28 +1154,28 @@ namespace RESOReference
                 RuleExecuter rules = new RuleExecuter(resultProvider, logger);
                 rules.Execute(ctx, ruleArray, (int)ruleArray.Length, webapitestcomplete);
                 ResultsProvider logitems = logger as ResultsProvider;
-                Hashtable logitemshash = new Hashtable();
+               // Hashtable logitemshash = new Hashtable();
                 finderror = 10;
                 int detailcount = 0;
-                foreach (ExtensionRuleResultDetail item in logitems.Details)
-                {
-                    detailcount++;
-                    if (logitemshash[item.RuleName] == null)
-                    {
-                        Hashtable hsh = new Hashtable();
-                        hsh[detailcount] = item;
-                        logitemshash[item.RuleName] = hsh;
-                    }
-                    else
-                    {
-                        Hashtable hsh = logitemshash[item.RuleName] as Hashtable;
-                        hsh[detailcount] = item;
-                        logitemshash[item.RuleName] = hsh;
-                    }
-                }
+                //foreach (ExtensionRuleResultDetail item in logitems.Details)
+                //{
+                //    detailcount++;
+                //    if (logitemshash[item.RuleName] == null)
+                //    {
+                //        Hashtable hsh = new Hashtable();
+                //        hsh[detailcount] = item;
+                //        logitemshash[item.RuleName] = hsh;
+                //    }
+                //    else
+                //    {
+                //        Hashtable hsh = logitemshash[item.RuleName] as Hashtable;
+                //        hsh[detailcount] = item;
+                //        logitemshash[item.RuleName] = hsh;
+                //    }
+                //}
                 finderror = 11;
                 StringBuilder sbresults = new StringBuilder();
-                StringBuilder sbLogAll = new StringBuilder();
+                
                 sbresults.Append("URL");
                 sbresults.Append("\t");
                 sbresults.Append("ODataLevel");
@@ -1191,7 +1192,8 @@ namespace RESOReference
                 finderror = 7;
                 foreach (ODataValidator.RuleEngine.TestResult result in resultProvider.ResultsToSave)
                 {
-                    BuildResultsOutput(ref sbresults, result, ref sbLogAll, logitemshash);
+                    //BuildResultsOutput(ref sbresults, result, logitemshash);
+                    BuildResultsOutput(ref sbresults, result);
                 }
                 finderror = 8;
                 VerifyLogDirectory(clientsettings);
@@ -1335,7 +1337,9 @@ namespace RESOReference
 
         void webapitestcomplete(ODataValidator.RuleEngine.TestResult results, int numberofrules, ref int count)
         {
-
+            StringBuilder sbLogAll_out = OutputDetail(results);
+            sbLogAll.Append(sbLogAll_out);
+            sbLogAll_out.Clear();
             webapicurrentrule.Text = results.RuleName;
             webapicurrentrule.Update();
             this.webapiprogressBar.Value = (int)((100 * count) / numberofrules);
@@ -1361,7 +1365,10 @@ namespace RESOReference
             }
             if (metadatatests.Checked)
             {
-                if (rule.Name.IndexOf("Metadata") >= 0)
+                if((rule.Name.IndexOf("Property") >= 0) && (rule.Name.IndexOf("IndividualProperty") < 0))
+                    {
+                }
+                if ((rule.Name.IndexOf("Metadata") >= 0) || (rule.Name.IndexOf("IndividualProperty") >= 0) || (rule.Name.IndexOf("Property.Core") >= 0))
                 {
                     if ((rule.Version == ODataValidator.RuleEngine.ODataVersion.V3_V4) ||
                         (rule.Version == ODataValidator.RuleEngine.ODataVersion.V4) ||
@@ -1595,8 +1602,9 @@ namespace RESOReference
             return true;
         }
 
-        private void BuildResultsOutput(ref StringBuilder sbresults, ODataValidator.RuleEngine.TestResult result, ref StringBuilder sbLogAll, Hashtable logitemshash)
+        private void BuildResultsOutput(ref StringBuilder sbresults, ODataValidator.RuleEngine.TestResult result)
         {
+
             //if (result.Classification != "notApplicable")
             {
                 string[] descspit = result.Description.Split('^');
@@ -1644,19 +1652,66 @@ namespace RESOReference
                 sbresults.Append("\t");
 
 
+                sbresults.Append("\r\n");
+            }
+        }
 
-                Hashtable hsh = null;
-                if (logitemshash[result.RuleName] != null)
-                {
-                    hsh = logitemshash[result.RuleName] as Hashtable;
-                }
+        private StringBuilder OutputDetail(ODataValidator.RuleEngine.TestResult results)
+        {
+            StringBuilder sbLog = new StringBuilder();
+            
+            
+                sbLog.Append("___________RULE RESULTS___________");
+                sbLog.Append("\r\n");
+                sbLog.Append("Category:"+  results.Category);
+                sbLog.Append("\r\n");
+                sbLog.Append("Classification:" + results.Classification);
+                sbLog.Append("\r\n");
+                sbLog.Append("Description:" + results.Description);
+                sbLog.Append("\r\n");
+                sbLog.Append("ErrorDetail:" + results.ErrorDetail);
+                sbLog.Append("\r\n");
+                sbLog.Append("ErrorMessage:" + results.ErrorMessage);
+                sbLog.Append("\r\n");
+                sbLog.Append("HelpLink:" + results.HelpLink);
+                sbLog.Append("\r\n");
+                sbLog.Append("HelpUri:" + results.HelpUri);
+                sbLog.Append("\r\n");
+                sbLog.Append("JobId:" + results.JobId);
+                sbLog.Append("\r\n");
+                sbLog.Append("LineNumberInError:" + Convert.ToString(results.LineNumberInError));
+                sbLog.Append("\r\n");
+                sbLog.Append("ODataLevel:" + results.ODataLevel);
+                sbLog.Append("\r\n");
+                sbLog.Append("RequirementLevel:" + results.RequirementLevel);
+                sbLog.Append("\r\n");
+                sbLog.Append("RuleName:" + results.RuleName);
+                sbLog.Append("\r\n");
+                sbLog.Append("SpecificationSection:" + results.SpecificationSection);
+                sbLog.Append("\r\n");
+                sbLog.Append("SpecificationUri:" + results.SpecificationUri);
+                sbLog.Append("\r\n");
+                sbLog.Append("Target:" + results.Target);
+                sbLog.Append("\r\n");
+                sbLog.Append("TextInvolved:" + results.TextInvolved);
+                sbLog.Append("\r\n");
+                sbLog.Append("V4Specification:" + results.V4Specification);
+                sbLog.Append("\r\n");
+                sbLog.Append("V4SpecificationSection:" + results.V4SpecificationSection);
+                sbLog.Append("\r\n");
+                sbLog.Append("ValidationJobID:" + results.ValidationJobID);
+                sbLog.Append("\r\n");
+                sbLog.Append("Version:" + results.Version);
+                sbLog.Append("\r\n");
 
-                if (hsh != null)
+                sbLog.Append("___________DETAILED RESULTS___________\r\n");
+                if (results.Details != null)
                 {
-                    StringBuilder sbLog = new StringBuilder();
-                    foreach (DictionaryEntry entry in hsh)
+
+                    foreach (ExtensionRuleResultDetail item in results.Details)
                     {
-                        ExtensionRuleResultDetail item = entry.Value as ExtensionRuleResultDetail;
+
+
                         if (item != null)
                         {
                             try
@@ -1679,6 +1734,10 @@ namespace RESOReference
                                 if (item.RequestHeaders != null) sbLog.Append(item.RequestHeaders.ToString());
                                 sbLog.Append("\r\n");
                                 sbLog.Append("___________RESPONSE___________");
+                                if (string.IsNullOrEmpty(item.ResponsePayload))
+                                {
+
+                                }
                                 sbLog.Append("\r\n");
                                 if (item.ResponseStatusCode != null) sbLog.Append(item.ResponseStatusCode);
                                 sbLog.Append("\r\n");
@@ -1702,18 +1761,20 @@ namespace RESOReference
                             }
                         }
                     }
-                    RESOClientSettings clientsettings = GetSettings();
-                    using (System.IO.StreamWriter file = new System.IO.StreamWriter(clientsettings.GetSetting(settings.log_directory) + "\\" + result.RuleName + ".txt", false))
-                    {
-                        file.Write(sbLog.ToString());
-                    }
-                    sbLogAll.Append(sbLog);
-                    sbLog.Clear();
-
                 }
-                sbresults.Append("\r\n");
+                else
+                {
+                    sbLog.Append("No detailed results provided\r\n");
+                }
+            RESOClientSettings clientsettings = GetSettings();
+            using (System.IO.StreamWriter file = new System.IO.StreamWriter(clientsettings.GetSetting(settings.log_directory) + "\\" + results.RuleName + ".txt", false))
+            {
+                file.Write(sbLog.ToString());
+                file.Close();
             }
+            return sbLog;
         }
+    
         private void AddRuleData(ref StringBuilder allrulecontrollist, ref StringBuilder sb, ODataValidator.RuleEngine.Rule rule, TestControl testcontrol)
         {
             if (testcontrol != null)

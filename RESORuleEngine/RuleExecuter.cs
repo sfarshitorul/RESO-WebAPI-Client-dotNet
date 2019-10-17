@@ -146,11 +146,23 @@ namespace ODataValidator.RuleEngine
 
                         errorOccurred = true;
                         result = TestResult.CreateAbortedResult(rule, context.JobId);
+                        
+                        if (result.Details == null)
+                        {
+                            result.Details = new List<ExtensionRuleResultDetail>();
+                        }
+                        ExtensionRuleResultDetail detail = new ExtensionRuleResultDetail(result.RuleName, string.Empty, HttpMethod.Get, "Exception:  " + ex.Message);
+                        result.Details.Add(detail);
+                        detail = new ExtensionRuleResultDetail(result.RuleName, string.Empty, HttpMethod.Get, "StackTrace:  " + ex.StackTrace);
+                        result.Details.Add(detail);
+
+
 
                         var e = new RuntimeException(ex, null);
                         e.JobId = context.JobId;
                         e.RuleName = rule.Name;
                         e.DestinationEndpoint = context.Destination.AbsolutePath;
+                        
                         this.LogRuntimeError(e);
                         bool tryagain = false;
                         if (tryagain)

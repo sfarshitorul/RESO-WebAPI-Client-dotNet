@@ -142,8 +142,26 @@ namespace ODataValidator.Rule
                 JArray entities = JsonParserHelper.GetEntries(feed);
                 foreach (JToken entity in entities)
                 {
-                    if (!Find(allEntities, key.Item1, entity[key].ToString()))
-                        return passed = false;
+                    try
+                    {
+                        var test = entity;
+
+
+                        if (!Find(allEntities, key.Item1, entity[key].ToString()))
+                        {
+                            passed = false;
+                        }
+                        else
+                        {
+                            return passed = true;
+                        }
+                       
+                    }
+                    catch(Exception ex)
+                    {
+                        passed = false;
+                    }
+            
                 }
 
             }

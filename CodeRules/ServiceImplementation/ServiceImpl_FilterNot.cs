@@ -141,7 +141,35 @@ namespace ODataValidator.Rule
                     else
                     {
                         var entities = JsonParserHelper.GetEntries(feed);
-                        Int64 propVal = entities[0][primitivePropName].Value<Int64>();
+
+                        Int64? propVal = null;
+                        for (int n = 0; n < entities.Count; n++)
+                        {
+                            //if (entities[0].Value != null)
+                            {
+                                try
+                                {
+                                    propVal = entities[0].Value<Int64>(primitivePropName) - 1;
+                                    break;
+                                }
+                                catch (Exception ex)
+                                {
+
+                                }
+
+                            }
+                        }
+
+                        if (propVal == null)
+                        {
+                            detail.ErrorMessage = "Unable to find a suitable property to test.  They have all returned NULL.  Require a Int64 with data";
+
+                            passed = false;
+                            return passed;
+
+                        }
+
+                        //Int64 propVal = entities[0][primitivePropName].Value<Int64>();
 
                         string pattern = "{0}/{1}?$filter=not {2} eq {3}";
                         url = string.Format(pattern, context.ServiceBaseUri.OriginalString.TrimEnd('/'), entitySet, primitivePropName, propVal);

@@ -164,7 +164,7 @@ namespace ODataValidator.Rule
                         typeNames[0] + "\'" + enumValue + "\'";
 
                     resp = WebHelper.Get(new Uri(url), Constants.AcceptHeaderJson, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
-                    details.Add(new ExtensionRuleResultDetail(this.Name, url, HttpMethod.Get, ""));
+                    details.Add(new ExtensionRuleResultDetail(this.Name, url, HttpMethod.Get,resp.ResponseHeaders,resp));
 
                     if (null == resp || HttpStatusCode.OK != resp.StatusCode)
                     {

@@ -115,7 +115,7 @@ namespace ODataValidator.Rule
 
             if (actionImport == null)
             {
-                detail.ErrorMessage = "The service has no action Import.";
+                detail.ErrorMessage = "The service has no action Import.  xpath used on Metadata:  [local-name()='ActionImport']";
                 info = new ExtensionRuleViolationInfo(new Uri(url), string.Empty, detail);
                 return passed;
             }
@@ -168,11 +168,12 @@ namespace ODataValidator.Rule
 
             if (response.StatusCode == HttpStatusCode.OK || response.StatusCode == HttpStatusCode.Created || response.StatusCode == HttpStatusCode.NoContent)
             {
-                detail = new ExtensionRuleResultDetail(this.Name, url, HttpMethod.Post, string.Empty);
+                detail = new ExtensionRuleResultDetail(this.Name, url, HttpMethod.Post, response.ResponseHeaders, response, string.Empty, parameterEntity.ToString());
                 passed = true;
             }
             else
             {
+                detail = new ExtensionRuleResultDetail(this.Name, url, HttpMethod.Post, response.ResponseHeaders, response, response.StatusCode.ToString(), parameterEntity.ToString());
                 passed = false;
             }
 

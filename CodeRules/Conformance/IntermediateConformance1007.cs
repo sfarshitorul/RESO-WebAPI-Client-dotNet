@@ -90,7 +90,13 @@ namespace ODataValidator.Rule
 
             bool? passed = null;
             info = null;
-            
+
+            ExtensionRuleResultDetail detail = new ExtensionRuleResultDetail(this.Name);
+            detail.ErrorMessage = "This test is dependent upon passing Intermediate.Conformance.100701, Intermediate.Conformance.100702, Intermediate.Conformance.100703, Intermediate.Conformance.100704, Intermediate.Conformance.100705";
+            info = new ExtensionRuleViolationInfo(context.Destination, context.ResponsePayload, detail);
+
+
+
             return passed;
         }
     }

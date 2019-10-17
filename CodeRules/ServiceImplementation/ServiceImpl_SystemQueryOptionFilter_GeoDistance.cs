@@ -126,30 +126,55 @@ namespace ODataValidator.Rule
                     passed = false;
                     return passed;
                 }
-                var propVal = entity[propName]["coordinates"] as JArray;
-                var pt1 = new Point(Convert.ToDouble(propVal[0]), Convert.ToDouble(propVal[1]));
-                var pt2 = new Point(0.0, 0.0);
-                var distance = Point.GetDistance(pt1, pt2);
-                url = string.Format("{0}?$filter=geo.distance({1}, geography'POINT(0.0 0.0)') ge {2}", url, propName, distance);
-                resp = WebHelper.Get(new Uri(url), string.Empty, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, svcStatus.DefaultHeaders);
-                detail = new ExtensionRuleResultDetail(this.Name, url, HttpMethod.Get, string.Empty);
-                info = new ExtensionRuleViolationInfo(new Uri(url), string.Empty, detail);
-                if (null != resp && HttpStatusCode.OK == resp.StatusCode)
+                try
                 {
-                    jObj = JObject.Parse(resp.ResponsePayload);
-                    jArr = jObj.GetValue(Constants.Value) as JArray;
-                    foreach (JObject et in jArr)
+                    try
                     {
-                        propVal = et[propName]["coordinates"] as JArray;
-                        pt1 = new Point(Convert.ToDouble(propVal[0]), Convert.ToDouble(propVal[1]));
-                        pt2 = new Point(0.0, 0.0);
-                        var dis = Point.GetDistance(pt1, pt2);
-                        passed = dis >= distance;
+                        var test = entity[propName]["coordinates"] as JArray;
+                    }
+                    catch(Exception ex2)
+                    {
+                        detail = new ExtensionRuleResultDetail(this.Name, url, HttpMethod.Get, string.Empty, Convert.ToString(resp.StatusCode), propName + " coordinates is null or missing.  Review for format and include the coordinate attribute.  This is the call that is failing:  var propVal = entity[propName][\"coordinates\"] as JArray;", resp.ResponsePayload);
+                        info = new ExtensionRuleViolationInfo(new Uri(url), string.Empty, detail);
+
+                        passed = false;
+                        return passed;
+
+                    }
+                    var propVal = entity[propName]["coordinates"] as JArray;
+                    var pt1 = new Point(Convert.ToDouble(propVal[0]), Convert.ToDouble(propVal[1]));
+                    var pt2 = new Point(0.0, 0.0);
+                    var distance = Point.GetDistance(pt1, pt2);
+                    url = string.Format("{0}?$filter=geo.distance({1}, geography'POINT(0.0 0.0)') ge {2}", url, propName, distance);
+                    resp = WebHelper.Get(new Uri(url), string.Empty, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, svcStatus.DefaultHeaders);
+                    detail = new ExtensionRuleResultDetail(this.Name, url, HttpMethod.Get, string.Empty);
+                    info = new ExtensionRuleViolationInfo(new Uri(url), string.Empty, detail);
+                    if (null != resp && HttpStatusCode.OK == resp.StatusCode)
+                    {
+                        jObj = JObject.Parse(resp.ResponsePayload);
+                        jArr = jObj.GetValue(Constants.Value) as JArray;
+                        foreach (JObject et in jArr)
+                        {
+                            propVal = et[propName]["coordinates"] as JArray;
+                            pt1 = new Point(Convert.ToDouble(propVal[0]), Convert.ToDouble(propVal[1]));
+                            pt2 = new Point(0.0, 0.0);
+                            var dis = Point.GetDistance(pt1, pt2);
+                            passed = dis >= distance;
+                        }
+                    }
+                    else
+                    {
+                        passed = false;
                     }
                 }
-                else
+                catch(Exception ex)
                 {
+                    detail = new ExtensionRuleResultDetail(this.Name, url, HttpMethod.Get, string.Empty, Convert.ToString(resp.StatusCode), propName + " verification is failing;", resp.ResponsePayload);
+                    info = new ExtensionRuleViolationInfo(new Uri(url), string.Empty, detail);
+
                     passed = false;
+                    return passed;
+
                 }
             }
 

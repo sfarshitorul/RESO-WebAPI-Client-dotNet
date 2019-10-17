@@ -148,7 +148,7 @@ namespace ODataValidator.Rule
                     propVal = propVal.Substring(0, index);
                     url = string.Format("{0}?$filter=date({1}) eq {2}", url, propName, propVal);
                     resp = WebHelper.Get(new Uri(url), string.Empty, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, svcStatus.DefaultHeaders);
-                    var detail = new ExtensionRuleResultDetail(this.Name, url, HttpMethod.Get, string.Empty);
+                    var detail = new ExtensionRuleResultDetail(this.Name, url, HttpMethod.Get, resp.ResponseHeaders, resp);
                     info = new ExtensionRuleViolationInfo(new Uri(url), string.Empty, detail);
                     if (null != resp && HttpStatusCode.OK == resp.StatusCode)
                     {

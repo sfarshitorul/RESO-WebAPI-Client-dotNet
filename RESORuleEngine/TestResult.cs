@@ -119,6 +119,7 @@ namespace ODataValidator.RuleEngine
                 result.JobId = jobId;
                 result.SetProperties(rule, true);
                 result.Classification = Constants.ClassificationAborted;
+                result.Details = new List<ExtensionRuleResultDetail>();
                 return result;
             }
 

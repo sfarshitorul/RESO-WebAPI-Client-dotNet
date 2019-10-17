@@ -119,10 +119,11 @@ namespace ODataValidator.Rule
                 string url = context.ServiceBaseUri.OriginalString.TrimEnd('/') + @"/" + entitySetUrl + "(" + (key.Item2.Equals("Edm.String") ? "\'" + identity + "\'" : identity) + ")";
 
                 resp = WebHelper.Get(new Uri(url), Constants.AcceptHeaderJson, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
-                detail = new ExtensionRuleResultDetail(this.Name, url, HttpMethod.Get, "");
+                detail = new ExtensionRuleResultDetail(this.Name, url, HttpMethod.Get, resp.ResponseHeaders,resp);
 
                 if (null == resp || HttpStatusCode.OK != resp.StatusCode)
                 {
+                    detail.ErrorMessage = "returned error:  " + resp.StatusCode.ToString();
                     passed = false; break;
                 }
 
@@ -130,6 +131,7 @@ namespace ODataValidator.Rule
 
                 if (feed == null || JTokenType.Object != feed.Type)
                 {
+                    detail.ErrorMessage = "Cannot convert to JSON";
                     passed = false; break;
                 }
 
