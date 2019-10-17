@@ -98,11 +98,16 @@ namespace ODataValidator.Rule
             string entityTypeShortName;
             var entityTypeShortNames = new List<string>();
             Tuple<string, string> keyProp = null;
+            ExtensionRuleResultDetail detailglobal = new ExtensionRuleResultDetail(this.Name);
+            info = new ExtensionRuleViolationInfo(context.Destination, context.ResponsePayload, detailglobal);
+            detailglobal = info.Details[0];
+
             do
             {
                 var navigPropNames = MetadataHelper.GetNavigationPropertyNames(out entityTypeShortName, entityTypeShortNames);
                 if (null == navigPropNames || !navigPropNames.Any())
                 {
+                    detailglobal.ErrorMessage = "No navigation properties available to test";
                     return passed;
                 }
 
@@ -117,6 +122,7 @@ namespace ODataValidator.Rule
             var entitySetUrl = entityTypeShortName.GetAccessEntitySetURL();
             if (string.IsNullOrEmpty(entitySetUrl))
             {
+                detailglobal.ErrorMessage = "Unable to get a proper Entity URL";
                 return passed;
             }
 
@@ -124,22 +130,31 @@ namespace ODataValidator.Rule
             var resp = WebHelper.Get(new Uri(url), string.Empty, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, svcStatus.DefaultHeaders);
             if (null == resp || HttpStatusCode.OK != resp.StatusCode)
             {
+                detailglobal.ErrorMessage = resp.StatusCode +"status code returned for "+ url;
                 return passed;
             }
 
             var entities = JsonParserHelper.GetEntities(resp.ResponsePayload);
             if (!entities.Any())
             {
+                detailglobal.ErrorMessage = "No entities returned:  "+ resp.ResponsePayload;
                 return passed;
             }
 
             var entity = entities.First();
+            if(!entity[keyPropName].HasValues)
+            {
+                detailglobal.ErrorMessage = keyPropName + " have no values to test";
+                return passed;
+
+            }
             string keyPropVal = entity[keyPropName].ToString();
             string pattern = "Edm.String" == keyPropType ? "{0}('{1}')/{2}/$ref" : "{0}({1})/{2}/$ref";
             url = string.Format(pattern, url, keyPropVal, navigPropName);
             resp = WebHelper.Get(new Uri(url), string.Empty, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, svcStatus.DefaultHeaders);
             var detail = new ExtensionRuleResultDetail("ServiceImpl_SystemQueryOptionRef", url, HttpMethod.Get, string.Empty);
-            info = new ExtensionRuleViolationInfo(new Uri(url), string.Empty, detail);
+            info = new ExtensionRuleViolationInfo(new Uri(url), string.Empty, detailglobal);
+            info.AddDetail(detail);
             if (null != resp && HttpStatusCode.OK == resp.StatusCode)
             {
                 entities = JsonParserHelper.GetEntities(resp.ResponsePayload);

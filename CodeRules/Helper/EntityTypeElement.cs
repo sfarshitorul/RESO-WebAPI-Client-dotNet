@@ -304,6 +304,7 @@ namespace ODataValidator.Rule.Helper
             var allProperties = entityTypeElement.Elements();
             foreach (var prop in allProperties)
             {
+                
                 // Records the key properties of the entity-type.
                 if (prop.Name.LocalName.Equals("Key"))
                 {
@@ -331,6 +332,11 @@ namespace ODataValidator.Rule.Helper
                 else if (prop.Name.LocalName.Equals("Property"))
                 {
                     string propName = prop.Attribute("Name") != null ? prop.GetAttributeValue("Name") : null;
+                    if(propName == "OfficeKey")
+                    {
+
+
+                    }
                     string propType = prop.Attribute("Type") != null ? prop.GetAttributeValue("Type") : null;
                     bool isKey = keyPropNames.Contains(propName) ? true : false;
                     bool isNullable = prop.Attribute("Nullable") != null ? Convert.ToBoolean(prop.GetAttributeValue("Nullable")) : true;

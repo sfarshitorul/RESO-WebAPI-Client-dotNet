@@ -37,8 +37,7 @@ namespace ODataValidator.Rule
         {
             get
             {
-                return @"1). Services MUST support all three formats: Absolute URI with schema, host, port, and absolute resource path. 
-                         Absolute resource path and separate Host header. Resource path relative to the batch request URI. (section 11.7.2)";
+                return @"1). Services MUST support all three formats: Absolute URI with schema, host, port, and absolute resource path. Absolute resource path and separate Host header. Resource path relative to the batch request URI. (section 11.7.2)";
             }
         }
 
@@ -116,7 +115,27 @@ namespace ODataValidator.Rule
             }
 
 
-            string relativeUrl = new Uri(entityUrl).LocalPath;
+            string relativeUrl = string.Empty;
+            try
+            {
+                relativeUrl = new Uri(entityUrl).LocalPath;
+            }
+            catch
+            {
+                var details23 = new ExtensionRuleResultDetail(this.Name);
+                details23.ErrorMessage = "The Entity URL is not valid:  " + entityUrl;
+                if (info == null)
+                {
+                    info = new ExtensionRuleViolationInfo(new Uri(serviceStatus.RootURL), serviceStatus.ServiceDocument, details23);
+                }
+                else
+                {
+                    info.AddDetail(details23);
+                }
+                
+                passed = false;
+                return passed;
+            }
             string host = entityUrl.Remove(entityUrl.IndexOf(relativeUrl));
 
             string format1Request = string.Format(@"
@@ -165,7 +184,7 @@ GET {0} HTTP/1.1
                 if (!format1Response.ResponsePayload.Contains(@"HTTP/1.1 200 OK"))
                 {
                     passed = false;
-                    detail1.ErrorMessage = string.Format("Batch request failed by above URI.");
+                    detail1.ErrorMessage = "Batch request failed by above URI. ERROR:  "+ format1Response.ResponsePayload;
                 }
             }
             else
@@ -179,13 +198,13 @@ GET {0} HTTP/1.1
                 if (!format2Response.ResponsePayload.Contains(@"HTTP/1.1 200 OK"))
                 {
                     passed = false;
-                    detail2.ErrorMessage = string.Format("Batch request failed by above URI and host : {0}. ", host);
+                    detail2.ErrorMessage = "Batch request failed by above URI and host : " + format2Response.ResponsePayload;
                 }
             }
             else
             {
                 passed = false;
-                detail2.ErrorMessage = string.Format("No response returned from above URI and host : {0}. ", host);
+                detail2.ErrorMessage = "No response returned from above URI and host : " + format2Response.ResponsePayload;
             }
 
             if (format3Response != null && !string.IsNullOrEmpty(format3Response.ResponsePayload))
@@ -193,13 +212,13 @@ GET {0} HTTP/1.1
                 if (!format3Response.ResponsePayload.Contains(@"HTTP/1.1 200 OK"))
                 {
                     passed = false;
-                    detail3.ErrorMessage = string.Format("Batch request failed by above URI and Batch request host : {0}.", host);
+                    detail3.ErrorMessage = "Batch request failed by above URI and Batch request host : "+ format2Response.ResponsePayload;
                 }
             }
             else
             {
                 passed = false;
-                detail3.ErrorMessage = string.Format("No response returned from above URI and Batch request host : {0}. ", host);
+                detail3.ErrorMessage = "No response returned from above URI and Batch request host : "+ format2Response.ResponsePayload;
             }
 
             if (passed == null)

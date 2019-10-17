@@ -3048,8 +3048,12 @@ namespace ODataValidator.Rule.Helper
             var propElem = etElem.XPathSelectElement(xPath, ODataNamespaceManager.Instance);
             if(propElem != null)
             {
+                
 
-            
+
+                string test = propElem.Attribute("Name").Value as string; //STUART
+
+
                 if (null != propElem.Attribute("Name") &&
                     null != propElem.Attribute("Type") &&
                     MetadataHelper.IsKeyPropertyType(propElem.GetAttributeValue("Type")))

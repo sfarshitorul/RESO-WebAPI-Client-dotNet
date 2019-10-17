@@ -133,52 +133,80 @@ namespace ODataValidator.Rule
                 return passed;
             }
 
+
             var entities = JsonParserHelper.GetEntries(feed);
-            Int64 propVal = entities[0].Value<Int64>(primitivePropName);
+            
 
-            string pattern = "{0}/{1}?$filter={2} ge {3}";
-            url = string.Format(pattern, context.ServiceBaseUri.OriginalString.TrimEnd('/'), entitySet, primitivePropName, propVal);
-            resp = WebHelper.Get(new Uri(url), Constants.AcceptHeaderJson, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
-
-            detail.URI = url;
-            detail.HTTPMethod = "GET";
-            detail.RequestHeaders = StringHelper.MergeHeaders(Constants.AcceptHeaderJson, context.RequestHeaders);
-            detail.ResponseStatusCode = resp != null && resp.StatusCode.HasValue ? resp.StatusCode.Value.ToString() : "";
-            detail.ResponseHeaders = string.IsNullOrEmpty(resp.ResponseHeaders) ? "" : resp.ResponseHeaders;
-            detail.ResponsePayload = string.IsNullOrEmpty(resp.ResponsePayload) ? "" : resp.ResponsePayload;
-
-
-            if (resp.StatusCode != HttpStatusCode.OK)
+            Int64 propVal = 0;
+            for (int n = 0; n < entities.Count; n++)
             {
-                passed = false;
-                detail.ErrorMessage = "Request failed with system query option $filter ge.";
-                return passed;
+                try
+                {
+                    bool test = entities[n][primitivePropName].HasValues;
+                    if (!test)
+                    {
+                        continue;
+                    }
+                    propVal = entities[n].Value<Int64>(primitivePropName);
+                    break;
+                }
+                catch (Exception ex)
+                {
+
+                }
             }
-
-            JObject feed2;
-            resp.ResponsePayload.TryToJObject(out feed2);
-
-            if (feed2 == null || JTokenType.Object != feed2.Type)
+            if (propVal == 0)
             {
                 passed = false;
                 detail.ErrorMessage = "The service does not return a valid response for system query option $filter ge.";
                 return passed;
             }
-
-            var entities2 = JsonParserHelper.GetEntries(feed2).ToList();
-            var temp = entities2.FindAll(en => en.Value<Int64>(primitivePropName) >= propVal).Select(en => en);
-
-            if (entities2.Count() == temp.Count())
-            {
-                passed = true;
-            }
             else
             {
-                passed = false;
-                detail.ErrorMessage = "The service does not execute an accurate result with system query option $filter ge.";
-            }
+                string pattern = "{0}/{1}?$filter={2} ge {3}";
+                url = string.Format(pattern, context.ServiceBaseUri.OriginalString.TrimEnd('/'), entitySet, primitivePropName, propVal);
+                resp = WebHelper.Get(new Uri(url), Constants.AcceptHeaderJson, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
 
-            return passed;
+                detail.URI = url;
+                detail.HTTPMethod = "GET";
+                detail.RequestHeaders = StringHelper.MergeHeaders(Constants.AcceptHeaderJson, context.RequestHeaders);
+                detail.ResponseStatusCode = resp != null && resp.StatusCode.HasValue ? resp.StatusCode.Value.ToString() : "";
+                detail.ResponseHeaders = string.IsNullOrEmpty(resp.ResponseHeaders) ? "" : resp.ResponseHeaders;
+                detail.ResponsePayload = string.IsNullOrEmpty(resp.ResponsePayload) ? "" : resp.ResponsePayload;
+
+
+                if (resp.StatusCode != HttpStatusCode.OK)
+                {
+                    passed = false;
+                    detail.ErrorMessage = "Request failed with system query option $filter ge.";
+                    return passed;
+                }
+
+                JObject feed2;
+                resp.ResponsePayload.TryToJObject(out feed2);
+
+                if (feed2 == null || JTokenType.Object != feed2.Type)
+                {
+                    passed = false;
+                    detail.ErrorMessage = "The service does not return a valid response for system query option $filter ge.";
+                    return passed;
+                }
+
+                var entities2 = JsonParserHelper.GetEntries(feed2).ToList();
+                var temp = entities2.FindAll(en => en.Value<Int64>(primitivePropName) >= propVal).Select(en => en);
+
+                if (entities2.Count() == temp.Count())
+                {
+                    passed = true;
+                }
+                else
+                {
+                    passed = false;
+                    detail.ErrorMessage = "The service does not execute an accurate result with system query option $filter ge.";
+                }
+
+                return passed;
+            }
         }
     }
 }

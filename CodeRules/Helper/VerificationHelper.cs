@@ -381,6 +381,10 @@ namespace ODataValidator.Rule.Helper
 
                     foreach (var t in temp)
                     {
+                        if(!t[strArr[0]].HasValues)
+                        {
+                            continue;
+                        }
                         if (LambdaOperatorType.Any == lambdaOpType ?
                             t[strArr[0]].GreaterThanOrEquals(1, strArr[1]) :
                             !t[strArr[0]].GreaterThanOrEquals(1, strArr[1]))

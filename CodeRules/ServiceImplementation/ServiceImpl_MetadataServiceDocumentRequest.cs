@@ -95,7 +95,7 @@ namespace ODataValidator.Rule
             
             Response response = WebHelper.GetPropertyValue(url);
 
-            var detail = new ExtensionRuleResultDetail(this.Name, url, HttpMethod.Get, string.Empty);
+            var detail = new ExtensionRuleResultDetail(this.Name, url, HttpMethod.Get, response.ResponseHeaders,response);
             info = new ExtensionRuleViolationInfo(new Uri(url), string.Empty, detail);
 
             if (response.StatusCode == HttpStatusCode.OK && !string.IsNullOrEmpty(response.ResponsePayload) && response.ResponsePayload.IsXmlPayload())

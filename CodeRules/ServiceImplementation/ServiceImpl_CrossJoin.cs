@@ -92,12 +92,11 @@ namespace ODataValidator.Rule
 
             List<string> entitySetURLs = MetadataHelper.GetEntitySetURLs();
 
-            Response resp = WebHelper.Get(new Uri(context.ServiceBaseUri.OriginalString.TrimEnd('/') + @"/" + "$crossjoin(" + entitySetURLs.First<string>() + "," + entitySetURLs.Last<string>() + ")"), 
+            string url = context.ServiceBaseUri.OriginalString.TrimEnd('/') + @"/" + "$crossjoin(" + entitySetURLs.First<string>() + "," + entitySetURLs.Last<string>() + ")";
+            Response resp = WebHelper.Get(new Uri(url), 
                 Constants.AcceptHeaderJson, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
 
-            ExtensionRuleResultDetail detail = new ExtensionRuleResultDetail(this.Name, 
-                context.ServiceBaseUri.OriginalString.TrimEnd('/') + @"/" + "$crossjoin(" + entitySetURLs.First<string>() + "," + entitySetURLs.Last<string>() + ")",
-                HttpMethod.Get, context.RequestHeaders.ToString());
+            ExtensionRuleResultDetail detail = new ExtensionRuleResultDetail(this.Name,url,HttpMethod.Get, resp.ResponseHeaders, resp);
 
             info = new ExtensionRuleViolationInfo(context.Destination, context.ResponsePayload, detail);
 

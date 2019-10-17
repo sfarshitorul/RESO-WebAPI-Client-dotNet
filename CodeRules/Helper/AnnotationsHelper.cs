@@ -2351,6 +2351,10 @@ namespace ODataValidator.Rule.Helper
 
             foreach (var p in properties)
             {
+                if(p.PropertyName == "OfficeKey")
+                {
+
+                }
                 if (!p.IsKey)
                 {
                     if (primitiveTypes.Contains(p.PropertyType))

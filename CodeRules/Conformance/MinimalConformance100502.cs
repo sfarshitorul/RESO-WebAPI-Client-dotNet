@@ -92,7 +92,15 @@ namespace ODataValidator.Rule
                 }
                 else
                 {
-                    detail1.ErrorMessage = string.Format("The Header {0} was not found in the header.  This is case sensitive", Constants.ODataVersion);
+                    odataVersion = resp.ResponseHeaders.GetHeaderValue(Constants.ODataVersion,StringComparison.OrdinalIgnoreCase);
+                    if (!string.IsNullOrEmpty(odataVersion))
+                    {
+                        detail1.ErrorMessage = string.Format("The Header {0} was not found in the header.  This is case sensitive.  There was a header found that had the wrong case.  Review the specification http://docs.oasis-open.org/odata/odata/v4.0/errata03/os/complete/part1-protocol/odata-v4.0-errata03-os-part1-protocol-complete.html#_Toc453752225", Constants.ODataVersion);
+                    }
+                    else
+                    {
+                        detail1.ErrorMessage = string.Format("The Header {0} was not found in the header.  This is case sensitive", Constants.ODataVersion);
+                    }
                     info = new ExtensionRuleViolationInfo(context.Destination, context.ResponsePayload, detail1);
 
                     return false;

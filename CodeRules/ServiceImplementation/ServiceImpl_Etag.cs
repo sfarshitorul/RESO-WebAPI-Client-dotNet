@@ -141,7 +141,7 @@ namespace ODataValidator.Rule
                 string url = context.ServiceBaseUri.OriginalString.TrimEnd('/') + @"/" + entitySetUrl + "(" + (key.Item2.Equals("Edm.String") ? "\'" + identity + "\'" : identity) + ")";
 
                 resp = WebHelper.Get(new Uri(url), Constants.AcceptHeaderJson, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
-                details.Add(new ExtensionRuleResultDetail(this.Name, url, HttpMethod.Get, ""));
+                details.Add(new ExtensionRuleResultDetail(this.Name, url, HttpMethod.Get,resp.ResponseHeaders,resp));
 
                 if (resp.ResponseHeaders.Contains("ETag:"))
                 {
