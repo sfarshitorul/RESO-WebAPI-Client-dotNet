@@ -172,13 +172,30 @@ GET {0} HTTP/1.1
 
             string boundary = @"batch_36522ad7-fc75-4b56-8c71-56071383e77b";
             Response format1Response = WebHelper.BatchOperation(serviceStatus.RootURL.TrimEnd('/') + @"/", format1Request, boundary);
-            detail1 = new ExtensionRuleResultDetail(this.Name, serviceStatus.RootURL.TrimEnd('/') + "/$batch", HttpMethod.Post, string.Empty, format1Response, string.Empty, format1Request);
+
+            detail1 = new ExtensionRuleResultDetail(this.Name, feedUrl.TrimEnd('/') + "/$batch", HttpMethod.Post, string.Empty, format1Response, string.Empty, format1Request);
+            detail1.URI = serviceStatus.RootURL.TrimEnd('/') + @"/";
+            detail1.ResponsePayload = format1Response.ResponsePayload;
+            detail1.ResponseHeaders = format1Response.ResponseHeaders;
+            detail1.HTTPMethod = "POST";
+            detail1.ResponseStatusCode = format1Response.StatusCode.ToString();
 
             Response format2Response = WebHelper.BatchOperation(serviceStatus.RootURL.TrimEnd('/') + @"/", format2Request, boundary);
-            detail2 = new ExtensionRuleResultDetail(this.Name, serviceStatus.RootURL.TrimEnd('/') + "/$batch", HttpMethod.Post, string.Empty, format2Response, string.Empty, format2Request);
+            detail2 = new ExtensionRuleResultDetail(this.Name, feedUrl.TrimEnd('/') + "/$batch", HttpMethod.Post, string.Empty, format2Response, string.Empty, format2Request);
+            detail2.URI = serviceStatus.RootURL.TrimEnd('/') + @"/";
+            detail2.ResponsePayload = format1Response.ResponsePayload;
+            detail2.ResponseHeaders = format1Response.ResponseHeaders;
+            detail2.HTTPMethod = "POST";
+            detail2.ResponseStatusCode = format1Response.StatusCode.ToString();
 
-            Response format3Response = WebHelper.BatchOperation(serviceStatus.RootURL.TrimEnd('/') + @"/", format3Request, boundary);
-            detail3 = new ExtensionRuleResultDetail(this.Name, serviceStatus.RootURL.TrimEnd('/') + "/$batch", HttpMethod.Post, string.Empty, format3Response, string.Empty, format3Request);
+            Response format3Response = WebHelper.BatchOperation(serviceStatus.RootURL.TrimEnd('/') + @"/", format3Reuqest, boundary);
+            detail3 = new ExtensionRuleResultDetail(this.Name, feedUrl.TrimEnd('/') + "/$batch", HttpMethod.Post, string.Empty, format3Response, string.Empty, format3Reuqest);
+            detail3.URI = serviceStatus.RootURL.TrimEnd('/') + @"/";
+            detail3.ResponsePayload = format1Response.ResponsePayload;
+            detail3.ResponseHeaders = format1Response.ResponseHeaders;
+            detail3.HTTPMethod = "POST";
+            detail3.ResponseStatusCode = format1Response.StatusCode.ToString();
+
 
             if (format1Response != null && !string.IsNullOrEmpty(format1Response.ResponsePayload))
             {

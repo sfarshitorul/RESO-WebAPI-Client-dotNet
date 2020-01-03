@@ -258,7 +258,7 @@ namespace ODataValidator.Rule.Helper
                         detail1.ErrorMessage = "The service does not support the system query option '$orderby'.";
                     }
                 }
-                catch (Exception ex)
+                catch
                 {
                     passed = false;
                     detail1.ErrorMessage = "The service does not support the system query option '$orderby'.";
@@ -267,7 +267,6 @@ namespace ODataValidator.Rule.Helper
             else
             {
                 detail1.ErrorMessage = "Cannot find any appropriate entity-sets which support system query options $filter in the service.";
-                info = new ExtensionRuleViolationInfo(context.Destination, context.ResponsePayload, detail1);
                 passed = false;
 
             }
@@ -453,7 +452,7 @@ namespace ODataValidator.Rule.Helper
         {
             bool result = false;
 
-            Response response = WebHelper.Get(context.Destination, Constants.AcceptHeaderJson, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
+            Response response = WebHelper.Get(context.ServiceBaseUri, Constants.AcceptHeaderJson, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
             ExtensionRuleResultDetail detail = new ExtensionRuleResultDetail("", context.Destination.AbsoluteUri, "GET", StringHelper.MergeHeaders(Constants.AcceptHeaderJson, context.RequestHeaders), response);
 
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
@@ -472,7 +471,7 @@ namespace ODataValidator.Rule.Helper
             }
             else
             {
-                detail.ErrorMessage = "Get service document failed from above URI.";
+                detail.ErrorMessage = "Get service document failed from this URI:  "+ context.ServiceBaseUri +" Error Code returned from HTTP GET request:  "+ response.StatusCode.ToString();
             }
 
             info = new ExtensionRuleViolationInfo(context.Destination, context.ResponsePayload, detail);
@@ -500,17 +499,21 @@ namespace ODataValidator.Rule.Helper
             string errorURL = BuildURL(context.Destination,errorFeed);
             Response response = WebHelper.Get(new Uri(errorURL), Constants.V4AcceptHeaderJsonFullMetadata, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
             ExtensionRuleResultDetail detail = new ExtensionRuleResultDetail(string.Empty, errorURL, "GET", StringHelper.MergeHeaders(Constants.V4AcceptHeaderJsonFullMetadata, context.RequestHeaders), response);
+            detail.URI = errorURL;
+            detail.ResponsePayload = response.ResponsePayload;
+            detail.ResponseHeaders = response.ResponseHeaders;
+            detail.HTTPMethod = "GET";
 
             payloadFormat = response.ResponsePayload.GetFormatFromPayload();
             var payloadType = ContextHelper.GetPayloadType(response.ResponsePayload, payloadFormat, response.ResponseHeaders);
 
-            if (payloadType == RuleEngine.PayloadType.None)
+            if (payloadType == RuleEngine.PayloadType.Error)
             {
                 result = true;
             }
             else
             {
-                detail.ErrorMessage = "The response is not an error response.";
+                detail.ErrorMessage = "The response is not an error response.  The test is sending an invalid URL and expecting an error response.";
             }
 
             info = new ExtensionRuleViolationInfo(context.Destination, context.ResponsePayload, detail);
@@ -872,8 +875,10 @@ namespace ODataValidator.Rule.Helper
         public static bool VerifyReference(ServiceContext context, out ExtensionRuleViolationInfo info)
         {
             bool result = false;
-            string referenceURL = MetadataHelper.GenerateReferenceURL(context.MetadataDocument, context.ServiceDocument, context.ServiceBaseUri.AbsoluteUri);
             ExtensionRuleResultDetail detail = new ExtensionRuleResultDetail();
+            info = new ExtensionRuleViolationInfo(context.Destination, context.ResponsePayload, detail);
+            string referenceURL = MetadataHelper.GenerateReferenceURL(context.MetadataDocument, context.ServiceDocument, context.ServiceBaseUri.AbsoluteUri, ref info);
+            
 
             if (string.IsNullOrEmpty(referenceURL))
             {
@@ -904,7 +909,7 @@ namespace ODataValidator.Rule.Helper
                 }
             }
 
-            info = new ExtensionRuleViolationInfo(context.Destination, context.ResponsePayload, detail);
+            
             return result;
         }
 
@@ -1469,7 +1474,7 @@ namespace ODataValidator.Rule.Helper
                     skipNumber = rnd.Next(10, 30);
                 }
             }
-            catch(Exception ex)
+            catch
             {
                 detail = new ExtensionRuleResultDetail(string.Empty, url, "GET", StringHelper.MergeHeaders(Constants.AcceptHeaderJson, context.RequestHeaders), resp.ResponsePayload);
                 detail.ErrorMessage = "The expected response is a number.  This is what was returned:  " + resp.ResponsePayload;
@@ -1607,6 +1612,38 @@ namespace ODataValidator.Rule.Helper
             {
                 var entity = JsonParserHelper.GetEntries(feed1).First;
                 string searchVal = entity[propName].ToString().Contains(" ") ? string.Format("\"{0}\"", entity[propName].ToString()) : entity[propName].ToString();
+                JArray values = JsonParserHelper.GetEntries(feed1);
+                List<string> propnames = props;
+
+                if (string.IsNullOrEmpty(searchVal))
+                {
+                    for (int n = 0; n < values.Count; n++)
+                    {
+                        foreach (string item in propnames)
+                        {
+                            propName = item.Split(',')[0];
+                            if(propName.IndexOf("Key",StringComparison.CurrentCultureIgnoreCase) >= 0)
+                            {
+                                continue;
+                            }
+                            entity = values[n];
+                            searchVal = entity[propName].ToString().Contains(" ") ? string.Format("\"{0}\"", entity[propName].ToString()) : entity[propName].ToString();
+                            if (!string.IsNullOrEmpty(searchVal))
+                            {
+                                n = values.Count;
+                                break;
+                            }
+                        }
+                    }
+                }
+                if(string.IsNullOrEmpty(searchVal))
+                {
+                    passed = false;
+                    detail.ErrorMessage = "No search value could be obtained from this payload:  "+ feed1;
+                    info = new ExtensionRuleViolationInfo(context.Destination, context.ResponsePayload, detail);
+                    return HttpStatusCode.OK;
+
+                }
                 url = string.Format("{0}/{1}?$search={2}", context.DestinationBasePath.TrimEnd('/'), entitySetName, searchVal);
                 //req = WebRequest.Create(url) as HttpWebRequest;
                 //resp = WebHelper.Get(req, RuleEngineSetting.Instance().DefaultMaximumPayloadSize);

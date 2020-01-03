@@ -98,6 +98,7 @@ namespace ODataValidator.Rule
             string updateUrl = serviceStatus.RootURL;
             List<string> keyPropertyTypes = new List<string>() { "Edm.Int32", "Edm.Int16", "Edm.Int64", "Edm.Guid", "Edm.String" };
             List<string> norPropertyTypes = new List<string>() { "Edm.String" };
+
             List<EntityTypeElement> entityTypeElements = MetadataHelper.GetEntityTypes(serviceStatus.MetadataDocument, 1, keyPropertyTypes, null, NavigationRoughType.None).ToList();
             if (null == entityTypeElements || 0 == entityTypeElements.Count)
             {

@@ -147,6 +147,12 @@ namespace ODataValidator.Rule
                         url = serviceStatus.RootURL.TrimEnd('/') + @"/" + navigPropRelatedEntitySetUrl;
                         resp = WebHelper.Get(new Uri(url), Constants.V4AcceptHeaderJsonFullMetadata, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, serviceStatus.DefaultHeaders);
                         detail2 = new ExtensionRuleResultDetail(this.Name, url, HttpMethod.Get, StringHelper.MergeHeaders(Constants.V4AcceptHeaderJsonFullMetadata, serviceStatus.DefaultHeaders), resp, string.Empty, reqDataStr);
+                        detail2.URI = url;
+                        detail2.ResponsePayload = resp.ResponsePayload;
+                        detail2.ResponseHeaders = resp.ResponseHeaders;
+                        detail2.HTTPMethod = "GET";
+                        detail2.ResponseStatusCode = resp.StatusCode.ToString();
+
                         if (null != resp && resp.StatusCode == HttpStatusCode.OK)
                         {
                             JObject feed;

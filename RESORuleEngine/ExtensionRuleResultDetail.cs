@@ -79,6 +79,11 @@
         public string RuleName { get; set; }
 
         /// <summary>
+        /// Gets the name of the rule.
+        /// </summary>
+        public string DetailDescription { get; set; }
+
+        /// <summary>
         /// Gets the URI of the request.
         /// </summary>
         public string URI { get; set; }

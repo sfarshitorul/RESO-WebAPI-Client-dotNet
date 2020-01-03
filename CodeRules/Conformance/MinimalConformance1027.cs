@@ -166,6 +166,12 @@ namespace ODataValidator.Rule
                 string individualProUrl = entityId + @"/" + toDeletePropertyName;
                 resp = WebHelper.Get(new Uri(individualProUrl), Constants.AcceptHeaderJson, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, serviceStatus.DefaultHeaders);
                 detail2 = new ExtensionRuleResultDetail(this.Name, individualProUrl, HttpMethod.Get, StringHelper.MergeHeaders(Constants.AcceptHeaderJson, serviceStatus.DefaultHeaders), resp);
+                detail2.URI = individualProUrl;
+                detail2.ResponsePayload = resp.ResponsePayload;
+                detail2.ResponseHeaders = resp.ResponseHeaders;
+                detail2.HTTPMethod = "PATCH";
+                detail2.ResponseStatusCode = resp.StatusCode.ToString();
+
                 if (resp.StatusCode == HttpStatusCode.OK)
                 {
                     // Delete the individual property

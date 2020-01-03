@@ -121,6 +121,12 @@ namespace ODataValidator.Rule
             url = string.Format("{0}?$filter={1} eq {2}", url, keyPropName, keyPropVal);
             resp = WebHelper.Get(new Uri(url), Constants.V4AcceptHeaderJsonFullMetadata, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
             var detail = new ExtensionRuleResultDetail("ServiceImpl_SystemQueryOptionFilter", url, HttpMethod.Get, string.Empty);
+            detail.URI = url;
+            detail.ResponsePayload = resp.ResponsePayload;
+            detail.ResponseHeaders = resp.ResponseHeaders;
+            detail.HTTPMethod = "GET";
+            detail.ResponseStatusCode = resp.StatusCode.ToString();
+
             info = new ExtensionRuleViolationInfo(new Uri(url), string.Empty, detail);
             if (null != resp && HttpStatusCode.OK == resp.StatusCode)
             {
@@ -129,6 +135,7 @@ namespace ODataValidator.Rule
                 temp = ((JObject)(jArr.First))[keyPropName];
                 if (null == temp)
                 {
+                    detail.ErrorMessage = "Unable to find Key Property Name in the Reponse:  " + keyPropName;
                     return false;
                 }
 
@@ -140,6 +147,7 @@ namespace ODataValidator.Rule
             }
             else
             {
+                detail.ErrorMessage = "Response return an error message:  " + resp.StatusCode.ToString();
                 passed = false;
             }
 

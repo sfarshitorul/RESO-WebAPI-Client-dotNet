@@ -98,7 +98,7 @@ namespace ODataValidator.Rule
             {
                 entitySetURLs = MetadataHelper.GetEntitySetURLs();
             }
-            catch(Exception ex)
+            catch
             {
                 details.Add(new ExtensionRuleResultDetail(this.Name, string.Empty, HttpMethod.Get, "Please check the Service Document.  One of the attributes are missing for EntitySet.  Required url and kind"));
                 info = new ExtensionRuleViolationInfo(context.Destination, context.ResponsePayload, details);

@@ -86,7 +86,12 @@ namespace ODataValidator.Rule
 
             string url = string.Format("{0}/{1}", context.ServiceBaseUri.OriginalString.TrimEnd('/'), entitySet);
             var resp = WebHelper.Get(new Uri(url), Constants.AcceptHeaderJson, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
-
+            detail.URI = url;
+            detail.ResponsePayload = resp.ResponsePayload;
+            detail.ResponseHeaders = resp.ResponseHeaders;
+            detail.HTTPMethod = "GET";
+            detail.ResponseStatusCode = resp.StatusCode.ToString();
+            
             if (null == resp || HttpStatusCode.OK != resp.StatusCode)
             {
                 detail.ErrorMessage = JsonParserHelper.GetErrorMessage(resp.ResponsePayload);
@@ -108,7 +113,11 @@ namespace ODataValidator.Rule
                 string requri = string.Format("{0}?$filter={1} eq @test1&@test1='{2}'", url, primitivePropName, propVal);
                 resp = WebHelper.Get(requri, null, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
                 detail = new ExtensionRuleResultDetail(this.Name, requri, "GET", string.Empty, resp);
-
+                detail.URI = url;
+                detail.ResponsePayload = resp.ResponsePayload;
+                detail.ResponseHeaders = resp.ResponseHeaders;
+                detail.HTTPMethod = "GET";
+                detail.ResponseStatusCode = resp.StatusCode.ToString();
                 if (resp.StatusCode == HttpStatusCode.OK)
                 {
                     JObject feed1;

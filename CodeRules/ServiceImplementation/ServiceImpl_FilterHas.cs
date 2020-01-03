@@ -153,7 +153,7 @@ namespace ODataValidator.Rule
                     {
                         enumValue = entities[0][properties[0].Split(',')[0]].ToString();
                     }
-                    catch(Exception ex)
+                    catch
                     {
                         string error = properties[0].Split(',')[0] + " is missing from the response " + resp.ResponsePayload;
                         details.Add(new ExtensionRuleResultDetail(this.Name, req_entity.ToString(), HttpMethod.Get, ""));
@@ -164,7 +164,14 @@ namespace ODataValidator.Rule
                         typeNames[0] + "\'" + enumValue + "\'";
 
                     resp = WebHelper.Get(new Uri(url), Constants.AcceptHeaderJson, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
-                    details.Add(new ExtensionRuleResultDetail(this.Name, url, HttpMethod.Get,resp.ResponseHeaders,resp));
+                    //details.Add(new ExtensionRuleResultDetail(this.Name, url, HttpMethod.Get,resp.ResponseHeaders,resp));
+                    var detail = new ExtensionRuleResultDetail(this.Name, url, HttpMethod.Get, resp.ResponseHeaders, resp);
+                    detail.URI = url;
+                    detail.ResponsePayload = resp.ResponsePayload;
+                    detail.ResponseHeaders = resp.ResponseHeaders;
+                    detail.HTTPMethod = "GET";
+                    detail.ResponseStatusCode = resp.StatusCode.ToString();
+                    details.Add(detail);
 
                     if (null == resp || HttpStatusCode.OK != resp.StatusCode)
                     {

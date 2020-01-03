@@ -171,11 +171,21 @@ namespace ODataValidator.Rule
 
                 resp = WebHelper.GetEntity(mainEntityID);
                 detail = new ExtensionRuleResultDetail(this.Name, mainEntityID, HttpMethod.Get, string.Empty, resp, string.Empty, reqDataStr);
+                detail.URI = refUrl;
+                detail.ResponsePayload = resp.ResponsePayload;
+                detail.ResponseHeaders = resp.ResponseHeaders;
+                detail.HTTPMethod = "GET";
+                detail.ResponseStatusCode = resp.StatusCode.ToString();
 
                 if (HttpStatusCode.OK == resp.StatusCode && additionalInfos.Count > 1)
                 {
                     resp = WebHelper.GetEntity(refUrl);
                     detail = new ExtensionRuleResultDetail(this.Name, refUrl, HttpMethod.Get, string.Empty, resp, string.Empty, reqDataStr);
+                    detail.URI = refUrl;
+                    detail.ResponsePayload = resp.ResponsePayload;
+                    detail.ResponseHeaders = resp.ResponseHeaders;
+                    detail.HTTPMethod = "GET";
+                    detail.ResponseStatusCode = resp.StatusCode.ToString();
 
                     if (HttpStatusCode.OK == resp.StatusCode)
                     {

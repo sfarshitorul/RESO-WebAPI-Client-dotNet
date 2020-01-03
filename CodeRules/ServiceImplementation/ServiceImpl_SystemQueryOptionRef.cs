@@ -153,6 +153,13 @@ namespace ODataValidator.Rule
             url = string.Format(pattern, url, keyPropVal, navigPropName);
             resp = WebHelper.Get(new Uri(url), string.Empty, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, svcStatus.DefaultHeaders);
             var detail = new ExtensionRuleResultDetail("ServiceImpl_SystemQueryOptionRef", url, HttpMethod.Get, string.Empty);
+            detail.URI = url;
+            detail.ResponsePayload = resp.ResponsePayload;
+            detail.ResponseHeaders = resp.ResponseHeaders;
+            detail.HTTPMethod = "GET";
+            detail.ResponseStatusCode = resp.StatusCode.ToString();
+
+
             info = new ExtensionRuleViolationInfo(new Uri(url), string.Empty, detailglobal);
             info.AddDetail(detail);
             if (null != resp && HttpStatusCode.OK == resp.StatusCode)
@@ -160,6 +167,7 @@ namespace ODataValidator.Rule
                 entities = JsonParserHelper.GetEntities(resp.ResponsePayload);
                 if (!entities.Any())
                 {
+                    detail.ErrorMessage = "No entities available to test";
                     return false;
                 }
 
@@ -167,9 +175,25 @@ namespace ODataValidator.Rule
                 var odataId = entity[Constants.V4OdataId].ToString();
                 resp = WebHelper.Get(new Uri(url), string.Empty, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, svcStatus.DefaultHeaders);
                 passed = null != resp && HttpStatusCode.OK == resp.StatusCode;
+                if(passed == false)
+                {
+                    detail.URI = url;
+                    detail.ResponsePayload = resp.ResponsePayload;
+                    detail.ResponseHeaders = resp.ResponseHeaders;
+                    detail.HTTPMethod = "GET";
+                    detail.ResponseStatusCode = resp.StatusCode.ToString();
+                    detail.ErrorMessage = "Response return an error message:  " + resp.StatusCode.ToString();
+                }
             }
             else
             {
+                detail.URI = url;
+                detail.ResponsePayload = resp.ResponsePayload;
+                detail.ResponseHeaders = resp.ResponseHeaders;
+                detail.HTTPMethod = "GET";
+                detail.ResponseStatusCode = resp.StatusCode.ToString();
+
+                detail.ErrorMessage = "Response return an error message:  "+ resp.StatusCode.ToString(); 
                 passed = false;
             }
 

@@ -157,6 +157,12 @@ namespace ODataValidator.Rule
                 bool hasEtag = additionalInfos.Last().HasEtag;
                 resp = WebHelper.GetEntity(updateUrl);
                 detail = new ExtensionRuleResultDetail(this.Name, updateUrl, HttpMethod.Get, string.Empty, resp);
+                detail.URI = updateUrl;
+                detail.ResponsePayload = resp.ResponsePayload;
+                detail.ResponseHeaders = resp.ResponseHeaders;
+                detail.HTTPMethod = "GET";
+                detail.ResponseStatusCode = resp.StatusCode.ToString();
+
                 if (HttpStatusCode.OK == resp.StatusCode)
                 {
                     string navigPropType = MetadataHelper.GetNavigPropertyTypeFromMetadata(navigationPropName, entityType.EntityTypeShortName, serviceStatus.MetadataDocument);
@@ -183,6 +189,11 @@ namespace ODataValidator.Rule
 
                         resp = WebHelper.GetEntity(refEntityId);
                         detail = new ExtensionRuleResultDetail(this.Name, refEntityId, HttpMethod.Get, string.Empty, resp, string.Empty, reqDataStr);
+                        detail.URI = updateUrl;
+                        detail.ResponsePayload = resp.ResponsePayload;
+                        detail.ResponseHeaders = resp.ResponseHeaders;
+                        detail.HTTPMethod = "GET";
+                        detail.ResponseStatusCode = resp.StatusCode.ToString();
 
                         if (HttpStatusCode.OK == resp.StatusCode)
                         {
@@ -195,10 +206,21 @@ namespace ODataValidator.Rule
 
                             resp = WebHelper.CreateEntity(updateUrl, context.RequestHeaders, navigationRefSet, isMediaType, ref additionalInfosAll);
                             detail = new ExtensionRuleResultDetail(this.Name, updateUrl, HttpMethod.Patch, string.Empty, resp, string.Empty, reqDataStr);
+                            detail.URI = updateUrl;
+                            detail.ResponsePayload = resp.ResponsePayload;
+                            detail.ResponseHeaders = resp.ResponseHeaders;
+                            detail.HTTPMethod = "GET";
+                            detail.ResponseStatusCode = resp.StatusCode.ToString();
+
                             if (HttpStatusCode.NoContent == resp.StatusCode)
                             {
                                 resp = WebHelper.GetEntity(updateUrl);
                                 detail = new ExtensionRuleResultDetail(this.Name, updateUrl, HttpMethod.Get, string.Empty, resp, string.Empty, reqDataStr);
+                                detail.URI = updateUrl;
+                                detail.ResponsePayload = resp.ResponsePayload;
+                                detail.ResponseHeaders = resp.ResponseHeaders;
+                                detail.HTTPMethod = "GET";
+                                detail.ResponseStatusCode = resp.StatusCode.ToString();
 
                                 if (HttpStatusCode.OK == resp.StatusCode)
                                 {

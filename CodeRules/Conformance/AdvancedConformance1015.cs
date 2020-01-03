@@ -101,7 +101,11 @@ namespace ODataValidator.Rule
                 
                 Response response = WebHelper.Get(crossJoinUrl, null, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
                 detail = new ExtensionRuleResultDetail(this.Name, crossJoinUrl.AbsoluteUri, "GET", string.Empty, response);
-
+                detail.URI = crossJoinUrl.AbsoluteUri;
+                detail.ResponsePayload = response.ResponsePayload;
+                detail.ResponseHeaders = response.ResponseHeaders;
+                detail.HTTPMethod = "GET";
+                detail.ResponseStatusCode = response.StatusCode.ToString();
                 if (response != null && response.StatusCode == HttpStatusCode.OK)
                 {
                     response.ResponsePayload.TryToJObject(out jo);

@@ -72,6 +72,11 @@ namespace ODataValidator.Rule
             // Services MUST reject formats that specify unknown or unsupported format parameters.
             var resp = WebHelper.Get(new Uri(url), Constants.UndefinedAcceptHeader, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
             ExtensionRuleResultDetail detail1 = new ExtensionRuleResultDetail(this.Name, url, "GET", StringHelper.MergeHeaders(Constants.UndefinedAcceptHeader, context.RequestHeaders), resp);
+            detail1.URI = url;
+            detail1.ResponsePayload = resp.ResponsePayload;
+            detail1.ResponseHeaders = resp.ResponseHeaders;
+            detail1.HTTPMethod = "GET";
+            detail1.ResponseStatusCode = resp.StatusCode.ToString();
 
             if (null != resp && HttpStatusCode.UnsupportedMediaType == resp.StatusCode)
             {
@@ -89,6 +94,11 @@ namespace ODataValidator.Rule
             headers.Add(new KeyValuePair<string, string>("Accept-Charset", "utf-16"));
             resp = WebHelper.Get(new Uri(url), Constants.AcceptHeaderJson + ";charset=utf-8", RuleEngineSetting.Instance().DefaultMaximumPayloadSize, headers);
             ExtensionRuleResultDetail detail2 = new ExtensionRuleResultDetail(this.Name, url, "GET", StringHelper.MergeHeaders(Constants.AcceptHeaderJson + ";charset=utf-8", headers), resp);
+            detail2.URI = url;
+            detail2.ResponsePayload = resp.ResponsePayload;
+            detail2.ResponseHeaders = resp.ResponseHeaders;
+            detail2.HTTPMethod = "GET";
+            detail2.ResponseStatusCode = resp.StatusCode.ToString();
 
             if (null != resp && HttpStatusCode.OK == resp.StatusCode)
             {
@@ -111,6 +121,11 @@ namespace ODataValidator.Rule
             // If the media type specified in the Accept header does not include a charset format parameter, then the Content-Type header of the response MUST NOT contain a charset format parameter.
             resp = WebHelper.Get(new Uri(url), Constants.AcceptHeaderJson, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
             ExtensionRuleResultDetail detail3 = new ExtensionRuleResultDetail(this.Name, url, "GET", StringHelper.MergeHeaders(Constants.AcceptHeaderJson, context.RequestHeaders), resp);
+            detail3.URI = url;
+            detail3.ResponsePayload = resp.ResponsePayload;
+            detail3.ResponseHeaders = resp.ResponseHeaders;
+            detail3.HTTPMethod = "GET";
+            detail3.ResponseStatusCode = resp.StatusCode.ToString();
 
             if (null != resp && HttpStatusCode.OK == resp.StatusCode)
             {

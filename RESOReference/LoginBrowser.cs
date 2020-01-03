@@ -19,7 +19,7 @@ namespace RESOReference
 
         public LoginBrowser()
         {
-            InitializeComponent();
+            InitializeComponent(); 
 
         }
 
@@ -38,7 +38,7 @@ namespace RESOReference
 
             if (e.Url.AbsoluteUri.IndexOf("code=") >= 0)
             {
-                int tweet = e.Url.AbsoluteUri.IndexOf("#");
+                int tweet = e.Url.AbsoluteUri.IndexOf("#"); 
                 if (tweet >= 0)
                 {
 

@@ -170,7 +170,11 @@ namespace ODataValidator.Rule
 
             string url = string.Format("{0}/{1}?$expand={2}", context.ServiceBaseUri.OriginalString.TrimEnd('/'), entitySet, navigPropName);
             var resp = WebHelper.Get(new Uri(url), Constants.V4AcceptHeaderJsonFullMetadata, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
-
+            detail.URI = url;
+            detail.ResponsePayload = resp.ResponsePayload;
+            detail.ResponseHeaders = resp.ResponseHeaders;
+            detail.HTTPMethod = "GET";
+            detail.ResponseStatusCode = resp.StatusCode.ToString();
             if (null == resp || HttpStatusCode.OK != resp.StatusCode)
             {
                 detail.ErrorMessage = JsonParserHelper.GetErrorMessage(resp.ResponsePayload);
@@ -235,7 +239,11 @@ namespace ODataValidator.Rule
             url = string.Format("{0}/{1}?$expand={2}($search={3})", context.ServiceBaseUri.OriginalString.TrimEnd('/'), entitySet, navigPropName, searchVal);
             resp = WebHelper.Get(new Uri(url), Constants.V4AcceptHeaderJsonFullMetadata, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
             detail = new ExtensionRuleResultDetail(this.Name, url, "GET", String.Empty, resp);
-
+            detail.URI = url;
+            detail.ResponsePayload = resp.ResponsePayload;
+            detail.ResponseHeaders = resp.ResponseHeaders;
+            detail.HTTPMethod = "GET";
+            detail.ResponseStatusCode = resp.StatusCode.ToString();
             if (null != resp && resp.StatusCode == HttpStatusCode.OK)
             {
                 resp.ResponsePayload.TryToJObject(out feed);

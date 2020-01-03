@@ -99,6 +99,12 @@ namespace ODataValidator.Rule
             string url = string.Format("{0}/{1}?$filter=isof('{2}')", svcStatus.RootURL.TrimEnd('/'), entitySetUrl, entityTypeFullName);
             var resp = WebHelper.Get(new Uri(url), string.Empty, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, svcStatus.DefaultHeaders);
             var detail = new ExtensionRuleResultDetail(this.Name, url, HttpMethod.Get, string.Empty);
+            detail.URI = url;
+            detail.ResponsePayload = resp.ResponsePayload;
+            detail.ResponseHeaders = resp.ResponseHeaders;
+            detail.HTTPMethod = "GET";
+            detail.ResponseStatusCode = resp.StatusCode.ToString();
+
             info = new ExtensionRuleViolationInfo(new Uri(url), string.Empty, detail);
             if (null != resp && HttpStatusCode.OK == resp.StatusCode)
             {
@@ -115,6 +121,7 @@ namespace ODataValidator.Rule
                         passed = entity[Constants.V4OdataType].ToString() == entityTypeFullName;
                         if (passed == false)
                         {
+                            detail.ErrorMessage = entity[Constants.V4OdataType].ToString() + " not equal to " + entityTypeFullName;
                             break;
                         }
                     }
@@ -122,6 +129,7 @@ namespace ODataValidator.Rule
             }
             else
             {
+                detail.ErrorMessage = "The server returned an error response:  " + detail.ResponseStatusCode;
                 passed = false;
             }
 

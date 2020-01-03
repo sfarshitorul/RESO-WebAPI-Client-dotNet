@@ -120,7 +120,11 @@ namespace ODataValidator.Rule
             requestHeaders.Add(prefer);
             Response response = WebHelper.Get(new Uri(url), Constants.V4AcceptHeaderJsonFullMetadata, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, requestHeaders);
             detail = new ExtensionRuleResultDetail(this.Name, url, "GET", StringHelper.MergeHeaders(Constants.V4AcceptHeaderJsonFullMetadata, requestHeaders), response);
-
+            detail.URI = url;
+            detail.ResponsePayload = response.ResponsePayload;
+            detail.ResponseHeaders = response.ResponseHeaders;
+            detail.HTTPMethod = "GET";
+            detail.ResponseStatusCode = response.StatusCode.ToString();
             if (response != null && !string.IsNullOrEmpty(response.ResponseHeaders))
             {
                 string preferHeader = response.ResponseHeaders.GetHeaderValue("Preference-Applied");

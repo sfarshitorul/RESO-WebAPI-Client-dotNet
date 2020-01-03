@@ -154,10 +154,14 @@ namespace ODataValidator.Rule
 
                 return passed;
             }
-            string struri = string.Format("{0}/{1}?$expand={2}", context.ServiceBaseUri.OriginalString.TrimEnd('/'), entitySet, navigPropName);
-            Uri uri = new Uri(struri);
+            string url = string.Format("{0}/{1}?$expand={2}", context.ServiceBaseUri.OriginalString.TrimEnd('/'), entitySet, navigPropName);
+            Uri uri = new Uri(url);
             var response = WebHelper.Get(uri, Constants.AcceptHeaderJson, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
-
+            detail.URI = url;
+            detail.ResponsePayload = response.ResponsePayload;
+            detail.ResponseHeaders = response.ResponseHeaders;
+            detail.HTTPMethod = "GET";
+            detail.ResponseStatusCode = response.StatusCode.ToString();
             if (HttpStatusCode.OK != response.StatusCode)
             { 
                 passed = false;
@@ -185,10 +189,14 @@ namespace ODataValidator.Rule
                         compareVal = "'" + propVal + "'";
                     }
 
-                    string url = string.Format("{0}/{1}?$expand={2}($filter={3} eq {4})", context.ServiceBaseUri.OriginalString.TrimEnd('/'), entitySet, navigPropName, primitivePropertyName, compareVal);
+                    url = string.Format("{0}/{1}?$expand={2}($filter={3} eq {4})", context.ServiceBaseUri.OriginalString.TrimEnd('/'), entitySet, navigPropName, primitivePropertyName, compareVal);
                     var resp = WebHelper.Get(new Uri(url), Constants.AcceptHeaderJson, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
                     detail = new ExtensionRuleResultDetail(this.Name, url, "GET", StringHelper.MergeHeaders(Constants.AcceptHeaderJson, context.RequestHeaders), resp);
-
+                    detail.URI = url;
+                    detail.ResponsePayload = resp.ResponsePayload;
+                    detail.ResponseHeaders = resp.ResponseHeaders;
+                    detail.HTTPMethod = "GET";
+                    detail.ResponseStatusCode = resp.StatusCode.ToString();
                     if (resp.StatusCode == HttpStatusCode.OK)
                     {
                         JObject jObj;

@@ -1754,7 +1754,7 @@ namespace ODataValidator.Rule.Helper
         /// <param name="svcDoc">The service document.</param>
         /// <param name="svcDocUrl">The service document URL.</param>
         /// <returns></returns>
-        public static string GenerateReferenceURL(string metadata, string svcDoc, string svcDocUrl)
+        public static string GenerateReferenceURL(string metadata, string svcDoc, string svcDocUrl, ref ExtensionRuleViolationInfo info)
         {
             string referenceURL = string.Empty;
             var payloadFormat = svcDoc.GetFormatFromPayload();
@@ -1762,7 +1762,7 @@ namespace ODataValidator.Rule.Helper
 
             foreach (string feed in feeds)
             {
-                string feedUrl = svcDocUrl.TrimEnd('/') + @"/" + feed + @"/?$top=1";
+                string feedUrl = svcDocUrl.TrimEnd('/') + @"/" + feed + @"?$top=1";
                 var response = WebHelper.Get(new Uri(feedUrl), Constants.V4AcceptHeaderJsonFullMetadata, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, null);
 
                 if (response != null && response.StatusCode == HttpStatusCode.OK && !string.IsNullOrEmpty(response.ResponsePayload))
@@ -1785,6 +1785,16 @@ namespace ODataValidator.Rule.Helper
                             }
                         }
                     }
+                }
+                else
+                {
+                    
+                    ExtensionRuleResultDetail detail = new ExtensionRuleResultDetail(string.Empty);
+                    detail.ErrorMessage = "Server returned:  " + response.StatusCode;
+                    detail.ResponseHeaders = response.ResponseHeaders;
+                    detail.ResponsePayload = response.ResponsePayload;
+                    detail.URI = feedUrl;
+                    info.AddDetail(detail);
                 }
 
                 if (!string.IsNullOrEmpty(referenceURL))

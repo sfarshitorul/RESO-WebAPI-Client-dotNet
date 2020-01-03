@@ -225,7 +225,7 @@ namespace ODataValidator.Rule
 
             // get the first segment after the service root URI
             char[] delimiters = new char[] { '/'};
-            string path = context.DestinationBasePath.Substring(context.ServiceBaseUri.AbsoluteUri.Length).Trim('/');
+            string path = context.DestinationBasePath.Substring(context.ServiceBaseUri.AbsoluteUri.Length-1).Trim('/');
             string firstSegment = path.IndexOfAny(delimiters) >= 0 ? path.Substring(0, path.IndexOfAny(delimiters)) : path;
             firstSegment = firstSegment.Trim('/');
 

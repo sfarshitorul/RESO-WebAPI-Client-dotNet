@@ -97,6 +97,11 @@ namespace ODataValidator.Rule
             //var response = WebHelper.Get(req, RuleEngineSetting.Instance().DefaultMaximumPayloadSize);//REPLACE HEADER
             var response = WebHelper.Get(url,null, RuleEngineSetting.Instance().DefaultMaximumPayloadSize,context.RequestHeaders);
             ExtensionRuleResultDetail detail = new ExtensionRuleResultDetail(this.Name, url, "GET", string.Empty, response);
+            detail.URI = url;
+            detail.ResponsePayload = response.ResponsePayload;
+            detail.ResponseHeaders = response.ResponseHeaders;
+            detail.HTTPMethod = "GET";
+            detail.ResponseStatusCode = response.StatusCode.ToString();
 
             if (response != null && response.StatusCode != null)
             {

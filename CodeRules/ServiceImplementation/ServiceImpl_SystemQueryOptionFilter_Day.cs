@@ -100,6 +100,9 @@ namespace ODataValidator.Rule
             var propNames = MetadataHelper.GetPropertyNames(propTypes, out entityTypeShortName);
             if (null == propNames || !propNames.Any())
             {
+                var detail1 = new ExtensionRuleResultDetail(this.Name);
+                detail1.ErrorMessage = "No properties were returned for Edm.DateTimeOffset.  Nothing to test";
+                info = new ExtensionRuleViolationInfo(context.ServiceBaseUri, string.Empty, detail1);
                 return passed;
             }
 
@@ -107,6 +110,10 @@ namespace ODataValidator.Rule
             var entitySetUrl = entityTypeShortName.GetAccessEntitySetURL();
             if (string.IsNullOrEmpty(entitySetUrl))
             {
+                var detail1 = new ExtensionRuleResultDetail(this.Name);
+                detail1.ErrorMessage = "Entity Set URL was empty.  Unable to test.";
+                info = new ExtensionRuleViolationInfo(context.ServiceBaseUri, string.Empty, detail1);
+
                 return passed;
             }
 
@@ -144,7 +151,12 @@ namespace ODataValidator.Rule
                     int index = propVal.IndexOf('T');
                     if (index < 0)
                     {
+                        var detail1 = new ExtensionRuleResultDetail(this.Name);
+                        detail1.ErrorMessage = propVal + " is missing the delimiter T in the date time format.";
+                        info = new ExtensionRuleViolationInfo(context.ServiceBaseUri, string.Empty, detail1);
+
                         passed = false;
+                        return passed;
                     }
                     else
                     {
@@ -152,6 +164,12 @@ namespace ODataValidator.Rule
                         url = string.Format("{0}?$filter=day({1}) eq {2}", url, propName, propVal);
                         resp = WebHelper.Get(new Uri(url), string.Empty, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, svcStatus.DefaultHeaders);
                         var detail = new ExtensionRuleResultDetail(this.Name, url, HttpMethod.Get, string.Empty);
+                        detail.URI = url;
+                        detail.ResponsePayload = resp.ResponsePayload;
+                        detail.ResponseHeaders = resp.ResponseHeaders;
+                        detail.HTTPMethod = "GET";
+                        detail.ResponseStatusCode = resp.StatusCode.ToString();
+
                         info = new ExtensionRuleViolationInfo(new Uri(url), string.Empty, detail);
                         if (null != resp && HttpStatusCode.OK == resp.StatusCode)
                         {
@@ -160,16 +178,26 @@ namespace ODataValidator.Rule
                             foreach (JObject et in jArr)
                             {
                                 passed = et[propName].ToString().Substring(index - 2, 2) == propVal;
+                                if(passed == false)
+                                {
+                                    detail.ErrorMessage = et[propName].ToString().Substring(index - 2, 2) + " is not equal to " + propVal;
+                                    break;
+                                }
                             }
                         }
                         else
                         {
+                            detail.ErrorMessage = "The server returned an error response:  " + detail.ResponseStatusCode;
                             passed = false;
                         }
                     }
                 }
                 else
                 {
+                    var detail1 = new ExtensionRuleResultDetail(this.Name);
+                    detail1.ErrorMessage = "The property value is empty.  Unable to test.";
+                    info = new ExtensionRuleViolationInfo(context.ServiceBaseUri, string.Empty, detail1);
+
                     passed = false;
                 }
             }

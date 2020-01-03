@@ -99,7 +99,7 @@ namespace ODataValidator.RuleEngine
         [SuppressMessage("DataWeb.Usage", "AC0014:DoNotHandleProhibitedExceptionsRule", Justification = "Taken care of by similar mechanism")]
         public void Execute(ServiceContext context, IEnumerable<Rule> rules, int rulecount, TestComplete ruleresult)
         {
-            bool errorOccurred = false;
+            
             if (context == null)
             {
                 this.resultProvider.JobCompleted(true);
@@ -129,7 +129,7 @@ namespace ODataValidator.RuleEngine
                     }
                     catch (RuntimeException e)
                     {
-                        errorOccurred = true;
+                        
                         result = TestResult.CreateAbortedResult(rule, context.JobId);
 
                         e.JobId = context.JobId;
@@ -144,7 +144,7 @@ namespace ODataValidator.RuleEngine
                             throw;
                         }
 
-                        errorOccurred = true;
+                        
                         result = TestResult.CreateAbortedResult(rule, context.JobId);
                         
                         if (result.Details == null)

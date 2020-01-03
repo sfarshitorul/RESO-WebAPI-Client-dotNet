@@ -76,7 +76,12 @@ namespace ODataValidator.Rule
             Uri firstFeedFullUrl = new Uri(string.Format("{0}/{1}", context.DestinationBasePath.TrimEnd('/'), entitySetName));
             Response response = WebHelper.Get(firstFeedFullUrl, Constants.V4AcceptHeaderJsonFullMetadata, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
             detail = new ExtensionRuleResultDetail(this.Name, firstFeedFullUrl.AbsoluteUri, "GET", StringHelper.MergeHeaders(Constants.V4AcceptHeaderJsonFullMetadata, context.RequestHeaders), response);
-            
+            detail.URI = firstFeedFullUrl.OriginalString;
+            detail.ResponsePayload = response.ResponsePayload;
+            detail.ResponseHeaders = response.ResponseHeaders;
+            detail.HTTPMethod = "GET";
+            detail.ResponseStatusCode = response.StatusCode.ToString();
+
             if (response != null && response.StatusCode == HttpStatusCode.OK)
             {
                 JObject feed;

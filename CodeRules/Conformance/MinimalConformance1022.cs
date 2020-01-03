@@ -124,6 +124,12 @@ namespace ODataValidator.Rule
 
                     resp = WebHelper.GetEntity(entityId, serviceStatus.DefaultHeaders);
                     detail2 = new ExtensionRuleResultDetail(this.Name, entityId, HttpMethod.Get, StringHelper.MergeHeaders(string.Empty, serviceStatus.DefaultHeaders), resp);
+                    detail2.URI = url;
+                    detail2.ResponsePayload = resp.ResponsePayload;
+                    detail2.ResponseHeaders = resp.ResponseHeaders;
+                    detail2.HTTPMethod = "GET";
+                    detail2.ResponseStatusCode = resp.StatusCode.ToString();
+
                     if (HttpStatusCode.OK == resp.StatusCode)
                     {
                         reqDataStr = dFactory.ConstructUpdatedEntityData(reqData, normalPropNames).ToString();
@@ -143,6 +149,12 @@ namespace ODataValidator.Rule
                                 {
                                     resp = WebHelper.GetEntity(entityId);
                                     detail6 = new ExtensionRuleResultDetail(this.Name, entityId, HttpMethod.Get, string.Empty, resp);
+                                    detail6.URI = url;
+                                    detail6.ResponsePayload = resp.ResponsePayload;
+                                    detail6.ResponseHeaders = resp.ResponseHeaders;
+                                    detail6.HTTPMethod = "GET";
+                                    detail6.ResponseStatusCode = resp.StatusCode.ToString();
+
                                     if (HttpStatusCode.NotFound == resp.StatusCode)
                                     {
                                         passed = true;

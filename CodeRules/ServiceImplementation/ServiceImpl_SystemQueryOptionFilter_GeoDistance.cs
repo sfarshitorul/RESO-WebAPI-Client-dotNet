@@ -112,15 +112,22 @@ namespace ODataValidator.Rule
 
             string url = svcStatus.RootURL.TrimEnd('/') + "/" + entitySetUrl;
             var resp = WebHelper.Get(new Uri(url), string.Empty, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, svcStatus.DefaultHeaders);
+            var detail = new ExtensionRuleResultDetail(this.Name, url, HttpMethod.Get, string.Empty);
+            detail.URI = url;
+            detail.ResponsePayload = resp.ResponsePayload;
+            detail.ResponseHeaders = resp.ResponseHeaders;
+            detail.HTTPMethod = "GET";
+            detail.ResponseStatusCode = resp.StatusCode.ToString();
+
             if (null != resp && HttpStatusCode.OK == resp.StatusCode)
             {
                 JObject jObj = JObject.Parse(resp.ResponsePayload);
                 JArray jArr = jObj.GetValue(Constants.Value) as JArray;
                 var entity = jArr.First as JObject;
-                var detail = new ExtensionRuleResultDetail(this.Name, url, HttpMethod.Get, string.Empty);
+                
                 if (entity[propName] == null)
                 {
-                    detail = new ExtensionRuleResultDetail(this.Name, url, HttpMethod.Get, string.Empty, Convert.ToString(resp.StatusCode), propName + "is null", resp.ResponsePayload);
+                    detail.ErrorMessage = propName + "is null";
                     info = new ExtensionRuleViolationInfo(new Uri(url), string.Empty, detail);
 
                     passed = false;
@@ -132,14 +139,18 @@ namespace ODataValidator.Rule
                     {
                         var test = entity[propName]["coordinates"] as JArray;
                     }
-                    catch(Exception ex2)
+                    catch
                     {
-                        detail = new ExtensionRuleResultDetail(this.Name, url, HttpMethod.Get, string.Empty, Convert.ToString(resp.StatusCode), propName + " coordinates is null or missing.  Review for format and include the coordinate attribute.  This is the call that is failing:  var propVal = entity[propName][\"coordinates\"] as JArray;", resp.ResponsePayload);
+                        detail.ErrorMessage = propName + " coordinates is null or missing.  Review for format and include the coordinate attribute.  This is the call that is failing:  var propVal = entity[propName][\"coordinates\"] as JArray;";
                         info = new ExtensionRuleViolationInfo(new Uri(url), string.Empty, detail);
 
                         passed = false;
                         return passed;
 
+                    }
+                    if(info == null)
+                    {
+                        info = new ExtensionRuleViolationInfo(new Uri(url), string.Empty, detail);
                     }
                     var propVal = entity[propName]["coordinates"] as JArray;
                     var pt1 = new Point(Convert.ToDouble(propVal[0]), Convert.ToDouble(propVal[1]));
@@ -147,8 +158,14 @@ namespace ODataValidator.Rule
                     var distance = Point.GetDistance(pt1, pt2);
                     url = string.Format("{0}?$filter=geo.distance({1}, geography'POINT(0.0 0.0)') ge {2}", url, propName, distance);
                     resp = WebHelper.Get(new Uri(url), string.Empty, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, svcStatus.DefaultHeaders);
-                    detail = new ExtensionRuleResultDetail(this.Name, url, HttpMethod.Get, string.Empty);
-                    info = new ExtensionRuleViolationInfo(new Uri(url), string.Empty, detail);
+                    var detail1 = new ExtensionRuleResultDetail(this.Name, url, HttpMethod.Get, string.Empty);
+                    detail1.URI = url;
+                    detail1.ResponsePayload = resp.ResponsePayload;
+                    detail1.ResponseHeaders = resp.ResponseHeaders;
+                    detail1.HTTPMethod = "GET";
+                    detail1.ResponseStatusCode = resp.StatusCode.ToString();
+                    
+                    info.AddDetail(detail1);
                     if (null != resp && HttpStatusCode.OK == resp.StatusCode)
                     {
                         jObj = JObject.Parse(resp.ResponsePayload);
@@ -164,18 +181,29 @@ namespace ODataValidator.Rule
                     }
                     else
                     {
+                        detail1.ErrorMessage = "The server returned an error response:  " + detail.ResponseStatusCode;
                         passed = false;
                     }
                 }
                 catch(Exception ex)
                 {
-                    detail = new ExtensionRuleResultDetail(this.Name, url, HttpMethod.Get, string.Empty, Convert.ToString(resp.StatusCode), propName + " verification is failing;", resp.ResponsePayload);
-                    info = new ExtensionRuleViolationInfo(new Uri(url), string.Empty, detail);
+                    var detail2 = new ExtensionRuleResultDetail(this.Name, url, HttpMethod.Get, string.Empty, Convert.ToString(resp.StatusCode), propName + " verification is failing;", resp.ResponsePayload);
+                    info.AddDetail(detail2);
 
                     passed = false;
                     return passed;
 
                 }
+            }
+            else
+            {
+                detail.ErrorMessage = "The server returned an error response:  " + detail.ResponseStatusCode;
+                if (info == null)
+                {
+                    info = new ExtensionRuleViolationInfo(new Uri(url), string.Empty, detail);
+                }
+
+                passed = false;
             }
 
             return passed;

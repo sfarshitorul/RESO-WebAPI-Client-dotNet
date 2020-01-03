@@ -79,6 +79,12 @@ namespace ODataValidator.Rule
             string url = string.Format("{0}/{1}", serviceStatus.RootURL.TrimEnd('/'), entitySetName);
             Response response = WebHelper.Get(new Uri(url), Constants.V4AcceptHeaderJsonFullMetadata, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, null);
             detail = new ExtensionRuleResultDetail(this.Name, url, HttpMethod.Get, string.Empty, response);
+            detail.URI = url;
+            detail.ResponsePayload = response.ResponsePayload;
+            detail.ResponseHeaders = response.ResponseHeaders;
+            detail.ResponseStatusCode = response.StatusCode.ToString();
+            detail.HTTPMethod = "GET";
+
             if (response.StatusCode != HttpStatusCode.OK)
             {
                 detail.ErrorMessage = "HTTP Error was returned:  "+ response.StatusCode.ToString() + " with Reponse Body:  "+response.ResponsePayload;
@@ -86,6 +92,8 @@ namespace ODataValidator.Rule
 
                 return passed;
             }
+
+            
 
             JObject feed;
             response.ResponsePayload.TryToJObject(out feed);
@@ -130,7 +138,11 @@ namespace ODataValidator.Rule
             url = string.Format("{0}/{1}/$value", entryUrl.TrimEnd('/'), propNames[0]);
             response = WebHelper.Get(url, null, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
             detail = new ExtensionRuleResultDetail(this.Name, url, HttpMethod.Get, string.Empty, response);
-
+            detail.URI = url;
+            detail.ResponsePayload = response.ResponsePayload;
+            detail.ResponseHeaders = response.ResponseHeaders;
+            detail.HTTPMethod = "GET";
+            detail.ResponseStatusCode = response.StatusCode.ToString();
             // Get the value of propNames[0] property in entry payload and verify whether this value is equal to /$value payload value.
             if (response.StatusCode == HttpStatusCode.OK && entry[propNames[0]].ToString().Equals(response.ResponsePayload))
             {

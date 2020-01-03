@@ -173,44 +173,46 @@ namespace ODataValidator.Rule
             JObject jo;
             context.ResponsePayload.TryToJObject(out jo);
             string contextUrl = string.Empty;
-
-            if (jo[Constants.OdataV4JsonIdentity] == null)
+            if (jo != null)
             {
-                passed = false;
-                info = new ExtensionRuleViolationInfo(this.ErrorMessage, context.Destination, context.ResponsePayload);
-
-                return passed;
-            }
-            else
-            {
-                contextUrl = jo[Constants.OdataV4JsonIdentity].Value<string>().StripOffDoubleQuotes();
-                string[] feedSegment = contextUrl.Remove(0, contextUrl.IndexOf(Constants.JsonFeedIdentity) + Constants.JsonFeedIdentity.Length).Split('/');
-                string entitySetName = feedSegment[0].Split('(')[0];
-                string entityTypeName = XmlHelper.GetEntityTypeShortName(entitySetName, context.MetadataDocument);
-                var normalProperties = MetadataHelper.GetAllPropertiesOfEntity(context.MetadataDocument, entityTypeName, MatchPropertyType.Normal);
-
-                List<string> primitiveTypePropertyNames = new List<string>();
-
-                foreach (XElement xe in normalProperties)
+                if (jo[Constants.OdataV4JsonIdentity] == null)
                 {
-                    if (xe.GetAttributeValue("Type").StartsWith("Edm."))
-                    {
-                        primitiveTypePropertyNames.Add(xe.GetAttributeValue("Name"));
-                    }
+                    passed = false;
+                    info = new ExtensionRuleViolationInfo(this.ErrorMessage, context.Destination, context.ResponsePayload);
+
+                    return passed;
                 }
-
-                string propertyName = feedSegment[1];
-
-                if (primitiveTypePropertyNames.Contains(propertyName))
+                else
                 {
-                    if (jo[Constants.Value] != null)
+                    contextUrl = jo[Constants.OdataV4JsonIdentity].Value<string>().StripOffDoubleQuotes();
+                    string[] feedSegment = contextUrl.Remove(0, contextUrl.IndexOf(Constants.JsonFeedIdentity) + Constants.JsonFeedIdentity.Length).Split('/');
+                    string entitySetName = feedSegment[0].Split('(')[0];
+                    string entityTypeName = XmlHelper.GetEntityTypeShortName(entitySetName, context.MetadataDocument);
+                    var normalProperties = MetadataHelper.GetAllPropertiesOfEntity(context.MetadataDocument, entityTypeName, MatchPropertyType.Normal);
+
+                    List<string> primitiveTypePropertyNames = new List<string>();
+
+                    foreach (XElement xe in normalProperties)
                     {
-                        passed = true;
+                        if (xe.GetAttributeValue("Type").StartsWith("Edm."))
+                        {
+                            primitiveTypePropertyNames.Add(xe.GetAttributeValue("Name"));
+                        }
                     }
-                    else
+
+                    string propertyName = feedSegment[1];
+
+                    if (primitiveTypePropertyNames.Contains(propertyName))
                     {
-                        info = new ExtensionRuleViolationInfo(this.ErrorMessage, context.Destination, context.ResponsePayload);
-                        passed = false;
+                        if (jo[Constants.Value] != null)
+                        {
+                            passed = true;
+                        }
+                        else
+                        {
+                            info = new ExtensionRuleViolationInfo(this.ErrorMessage, context.Destination, context.ResponsePayload);
+                            passed = false;
+                        }
                     }
                 }
             }

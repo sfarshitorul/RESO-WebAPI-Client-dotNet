@@ -117,12 +117,19 @@ namespace ODataValidator.Rule
                 resp = WebHelper.Get(new Uri(url), string.Empty, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, svcStatus.DefaultHeaders);
                 var detail = new ExtensionRuleResultDetail(this.Name, url, HttpMethod.Get, string.Empty);
                 info = new ExtensionRuleViolationInfo(new Uri(url), string.Empty, detail);
+                detail.URI = url;
+                detail.ResponsePayload = resp.ResponsePayload;
+                detail.ResponseHeaders = resp.ResponseHeaders;
+                detail.HTTPMethod = "GET";
+                detail.ResponseStatusCode = resp.StatusCode.ToString();
+
                 if (null != resp && HttpStatusCode.OK == resp.StatusCode)
                 {
                     passed = true;
                 }
                 else
                 {
+                    detail.ErrorMessage = "The server returned an error response:  " + detail.ResponseStatusCode;
                     passed = false;
                 }
             }

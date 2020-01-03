@@ -686,7 +686,7 @@
             this.Controls.Add(this.edit_BearerToken);
             this.Controls.Add(this.lbl_BearerToken);
             this.Name = "ReferenceClient";
-            this.Text = "RESO Reference Client v3.1.23";
+            this.Text = "RESO Reference Client v3.1.24";
             this.ResumeLayout(false);
             this.PerformLayout();
 

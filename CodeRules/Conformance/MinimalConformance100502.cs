@@ -81,6 +81,11 @@ namespace ODataValidator.Rule
             }
             var resp = WebHelper.Get(new Uri(url), Constants.AcceptHeaderJson, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, headers);
             ExtensionRuleResultDetail detail1 = new ExtensionRuleResultDetail(this.Name, url, "GET", StringHelper.MergeHeaders(Constants.AcceptHeaderJson, headers), resp);
+            detail1.URI = url;
+            detail1.ResponsePayload = resp.ResponsePayload;
+            detail1.ResponseHeaders = resp.ResponseHeaders;
+            detail1.HTTPMethod = "GET";
+            detail1.ResponseStatusCode = resp.StatusCode.ToString();
 
             if (null != resp && HttpStatusCode.OK == resp.StatusCode)
             {
@@ -146,6 +151,11 @@ namespace ODataValidator.Rule
             headers["OData-MaxVersion"] = "3.0";
             resp = WebHelper.Get(new Uri(url), Constants.AcceptHeaderJson, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, headers);
             ExtensionRuleResultDetail detail2 = new ExtensionRuleResultDetail(this.Name, url, "GET", StringHelper.MergeHeaders(Constants.AcceptHeaderJson, headers), resp);
+            detail2.URI = url;
+            detail2.ResponsePayload = resp.ResponsePayload;
+            detail2.ResponseHeaders = resp.ResponseHeaders;
+            detail2.HTTPMethod = "GET";
+            detail2.ResponseStatusCode = resp.StatusCode.ToString();
 
             if (null != resp && HttpStatusCode.OK == resp.StatusCode)
             {

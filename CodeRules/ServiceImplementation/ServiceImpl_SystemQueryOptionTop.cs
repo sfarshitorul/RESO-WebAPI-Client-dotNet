@@ -97,15 +97,26 @@ namespace ODataValidator.Rule
             string url = svcStatus.RootURL.TrimEnd('/') + "/" + entitySetUrl + "?$top=1";
             var resp = WebHelper.Get(new Uri(url), string.Empty, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, svcStatus.DefaultHeaders);
             var detail = new ExtensionRuleResultDetail("ServiceImpl_SystemQueryOptionTop", url, HttpMethod.Get, string.Empty);
+            detail.URI = url;
+            detail.ResponsePayload = resp.ResponsePayload;
+            detail.ResponseHeaders = resp.ResponseHeaders;
+            detail.HTTPMethod = "GET";
+            detail.ResponseStatusCode = resp.StatusCode.ToString();
+
             info = new ExtensionRuleViolationInfo(new Uri(url), string.Empty, detail);
             if (null != resp && HttpStatusCode.OK == resp.StatusCode)
             {
                 JObject jObj = JObject.Parse(resp.ResponsePayload);
                 JArray jArr = jObj.GetValue("value") as JArray;
                 passed = 1 == jArr.Count;
+                if(passed == false)
+                {
+                    detail.ErrorMessage = "The Response Payload returned more that one record";
+                }
             }
             else
             {
+                detail.ErrorMessage = "Response status code was and error:  "+ resp.StatusCode.ToString();
                 passed = false;
             }
 

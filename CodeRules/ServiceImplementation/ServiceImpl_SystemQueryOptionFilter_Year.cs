@@ -113,6 +113,13 @@ namespace ODataValidator.Rule
 
             string url = svcStatus.RootURL.TrimEnd('/') + "/" + entitySetUrl;
             var resp = WebHelper.Get(new Uri(url), string.Empty, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, svcStatus.DefaultHeaders);
+            var detail = new ExtensionRuleResultDetail(this.Name, url, HttpMethod.Get, string.Empty);
+            detail.URI = url;
+            detail.ResponsePayload = resp.ResponsePayload;
+            detail.ResponseHeaders = resp.ResponseHeaders;
+            detail.HTTPMethod = "GET";
+            detail.ResponseStatusCode = resp.StatusCode.ToString();
+
             if (null != resp && HttpStatusCode.OK == resp.StatusCode)
             {
                 var settings = new JsonSerializerSettings();
@@ -123,7 +130,7 @@ namespace ODataValidator.Rule
 
                 if(entity[propName] == null)
                 {
-                    var detail = new ExtensionRuleResultDetail(this.Name, url, HttpMethod.Get, string.Empty);
+
                     detail.ErrorMessage = "The Attribute (" + propName + ") does not exist in the entity response:  " + entity.ToString();
                     info = new ExtensionRuleViolationInfo(new Uri(url), string.Empty, detail);
                     passed = false;
@@ -138,8 +145,14 @@ namespace ODataValidator.Rule
                     propVal = propVal.Substring(0, index);
                     url = string.Format("{0}?$filter=year({1}) eq {2}", url, propName, propVal);
                     resp = WebHelper.Get(new Uri(url), string.Empty, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, svcStatus.DefaultHeaders);
-                    var detail = new ExtensionRuleResultDetail(this.Name, url, HttpMethod.Get, string.Empty);
-                    info = new ExtensionRuleViolationInfo(new Uri(url), string.Empty, detail);
+                    var detail1 = new ExtensionRuleResultDetail(this.Name, url, HttpMethod.Get, string.Empty);
+                    detail1.URI = url;
+                    detail1.ResponsePayload = resp.ResponsePayload;
+                    detail1.ResponseHeaders = resp.ResponseHeaders;
+                    detail1.HTTPMethod = "GET";
+                    detail1.ResponseStatusCode = resp.StatusCode.ToString();
+
+                    info = new ExtensionRuleViolationInfo(new Uri(url), string.Empty, detail1);
                     if (null != resp && HttpStatusCode.OK == resp.StatusCode)
                     {
                         jObj = JsonConvert.DeserializeObject(resp.ResponsePayload, settings) as JObject;

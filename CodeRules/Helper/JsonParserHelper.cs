@@ -109,6 +109,11 @@ namespace ODataValidator.Rule.Helper
             return result;
         }
 
+        internal static JArray GetEntriesThatHaveAValue(JObject feed)
+        {
+            return GetEntries(feed);
+        }
+
         /// <summary>
         /// Gets all entities from the service's response payload.
         /// </summary>
@@ -856,7 +861,7 @@ namespace ODataValidator.Rule.Helper
                 }
                 catch(Exception ex)
                 {
-
+                    throw ex;
                 }
             }
             else
@@ -900,7 +905,6 @@ namespace ODataValidator.Rule.Helper
                     catch(Exception ex)
                     {
                         throw ex;
-                        string test = ex.Message;
                     }
                 }
 

@@ -140,6 +140,12 @@ namespace ODataValidator.Rule
                 {
                     resp = WebHelper.GetEntity(entityId);
                     detail3 = new ExtensionRuleResultDetail(this.Name, entityId, HttpMethod.Get, string.Empty, resp);
+                    detail3.URI = url;
+                    detail3.ResponsePayload = resp.ResponsePayload;
+                    detail3.ResponseHeaders = resp.ResponseHeaders;
+                    detail3.HTTPMethod = "GET";
+                    detail3.ResponseStatusCode = resp.StatusCode.ToString();
+
                     if (HttpStatusCode.NotFound == resp.StatusCode)
                     {
                         passed = true;

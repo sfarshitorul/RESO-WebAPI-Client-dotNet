@@ -99,7 +99,11 @@ namespace ODataValidator.Rule
             string url = string.Format("{0}/{1}?$expand=*($levels={2})", context.ServiceBaseUri.OriginalString.TrimEnd('/'), entitySetName, expectedLevels);
             var resp = WebHelper.Get(new Uri(url), Constants.AcceptHeaderJson, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
             detail = new ExtensionRuleResultDetail(this.Name, url, "GET", StringHelper.MergeHeaders(Constants.AcceptHeaderJson, context.RequestHeaders), resp);
-            
+            detail.URI = url;
+            detail.ResponsePayload = resp.ResponsePayload;
+            detail.ResponseHeaders = resp.ResponseHeaders;
+            detail.HTTPMethod = "GET";
+            detail.ResponseStatusCode = resp.StatusCode.ToString();
             if (resp != null && resp.StatusCode == HttpStatusCode.OK)
             {
                 JObject feed;
