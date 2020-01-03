@@ -137,6 +137,7 @@ namespace ODataValidator.Rule
                 return passed;
             }
             string host = entityUrl.Remove(entityUrl.IndexOf(relativeUrl));
+            string entityById = new Uri(entityUrl).Segments.Last();
 
             string format1Request = string.Format(@"
 --batch_36522ad7-fc75-4b56-8c71-56071383e77b
@@ -159,7 +160,7 @@ Host: {1}
 
 --batch_36522ad7-fc75-4b56-8c71-56071383e77b--", relativeUrl, host);
 
-            string format3Reuqest = string.Format(@"
+            string format3Request = string.Format(@"
 --batch_36522ad7-fc75-4b56-8c71-56071383e77b
 Content-Type: application/http 
 Content-Transfer-Encoding:binary
@@ -167,10 +168,11 @@ Content-Transfer-Encoding:binary
 
 GET {0} HTTP/1.1
 
---batch_36522ad7-fc75-4b56-8c71-56071383e77b--", relativeUrl);
+--batch_36522ad7-fc75-4b56-8c71-56071383e77b--", entityById);
 
             string boundary = @"batch_36522ad7-fc75-4b56-8c71-56071383e77b";
             Response format1Response = WebHelper.BatchOperation(serviceStatus.RootURL.TrimEnd('/') + @"/", format1Request, boundary);
+
             detail1 = new ExtensionRuleResultDetail(this.Name, feedUrl.TrimEnd('/') + "/$batch", HttpMethod.Post, string.Empty, format1Response, string.Empty, format1Request);
             detail1.URI = serviceStatus.RootURL.TrimEnd('/') + @"/";
             detail1.ResponsePayload = format1Response.ResponsePayload;
@@ -193,6 +195,7 @@ GET {0} HTTP/1.1
             detail3.ResponseHeaders = format1Response.ResponseHeaders;
             detail3.HTTPMethod = "POST";
             detail3.ResponseStatusCode = format1Response.StatusCode.ToString();
+
 
             if (format1Response != null && !string.IsNullOrEmpty(format1Response.ResponsePayload))
             {
