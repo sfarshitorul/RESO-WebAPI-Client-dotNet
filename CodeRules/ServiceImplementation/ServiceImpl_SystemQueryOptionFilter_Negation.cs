@@ -108,6 +108,12 @@ namespace ODataValidator.Rule
             string url = string.Format("{0}/{1}?$filter={2} gt -({3})", svcStatus.RootURL.TrimEnd('/'), entitySetUrl, propName, negativeNum);
             var resp = WebHelper.Get(new Uri(url), Constants.V4AcceptHeaderJsonFullMetadata, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
             var detail = new ExtensionRuleResultDetail(this.Name, url, HttpMethod.Get, string.Empty);
+            detail.URI = url;
+            detail.ResponsePayload = resp.ResponsePayload;
+            detail.ResponseHeaders = resp.ResponseHeaders;
+            detail.HTTPMethod = "GET";
+            detail.ResponseStatusCode = resp.StatusCode.ToString();
+
             info = new ExtensionRuleViolationInfo(new Uri(url), string.Empty, detail);
             if (null != resp && HttpStatusCode.OK == resp.StatusCode)
             {

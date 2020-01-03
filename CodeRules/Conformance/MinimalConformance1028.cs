@@ -150,6 +150,11 @@ namespace ODataValidator.Rule
                 var entityId = additionalInfos.Last().EntityId;
                 resp = WebHelper.GetEntity(entityId);
                 detail2 = new ExtensionRuleResultDetail(this.Name, entityId, HttpMethod.Get, string.Empty, resp, string.Empty, reqDataStr);
+                detail2.URI = entityId;
+                detail2.ResponsePayload = resp.ResponsePayload;
+                detail2.ResponseHeaders = resp.ResponseHeaders;
+                detail2.HTTPMethod = "GET";
+                detail2.ResponseStatusCode = resp.StatusCode.ToString();
 
                 if (HttpStatusCode.OK == resp.StatusCode && additionalInfos.Count > 1)
                 {

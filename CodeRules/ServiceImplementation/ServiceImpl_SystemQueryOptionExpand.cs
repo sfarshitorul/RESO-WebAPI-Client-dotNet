@@ -102,6 +102,10 @@ namespace ODataValidator.Rule
                 });
             if (null == navigPropNames || !navigPropNames.Any())
             {
+                var detail1 = new ExtensionRuleResultDetail("ServiceImpl_SystemQueryOptionExpand");
+                detail1.ResponsePayload = svcStatus.MetadataDocument;
+                detail1.ErrorMessage = "No navigational properties found";
+                info = new ExtensionRuleViolationInfo(context.ServiceBaseUri, string.Empty, detail1);
                 return passed;
             }
 
@@ -111,6 +115,12 @@ namespace ODataValidator.Rule
             string url = string.Format("{0}/{1}?$expand={2}", svcStatus.RootURL.TrimEnd('/'), entitySetUrl, navigPropName);
             var resp = WebHelper.Get(new Uri(url), string.Empty, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, svcStatus.DefaultHeaders);
             var detail = new ExtensionRuleResultDetail("ServiceImpl_SystemQueryOptionExpand", url, HttpMethod.Get, string.Empty);
+            detail.URI = url;
+            detail.ResponsePayload = resp.ResponsePayload;
+            detail.ResponseHeaders = resp.ResponseHeaders;
+            detail.HTTPMethod = "GET";
+            detail.ResponseStatusCode = resp.StatusCode.ToString();
+
             info = new ExtensionRuleViolationInfo(new Uri(url), string.Empty, detail);
             if (null != resp && HttpStatusCode.OK == resp.StatusCode)
             {
@@ -134,7 +144,16 @@ namespace ODataValidator.Rule
                     }
                 }
             }
-
+            else
+            {
+                detail.ErrorMessage = "Response return an error message:  " + resp.StatusCode.ToString();
+                passed = false;
+                return passed;
+            }
+            if (passed != true)
+            {
+                detail.ErrorMessage = "No valid navigational properties found";
+            }
             return passed;
         }
     }

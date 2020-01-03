@@ -111,6 +111,12 @@ namespace ODataValidator.Rule
             string url = string.Format("{0}/{1}?$filter={2} add {3} gt {4}", svcStatus.RootURL.TrimEnd('/'), entitySetUrl, propName, addend, threshold);
             var resp = WebHelper.Get(new Uri(url), Constants.V4AcceptHeaderJsonFullMetadata, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
             var detail = new ExtensionRuleResultDetail("ServiceImpl_SystemQueryOptionFilter_Addition", url, HttpMethod.Get, string.Empty);
+            detail.URI = url;
+            detail.ResponsePayload = resp.ResponsePayload;
+            detail.ResponseHeaders = resp.ResponseHeaders;
+            detail.HTTPMethod = "GET";
+            detail.ResponseStatusCode = resp.StatusCode.ToString();
+
             info = new ExtensionRuleViolationInfo(new Uri(url), string.Empty, detail);
             if (null != resp && HttpStatusCode.OK == resp.StatusCode)
             {
@@ -124,6 +130,7 @@ namespace ODataValidator.Rule
                         double val = Convert.ToDouble(entity[propName]);
                         if (val + addend <= threshold)
                         {
+                            detail.ErrorMessage = "Addition was done incorrectly.  ";
                             passed = false;
                             break;
                         }
@@ -136,6 +143,7 @@ namespace ODataValidator.Rule
             }
             else
             {
+                detail.ErrorMessage = "Response return an error message:  " + resp.StatusCode.ToString();
                 passed = false;
             }
 

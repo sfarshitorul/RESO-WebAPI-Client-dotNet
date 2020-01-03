@@ -106,6 +106,12 @@ namespace ODataValidator.Rule
             string url = string.Format("{0}/{1}?$select={2}", svcStatus.RootURL.TrimEnd('/'), entitySetUrl, propName);
             var resp = WebHelper.Get(new Uri(url), string.Empty, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, svcStatus.DefaultHeaders);
             var detail = new ExtensionRuleResultDetail("ServiceImpl_SystemQueryOptionSelect", url, HttpMethod.Get, string.Empty);
+            detail.URI = url;
+            detail.ResponsePayload = resp.ResponsePayload;
+            detail.ResponseHeaders = resp.ResponseHeaders;
+            detail.HTTPMethod = "GET";
+            detail.ResponseStatusCode = resp.StatusCode.ToString();
+
             info = new ExtensionRuleViolationInfo(new Uri(url), string.Empty, detail);
             if (null != resp && HttpStatusCode.OK == resp.StatusCode)
             {
@@ -118,6 +124,8 @@ namespace ODataValidator.Rule
                         passed = true;
                         if (propNames.Contains(prop.Name))
                         {
+                            detail.ErrorMessage = propNames +" does not contain "+ prop.Name;
+
                             passed = false;
                             break;
                         }

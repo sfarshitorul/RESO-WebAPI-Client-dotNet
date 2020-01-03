@@ -147,6 +147,12 @@ namespace ODataValidator.Rule
                 var hasEtag = additionalInfos.Last().HasEtag;
                 resp = WebHelper.DeleteEntity(entityId, context.RequestHeaders, hasEtag);
                 detail = new ExtensionRuleResultDetail(this.Name, entityId, HttpMethod.Delete, string.Empty, resp);
+                detail.URI = entityId;
+                detail.ResponsePayload = resp.ResponsePayload;
+                detail.ResponseHeaders = resp.ResponseHeaders;
+                detail.HTTPMethod = "GET";
+                detail.ResponseStatusCode = resp.StatusCode.ToString();
+
                 if (HttpStatusCode.NoContent == resp.StatusCode)
                 {
                     resp = WebHelper.GetEntity(entityId);

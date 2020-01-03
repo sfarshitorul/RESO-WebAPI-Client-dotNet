@@ -179,7 +179,7 @@ namespace ODataValidator.Rule.Helper
 
             if (context.ServiceBaseUri != null)
             {
-                string pathRelative = context.DestinationBasePath.Substring(context.ServiceBaseUri.AbsoluteUri.Length);
+                string pathRelative = context.DestinationBasePath.Substring(context.ServiceBaseUri.AbsoluteUri.Length-1);
                 segment = pathRelative.Trim('/');
                 if (!string.IsNullOrEmpty(pathRelative) && !pathRelative.Equals(Constants.Metadata, StringComparison.Ordinal))
                 {

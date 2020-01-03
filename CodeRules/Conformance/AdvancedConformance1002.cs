@@ -71,7 +71,9 @@ namespace ODataValidator.Rule
             string url = context.Destination.AbsoluteUri.TrimEnd('/') + @"/$metadata";
             Response response = WebHelper.Get(new Uri(url), string.Empty, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
             ExtensionRuleResultDetail detail = new ExtensionRuleResultDetail(this.Name, url, "GET", StringHelper.MergeHeaders(string.Empty, context.RequestHeaders), response);
-
+            detail.URI = url;
+            detail.ResponsePayload = response.ResponsePayload;
+            detail.ResponseHeaders = response.ResponseHeaders;
             // Get EntityContainer from metadata response payload.
             try
             {
@@ -93,6 +95,7 @@ namespace ODataValidator.Rule
                 {
                     passed = false;
                     detail.ErrorMessage = "There is no EntityContainer in metadata document.";
+
                 }
             }
             catch(Exception ex)

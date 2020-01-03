@@ -144,6 +144,12 @@ namespace ODataValidator.Rule
                     url = string.Format("{0}?$filter=hour({1}) eq {2}", url, propName, propVal);
                     resp = WebHelper.Get(new Uri(url), string.Empty, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, svcStatus.DefaultHeaders);
                     var detail = new ExtensionRuleResultDetail(this.Name, url, HttpMethod.Get, string.Empty);
+                    detail.URI = url;
+                    detail.ResponsePayload = resp.ResponsePayload;
+                    detail.ResponseHeaders = resp.ResponseHeaders;
+                    detail.HTTPMethod = "GET";
+                    detail.ResponseStatusCode = resp.StatusCode.ToString();
+
                     info = new ExtensionRuleViolationInfo(new Uri(url), string.Empty, detail);
                     if (null != resp && HttpStatusCode.OK == resp.StatusCode)
                     {
@@ -157,15 +163,25 @@ namespace ODataValidator.Rule
                         foreach (JObject et in jArr)
                         {
                             passed = et[propName].ToString().Substring(index + 1, 2) == propVal;
+                            if(passed == false)
+                            {
+                                detail.ErrorMessage = et[propName].ToString() + " Substring(index + 1, 2) not equal to " + propVal;
+                                break;
+                            }
                         }
                     }
                     else
                     {
+                        detail.ErrorMessage = "The server returned an error response:  " + detail.ResponseStatusCode;
                         passed = false;
                     }
                 }
                 else
                 {
+                    var detail2 = new ExtensionRuleResultDetail(this.Name);
+                    detail2.ErrorMessage = "The demiliter T is not in the date response:  " + propVal;
+                    info = new ExtensionRuleViolationInfo(context.ServiceBaseUri, string.Empty, detail2);
+                    
                     passed = false;
                 }
             }

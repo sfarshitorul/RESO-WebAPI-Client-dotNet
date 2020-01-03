@@ -178,6 +178,12 @@ namespace ODataValidator.Rule
 
                     resp = WebHelper.Get(new Uri(url), null, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, null);
                     detail = new ExtensionRuleResultDetail(this.Name, url, HttpMethod.Get, StringHelper.MergeHeaders(Constants.V4AcceptHeaderJsonFullMetadata, serviceStatus.DefaultHeaders), resp);
+                    detail.URI = url;
+                    detail.ResponsePayload = resp.ResponsePayload;
+                    detail.ResponseHeaders = resp.ResponseHeaders;
+                    detail.HTTPMethod = "GET";
+                    detail.ResponseStatusCode = resp.StatusCode.ToString();
+
                     if ((resp.StatusCode.HasValue && HttpStatusCode.OK == resp.StatusCode) || HttpStatusCode.NoContent == resp.StatusCode)
                     {
                         resp = WebHelper.DeleteEntity(url, context.RequestHeaders, additionalInfos.Last().HasEtag);

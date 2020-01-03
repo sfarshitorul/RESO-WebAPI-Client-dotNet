@@ -1069,6 +1069,7 @@ namespace RESOReference
                 //Uri uri = new Uri(host, url.AbsoluteUri);
                 
                 Uri service = GetUri(clientsettings.GetSetting(settings.webapi_uri).TrimEnd('/')+"/");
+
                 ServiceStatus intservice = ServiceStatus.GetInstance(clientsettings.GetSetting(settings.webapi_uri).TrimEnd('/') + "/", reqHeadersString);
                 ServiceStatus.ReviseMetadata(metadataresponse);
                 ServiceContext ctx = new ServiceContext(url, JobID, HttpStatusCode.OK, reqHeadersString, metadataresponse, string.Empty, service, serviceresponse, metadataresponse, false, reqHeaders, ODataMetadataType.MinOnly);
@@ -1292,7 +1293,7 @@ namespace RESOReference
             {
                 entitySetURLs = MetadataHelper.GetEntitySetURLs();
             }
-            catch (Exception ex)
+            catch
             {
                 servicegood = false;
             }
@@ -1431,11 +1432,47 @@ namespace RESOReference
 
                 }
             }
-
-            if(!rulecontrolfile.Checked)
+            if(rulecontrolfile.Checked)
             {
-                return false;
+                RuleControl control2 = testcontrol.rulecontrol[rule.Name] as RuleControl;
+                if (string.IsNullOrEmpty(TestsToRun.Text))
+                {
+                    if (control2 != null)
+                    {
+                        return true;
+                    }
+                }
+                else if (rule.Name == TestsToRun.Text)
+                {
+                    return true;
+                }
+
+                
+
             }
+            //if(!rulecontrolfile.Checked)
+            //{
+            //    return false;
+            //}
+            if (!metadatatests.Checked && !servicedoctests.Checked && !rulecontrolfile.Checked)
+            {
+                if ((rule.Version == ODataValidator.RuleEngine.ODataVersion.V3_V4) ||
+                     (rule.Version == ODataValidator.RuleEngine.ODataVersion.V4) ||
+                    (rule.Version == ODataValidator.RuleEngine.ODataVersion.V_All))
+                {
+                    if (string.IsNullOrEmpty(TestsToRun.Text))
+                    {
+                        return true;
+                    }
+                    else if (rule.Name == TestsToRun.Text)
+                    {
+                        return true;
+                    }
+
+                }
+            }
+
+            return false;//If a filter is not checked run all rules.
             //Advanced.Conformance.1004
             //Advanced.Conformance.1007
 
@@ -1517,89 +1554,89 @@ namespace RESOReference
             {
                 return false;
             }
-            //ServiceImpl_SystemQueryOptionSkip
+            ////ServiceImpl_SystemQueryOptionSkip
 
-            if (rule.Name == "ServiceImpl_SystemQueryOptionCount")//Takes too long.  Need to make it an option.
-            {
-                return false;
-            }
-            if (rule.Name == "ServiceImpl_RequestingChanges_delta")//Takes too long.  Need to make it an option.
-            {
-                return false;
-            }
-
-
-            //return false;
-
-            //if ((rule.RequirementLevel != RequirementLevel.Must) && (rule.RequirementLevel != RequirementLevel.MustNot))
+            //if (rule.Name == "ServiceImpl_SystemQueryOptionCount")//Takes too long.  Need to make it an option.
             //{
             //    return false;
             //}
-            //if (rule.Name == "Common.Core.3100") return true;
-            //if (rule.Name == "Common.Core.3009") return true;
-            //return false;
-            //if (rule.Name.IndexOf("Advanced.Conformance") >= 0)
+            //if (rule.Name == "ServiceImpl_RequestingChanges_delta")//Takes too long.  Need to make it an option.
             //{
             //    return false;
             //}
-            //if (rule.Name.IndexOf("Intermediate.Conformance") >= 0)
-            //{
-            //    return false;
-            //}
-            // if (rule.Name.IndexOf("Entry.Core") >= 0)
-            {
-                // return false;
-            }
 
-            if (string.IsNullOrEmpty(rule.V4Specification) || (rule.Version != ODataValidator.RuleEngine.ODataVersion.UNKNOWN && rule.Version != ODataValidator.RuleEngine.ODataVersion.V_All && rule.Version != ODataValidator.RuleEngine.ODataVersion.V3_V4 && rule.Version != ODataValidator.RuleEngine.ODataVersion.V4))
-            {
-                return false;
-            }
-            if (rule.PayloadFormat != null && rule.PayloadFormat == ODataValidator.RuleEngine.PayloadFormat.Atom)
-            {
-                return false;
-            }
-            if (rule.PayloadType == ODataValidator.RuleEngine.PayloadType.Entry)
-            {
-                return false;
-            }
-            //if (rule.ResourceType != null && rule.ResourceType == ConformanceServiceType.ReadWrite)
-            //{
-            //    return false;
+
+            ////return false;
+
+            ////if ((rule.RequirementLevel != RequirementLevel.Must) && (rule.RequirementLevel != RequirementLevel.MustNot))
+            ////{
+            ////    return false;
             ////}
-            //if (!AtomTests.Checked)
+            ////if (rule.Name == "Common.Core.3100") return true;
+            ////if (rule.Name == "Common.Core.3009") return true;
+            ////return false;
+            ////if (rule.Name.IndexOf("Advanced.Conformance") >= 0)
+            ////{
+            ////    return false;
+            ////}
+            ////if (rule.Name.IndexOf("Intermediate.Conformance") >= 0)
+            ////{
+            ////    return false;
+            ////}
+            //// if (rule.Name.IndexOf("Entry.Core") >= 0)
             //{
-            //    if (rule.Description.IndexOf("Atom", StringComparison.CurrentCultureIgnoreCase) >= 0)
-            //    {
-            //        return false;
-            //    }
-            //    if (rule.PayloadFormat == ODataValidator.RuleEngine.PayloadFormat.Atom)
-            //    {
-            //        return false;
-            //    }
+            //    // return false;
             //}
-            //if(rule.IsMediaLinkEntry != null && (bool)rule.IsMediaLinkEntry)
+
+            //if (string.IsNullOrEmpty(rule.V4Specification) || (rule.Version != ODataValidator.RuleEngine.ODataVersion.UNKNOWN && rule.Version != ODataValidator.RuleEngine.ODataVersion.V_All && rule.Version != ODataValidator.RuleEngine.ODataVersion.V3_V4 && rule.Version != ODataValidator.RuleEngine.ODataVersion.V4))
+            //{
+            //    return false;
+            //}
+            //if (rule.PayloadFormat != null && rule.PayloadFormat == ODataValidator.RuleEngine.PayloadFormat.Atom)
+            //{
+            //    return false;
+            //}
+            //if (rule.PayloadType == ODataValidator.RuleEngine.PayloadType.Entry)
+            //{
+            //    return false;
+            //}
+            ////if (rule.ResourceType != null && rule.ResourceType == ConformanceServiceType.ReadWrite)
+            ////{
+            ////    return false;
+            //////}
+            ////if (!AtomTests.Checked)
+            ////{
+            ////    if (rule.Description.IndexOf("Atom", StringComparison.CurrentCultureIgnoreCase) >= 0)
+            ////    {
+            ////        return false;
+            ////    }
+            ////    if (rule.PayloadFormat == ODataValidator.RuleEngine.PayloadFormat.Atom)
+            ////    {
+            ////        return false;
+            ////    }
+            ////}
+            ////if(rule.IsMediaLinkEntry != null && (bool)rule.IsMediaLinkEntry)
+            ////{
+            ////    return false;
+            ////}
+
+
+
+            //if (rule.Name == "ServiceImpl_RequestingChanges_delta")//Takes too long.  Need to make it an option.
             //{
             //    return false;
             //}
 
-
-
-            if (rule.Name == "ServiceImpl_RequestingChanges_delta")//Takes too long.  Need to make it an option.
-            {
-                return false;
-            }
-
-            //if (rule.Category == "SERVICEIMPL")
-            //{
-            //    //if (rule.Name != "ServiceImpl_RequestingChanges_delta")
-            //    return false;
-            //}
-            //if ((rule.RequirementLevel == RequirementLevel.Must) || (rule.RequirementLevel == RequirementLevel.MustNot))
-            //{
-            //    return true;
-            //}
-            return true;
+            ////if (rule.Category == "SERVICEIMPL")
+            ////{
+            ////    //if (rule.Name != "ServiceImpl_RequestingChanges_delta")
+            ////    return false;
+            ////}
+            ////if ((rule.RequirementLevel == RequirementLevel.Must) || (rule.RequirementLevel == RequirementLevel.MustNot))
+            ////{
+            ////    return true;
+            ////}
+            //return true;
         }
 
         private void BuildResultsOutput(ref StringBuilder sbresults, ODataValidator.RuleEngine.TestResult result)

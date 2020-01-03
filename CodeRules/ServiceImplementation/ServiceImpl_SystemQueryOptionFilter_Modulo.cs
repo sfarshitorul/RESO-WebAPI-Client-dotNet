@@ -111,6 +111,12 @@ namespace ODataValidator.Rule
             string url = string.Format("{0}/{1}?$filter={2} mod {3} eq {4}", svcStatus.RootURL.TrimEnd('/'), entitySetUrl, propName, divisor, threshold);
             var resp = WebHelper.Get(new Uri(url), Constants.V4AcceptHeaderJsonFullMetadata, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
             var detail = new ExtensionRuleResultDetail(this.Name, url, HttpMethod.Get, string.Empty);
+            detail.URI = url;
+            detail.ResponsePayload = resp.ResponsePayload;
+            detail.ResponseHeaders = resp.ResponseHeaders;
+            detail.HTTPMethod = "GET";
+            detail.ResponseStatusCode = resp.StatusCode.ToString();
+
             info = new ExtensionRuleViolationInfo(new Uri(url), string.Empty, detail);
             if (null != resp && HttpStatusCode.OK == resp.StatusCode)
             {
@@ -124,6 +130,7 @@ namespace ODataValidator.Rule
                         double val = Convert.ToDouble(entity[propName]);
                         if (val % divisor != threshold)
                         {
+                            detail.ErrorMessage = "The MOD calculation failed to between "+val+" and "+divisor+" does not equal " + threshold;
                             passed = false;
                             break;
                         }
@@ -134,7 +141,13 @@ namespace ODataValidator.Rule
                     }
                 }
             }
-            
+            else
+            {
+                detail.ErrorMessage = "The server returned an error response:  " + detail.ResponseStatusCode;
+                passed = false;
+
+            }
+
             return passed;
         }
     }

@@ -83,7 +83,7 @@ namespace ODataValidator.Rule.Helper
                             {
                                 result = ((int)x[this.propName]).CompareTo((int)y[this.propName]);
                             }
-                            catch (Exception ex)
+                            catch
                             {
                                 if (x[this.propName] == null && y[this.propName] == null)
                                 {

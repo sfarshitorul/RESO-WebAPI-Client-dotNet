@@ -148,6 +148,11 @@ namespace ODataValidator.Rule
                 {
                     resp = WebHelper.UpdateMediaTypeEntity(url, context.RequestHeaders, additionalInfos.Last().HasEtag);
                     detail = new ExtensionRuleResultDetail(this.Name, url, HttpMethod.Put, string.Empty, resp, string.Empty, "Successfully updated the stream of the image.");
+                    detail.URI = url;
+                    detail.ResponsePayload = resp.ResponsePayload;
+                    detail.ResponseHeaders = resp.ResponseHeaders;
+                    detail.HTTPMethod = "GET";
+                    detail.ResponseStatusCode = resp.StatusCode.ToString();
 
                     if (null != resp && (HttpStatusCode.NoContent == resp.StatusCode || resp.StatusCode == HttpStatusCode.OK))
                     {

@@ -91,6 +91,7 @@ namespace ODataValidator.Rule
                 throw new ArgumentNullException("context");
             }
 
+
             bool? passed = null;
             info = null;
             var svcStatus = ServiceStatus.GetInstance();
@@ -111,7 +112,21 @@ namespace ODataValidator.Rule
 
             string url = svcStatus.RootURL.TrimEnd('/') + "/" + entitySetUrl;
             var resp = WebHelper.Get(new Uri(url), string.Empty, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, svcStatus.DefaultHeaders);
-            if (null != resp && HttpStatusCode.OK == resp.StatusCode)
+
+            if (null == resp || HttpStatusCode.OK != resp.StatusCode)
+            {
+                passed = false;
+                ExtensionRuleResultDetail detail = new ExtensionRuleResultDetail(this.Name);
+                info = new ExtensionRuleViolationInfo(context.Destination, context.ResponsePayload, detail);
+                detail = info.Details[0];
+
+               
+                detail.ErrorMessage = JsonParserHelper.GetErrorMessage(resp.ResponsePayload);
+                detail.ResponsePayload = resp.ResponsePayload;
+                detail.ResponseHeaders = resp.ResponseHeaders;
+                
+            }
+            else
             {
                 JObject jObj = JObject.Parse(resp.ResponsePayload);
                 JArray jArr = jObj.GetValue(Constants.Value) as JArray;
@@ -119,6 +134,12 @@ namespace ODataValidator.Rule
                 url = string.Format("{0}?$filter={1} le now()", url, propName);
                 resp = WebHelper.Get(new Uri(url), string.Empty, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, svcStatus.DefaultHeaders);
                 var detail = new ExtensionRuleResultDetail(this.Name, url, HttpMethod.Get, string.Empty);
+                detail.URI = url;
+                detail.ResponsePayload = resp.ResponsePayload;
+                detail.ResponseHeaders = resp.ResponseHeaders;
+                detail.HTTPMethod = "GET";
+                detail.ResponseStatusCode = resp.StatusCode.ToString();
+
                 info = new ExtensionRuleViolationInfo(new Uri(url), string.Empty, detail);
                 if (null != resp && HttpStatusCode.OK == resp.StatusCode)
                 {

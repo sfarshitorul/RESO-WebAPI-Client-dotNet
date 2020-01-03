@@ -149,6 +149,10 @@ namespace ODataValidator.Rule
             string reqDataStr = reqData.ToString();
             var resp = WebHelper.CreateEntity(url, context.RequestHeaders, reqData, false, ref additionalInfos);
             detail1 = new ExtensionRuleResultDetail(this.Name, url, HttpMethod.Post, string.Empty, resp, string.Empty, reqDataStr);
+            detail1.URI = url;
+            detail1.ResponsePayload = resp.ResponsePayload;
+            detail1.ResponseHeaders = resp.ResponseHeaders;
+            detail1.HTTPMethod = "POST";
             if (HttpStatusCode.Created == resp.StatusCode)
             {
                 string entityId = additionalInfos.Last().EntityId;
@@ -202,7 +206,7 @@ DELETE {0} HTTP/1.1
             else
             {
                 passed = false;
-                detail1.ErrorMessage = string.Format("Created entity failed for above URI with entity data {0}. ", reqDataStr);
+                detail1.ErrorMessage = string.Format("Created entity failed for above URI with entity data {0}.  Server Response:  {1}", reqDataStr, resp.StatusCode);
             }
 
             var details = new List<ExtensionRuleResultDetail>() { detail1, detail2 }.RemoveNullableDetails();

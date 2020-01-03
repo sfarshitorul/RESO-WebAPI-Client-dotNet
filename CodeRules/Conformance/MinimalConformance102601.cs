@@ -168,6 +168,12 @@ namespace ODataValidator.Rule
                 string individualProUrl = entityId + @"/" + toUpdatePropertyName;
                 resp = WebHelper.Get(new Uri(individualProUrl), Constants.AcceptHeaderJson, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, serviceStatus.DefaultHeaders);
                 detail2 = new ExtensionRuleResultDetail(this.Name, individualProUrl, HttpMethod.Get, StringHelper.MergeHeaders(Constants.AcceptHeaderJson, serviceStatus.DefaultHeaders), resp);
+                detail2.URI = url;
+                detail2.ResponsePayload = resp.ResponsePayload;
+                detail2.ResponseHeaders = resp.ResponseHeaders;
+                detail2.HTTPMethod = "GET";
+                detail2.ResponseStatusCode = resp.StatusCode.ToString();
+
                 if (resp.StatusCode == HttpStatusCode.OK)
                 {
                     JObject jo;
@@ -179,12 +185,20 @@ namespace ODataValidator.Rule
                     // Update the individual property
                     resp = WebHelper.UpdateEntity(individualProUrl, jo.ToString(), HttpMethod.Put);
                     detail3 = new ExtensionRuleResultDetail(this.Name, individualProUrl, HttpMethod.Put, string.Empty, resp, string.Empty, jo.ToString());
+                    detail3.URI = individualProUrl;
+                    detail3.ResponsePayload = resp.ResponsePayload;
+                    detail3.ResponseHeaders = resp.ResponseHeaders;
+                    detail3.HTTPMethod = "PUT";
+                    detail3.RequestData = jo.ToString();
+                    detail3.ResponseStatusCode = resp.StatusCode.ToString();
+
                     if (resp.StatusCode == HttpStatusCode.NoContent)
                     {
                         // Check whether the individual property is updated to new value
                         if (WebHelper.GetContent(individualProUrl, context.RequestHeaders, out resp))
                         {
                             detail4 = new ExtensionRuleResultDetail(this.Name, individualProUrl, HttpMethod.Get, string.Empty, resp);
+
                             resp.ResponsePayload.TryToJObject(out jo);
 
                             if (jo != null && jo[Constants.Value] != null && jo[Constants.Value].Value<string>().Equals(newValue))

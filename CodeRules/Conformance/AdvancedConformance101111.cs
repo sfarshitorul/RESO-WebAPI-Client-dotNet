@@ -146,7 +146,10 @@ namespace ODataValidator.Rule
             string reqDataStr = reqData.ToString();
             var resp = WebHelper.CreateEntity(url, context.RequestHeaders, reqData, false, ref additionalInfos);
             detail1 = new ExtensionRuleResultDetail(this.Name, url, HttpMethod.Post, string.Empty, resp, string.Empty, reqDataStr);
-
+            detail1.URI = url;
+            detail1.ResponsePayload = resp.ResponsePayload;
+            detail1.ResponseHeaders = resp.ResponseHeaders;
+            detail1.HTTPMethod = "GET";
             if (HttpStatusCode.Created == resp.StatusCode)
             {
                 string entityId = additionalInfos.Last().EntityId;

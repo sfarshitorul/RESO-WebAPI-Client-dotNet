@@ -1,0 +1,1247 @@
+﻿ <!-- working piece -->
+<!-- update open cart order confirmation -->
+<table style="max-width: 600px">
+    <tr>
+        <td>
+            %%[
+            var @showGWPfooter
+            set @showGWPfooter = 0
+
+            SET @orderNumber = BuildRowSetFromXML(@order_xml, "//orderNumber", 1)
+            IF RowCount(@orderNumber) > 0 THEN
+            SET @orderNumber = Field(Row(@orderNumber, 1), "Value")
+            SET @orderNumberExists = "true"
+            ELSE
+            SET @orderNumber = ""
+            SET @orderNumberExists = "false"
+            ENDIF
+
+            SET @orderDateTime = BuildRowSetFromXML(@order_xml, "//orderDateTime", 1)
+            IF RowCount(@orderDateTime) > 0 THEN
+            SET @orderDateTime = Field(Row(@orderDateTime, 1), "Value")
+            ELSE
+            SET @orderDateTime = ""
+            ENDIF
+
+            SET @customerId = BuildRowSetFromXML(@order_xml, "//billingInfo/customerId", 1)
+            IF RowCount(@customerId) > 0 THEN
+            SET @customerId = Field(Row(@customerId, 1), "Value")
+            ELSE
+            SET @customerId = ""
+            ENDIF
+
+            SET @orderTotal1 = BuildRowSetFromXML(@order_xml, "//orderDetailTotals/orderTotal", 1)
+            IF RowCount(@orderTotal1) > 0 THEN
+            SET @orderTotal1 = Field(Row(@orderTotal1, 1), "Value")
+            ELSE
+            SET @orderTotal1 = ""
+            ENDIF
+
+            SET @lastName = BuildRowSetFromXML(@order_xml, "//billingInfo/lastName", 1)
+            IF RowCount(@lastName) > 0 THEN
+            SET @lastName = Field(Row(@lastName, 1), "Value")
+            SET @lastName = ProperCase(@lastName)
+            ELSE
+            SET @lastName = ""
+            ENDIF
+
+            SET @addressLine1 = BuildRowSetFromXML(@order_xml, "//billingInfo/addressLine1", 1)
+            IF RowCount(@addressLine1) > 0 THEN
+            SET @addressLine1 = Field(Row(@addressLine1, 1), "Value")
+            SET @addressLine1 = ProperCase(@addressLine1)
+            ELSE
+            SET @addressLine1 = ""
+            ENDIF
+
+            SET @addressLine2 = BuildRowSetFromXML(@order_xml, "//billingInfo/addressLine2", 1)
+            IF RowCount(@addressLine2) > 0 THEN
+            SET @addressLine2 = Field(Row(@addressLine2, 1), "Value")
+            SET @addressLine2 = ProperCase(@addressLine2)
+            ELSE
+            SET @addressLine2 = "NA"
+            ENDIF
+
+            SET @city = BuildRowSetFromXML(@order_xml, "//billingInfo/city", 1)
+            IF RowCount(@city) > 0 THEN
+            SET @city = Field(Row(@city, 1), "Value")
+            SET @city = ProperCase(@city)
+            ELSE
+            SET @city = ""
+            ENDIF
+
+            SET @state = BuildRowSetFromXML(@order_xml, "//billingInfo/state", 1)
+            IF RowCount(@state) > 0 THEN
+            SET @state = Field(Row(@state, 1), "Value")
+            ELSE
+            SET @state = ""
+            ENDIF
+
+            SET @postalCode = BuildRowSetFromXML(@order_xml, "//billingInfo/postalCode", 1)
+            IF RowCount(@postalCode) > 0 THEN
+            SET @postalCode = Field(Row(@postalCode, 1), "Value")
+            ELSE
+            SET @postalCode = ""
+            ENDIF
+
+            ]%%
+            %%=ContentAreaByName("My Contents\Transactional\Order Confirmation Pink Box")=%%
+            %%[
+            /* Begin orderDestination loop */
+            /* transaction counter because order destinations can reset the value */
+            VAR @transactionCounter
+            SET @transactionCounter = 0
+
+            /* Begin orderTransactionRows loop - nested inside the shipmentSalesOrder Loop */
+            SET @orderTransactionRows = BuildRowSetFromXML(@order_xml, "//root/orderTransactionList/orderTransaction", 1)
+            IF RowCount(@orderTransactionRows) > 0 THEN
+            FOR @otr = 1 TO RowCount(@orderTransactionRows) DO
+            SET @transactionCounter = add(@transactionCounter,1)
+            SET @orderTransactionRow = Row(@orderTransactionRows, @otr)
+            SET @orderTransactionRow_xml = Field(@orderTransactionRow, "XML")
+            SET @orderTransactionRow_xml = Concat('<root>',@orderTransactionRow_xml,'</root>')
+            SET @transactionDisplayNumber = BuildRowSetFromXML(@orderTransactionRow_xml, "//root/transactionDisplayNumber", 1)
+            IF RowCount(@transactionDisplayNumber) > 0 THEN
+            SET @transactionDisplayNumber = Field(Row(@transactionDisplayNumber, 1), "Value")
+            ELSE
+            SET @transactionDisplayNumber = ""
+            ENDIF
+            SET @transactionDateTime = BuildRowSetFromXML(@orderTransactionRow_xml, "//root/transactionDateTime", 1)
+            IF RowCount(@transactionDateTime) > 0 THEN
+            SET @transactionDateTime = Field(Row(@transactionDateTime, 1), "Value")
+            SET @transactionDateTime = DateParse(@transactionDateTime)
+            SET @dateTimeMonth = datepart(@transactionDateTime, "M")
+            IF @dateTimeMonth == 1 then
+            SET @DateTimeMonth = "January"
+            ELSEIF @dateTimeMonth == 2 then
+            SET @DateTimeMonth = "February"
+            ELSEIF @dateTimeMonth == 3 then
+            SET @DateTimeMonth = "March"
+            ELSEIF @dateTimeMonth == 4 then
+            SET @DateTimeMonth = "April"
+            ELSEIF @dateTimeMonth == 5 then
+            SET @DateTimeMonth = "May"
+            ELSEIF @dateTimeMonth == 6 then
+            SET @DateTimeMonth = "June"
+            ELSEIF @dateTimeMonth == 7 then
+            SET @DateTimeMonth = "July"
+            ELSEIF @dateTimeMonth == 8 then
+            SET @DateTimeMonth = "August"
+            ELSEIF @dateTimeMonth == 9 then
+            SET @DateTimeMonth = "September"
+            ELSEIF @dateTimeMonth == 10 then
+            SET @DateTimeMonth = "October"
+            ELSEIF @dateTimeMonth == 11 then
+            SET @DateTimeMonth = "November"
+            ELSEIF @dateTimeMonth == 12 then
+            SET @DateTimeMonth = "December"
+            ENDIF
+            SET @dateTimeDay =  datepart(@transactionDateTime, "D")
+            SET @dateTimeYear = datepart(@transactionDateTime, "Y")
+            SET @dateTimeHour = datepart(@transactionDateTime, "H")
+            SET @dateTimeMin = datepart(@transactionDateTime, "MI")
+            if @dateTImeMin < 10 then SET @dateTimeMin = concat("0",@dateTimeMin)
+            endif
+            SET @transactionDateTime = concat(@dateTimeMonth," ",@dateTimeDay,", ",@dateTimeYear, " at ", @dateTimeHour, ":",@dateTimeMin)
+            ELSE
+            SET @transactionDateTime = ""
+            ENDIF
+
+            SET @transactionItemSubTotal = BuildRowSetFromXML(@orderTransactionRow_xml, "//root/transactionDetailTotals/itemSubTotal", 1)
+            IF RowCount(@transactionItemSubTotal) > 0 THEN
+            SET @transactionItemSubTotal = Field(Row(@transactionItemSubTotal, 1), "Value")
+            ELSE
+            SET @transactionItemSubTotal = ""
+            ENDIF
+            SET @transactionItemDiscounts = BuildRowSetFromXML(@orderTransactionRow_xml, "//root/transactionDetailTotals/itemDiscounts", 1)
+            IF RowCount(@transactionItemDiscounts) > 0 THEN
+            SET @transactionItemDiscounts = Field(Row(@transactionItemDiscounts, 1), "Value")
+            ELSE
+            SET @transactionItemDiscounts = ""
+            ENDIF
+
+
+            SET @transactionItemTotal = BuildRowSetFromXML(@orderTransactionRow_xml, "//root/transactionDetailTotals/itemTotal", 1)
+            IF RowCount(@transactionItemTotal) > 0 THEN
+            SET @transactionItemTotal = Field(Row(@transactionItemTotal, 1), "Value")
+            ELSE
+            SET @transactionItemTotal = ""
+            ENDIF
+            SET @transactionShipping = BuildRowSetFromXML(@orderTransactionRow_xml, "//root/transactionDetailTotals/shipping", 1)
+            IF RowCount(@transactionShipping) > 0 THEN
+            SET @transactionShipping = Field(Row(@transactionShipping, 1), "Value")
+            ELSE
+            SET @transactionShipping = ""
+            ENDIF
+            SET @shippingDiscounts = BuildRowSetFromXML(@orderTransactionRow_xml, "//root/transactionDetailTotals/shippingDiscounts", 1)
+            IF RowCount(@shippingDiscounts) > 0 THEN
+            SET @shippingDiscounts = Field(Row(@shippingDiscounts, 1), "Value")
+            ELSE
+            SET @shippingDiscounts = ""
+            ENDIF
+            SET @transactionOrderTax = BuildRowSetFromXML(@orderTransactionRow_xml, "//root/transactionDetailTotals/orderTax", 1)
+            IF RowCount(@transactionOrderTax) > 0 THEN
+            SET @transactionOrderTax = Field(Row(@transactionOrderTax, 1), "Value")
+            ELSE
+            SET @transactionOrderTax = ""
+            ENDIF
+            SET @transactionOrderTotal = BuildRowSetFromXML(@orderTransactionRow_xml, "//root/transactionDetailTotals/orderTotal", 1)
+            IF RowCount(@transactionOrderTotal) > 0 THEN
+            SET @transactionOrderTotal = Field(Row(@transactionOrderTotal, 1), "Value")
+            ELSE
+            SET @transactionOrderTotal = ""
+            ENDIF
+            SET @sourceServiceProvider=BuildRowSetFromXML(@order_xml, "//root/orderTransactionList/orderTransaction/sourcingInfo/sourceServiceProvider", 1)
+            IF RowCount(@sourceServiceProvider) > 0 THEN
+            SET @sourceServiceProvider = Field(Row(@sourceServiceProvider, 1), "Value")
+            ELSE
+            SET @sourceServiceProvider = ""
+            ENDIF
+
+            if @transactionCounter == 1 THEN
+
+            ]%%
+            <table cellspacing="0" cellpadding="0" width="100%">
+                <tr valign="top">
+                    <td class="drop" style="padding-top: 10px;">
+                        <table>
+                            %%[ IF @orderNumberExists == "true" THEN ]%%
+                            <tr>
+                                <td style="text-align: left; font-family: Arial, sans-serif; font-weight: bold; font-size: 14px; padding-bottom: 5px;">Order # %%=v(@orderNumber)=%%</td>
+                            </tr>
+                            %%[ ENDIF ]%%
+                            <tr>
+                                <td style="text-align: left; font-family: Arial, sans-serif; font-size: 12px;">
+                                    Customer ID: %%=v(@customerId)=%%<br>
+                                    <a href="https://jtv.com/orders" target="_blank">Check Order Status</a>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td class="drop" style="padding-top: 10px;">
+                        <table>
+                            <tr>
+                                <td style="text-align: left; font-family: Arial, sans-serif; font-weight: bold; font-size: 14px; padding-bottom: 5px;">Billing Address</td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: left; font-family: Arial, sans-serif; font-size: 12px;">
+                                    %%=v(@firstName)=%% %%=v(@lastName)=%%<br>
+                                    %%=v(@addressLine1)=%%<br>
+                                    %%[ IF @addressLine2 != "NA" THEN ]%%
+                                    %%=v(@addressLine2)=%%<br>
+                                    %%[ ENDIF ]%%
+                                    %%=v(@city)=%%, %%=v(@state)=%% %%=v(@postalCode)=%%
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td class="drop" style="padding-top: 10px;">
+                        <table>
+                            <tr>
+                                <td style="text-align: left; font-family: Arial, sans-serif; font-weight: bold; font-size: 14px; padding-bottom: 5px;">Payment Method</td>
+                            </tr>
+                            %%[
+                            /* Begin paymentInfo loop */
+                            SET @paymentInfoRows = BuildRowSetFromXML(@order_xml, "//root/paymentInfoList/paymentInfo", 1)
+                            IF RowCount(@paymentInfoRows) > 0 THEN
+                            FOR @i = 1 TO RowCount(@paymentInfoRows) DO
+                            SET @paymentInfoRow = Row(@paymentInfoRows, @i)
+                            SET @paymentInfoRow_xml = Field(@paymentInfoRow, "XML")
+                            SET @paymentInfoRow_xml = Concat ('
+                            <root>',@paymentInfoRow_xml,'</root>')
+                            SET @paymentMethod = BuildRowSetFromXML(@paymentInfoRow_xml, "//root/paymentMethod", 1)
+                            IF RowCount(@paymentMethod) > 0 THEN
+                            SET @paymentMethod = Field(Row(@paymentMethod, 1), "Value")
+                            ELSE
+                            SET @paymentMethod = ""
+                            ENDIF
+                            SET @accountNumberLast4 = BuildRowSetFromXML(@paymentInfoRow_xml, "//root/accountNumberLast4", 1)
+                            IF RowCount(@accountNumberLast4) > 0 THEN
+                            SET @accountNumberLast4 = Field(Row(@accountNumberLast4, 1), "Value")
+                            ELSE
+                            SET @accountNumberLast4 = ""
+                            ENDIF
+                            SET @paymentAmount = BuildRowSetFromXML(@paymentInfoRow_xml, "//root/paymentAmount", 1)
+                            IF RowCount(@paymentAmount) > 0 THEN
+                            SET @paymentAmount = Field(Row(@paymentAmount, 1), "Value")
+                            ELSE
+                            SET @paymentAmount = ""
+                            ENDIF
+                            ]%%
+                            <tr>
+                                <td style="text-align: left; font-family: Arial, sans-serif; font-size: 12px;">
+                                    %%=v(@paymentMethod)=%% %%[ IF NOT EMPTY(@accountNumberLast4) THEN ]%%****%%=v(@accountNumberLast4)=%%%%[ ENDIF ]%%
+                                </td>
+                            </tr>
+                            %%[
+                            NEXT @i
+                            ENDIF /* Closes paymentInfo loop */
+                            ]%%
+                        </table>
+                    </td>
+                </tr>
+            </table>
+            %%[
+            if RowCount(@orderTransactionRows)  > 1 THEN
+            ]%%
+            <table cellspacing="0" cellpadding="0" width="100%">
+                <tr>
+                    <td>
+                        <h1 style="font-family: Arial, sans-serif; font-size: 24px; color: #d00178; display: inline-block !important;">Your Newly Ordered Items</h1>
+                    </td>
+                </tr>
+            </table>
+            <hr style="border: 2px dotted #d00178; border-style: none none dotted; " />
+            %%[
+            ENDIF
+            ]%%
+            <table cellspacing="0" cellpadding="0" width="100%">
+                <tr valign="top">
+                    <td style="padding-top: 10px; padding-right: 20px; padding-bottom: 20px; padding-left:20px;">
+                        <table cellspacing="0" cellpadding="0" width="100%">
+                            <tr valign="top">
+                                <td class="drop" style="padding-top: 10px;">
+                                    <table>
+                                        <tr>
+                                            <td><img id="image-placeholder" align="left" style="width: 66%; height: auto;" src="http://image.email.jtv.com/lib/fe921372756d0c7d76/m/1/icon-cart.png" border="0" title="icon-cart" /></td>
+                                            <td style="text-align: left; font-family: Arial, sans-serif; font-size: 12px;">
+                                                <font style="font-weight: bold">%%=v(@transactionDateTime)=%%</font><br>
+                                                Total: $%%=v(@transactionOrderTotal)=%%<br>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+            <!-- /Order Info -->
+            %%[
+            endif
+            if @transactionCounter == 2 then
+            ]%%
+            <table cellspacing="0" cellpadding="0" width="100%">
+                <tr>
+                    <td>
+                        <h1 style="font-family: Arial, sans-serif; font-size: 24px; color: #d00178; display: inline-block !important;">Other Items in Your Order</h1>
+                    </td>
+                </tr>
+            </table>
+            %%[
+            endif
+            if @otr > 1 then ]%%
+            <hr style="border: 2px dotted #d00178; border-style: none none dotted; " />
+            <table cellspacing="0" cellpadding="0" width="100%">
+                <tr valign="top">
+                    <td style="padding-top: 10px; padding-right: 20px; padding-bottom: 20px; padding-left:20px;">
+                        <table cellspacing="0" cellpadding="0" width="100%">
+                            <tr valign="top">
+                                <td class="drop" style="padding-top: 10px;">
+                                    <table>
+                                        <tr>
+                                            <td><img id="image-placeholder" align="left" style="width: 66%; height: auto;" src="http://image.email.jtv.com/lib/fe921372756d0c7d76/m/1/icon-cart.png" border="0" title="icon-cart" /></td>
+                                            <td style="text-align: left; font-family: Arial, sans-serif; font-size: 12px;">
+                                                <font style="font-weight: bold">%%=v(@transactionDateTime)=%%</font><br>
+                                                Total: $%%=v(@transactionOrderTotal)=%%<br>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+
+            %%[
+            endif
+
+            /* Begin orderLineItem loop - nested inside the shipmentSalesOrder Loop */
+            SET @orderLineItemRows = BuildRowSetFromXML(@orderTransactionRow_xml, "//root/orderLineItemList/orderLineItem", 1)
+            IF RowCount(@orderLineItemRows) > 0 THEN
+            FOR @j = 1 TO RowCount(@orderLineItemRows) DO
+            SET @orderLineItemRow = Row(@orderLineItemRows, @j)
+            SET @orderLineItemRow_xml = Field(@orderLineItemRow, "XML")
+            SET @orderLineItemRow_xml = Concat('<root>',@orderLineItemRow_xml,'</root>')
+            SET @baseProductId = BuildRowSetFromXML(@orderLineItemRow_xml, "//root/baseProductId", 1)
+            IF RowCount(@baseProductId) > 0 THEN
+            SET @baseProductId = Field(Row(@baseProductId, 1), "Value")
+            ELSE
+            SET @baseProductId = ""
+            ENDIF
+
+            SET @productURL = "https://www.jtv.com/product/%%=v(@baseProductId)=%%"
+
+            SET @productImageURL = BuildRowSetFromXML(@orderLineItemRow_xml, "//root/productImageURL", 1)
+            IF RowCount(@productImageURL) > 0 THEN
+            SET @productImageURL = Field(Row(@productImageURL, 1), "Value")
+            IF EMPTY(@productImageURL) THEN
+            SET @productImageURL = "http://image.email.jtv.com/lib/fe921372756d0c7d76/m/3/image_not_available_96x71.gif"
+            ENDIF
+            ELSE
+            SET @productImageURL = "http://image.email.jtv.com/lib/fe921372756d0c7d76/m/3/image_not_available_96x71.gif"
+            ENDIF
+
+
+            SET @productID = BuildRowSetFromXML(@orderLineItemRow_xml, "//root/productId", 1)
+            IF RowCount(@productID) > 0 THEN
+            SET @productID = Field(Row(@productID, 1), "Value")
+            ELSE
+            SET @productID = ""
+            ENDIF
+            SET @size = BuildRowSetFromXML(@orderLineItemRow_xml, "//root/size", 1)
+            IF RowCount(@size) > 0 THEN
+            SET @size = Field(Row(@size, 1), "Value")
+            ELSE
+            SET @size = "NA"
+            ENDIF
+            SET @productDescription = BuildRowSetFromXML(@orderLineItemRow_xml, "//root/productDescription", 1)
+            IF RowCount(@productDescription) > 0 THEN
+            SET @productDescription = ProperCase(Field(Row(@productDescription, 1), "Value"))
+            ELSE
+            SET @productDescription = ""
+            ENDIF
+            SET @unitPrice = BuildRowSetFromXML(@orderLineItemRow_xml, "//root/unitPrice", 1)
+            IF RowCount(@unitPrice) > 0 THEN
+            SET @unitPrice = Field(Row(@unitPrice, 1), "Value")
+            ELSE
+            SET @unitPrice = ""
+            ENDIF
+            SET @orderQuantity = BuildRowSetFromXML(@orderLineItemRow_xml, "//root/orderQuantity", 1)
+            IF RowCount(@orderQuantity) > 0 THEN
+            SET @orderQuantity = Field(Row(@orderQuantity, 1), "Value")
+            ELSE
+            SET @orderQuantity = ""
+            ENDIF
+            SET @extendedPrice = BuildRowSetFromXML(@orderLineItemRow_xml, "//root/extendedPrice", 1)
+            IF RowCount(@extendedPrice) > 0 THEN
+            SET @extendedPrice = Field(Row(@extendedPrice, 1), "Value")
+            ELSE
+            SET @extendedPrice = ""
+            ENDIF
+            SET @qualifyingReturnAmount = BuildRowSetFromXML(@orderLineItemRow_xml, "//root/qualifyingReturnAmount", 1)
+            IF RowCount(@qualifyingReturnAmount) > 0 THEN
+            SET @qualifyingReturnAmount = Field(Row(@qualifyingReturnAmount, 1), "Value")
+            ELSE
+            SET @qualifyingReturnAmount = ""
+            ENDIF
+            SET @isGWPReward = BuildRowSetFromXML(@orderLineItemRow_xml, "//root/isGWPReward", 1)
+            IF RowCount(@isGWPReward) > 0 THEN
+            SET @isGWPReward = Field(Row(@isGWPReward, 1), "Value")
+            ELSE
+            SET @isGWPReward = ""
+            ENDIF
+
+            if @isGWPReward == "Y" then
+            set @showGWPfooter = 1
+            set @GWPRewardPrice = @qualifyingReturnAmount
+            else
+            ]%%
+            <!-- Item 1 details -->
+            <table cellspacing="0" cellpadding="0" bgcolor="#ffffff" width="100%" style="table-layout: fixed;">
+                <tr>
+                    <td style="padding-top:10px; font-family: Arial, sans-serif;">
+                        <table cellspacing="0" cellpadding="0" width="100%" style="table-layout: fixed;">
+                            <tr valign="top">
+                                <td class="drop" style="text-align: left; padding-top: 10px; font-family: Arial, sans-serif; font-size: 13px;" width="50%">
+                                    <table cellspacing="0" cellpadding="0" width="100%">
+                                        <tr>
+                                            <td class="mobile-hidden" style="font-size: 13px; font-weight: bold; font-family: Arial, sans-serif; color: #666666; border-bottom: 1px; border-bottom-color: #e3e3e3; border-bottom-style: solid; padding-bottom: 7px;">Item</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-family: Arial, sans-serif; padding-top:5px;">
+                                                <table cellspacing="0" cellpadding="0" width="100%">
+                                                    <tr>
+                                                        <td style="padding: 5px;"><a href="%%=v(@productURL)=%%" target="_blank"><img src="%%=v(@productImageURL)=%%"></a></td>
+                                                        <td style="font-family: Arial, sans-serif; font-size: 13px;">
+                                                            %%=v(@productDescription)=%% - <a href="%%=v(@productURL)=%%?ssp=%%=v(@sourceServiceProvider)=%%" target="_blank" style="color:#666666;">%%=v(@productId)=%%</a>
+                                                            %%[ IF @size != "NA" THEN ]%% Size: %%=v(@size)=%% %%[ ENDIF ]%%
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td class="drop" style="text-align: left; padding-top: 10px; font-family: Arial, sans-serif; font-size: 13px;" valign="top">
+                                    <table cellspacing="0" cellpadding="0" width="100%" style="table-layout: fixed;">
+                                        <tr>
+                                            <td style="font-family: Arial, sans-serif; font-size: 13px; font-weight: bold; color: #666666; border-bottom: 1px; border-bottom-color: #e3e3e3; border-bottom-style: solid; padding-bottom: 7px; text-align: center;" width="20%">Qty</td>
+                                            <td style="font-family: Arial, sans-serif; font-size: 13px; font-weight: bold; color: #666666; border-bottom: 1px; border-bottom-color: #e3e3e3; border-bottom-style: solid; padding-bottom: 7px;text-align: center;" width="40%">Unit Price</td>
+                                            <td style="font-family: Arial, sans-serif; font-size: 13px; font-weight: bold; color: #666666; border-bottom: 1px; border-bottom-color: #e3e3e3; border-bottom-style: solid; padding-bottom: 7px; text-align: right;" width="40%">Price</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-family: Arial, sans-serif; font-size: 13px; padding-top: 10px;text-align: center;" width="20%">%%=v(@orderQuantity)=%%</td>
+                                            <td style="font-family: Arial, sans-serif; font-size: 13px; padding-top: 10px;text-align: center;" width="40%">$%%=v(@unitPrice)=%%</td>
+                                            <td style="font-family: Arial, sans-serif; font-size: 13px; padding-top: 10px;text-align: right;" width="40%">$%%=v(@extendedPrice)=%%</td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <!-- item Service row(s) -->
+                %%[
+                /* Begin itemService loop - nested inside the orderLineItem loop */
+                SET @itemServiceRows = BuildRowSetFromXML(@orderLineItemRow_xml, "//root/itemServiceList/itemService", 1)
+                IF RowCount(@itemServiceRows) > 0 THEN
+                FOR @c = 1 TO RowCount(@itemServiceRows) DO
+                SET @itemServiceRow = Row(@itemServiceRows, @c)
+                SET @itemServiceRow_xml = Field(@itemServiceRow, "XML")
+                SET @itemServiceRow_xml = Concat('
+                <root>',@itemServiceRow_xml,'</root>')
+                SET @serviceType = BuildRowSetFromXML(@itemServiceRow_xml, "//root/serviceType", 1)
+                IF RowCount(@serviceType) > 0 THEN
+                SET @serviceType = ProperCase(Field(Row(@serviceType, 1), "Value"))
+                ELSE
+                SET @serviceType = ""
+                ENDIF
+                SET @serviceDescription = BuildRowSetFromXML(@itemServiceRow_xml, "//root/serviceDescription", 1)
+                IF RowCount(@serviceDescription) > 0 THEN
+                SET @serviceDescription = ProperCase(Field(Row(@serviceDescription, 1), "Value"))
+                ELSE
+                SET @serviceDescription = "NA"
+                ENDIF
+                SET @serviceUnitPrice = BuildRowSetFromXML(@itemServiceRow_xml, "//root/serviceUnitPrice", 1)
+                IF RowCount(@serviceUnitPrice) > 0 THEN
+                SET @serviceUnitPrice = Field(Row(@serviceUnitPrice, 1), "Value")
+                ELSE
+                SET @serviceUnitPrice = ""
+                ENDIF
+                SET @serviceOrderQuantity = BuildRowSetFromXML(@itemServiceRow_xml, "//root/orderQuantity", 1)
+                IF RowCount(@serviceOrderQuantity) > 0 THEN
+                SET @serviceOrderQuantity = Field(Row(@serviceOrderQuantity, 1), "Value")
+                ELSE
+                SET @serviceOrderQuantity = ""
+                ENDIF
+                SET @serviceExtendedPrice = BuildRowSetFromXML(@itemServiceRow_xml, "//root/serviceExtendedPrice", 1)
+                IF RowCount(@serviceExtendedPrice) > 0 THEN
+                SET @serviceExtendedPrice = Field(Row(@serviceExtendedPrice, 1), "Value")
+                ELSE
+                SET @serviceExtendedPrice = ""
+                ENDIF
+                ]%%
+                <tr>
+                    <td style="padding-top: 2px; font-family: Arial, sans-serif;">
+                        <table cellspacing="0" cellpadding="0" width="100%">
+                            <tr valign="top">
+                                <td class="drop" style="text-align: left; padding-top: 2px; font-family: Arial, sans-serif; font-size: 13px;" width="50%">
+                                    <table cellspacing="0" cellpadding="0" width="100%">
+                                        <tr>
+                                            <td style="font-family: Arial, sans-serif;">
+                                                <table cellspacing="0" cellpadding="0" width="100%">
+                                                    <tr>
+                                                        <td style="padding:5px;" class="mobile-hidden" width="96"><img src="http://image.email.jtv.com/lib/fe921372756d0c7d76/m/1/transparent.gif" alt="" /></td>
+                                                        <td style="font-family: Arial, sans-serif; font-size: 13px;">
+                                                            %%=v(@serviceType)=%% %%[ IF @serviceDescription != "NA" THEN ]%% - %%=v(@serviceDescription)=%% %%[ ENDIF ]%%
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td class="drop" style="text-align: left; padding-top: 2px; font-family: Arial, sans-serif; font-size: 13px;">
+                                    <table cellspacing="0" cellpadding="0" width="100%">
+                                        <tr valign="top">
+                                            <td style="font-family: Arial, sans-serif; font-size: 13px; text-align: center;" width="20%">%%=v(@serviceOrderQuantity)=%%</td>
+                                            <td style="font-family: Arial, sans-serif; font-size: 13px; text-align: center;" width="40%">$%%=v(@serviceUnitPrice)=%%</td>
+                                            <td style="font-family: Arial, sans-serif; font-size: 13px; text-align: right;" width="40%">$%%=v(@serviceExtendedPrice)=%%</td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                %%[
+                /* Begin itemServiceDiscount loop - nested inside of the itemService loop */
+                SET @itemServiceDiscountRows = BuildRowSetFromXML(@itemServiceRow_xml, "//root/serviceDiscountList/serviceDiscount", 1)
+                IF RowCount(@itemServiceDiscountRows) > 0 THEN
+                FOR @d = 1 TO RowCount(@itemServiceDiscountRows) DO
+                SET @itemServiceDiscountRow = Row(@itemServiceDiscountRows, @d)
+                SET @itemServiceDiscountRow_xml = Field(@itemServiceDiscountRow, "XML")
+                SET @itemServiceDiscountRow_xml = Concat ('
+                <root>',@itemServiceDiscountRow_xml,'</root>')
+                SET @itemServiceDiscountCode = BuildRowSetFromXML(@itemServiceDiscountRow_xml, "//root/discountCode",1)
+                IF RowCount(@itemServiceDiscountCode) > 0 THEN
+                SET @itemServiceDiscountCode = ProperCase(Field(Row(@itemServiceDiscountCode,1), "Value"))
+                ELSE
+                SET @itemServiceDiscountCode = "NA"
+                ENDIF
+                SET @itemServiceDiscountDescription = BuildRowSetFromXML(@itemServiceDiscountRow_xml, "//root/discountDescription",1)
+                IF RowCount(@itemServiceDiscountDescription) > 0 THEN
+                SET @itemServiceDiscountDescription = ProperCase(Field(Row(@itemServiceDiscountDescription,1), "Value"))
+                ELSE
+                SET @itemServiceDiscountDescription = ""
+                ENDIF
+                SET @itemServiceDiscountExtendedPrice = BuildRowSetFromXML(@itemServiceDiscountRow_xml, "//root/discountExtendedPrice",1)
+                IF RowCount(@itemServiceDiscountExtendedPrice) > 0 THEN
+                SET @itemServiceDiscountExtendedPrice = Field(Row(@itemServiceDiscountExtendedPrice,1), "Value")
+                ELSE
+                SET @itemServiceDiscountExtendedPrice = ""
+                ENDIF
+
+                ]%%
+                <tr valign="top">
+                    <td style="text-align: left;  font-family: Arial, sans-serif; font-size: 13px;">
+                        <table cellspacing="0" cellpadding="0" width="100%">
+                            <tr valign="top">
+                                <td style="padding:5px;" class="mobile-hidden" width="96"><img src="http://image.email.jtv.com/lib/fe921372756d0c7d76/m/1/transparent.gif" alt="" /></td>
+                                <td style="font-family: Arial, sans-serif; font-size: 13px; padding-top: 2px; text-align: left;color: red;">
+                                    %%[             IF @itemServiceDiscountCode != "NA" THEN ]%%%%=v(@itemServiceDiscountCode)=%% - %%[ ENDIF ]%%%%=v(@itemServiceDiscountDescription)=%%
+                                </td>
+                                <td style="font-family: Arial, sans-serif; font-size: 13px; padding-top: 2px; text-align: right; color: red; width: 100px;">
+                                    $%%=v(@itemServiceDiscountExtendedPrice)=%%
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                %%[
+                NEXT @d
+                ENDIF /* End itemServiceDiscount loop - nested inside of the itemService loop */
+                NEXT @c
+                ENDIF /* End itemService loop - nested inside the orderLineItem loop */
+                ]%%
+                <!-- / item service row(s) -->
+                %%[
+                /* begin itemShippingDestination - nested in orderLineItem loop */
+                SET @destAddressLine1 = BuildRowSetFromXML(@orderLineItemRow_xml, "//root/itemShippingDestination/addressLine1", 1)
+                IF RowCount(@destAddressLine1) > 0 THEN
+                SET @destAddressLine1 = Field(Row(@destAddressLine1, 1), "Value")
+                ELSE
+                SET @destAddressLine1 = ""
+                ENDIF
+                SET @destCity = BuildRowSetFromXML(@orderLineItemRow_xml, "//root/itemShippingDestination/city", 1)
+                IF RowCount(@destCity) > 0 THEN
+                SET @destCity = Field(Row(@destCity, 1), "Value")
+                ELSE
+                SET @destCity = ""
+                ENDIF
+                SET @destState = BuildRowSetFromXML(@orderLineItemRow_xml, "//root/itemShippingDestination/state", 1)
+                IF RowCount(@destState) > 0 THEN
+                SET @destState = Field(Row(@destState, 1), "Value")
+                ELSE
+                SET @shippingDestLine2 = ""
+                ENDIF
+                SET @destPostalCode = BuildRowSetFromXML(@orderLineItemRow_xml, "//root/itemShippingDestination/postalCode", 1)
+                IF RowCount(@destPostalCode) > 0 THEN
+                SET @destPostalCode = Field(Row(@destPostalCode, 1), "Value")
+                ELSE
+                SET @destPostalCode = ""
+                ENDIF
+                /* Begin itemShippingDetails - nested inside of the orderLineItem loop */
+                SET @itemShippingOffer = BuildRowSetFromXML(@orderLineItemRow_xml, "//root/itemShippingDetails/shippingOffer", 1)
+                IF RowCount(@itemShippingOffer) > 0 THEN
+                SET @itemShippingOffer = ProperCase(Field(Row(@itemShippingOffer, 1), "Value"))
+                ELSE
+                SET @itemShippingOffer = ""
+                ENDIF
+                SET @itemEstimatedDeliveryDate = BuildRowSetFromXML(@orderLineItemRow_xml, "//root/itemShippingDetails/estimatedDeliveryDate", 1)
+                IF RowCount(@itemEstimatedDeliveryDate) > 0 THEN
+                SET @itemEstimatedDeliveryDate = ProperCase(Field(Row(@itemEstimatedDeliveryDate, 1), "Value"))
+                ELSE
+                SET @itemEstimatedDeliveryDate = ""
+                ENDIF
+                SET @itemShippingTotal = BuildRowSetFromXML(@orderLineItemRow_xml, "//root/itemShippingDetails/itemShippingTotal", 1)
+                IF RowCount(@itemShippingTotal) > 0 THEN
+                SET @itemShippingTotal = ProperCase(Field(Row(@itemShippingTotal, 1), "Value"))
+                ELSE
+                SET @itemShippingTotal = ""
+                ENDIF
+                SET @waitlist = BuildRowSetFromXML(@orderLineItemRow_xml, "//root/itemDemandDetails/demandType", 1)
+                IF RowCount(@waitlist) > 0 THEN
+                SET @waitlist = Field(Row(@waitlist,1), "Value")
+                ELSE
+                SET @waitlist = ""
+                ENDIF
+                SET @sourced = BuildRowSetFromXML(@orderLineItemRow_xml, "//root/itemDemandDetails/demandStatus", 1)
+                IF RowCount(@sourced) > 0 THEN
+                SET @sourced = Field(Row(@sourced,1), "Value")
+                ELSE
+                SET @sourced = ""
+                ENDIF
+                ]%%
+                <tr valign="top">
+                    <td style="text-align: left; padding-top: 2px; font-family: Arial, sans-serif; font-size: 13px;">
+                        <table cellspacing="0" cellpadding="0" width="100%">
+                            <tr valign="top">
+                                <td style="padding:5px;" class="mobile-hidden" width="96"><img src="http://image.email.jtv.com/lib/fe921372756d0c7d76/m/1/transparent.gif" alt="" /></td>
+                                <td style="font-family: Arial, sans-serif; font-size: 13px; padding-top: 2px; text-align: left;">
+                                    %%=v(@itemShippingOffer)=%% %%[
+                                    IF @waitlist == "WAITLIST" THEN
+                                    if @sourced !="SOURCED" THEN ]%%(on Waitlist)%%[
+                                    ENDIF
+                                    ENDIF
+                                    IF @waitlist != "WAITLIST" THEN ]%%(Expected Delivery: %%=v(@itemEstimatedDeliveryDate)=%%)%%[ ENDIF ]%%
+                                </td>
+                                <td style="font-family: Arial, sans-serif; font-size: 13px; padding-top: 2px; text-align: right; width: 100px;">
+                                    $%%=v(@itemShippingTotal)=%%
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                %%[
+                /* closes itemShippingDetails - nested inside of orderLineItem loop */
+                ]%%
+                <tr>
+                    <td style="text-align: left; padding-top: 2px; font-family: Arial, sans-serif; font-size: 13px;">
+                        <table cellspacing="0" cellpadding="0" width="100%">
+                            <tr>
+                                <td style="padding:5px;" class="mobile-hidden" width="96"><img src="http://image.email.jtv.com/lib/fe921372756d0c7d76/m/1/transparent.gif" alt="" /></td>
+                                <td style="font-family: Arial, sans-serif; font-size: 13px;">Shipping to: %%=v(@destAddressLine1)=%%, %%=v(@destCity)=%%, %%=v(@destState)=%% %%=v(@destPostalCode)=%%</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                %%[
+                /* Begin shippingDiscount Loop - nested inside of orderLineItem loop */
+                SET @itemShippingDiscountRows = BuildRowSetFromXML(@orderLineItemRow_xml, "//root/itemShippingDetails/shippingDiscountList/serviceDiscount", 1)
+                IF RowCount(@itemShippingDiscountRows) > 0 THEN
+                FOR @e = 1 TO RowCount(@itemShippingDiscountRows) DO
+                SET @itemShippingDiscountRow = Row(@itemShippingDiscountRows, @e)
+                SET @itemShippingDiscountRow_xml = Field(@itemShippingDiscountRow, "XML")
+                SET @itemShippingDiscountRow_xml = Concat('
+                <root>',@itemShippingDiscountRow_xml,'</root>')
+                SET @shippingDiscountCode = BuildRowSetFromXML(@itemShippingDiscountRow_xml, "//root/discountCode", 1)
+                IF RowCount(@shippingDiscountCode) > 0 THEN
+                SET @shippingDiscountCode = Field(Row(@shippingDiscountCode, 1), "Value")
+                ELSE
+                SET @shippingDiscountCode = ""
+                ENDIF
+                SET @shippingDiscountDescription = BuildRowSetFromXML(@itemShippingDiscountRow_xml, "//root/discountDescription", 1)
+                IF RowCount(@shippingDiscountDescription) > 0 THEN
+                SET @shippingDiscountDescription = ProperCase(Field(Row(@shippingDiscountDescription, 1), "Value"))
+                ELSE
+                SET @shippingDiscountDescription = ""
+                ENDIF
+                SET @shippingDiscountExtendedPrice = BuildRowSetFromXML(@itemShippingDiscountRow_xml, "//root/discountExtendedPrice", 1)
+                IF RowCount(@shippingDiscountExtendedPrice) > 0 THEN
+                SET @shippingDiscountExtendedPrice = Field(Row(@shippingDiscountExtendedPrice, 1), "Value")
+                ELSE
+                SET @shippingDiscountExtendedPrice = ""
+                ENDIF
+                ]%%
+                <tr valign="top">
+                    <td style="text-align: left;  font-family: Arial, sans-serif; font-size: 13px;">
+                        <table cellspacing="0" cellpadding="0" width="100%">
+                            <tr valign="top">
+                                <td style="padding:5px;" class="mobile-hidden" width="96"><img src="http://image.email.jtv.com/lib/fe921372756d0c7d76/m/1/transparent.gif" alt="" /></td>
+                                <td style="font-family: Arial, sans-serif; font-size: 13px; padding-top: 2px; text-align: left;color: red;">
+                                    %%=v(@shippingDiscountCode)=%% - %%=v(@shippingDiscountDescription)=%%
+                                </td>
+                                <td style="font-family: Arial, sans-serif; font-size: 13px; padding-top: 2px; text-align: right; color: red; width: 100px;">
+                                    $%%=v(@shippingDiscountExtendedPrice)=%%
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                %%[
+                NEXT @e
+                ENDIF /* closes shippingDiscount Loop - nested inside of orderLineItem loop */
+
+                /* Begin tax check - nested inside of orderLineItem loop */
+                SET @productSalesTaxRows = BuildRowSetFromXML(@orderLineItemRow_xml, "//root/productSalesTax", 1)
+                IF RowCount(@productSalesTaxRows) > 0 THEN
+                SET @productSalesTaxRow = Row(@productSalesTaxRows, 1)
+                SET @productSalesTax = Field(@productSalesTaxRow, "Value")
+                IF @productSalesTax != 0 THEN
+                ]%%
+                <tr valign="top">
+                    <td style="text-align: left;  font-family: Arial, sans-serif; font-size: 13px;">
+                        <table cellspacing="0" cellpadding="0" width="100%">
+                            <tr valign="top">
+                                <td style="padding:5px;" class="mobile-hidden" width="96"><img src="http://image.email.jtv.com/lib/fe921372756d0c7d76/m/1/transparent.gif" alt="" /></td>
+                                <td style="font-family: Arial, sans-serif; font-size: 13px; padding-top: 2px; text-align: left;">
+                                    Tax
+                                </td>
+                                <td style="font-family: Arial, sans-serif; font-size: 13px; padding-top: 2px; text-align: right; width: 100px;">
+                                    $%%=v(@productSalesTax)=%%
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                %%[
+                ENDIF
+                ENDIF /* closes tax check - nested inside of orderLineItem loop */
+
+                /* Begin itemDiscount Loop - nested inside of the orderLineItem loop */
+                SET @itemDiscountRows = BuildRowSetFromXML(@orderLineItemRow_xml, "//root/itemDiscountList/itemDiscount", 1)
+                IF RowCount(@itemDiscountRows) > 0 THEN
+                FOR @b = 1 TO RowCount(@itemDiscountRows) DO
+                SET @itemDiscountRow = Row(@itemDiscountRows, @b)
+                SET @itemDiscountRow_xml = Field(@itemDiscountRow, "XML")
+                SET @itemDiscountRow_xml = Concat('
+                <root>',@itemDiscountRow_xml,'</root>')
+                SET @itemDiscountCode = BuildRowSetFromXML(@itemDiscountRow_xml, "//root/discountCode")
+                IF RowCount(@itemDiscountCode) > 0 THEN
+                SET @itemDiscountCode = Field(Row(@itemDiscountCode, 1), "Value")
+                ELSE
+                SET @itemDiscountCode = "NA"
+                ENDIF
+                SET @itemDiscountDescription = BuildRowSetFromXML(@itemDiscountRow_xml, "//root/discountDescription")
+                IF RowCount(@itemDiscountDescription) > 0 THEN
+                SET @itemDiscountDescription = Field(Row(@itemDiscountDescription, 1), "Value")
+                ELSE
+                SET @itemDiscountDescription = ""
+                ENDIF
+                SET @itemDiscountExtendedPrice = BuildRowSetFromXML(@itemDiscountRow_xml, "//root/discountExtendedPrice")
+                IF RowCount(@itemDiscountExtendedPrice) > 0 THEN
+                SET @itemDiscountExtendedPrice = Field(Row(@itemDiscountExtendedPrice, 1), "Value")
+                ELSE
+                SET @itemDiscountExtendedPrice = ""
+                ENDIF
+                SET @qualifyingReturnAmount = BuildRowSetFromXML(@orderLineItemRow_xml, "//root/qualifyingReturnAmount", 1)
+                IF RowCount(@qualifyingReturnAmount) > 0 THEN
+                SET @qualifyingReturnAmount = Field(Row(@qualifyingReturnAmount, 1), "Value")
+                ELSE
+                SET @qualifyingReturnAmount = ""
+                ENDIF
+                SET @discountisGWP = BuildRowSetFromXML(@itemDiscountRow_xml, "//root/discountIsGWP",1)
+                IF RowCount(@discountisGWP) > 0 THEN
+                SET @discountisGWP = Field(Row(@discountisGWP,1), "Value")
+                ELSE
+                SET @discountisGWP = ""
+                ENDIF
+
+                if @discountisGWP == 1 then
+
+                ]%%
+                <tr valign="top">
+                    <td style="text-align: left;  font-family: Arial, sans-serif; font-size: 13px; font-color: green;">
+                        <table cellspacing="0" cellpadding="0" width="100%">
+                            <tr valign="top">
+                                <td style="padding:5px;" class="mobile-hidden" width="96"><img src="http://image.email.jtv.com/lib/fe921372756d0c7d76/m/1/transparent.gif" alt="" /></td>
+                                <td style="font-family: Arial, sans-serif; font-size: 13px; padding-top: 2px; text-align: left;color: green;">
+                                    %%[ IF @itemDiscountCode != "NA" THEN ]%%%%=v(@itemDiscountCode)=%% - %%[ ENDIF ]%%%%=v(@itemDiscountDescription)=%%
+                                </td>
+                                <td style="font-family: Arial, sans-serif; font-size: 13px; padding-top: 2px; text-align: right; color: red; width: 100px;"> </td>
+                            </tr>
+                            <tr valign="top">
+                                <td style="padding:5px;" class="mobile-hidden" width="96"><img src="http://image.email.jtv.com/lib/fe921372756d0c7d76/m/1/transparent.gif" alt="" /></td>
+                                <td style="font-family: Arial, sans-serif; font-size: 13px; padding-top: 2px; text-align: left;color: green;">
+                                    Qualifying Return Value $%%=FormatCurrency(@qualifyingReturnAmount, "en-US")=%%
+                                </td>
+                                <td style="font-family: Arial, sans-serif; font-size: 13px; padding-top: 2px; text-align: right; color: red; width: 100px;"> </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                %%[
+
+                else
+
+                ]%%
+                <tr valign="top">
+                    <td style="text-align: left;  font-family: Arial, sans-serif; font-size: 13px;">
+                        <table cellspacing="0" cellpadding="0" width="100%">
+                            <tr valign="top">
+                                <td style="padding:5px;" class="mobile-hidden" width="96"><img src="http://image.email.jtv.com/lib/fe921372756d0c7d76/m/1/transparent.gif" alt="" /></td>
+                                <td style="font-family: Arial, sans-serif; font-size: 13px; padding-top: 2px; text-align: left;color: red;">
+                                    %%[ IF @itemDiscountCode != "NA" THEN ]%%%%=v(@itemDiscountCode)=%% - %%[ ENDIF ]%%%%=v(@itemDiscountDescription)=%%
+                                </td>
+                                <td style="font-family: Arial, sans-serif; font-size: 13px; padding-top: 2px; text-align: right; color: red; width: 100px;">
+                                    $%%=v(@itemDiscountExtendedPrice)=%%
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                %%[
+                endif
+                NEXT @b
+                ENDIF /* closes itemDiscount Loop - nested inside of orderLineItem loop */
+
+                /* Begin orderLineTotal - nested inside of the orderLineItem loop */
+                SET @orderLineTotal = BuildRowSetFromXML(@orderLineItemRow_xml, "//root/orderLineTotal", 1)
+                IF RowCount(@orderLineTotal) > 0 THEN
+                SET @orderLineTotal = Field(Row(@orderLineTotal, 1), "Value")
+                ELSE
+                SET @orderLineTotal = ""
+                ENDIF
+                ]%%
+                <!-- Item Total Section -->
+                <tr valign="top">
+                    <td style="text-align: left; font-family: Arial, sans-serif; font-size: 13px; font-weight: bold; padding-bottom: 20px;">
+                        <table cellspacing="0" cellpadding="0" width="100%">
+                            <tr valign="top">
+                                <td style="padding:5px;" class="mobile-hidden" width="96"><img src="http://image.email.jtv.com/lib/fe921372756d0c7d76/m/1/transparent.gif" alt="" /></td>
+                                <td style="font-family: Arial, sans-serif; font-size: 13px; padding-top: 2px; text-align: left;">
+                                    Item Total
+                                </td>
+                                <td style="font-family: Arial, sans-serif; font-size: 13px; padding-top: 2px; text-align: right;">
+                                    $%%=v(@orderLineTotal)=%%
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <!-- /Item Total Section -->
+                %%[
+                /* Waitlist Notification Section */
+                IF @waitlist == "WAITLIST" THEN
+                if @sourced !="SOURCED" THEN
+                ]%%
+                <!-- Waitlist Notification Section -->
+                <tr valign="top">
+                    <td style="text-align: left; font-family: Arial, sans-serif; font-size: 13px; font-weight: bold; padding-bottom: 20px;">
+                        <table cellspacing="0" cellpadding="0" width="100%">
+                            <tr valign="top">
+                                <td style="padding:5px;" class="mobile-hidden" width="96"><img src="http://image.email.jtv.com/lib/fe921372756d0c7d76/m/1/transparent.gif" alt="" /></td>
+                                <td style="font-family: Arial, sans-serif; font-size: 13px; padding-top: 10px; text-align: left;">
+                                    You are currently on the Waitlist for this item. Your item will be automatically shipped should it become available within the next 45 days. If the item does not become available within that timeframe, it will be cancelled from your order.
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <!-- /Waitlist Notification Section -->
+                %%[
+                ENDIF /* closes waitlist notification section */
+                ENDIF
+                ]%%
+            </table>
+            <!-- /Item 1 details -->
+            <!-- StretchPay Section -->
+            %%[
+            /* Begin itemBillingDetails - nested in the orderLineItem loop */
+            SET @billingTerms = BuildRowSetFromXML(@orderLineItemRow_xml, "//root/itemBillingDetails/billingTerms", 1)
+            IF RowCount(@billingTerms) > 0 THEN
+            SET @billingTerms = Field(Row(@billingTerms,1), "Value")
+            SET @billingTerms = ProperCase(Trim(@billingTerms))
+            ELSE
+            SET @billingTerms = "NA"
+            ENDIF
+            IF @billingTerms != "Full Pay" OR @billingTerms == "NA" THEN
+            SET @initialInstallmentAmount = BuildRowSetFromXML(@orderLineItemRow_xml, "//root/itemBillingDetails/initialInstallmentAmount", 1)
+            IF RowCount(@initialInstallmentAmount) > 0 THEN
+            SET @initialInstallmentAmount = Field(Row(@initialInstallmentAmount,1), "Value")
+            ELSE
+            SET @initialInstallmentAmount = ""
+            ENDIF
+            SET @deferredInstallmentCount = BuildRowSetFromXML(@orderLineItemRow_xml, "//root/itemBillingDetails/deferredInstallmentCount", 1)
+            IF RowCount(@deferredInstallmentCount) > 0 THEN
+            SET @deferredInstallmentCount = Field(Row(@deferredInstallmentCount,1), "Value")
+            ELSE
+            SET @deferredInstallmentCount = ""
+            ENDIF
+            SET @deferredInstallmentAmount = BuildRowSetFromXML(@orderLineItemRow_xml, "//root/itemBillingDetails/deferredInstallmentAmount", 1)
+            IF RowCount(@deferredInstallmentAmount) > 0 THEN
+            SET @deferredInstallmentAmount = Field(Row(@deferredInstallmentAmount,1), "Value")
+            ELSE
+            SET @deferredInstallmentAmount = ""
+            ENDIF
+            SET @planTotal = BuildRowSetFromXML(@orderLineItemRow_xml, "//root/itemBillingDetails/planTotal", 1)
+            IF RowCount(@planTotal) > 0 THEN
+            SET @planTotal = Field(Row(@planTotal,1), "Value")
+            ELSE
+            SET @planTotal = ""
+            ENDIF
+            ]%%
+            <table cellspacing="0" cellpadding="0" bgcolor="#ffffff" width="100%" style="border: 1px; border-color: #cbcbcb; border-style: solid; font-size: 13px;">
+                <tr>
+                    <td style="font-family: Arial, sans-serif; font-size: 13px;padding-top:10px; padding-right:5px; padding-left: 20px;padding-bottom: 10px;">You selected StretchPay for this item. Your original payment plan details are below:</td>
+                </tr>
+                <tr>
+                    <td style="padding-top:10px; padding-right: 20px; padding-bottom: 20px; padding-left: 20px;">
+                        <table cellspacing="0" cellpadding="0" width="100%">
+                            <tr>
+                                <td class="drop">
+                                    <table cellspacing="0" cellpadding="0" width="100%">
+                                        <tr>
+                                            <td>
+                                                <table class="mobile-float-left m-50pct">
+                                                    <tr>
+                                                        <td height="24"><img src="http://image.email.jtv.com/lib/fe921372756d0c7d76/m/3/icon-stretchpay.gif" alt="" style="display: block;" /></td>
+                                                    </tr>
+                                                </table>
+                                                <table class="m-text-right m-50pct">
+                                                    <tr>
+                                                        <td class="m-text-right" style="font-family: Arial, sans-serif; font-size: 13px; padding-top:5px;" height="24">%%=v(@billingTerms)=%%</td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td class="drop">
+                                    <table cellspacing="0" cellpadding="0" width="100%">
+                                        <tr>
+                                            <td>
+                                                <table class="mobile-float-left m-50pct">
+                                                    <tr>
+                                                        <td height="24" style="font-family: Arial, sans-serif; font-size: 13px; font-weight: bold;color:#666666;">First Payment</td>
+                                                    </tr>
+                                                </table>
+                                                <table class="mobile-float-left m-50pct">
+                                                    <tr>
+                                                        <td class="m-text-right m-50pct" style="font-family: Arial, sans-serif; font-size: 13px;" height="24">$%%=v(@initialInstallmentAmount)=%%</td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td class="drop">
+                                    <table cellspacing="0" cellpadding="0" width="100%">
+                                        <tr>
+                                            <td>
+                                                <table class="mobile-float-left m-50pct">
+                                                    <tr>
+                                                        <td style="font-family: Arial, sans-serif; font-size: 13px; font-weight: bold;color:#666666;" height="24">Additional Payments</td>
+                                                    </tr>
+                                                </table>
+                                                <table class="mobile-float-left m-50pct">
+                                                    <tr>
+                                                        <td class="m-text-right m-50pct" style="font-family: Arial, sans-serif; font-size: 13px;" height="24">%%=v(@deferredInstallmentCount)=%% x $%%=v(@deferredInstallmentAmount)=%%</td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td class="drop">
+                                    <table cellspacing="0" cellpadding="0" width="100%">
+                                        <tr>
+                                            <td>
+                                                <table class="mobile-float-left m-50pct">
+                                                    <tr>
+                                                        <td style="font-family: Arial, sans-serif; font-size: 13px; font-weight: bold;color:#666666;" height="24">Plan Total</td>
+                                                    </tr>
+                                                </table>
+                                                <table class="mobile-float-left m-50pct">
+                                                    <tr>
+                                                        <td class="m-text-right m-50pct" style="font-family: Arial, sans-serif; font-size: 13px;" height="24">$%%=v(@planTotal)=%%</td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+            %%[
+            ENDIF /* closes itemBilling Details - nested inside orderLineItem loop */
+
+            if @otr != RowCount(@orderTransactionRows) then
+            if @j != RowCount(@orderLineItemRows) then
+            ]%%
+            <!-- /StretchPay Section -->
+            <!--Divider line -->
+            <table cellspacing="0" cellpadding="0" width="100%">
+                <tr>
+                    <td align="center" style="font-family: Arial, sans-serif; font-size: 16px; color: #666666;border-top:1px #cccccc solid;"><img src="http://image.email.jtv.com/lib/fe921372756d0c7d76/m/1/transparent.gif" alt="" /></td>
+                </tr>
+            </table>
+            <!-- /Divider line -->
+            %%[
+            endif
+            endif
+            endif
+            NEXT @j /* Next orderLineItem */
+            ENDIF   /* END orderLineItem loop - nested inside shipmentSalesOrder loop */
+            NEXT @otr
+            ENDIF
+            ]%%
+            <!-- / end of orderDestination loop -->
+            <!-- Satisfaction Guaranteed and Order Summary Section -->
+            <table cellspacing="0" cellpadding="0" bgcolor="#ffffff" width="100%" style="padding-top: 20px; padding-bottom: 20px;">
+
+                <tr valign="top">
+                    <td style="padding-top: 10px; padding-right: 10px; padding-bottom: 10px; padding-left: 10px;">
+                        <table cellspacing="0" cellpadding="0" width="100%">
+                            <tr valign="top">
+                                <!-- Satisfaction Guaranteed specific -->
+                                <td class="drop" width="50%" style="font-family: Arial, sans-serif;">
+                                    <table cellspacing="0" cellpadding="0" width="100%">
+                                        <tr>
+                                            <td>
+                                                <table cellspacing="0" cellpadding="0" width="100%">
+                                                    <tr valign="middle">
+                                                        <td width="40">
+                                                            <img src="http://image.email.jtv.com/lib/fe921372756d0c7d76/m/3/shipcon_guarantee.jpg" width="40" height="40" style="display: inline-table;">
+                                                        </td>
+                                                        <td style="font-family: Arial, sans-serif; font-weight: bold;color:#666666;font-size: 13px">SATISFACTION GUARANTEED</td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-family: Arial, sans-serif; color:#666666; font-size:11px; padding-right: 22px">
+                                                <p style="color:#666666;">We want you to be completely satisfied with your purchase. If youre not, simply send it back in its as-shipped condition within 30 days of receipt, along with the completed Satisfaction Guarantee return form (on the back of your invoice).</p>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <!-- /Satisfaction Guaranteed specific -->
+                                <!-- Order Summary specific -->
+                                %%[
+                                /* Begin orderDetailTotals section */
+                                SET @itemSubtotal = BuildRowSetFromXML(@order_xml, "//orderDetailTotals/itemSubtotal", 1)
+                                IF RowCount(@itemSubtotal) > 0 THEN
+                                SET @itemSubtotal = Field(Row(@itemSubtotal, 1), "Value")
+                                ELSE
+                                SET @itemSubtotal = ""
+                                ENDIF
+                                SET @itemDetailDiscounts = BuildRowSetFromXML(@order_xml, "//orderDetailTotals/itemDiscounts", 1)
+                                IF RowCount(@itemDetailDiscounts) > 0 THEN
+                                SET @itemDetailDiscounts = Field(Row(@itemDetailDiscounts,1), "Value")
+                                ELSE
+                                SET @itemDetailDiscounts = "0.00"
+                                ENDIF
+                                SET @shipping = BuildRowSetFromXML(@order_xml, "//orderDetailTotals/shipping", 1)
+                                IF RowCount(@shipping) > 0 THEN
+                                SET @shipping = Field(Row(@shipping, 1), "Value")
+                                ELSE
+                                SET @shipping = ""
+                                ENDIF
+                                SET @itemDetailShippingDiscounts = BuildRowSetFromXML(@order_xml, "//orderDetailTotals/shippingDiscounts", 1)
+                                IF RowCount(@itemDetailShippingDiscounts) > 0 THEN
+                                SET @itemDetailShippingDiscounts = Field(Row(@itemDetailShippingDiscounts,1), "Value")
+                                ELSE
+                                SET @itemDetailShippingDiscounts = "0.00"
+                                ENDIF
+                                SET @orderTax = BuildRowSetFromXML(@order_xml, "//orderDetailTotals/orderTax", 1)
+                                IF RowCount(@orderTax) > 0 THEN
+                                SET @orderTax = Field(Row(@orderTax,1), "Value")
+                                ELSE
+                                SET @orderTax = "0.00"
+                                ENDIF
+                                SET @orderTotal = BuildRowSetFromXML(@order_xml, "//orderDetailTotals/orderTotal", 1)
+                                IF RowCount(@orderTotal) > 0 THEN
+                                SET @orderTotal = Field(Row(@orderTotal, 1), "Value")
+                                ELSE
+                                SET @orderTotal = ""
+                                ENDIF
+                                SET @paymentDueUponShipment = BuildRowSetFromXML(@order_xml, "//orderDetailTotals/paymentDueUponShipment", 1)
+                                IF RowCount(@paymentDueUponShipment) > 0 THEN
+                                SET @paymentDueUponShipment = Field(Row(@paymentDueUponShipment,1), "Value")
+                                ELSE
+                                SET @paymentDueUponShipment = "0"
+                                ENDIF
+                                SET @paymentAmountDeferred = BuildRowSetFromXML(@order_xml, "//orderDetailTotals/paymentAmountDeferred", 1)
+                                IF RowCount(@paymentAmountDeferred) > 0 THEN
+                                SET @paymentAmountDeferred = Field(Row(@paymentAmountDeferred,1), "Value")
+                                ELSE
+                                SET @paymentAmountDeferred = "0"
+                                ENDIF
+                                ]%%
+                                <td class="drop" width="50%" bgcolor="#ffffff" style="font-family: Arial, sans-serif;">
+                                    <table cellspacing="0" cellpadding="0" width="100%">
+                                        <tr>
+                                            <td width="100%" bgcolor="#f6f6f6" style="font-family: Arial, sans-serif; border-color:#dadada; border-style: solid; border-width: 1px;">
+                                                <table cellspacing="0" cellpadding="0" width="100%">
+                                                    <tr valign="top">
+                                                        <td height="40" valign="middle" bgcolor="#e6e6e6" align="center" style="font-family: Arial, sans-serif; font-weight: bold;color:#666666;font-size: 15px; border-bottom-color: #dadada; border-bottom-style: solid; border-bottom-width: 1px;">
+                                                            ORDER SUMMARY
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="color:#666666; font-family: Arial, sans-serif; font-size: 12px;">
+                                                            <table cellspacing="0" cellpadding="0" width="100%">
+                                                                <tr>
+                                                                    <td>
+                                                                        <table cellspacing="0" cellpadding="0" width="100%">
+                                                                            <tr>
+                                                                                <td style="font-family: Arial, sans-serif; font-size: 12px; padding-left: 25px; padding-right: 25px; padding-top:10px; padding-bottom: 5px;">Subtotal</td>
+                                                                                <td align="right" style="font-family: Arial, sans-serif; font-size: 12px; padding-left: 25px; padding-right: 25px; padding-top:10px; padding-bottom: 5px;">$%%=v(@itemSubtotal)=%%</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td style="font-family: Arial, sans-serif; font-size: 12px; padding-left: 25px; padding-right: 25px; padding-top:5px; padding-bottom: 5px;">Shipping</td>
+                                                                                <td align="right" style="font-family: Arial, sans-serif; font-size: 12px; padding-left: 25px; padding-right: 25px; padding-top:5px; padding-bottom: 5px;">$%%=v(@shipping)=%%</td>
+                                                                            </tr>
+                                                                            %%[ IF @itemDetailShippingDiscounts != "0.00" THEN ]%%
+                                                                            <tr>
+                                                                                <td style="font-family: Arial, sans-serif; font-size: 12px; color: #cc0000; padding-left: 25px; padding-right: 25px; padding-top:5px; padding-bottom: 5px;">Shipping Discount</td>
+                                                                                <td align="right" style="font-family: Arial, sans-serif; font-size: 12px; color: #cc0000; padding-left: 25px; padding-right: 25px; padding-top:5px; padding-bottom: 5px;">$%%=v(@itemDetailShippingDiscounts)=%%</td>
+                                                                            </tr>
+                                                                            %%[ ENDIF
+                                                                            IF @itemDetailDiscounts != "0.00" THEN ]%%
+                                                                            <tr>
+                                                                                <td style="font-family: Arial, sans-serif; font-size: 12px; color: #cc0000; padding-left: 25px; padding-right: 25px; padding-top:5px; padding-bottom: 5px;">Product Discount</td>
+                                                                                <td align="right" style="font-family: Arial, sans-serif; font-size: 12px; color: #cc0000; padding-left: 25px; padding-right: 25px; padding-top:5px; padding-bottom: 5px;">$%%=v(@itemDetailDiscounts)=%%</td>
+                                                                            </tr>
+                                                                            %%[ ENDIF
+                                                                            IF @orderTax != "0.00" THEN ]%%
+                                                                            <tr>
+                                                                                <td style="font-family: Arial, sans-serif; font-size: 12px; padding-left: 25px; padding-right: 25px; padding-top:5px; padding-bottom: 5px;">Tax</td>
+                                                                                <td align="right" style="font-family: Arial, sans-serif; font-size: 12px; padding-left: 25px; padding-right: 25px; padding-top:5px; padding-bottom: 5px;">$%%=v(@orderTax)=%%</td>
+                                                                            </tr>
+                                                                            %%[ ENDIF ]%%
+                                                                        </table>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td style="padding-left: 25px; padding-right: 25px">
+                                                                        <hr style="border-top-color: #999999; border-top-width:1px; border-top-style: dotted ">
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <table cellspacing="0" cellpadding="0" width="100%">
+                                                                            <tr>
+                                                                                <td style="font-family: Arial, sans-serif; padding-left: 25px; padding-right: 25px; padding-top:10px; padding-bottom: 5px; font-size: 13px;">Order Total</td>
+                                                                                <td align="right" style="font-family: Arial, sans-serif; padding-left: 25px; padding-right: 25px; padding-top:10px; padding-bottom: 5px; font-size: 13px;">$%%=v(@orderTotal)=%%</td>
+                                                                            </tr>
+                                                                            %%[ IF @paymentAmountDeferred != "0.00" THEN ]%%
+                                                                            <tr valign="top">
+                                                                                <td style="font-family: Arial, sans-serif; padding-left: 25px; padding-right: 25px; padding-top:5px; padding-bottom: 25px; font-weight: bold; font-size: 12px;">Amount to be charged upon shipment</td>
+                                                                                <td align="right" style="font-family: Arial, sans-serif; padding-left: 25px; padding-right: 25px; padding-top:5px; padding-bottom: 25px; font-weight: bold; font-size: 12px;">$%%=v(@paymentDueUponShipment)=%%*</td>
+                                                                            </tr>
+                                                                            %%[ ENDIF ]%%
+                                                                        </table>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        %%[
+                                        SET @itemDetailDiscountsPOS = Multiply(@itemDetailDiscounts, "-1")
+                                        SET @itemDetailShippingDiscountsPOS = Multiply(@itemDetailShippingDiscounts, "-1")
+                                        SET @totalDiscount = ADD(@itemDetailDiscountsPOS, @itemDetailShippingDiscountsPOS)
+                                        IF @totalDiscount > "0" THEN
+                                        ]%%
+                                        <tr valign="top">
+                                            <td valign="middle" align="center" style="font-family: Arial, sans-serif; font-weight: bold;color:#cc0000;font-size: 13px; padding-top:10px">
+                                                You saved %%=FormatCurrency(@totalDiscount, "en-US")=%% on your order today!
+                                            </td>
+                                        </tr>
+                                        %%[ ENDIF
+                                        IF @paymentAmountDeferred != "0.00" THEN ]%%
+                                        <tr valign="top">
+                                            <td valign="middle" align="center" style="font-family: Arial, sans-serif; color:#999999;font-size: 11px; padding-top:10px;">
+                                                *May include first months payment, JewelSafe, appraisal, custom sizing, shipping &amp; handling and tax.
+                                            </td>
+                                        </tr>
+                                        %%[ ENDIF
+                                        IF @showGWPfooter == 1 then
+                                        ]%%
+                                        <tr valign="top">
+                                            <td valign="middle" align="center" style="font-family: Arial, sans-serif; font-weight: bold;color:green; font-size: 13px; padding-top:10px">
+                                                You earned %%=FormatCurrency(@GWPRewardPrice, "en-US")=%% in Brilliant Cash!
+                                            </td>
+                                        </tr>
+                                        %%[ ENDIF
+                                        ]%%
+                                    </table>
+                                </td>
+                                <!-- /Order Summary specific -->
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+            <!-- /Satisfaction Guaranteed and Order Summary Section -->
+        </td>
+    </tr>
+</table>

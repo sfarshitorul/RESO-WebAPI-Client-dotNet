@@ -163,6 +163,11 @@ namespace ODataValidator.Rule
                 string complexProUrl = entityId + @"/" + complexPropName;
                 resp = WebHelper.Get(new Uri(complexProUrl), Constants.AcceptHeaderJson, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, serviceStatus.DefaultHeaders);
                 detail2 = new ExtensionRuleResultDetail(this.Name, complexProUrl, HttpMethod.Get, StringHelper.MergeHeaders(Constants.AcceptHeaderJson, serviceStatus.DefaultHeaders), resp);
+                detail2.URI = complexProUrl;
+                detail2.ResponsePayload = resp.ResponsePayload;
+                detail2.ResponseHeaders = resp.ResponseHeaders;
+                detail2.HTTPMethod = "GET";
+                detail2.ResponseStatusCode = resp.StatusCode.ToString();
 
                 if (resp.StatusCode == HttpStatusCode.OK)
                 {
@@ -174,6 +179,12 @@ namespace ODataValidator.Rule
                     // Update the complex property
                     resp = WebHelper.UpdateEntity(complexProUrl, context.RequestHeaders, newComplexProperty, HttpMethod.Patch, hasEtag);
                     detail3 = new ExtensionRuleResultDetail(this.Name, complexProUrl, HttpMethod.Patch, string.Empty, resp, string.Empty, newComplexProperty);
+                    detail3.URI = complexProUrl;
+                    detail3.ResponsePayload = resp.ResponsePayload;
+                    detail3.ResponseHeaders = resp.ResponseHeaders;
+                    detail3.HTTPMethod = "PATCH";
+                    detail3.ResponseStatusCode = resp.StatusCode.ToString();
+
                     if (resp.StatusCode == HttpStatusCode.NoContent)
                     {
                         // Check whether the complex property is updated to new value

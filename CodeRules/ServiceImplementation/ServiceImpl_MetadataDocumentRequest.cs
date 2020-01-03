@@ -102,6 +102,7 @@ namespace ODataValidator.Rule
             }
             else
             {
+                detail.ErrorMessage = "The Metadata docuemnt is empty";
                 passed = false;
             }
 

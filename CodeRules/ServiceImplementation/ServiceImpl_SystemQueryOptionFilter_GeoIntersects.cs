@@ -113,17 +113,22 @@ namespace ODataValidator.Rule
 
             string url = svcStatus.RootURL.TrimEnd('/') + "/" + entitySetUrl;
             var resp = WebHelper.Get(new Uri(url), string.Empty, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, svcStatus.DefaultHeaders);
+            var detail = new ExtensionRuleResultDetail(this.Name, url, HttpMethod.Get, string.Empty);
+            detail.URI = url;
+            detail.ResponsePayload = resp.ResponsePayload;
+            detail.ResponseHeaders = resp.ResponseHeaders;
+            detail.HTTPMethod = "GET";
+            detail.ResponseStatusCode = resp.StatusCode.ToString();
+            info = new ExtensionRuleViolationInfo(new Uri(url), string.Empty, detail);
             if (null != resp && HttpStatusCode.OK == resp.StatusCode)
             {
                 JObject jObj = JObject.Parse(resp.ResponsePayload);
                 JArray jArr = jObj.GetValue(Constants.Value) as JArray;
                 var entity = jArr.First as JObject;
-                var detail = new ExtensionRuleResultDetail(this.Name, url, HttpMethod.Get, string.Empty);
+
                 if (entity[propName] == null)
                 {
-                    detail = new ExtensionRuleResultDetail(this.Name, url, HttpMethod.Get, string.Empty, Convert.ToString(resp.StatusCode), propName + "is null", resp.ResponsePayload);
-                    info = new ExtensionRuleViolationInfo(new Uri(url), string.Empty, detail);
-
+                    detail.ErrorMessage = propName + "is null";
                     passed = false;
                     return passed;
                 }
@@ -133,9 +138,7 @@ namespace ODataValidator.Rule
                 }
                 catch (Exception ex2)
                 {
-                    detail = new ExtensionRuleResultDetail(this.Name, url, HttpMethod.Get, string.Empty, Convert.ToString(resp.StatusCode), propName + " coordinates is null or missing.  Review for format and include the coordinate attribute.  This is the call that is failing:  var propVal = entity[propName][\"coordinates\"] as JArray;", resp.ResponsePayload);
-                    info = new ExtensionRuleViolationInfo(new Uri(url), string.Empty, detail);
-
+                    detail.ErrorMessage = propName + " coordinates is null or missing.  Review for format and include the coordinate attribute.  This is the call that is failing:  var propVal = entity[propName][\"coordinates\"] as JArray;";
                     passed = false;
                     return passed;
 
@@ -151,8 +154,20 @@ namespace ODataValidator.Rule
                 };
                 url = string.Format("{0}?$filter=geo.intersects({1}, geography'POLYGON(({2}, {3}, {4}, {5}, {6}))')", url, propName, pts[0], pts[1], pts[2], pts[3], pts[0]);
                 resp = WebHelper.Get(new Uri(url), string.Empty, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, svcStatus.DefaultHeaders);
-                detail = new ExtensionRuleResultDetail(this.Name, url, HttpMethod.Get, string.Empty);
-                info = new ExtensionRuleViolationInfo(new Uri(url), string.Empty, detail);
+                var detail1 = new ExtensionRuleResultDetail(this.Name, url, HttpMethod.Get, string.Empty);
+                detail1.URI = url;
+                detail1.ResponsePayload = resp.ResponsePayload;
+                detail1.ResponseHeaders = resp.ResponseHeaders;
+                detail1.HTTPMethod = "GET";
+                detail1.ResponseStatusCode = resp.StatusCode.ToString();
+                if (info == null)
+                {
+                    info = new ExtensionRuleViolationInfo(new Uri(url), string.Empty, detail1);
+                }
+                else
+                {
+                    info.AddDetail(detail1);
+                }
                 if (null != resp && HttpStatusCode.OK == resp.StatusCode)
                 {
                     jObj = JObject.Parse(resp.ResponsePayload);
@@ -160,10 +175,16 @@ namespace ODataValidator.Rule
                     foreach (JObject et in jArr)
                     {
                         passed = this.IsIntersects(propName, new Polygon(pts), et);
+                        if(passed == false)
+                        {
+                            detail1.ErrorMessage = "The polygon doe not intersect";
+                            break;
+                        }
                     }
                 }
                 else
                 {
+                    detail1.ErrorMessage = "The server returned an error response:  " + detail.ResponseStatusCode;
                     passed = false;
                 }
             }

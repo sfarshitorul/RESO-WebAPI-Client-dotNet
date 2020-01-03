@@ -106,23 +106,7 @@ namespace ODataValidator.RuleEngine
         [SuppressMessage("DataWeb.Usage", "AC0013: call WebUtil.GetResponseStream instead of calling the method directly on the HTTP object.", Justification = "interop prefers to interact directly with network")]
         public static Response Get(WebRequest request, int maximumPayloadSize)
         {
-
-           
             IEnumerable<KeyValuePair<string, string>> reqHeaders = Headers;
-
-
-
-            //if (!string.IsNullOrEmpty(uri.UserInfo))
-            //{
-            //    req.Credentials = new NetworkCredential(Uri.UnescapeDataString(uri.UserInfo.Split(':')[0]), Uri.UnescapeDataString(uri.UserInfo.Split(':')[1]));
-            //}
-
-
-            //if (!string.IsNullOrEmpty(acceptHeader) && reqHttp != null)
-            //{
-            //    reqHttp.Accept = acceptHeader;
-            //}
-
             if (reqHeaders != null && reqHeaders.Any())
             {
                 foreach (var p in reqHeaders)

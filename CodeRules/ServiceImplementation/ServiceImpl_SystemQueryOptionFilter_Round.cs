@@ -153,6 +153,12 @@ namespace ODataValidator.Rule
                     url = string.Format("{0}?$filter=round({1}) eq {2}", url, propName, propVal);
                     resp = WebHelper.Get(new Uri(url), string.Empty, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, svcStatus.DefaultHeaders);
                     var detail = new ExtensionRuleResultDetail(this.Name, url, HttpMethod.Get, string.Empty);
+                    detail.URI = url;
+                    detail.ResponsePayload = resp.ResponsePayload;
+                    detail.ResponseHeaders = resp.ResponseHeaders;
+                    detail.HTTPMethod = "GET";
+                    detail.ResponseStatusCode = resp.StatusCode.ToString();
+
                     info = new ExtensionRuleViolationInfo(new Uri(url), string.Empty, detail);
                     if (null != resp && HttpStatusCode.OK == resp.StatusCode)
                     {
@@ -182,6 +188,12 @@ namespace ODataValidator.Rule
                     url = string.Format("{0}?$filter=round({1}) eq {2}", url, propName, propVal);
                     resp = WebHelper.Get(new Uri(url), string.Empty, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, svcStatus.DefaultHeaders);
                     var detail = new ExtensionRuleResultDetail(this.Name, url, HttpMethod.Get, string.Empty);
+                    detail.URI = url;
+                    detail.ResponsePayload = resp.ResponsePayload;
+                    detail.ResponseHeaders = resp.ResponseHeaders;
+                    detail.HTTPMethod = "GET";
+                    detail.ResponseStatusCode = resp.StatusCode.ToString();
+
                     info = new ExtensionRuleViolationInfo(new Uri(url), string.Empty, detail);
                     if (null != resp && HttpStatusCode.OK == resp.StatusCode)
                     {

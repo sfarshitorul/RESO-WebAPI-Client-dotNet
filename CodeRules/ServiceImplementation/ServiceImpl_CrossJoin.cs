@@ -97,6 +97,11 @@ namespace ODataValidator.Rule
                 Constants.AcceptHeaderJson, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
 
             ExtensionRuleResultDetail detail = new ExtensionRuleResultDetail(this.Name,url,HttpMethod.Get, resp.ResponseHeaders, resp);
+            detail.URI = url;
+            detail.ResponsePayload = resp.ResponsePayload;
+            detail.ResponseHeaders = resp.ResponseHeaders;
+            detail.HTTPMethod = "GET";
+            detail.ResponseStatusCode = resp.StatusCode.ToString();
 
             info = new ExtensionRuleViolationInfo(context.Destination, context.ResponsePayload, detail);
 

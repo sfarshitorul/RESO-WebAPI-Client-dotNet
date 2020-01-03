@@ -83,6 +83,12 @@ namespace ODataValidator.Rule
             string navigProp = expandRestrictions.Item3.First().NavigationPropertyName;
             string url = string.Format("{0}/{1}", context.ServiceBaseUri.OriginalString.TrimEnd('/'), entitySet);
             var resp = WebHelper.Get(new Uri(url), Constants.V4AcceptHeaderJsonFullMetadata, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
+            detail.URI = url;
+            detail.ResponsePayload = resp.ResponsePayload;
+            detail.ResponseHeaders = resp.ResponseHeaders;
+            detail.HTTPMethod = "GET";
+            detail.ResponseStatusCode = resp.StatusCode.ToString();
+
 
             if (null == resp || HttpStatusCode.OK != resp.StatusCode)
             {
@@ -94,7 +100,8 @@ namespace ODataValidator.Rule
 
             JObject feed;
             resp.ResponsePayload.TryToJObject(out feed);
-            var entities = JsonParserHelper.GetEntries(feed);
+            var entities = JsonParserHelper.GetEntriesThatHaveAValue(feed);
+
 
             if (null == entities || 0 == entities.Count)
             {
@@ -122,7 +129,11 @@ namespace ODataValidator.Rule
             }
             resp = WebHelper.Get(new Uri(url), Constants.AcceptHeaderJson, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
             detail = new ExtensionRuleResultDetail(this.Name, url, "GET", StringHelper.MergeHeaders(Constants.AcceptHeaderJson, context.RequestHeaders), resp);
-
+            detail.URI = url;
+            detail.ResponsePayload = resp.ResponsePayload;
+            detail.ResponseHeaders = resp.ResponseHeaders;
+            detail.HTTPMethod = "GET";
+            detail.ResponseStatusCode = resp.StatusCode.ToString();
             if (resp.StatusCode == HttpStatusCode.OK)
             {
                 JObject entry;
@@ -143,40 +154,59 @@ namespace ODataValidator.Rule
                     }
                     if (!entity_error)
                     {
-                        url = entity[Constants.V4OdataId].ToString();
-                        if (url.IndexOf(context.ServiceBaseUri.OriginalString) < 0)
-                        {
-                            url = context.ServiceBaseUri.OriginalString + url;
-                        }
-                        Uri testurl = null;
                         try
                         {
-                            testurl = new Uri(url);
+                            var test = entity;
+                            var test1 = entity[Constants.V4OdataId];
+                            url = entity[Constants.V4OdataId].ToString();
+                        }
+                        catch(Exception ex)
+                        {
+                            entity_error = true;
+                            passed = false;
+                            detail.ErrorMessage = ex.Message + " Attempt to access:  " + Constants.V4OdataId + " Response:  " + resp.ResponsePayload;
 
                         }
-                        catch (Exception ex)
+                        if (!entity_error)
                         {
-
-                        }
-
-                        if (testurl != null)
-                        {
-                            resp = WebHelper.Get(new Uri(url), Constants.AcceptHeaderJson, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
-
-                            if (resp.StatusCode == HttpStatusCode.OK)
+                            if (url.IndexOf(context.ServiceBaseUri.OriginalString) < 0)
                             {
-                                passed = true;
+                                url = context.ServiceBaseUri.OriginalString + url;
+                            }
+                            Uri testurl = null;
+                            try
+                            {
+                                testurl = new Uri(url);
+
+                            }
+                            catch
+                            {
+
+                            }
+
+                            if (testurl != null)
+                            {
+                                resp = WebHelper.Get(new Uri(url), Constants.AcceptHeaderJson, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
+                                detail.URI = url;
+                                detail.ResponsePayload = resp.ResponsePayload;
+                                detail.ResponseHeaders = resp.ResponseHeaders;
+                                detail.HTTPMethod = "GET";
+                                detail.ResponseStatusCode = resp.StatusCode.ToString();
+                                if (resp.StatusCode == HttpStatusCode.OK)
+                                {
+                                    passed = true;
+                                }
+                                else
+                                {
+                                    passed = false;
+                                    detail.ErrorMessage = "The service does not execute an accurate result, because the value of the annotation '@odata.id' (" + url + ") is a bad link.";
+                                }
                             }
                             else
                             {
                                 passed = false;
                                 detail.ErrorMessage = "The service does not execute an accurate result, because the value of the annotation '@odata.id' (" + url + ") is a bad link.";
                             }
-                        }
-                        else
-                        {
-                            passed = false;
-                            detail.ErrorMessage = "The service does not execute an accurate result, because the value of the annotation '@odata.id' (" + url + ") is a bad link.";
                         }
                     }
                 }

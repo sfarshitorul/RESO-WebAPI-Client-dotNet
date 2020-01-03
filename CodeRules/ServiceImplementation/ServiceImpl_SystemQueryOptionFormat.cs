@@ -96,13 +96,24 @@ namespace ODataValidator.Rule
             string url = svcStatus.RootURL + "?$format=application/json";
             var resp = WebHelper.Get(new Uri(url), string.Empty, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
             var detail = new ExtensionRuleResultDetail("ServiceImpl_SystemQueryOptionFormat", url, HttpMethod.Get, string.Empty);
+            detail.URI = url;
+            detail.ResponsePayload = resp.ResponsePayload;
+            detail.ResponseHeaders = resp.ResponseHeaders;
+            detail.HTTPMethod = "GET";
+            detail.ResponseStatusCode = resp.StatusCode.ToString();
+
             info = new ExtensionRuleViolationInfo(new Uri(url), string.Empty, detail);
             if (null != resp && HttpStatusCode.OK == resp.StatusCode)
             {
                 passed = resp.ResponsePayload.IsJsonLightSvcDoc();
+                if (passed == false)
+                {
+                    detail.ErrorMessage = "Response did not return a well formated JSON document";
+                }
             }
             else
             {
+                detail.ErrorMessage = "Response return an error message:  " + resp.StatusCode.ToString();
                 passed = false;
             }
 

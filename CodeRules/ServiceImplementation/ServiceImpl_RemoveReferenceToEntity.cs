@@ -177,6 +177,11 @@ namespace ODataValidator.Rule
                 isMediaType = !string.IsNullOrEmpty(additionalInfos.Last().ODataMediaEtag);
                 resp = WebHelper.CreateEntity(nEntitySetUrl, context.RequestHeaders, reqData, isMediaType, ref additionalInfos);
                 detail = new ExtensionRuleResultDetail(this.Name, nEntitySetUrl, HttpMethod.Post, string.Empty, resp, string.Empty, reqDataStr);
+                detail.URI = nEntitySetUrl;
+                detail.ResponsePayload = resp.ResponsePayload;
+                detail.ResponseHeaders = resp.ResponseHeaders;
+                detail.HTTPMethod = "GET";
+                detail.ResponseStatusCode = resp.StatusCode.ToString();
 
                 if (HttpStatusCode.Created == resp.StatusCode)
                 {
@@ -222,6 +227,12 @@ namespace ODataValidator.Rule
 
                             resp = WebHelper.UpdateEntity(updateUrl, context.RequestHeaders, navigationRefSet.ToString(), HttpMethod.Put, false);
                             detail = new ExtensionRuleResultDetail(this.Name, updateUrl, HttpMethod.Put, string.Empty, resp, string.Empty, refEntityValue.ToString());
+                            detail.URI = updateUrl;
+                            detail.ResponsePayload = resp.ResponsePayload;
+                            detail.ResponseHeaders = resp.ResponseHeaders;
+                            detail.HTTPMethod = "PUT";
+                            detail.ResponseStatusCode = resp.StatusCode.ToString();
+
                         }
 
                         if (HttpStatusCode.NoContent == resp.StatusCode)

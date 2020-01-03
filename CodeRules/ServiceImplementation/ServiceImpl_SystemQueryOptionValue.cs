@@ -124,6 +124,12 @@ namespace ODataValidator.Rule
                 url = string.Format(pattern, url, keyPropVal, keyPropName);
                 resp = WebHelper.Get(new Uri(url), string.Empty, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
                 var detail = new ExtensionRuleResultDetail("ServiceImpl_SystemQueryOptionValue", url, HttpMethod.Get, string.Empty);
+                detail.URI = url;
+                detail.ResponsePayload = resp.ResponsePayload;
+                detail.ResponseHeaders = resp.ResponseHeaders;
+                detail.HTTPMethod = "GET";
+                detail.ResponseStatusCode = resp.StatusCode.ToString();
+
                 info = new ExtensionRuleViolationInfo(new Uri(url), string.Empty, detail);
                 if (null != resp && HttpStatusCode.OK == resp.StatusCode)
                 {

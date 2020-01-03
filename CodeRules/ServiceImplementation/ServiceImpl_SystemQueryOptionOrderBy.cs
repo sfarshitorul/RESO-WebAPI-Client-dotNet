@@ -110,7 +110,11 @@ namespace ODataValidator.Rule
             string url = string.Format("{0}/{1}?$orderby={2} desc", svcStatus.RootURL.TrimEnd('/'), entitySetUrl, keyPropName);
             var resp = WebHelper.Get(new Uri(url), Constants.V4AcceptHeaderJsonFullMetadata, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, svcStatus.DefaultHeaders);
             var detail = new ExtensionRuleResultDetail("ServiceImpl_SystemQueryOptionOrderBy", url, HttpMethod.Get, resp.ResponseHeaders, resp);
-
+            detail.URI = url;
+            detail.ResponsePayload = resp.ResponsePayload;
+            detail.ResponseHeaders = resp.ResponseHeaders;
+            detail.HTTPMethod = "GET";
+            detail.ResponseStatusCode = resp.StatusCode.ToString();
             //public ExtensionRuleResultDetail(string ruleName, string uri, string httpMethod, string requestHeaders, string responseStatusCode = "", string responseHeaders = "", string responsePayload = "", string errorMessage = "", string requestData = "")
             info = new ExtensionRuleViolationInfo(new Uri(url), string.Empty, detail);
             if (null != resp && HttpStatusCode.OK == resp.StatusCode)

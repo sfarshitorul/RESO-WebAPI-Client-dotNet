@@ -125,7 +125,12 @@ namespace ODataValidator.Rule
 
                 resp = WebHelper.Get(new Uri(context.ServiceBaseUri.OriginalString.TrimEnd('/') + @"/" + entitySetUrl), 
                     Constants.AcceptHeaderJson, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
-                
+                detail.URI = context.ServiceBaseUri.OriginalString.TrimEnd('/') + @"/" + entitySetUrl;
+                detail.ResponsePayload = resp.ResponsePayload;
+                detail.ResponseHeaders = resp.ResponseHeaders;
+                detail.HTTPMethod = "GET";
+                detail.ResponseStatusCode = resp.StatusCode.ToString();
+
                 if (null == resp || HttpStatusCode.OK != resp.StatusCode)
                 {
                     continue;
@@ -150,6 +155,10 @@ namespace ODataValidator.Rule
                         if (!Find(allEntities, key.Item1, entity[key].ToString()))
                         {
                             passed = false;
+                            //public ExtensionRuleResultDetail(string ruleName, string uri, string httpMethod, string requestHeaders, string responseStatusCode = "", string responseHeaders = "", string responsePayload = "", string errorMessage = "", string requestData = "")
+                            ExtensionRuleResultDetail detail2 = new ExtensionRuleResultDetail(this.Name);
+                            detail2.ErrorMessage = "Unable to find key / value in entity set using:  " + key.Item1 + "/" + entity[key].ToString();
+                            info.AddDetail(detail2);
                         }
                         else
                         {
@@ -160,8 +169,12 @@ namespace ODataValidator.Rule
                     catch(Exception ex)
                     {
                         passed = false;
+                        ExtensionRuleResultDetail detail3 = new ExtensionRuleResultDetail(this.Name);
+                        detail3.ErrorMessage = "Exception occured try to find key / value in entity set:  " + ex.Message;
+                        info.AddDetail(detail3);
+
                     }
-            
+
                 }
 
             }

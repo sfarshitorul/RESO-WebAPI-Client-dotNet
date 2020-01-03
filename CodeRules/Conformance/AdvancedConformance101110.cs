@@ -137,6 +137,11 @@ GET {0} HTTP/1.1
             List<string> batchResponseSigns = new List<string>();
             Response batchResponse = WebHelper.BatchOperation(context.ServiceBaseUri.OriginalString, batchRequest, boundary);
             var detail = new ExtensionRuleResultDetail(this.Name, context.ServiceBaseUri.OriginalString + "/$batch", HttpMethod.Post, string.Empty, batchResponse, string.Empty, batchRequest);
+            detail.URI = context.ServiceBaseUri.OriginalString + "/$batch";
+            detail.ResponsePayload = batchResponse.ResponsePayload;
+            detail.ResponseHeaders = batchResponse.ResponseHeaders;
+            detail.HTTPMethod = "POST";
+            detail.ResponseStatusCode = batchResponse.StatusCode.ToString();
 
             if (batchResponse != null && !string.IsNullOrEmpty(batchResponse.ResponsePayload))
             {

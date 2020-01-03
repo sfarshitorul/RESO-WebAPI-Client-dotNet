@@ -76,13 +76,17 @@ namespace ODataValidator.Rule
 
             bool? passed = null;
 
-            Uri metadataServiceUrl = new Uri(context.Destination.AbsoluteUri.TrimEnd('/') + @"/$metadata" + @"/");
+            Uri metadataServiceUrl = new Uri(context.Destination.AbsoluteUri.TrimEnd('/') + @"/$metadata");
             //var req = WebRequest.Create(metadataServiceUrl) as HttpWebRequest;
             //Response response = WebHelper.Get(req, RuleEngineSetting.Instance().DefaultMaximumPayloadSize);
             Response response = WebHelper.Get(metadataServiceUrl, null, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, context.RequestHeaders);
 
             ExtensionRuleResultDetail detail = new ExtensionRuleResultDetail(this.Name, metadataServiceUrl.AbsoluteUri, "GET", string.Empty, response);
-
+            detail.URI = metadataServiceUrl.AbsoluteUri;
+            detail.ResponsePayload = response.ResponsePayload;
+            detail.ResponseHeaders = response.ResponseHeaders;
+            detail.HTTPMethod = "GET";
+            detail.ResponseStatusCode = response.StatusCode.ToString();
             if (response != null && response.StatusCode == HttpStatusCode.OK && response.ResponsePayload.IsMetadata())
             {
                 passed = true;
@@ -90,7 +94,14 @@ namespace ODataValidator.Rule
             else
             {
                 passed = false;
-                detail.ErrorMessage = "The response is not the metadata service document. Please refer to section 15 of [OData-CSDL].";
+                if (!response.ResponsePayload.IsMetadata())
+                {
+                    detail.ErrorMessage = "The response is not the metadata service document. Please refer to section 15 of [OData-CSDL].";
+                }
+                else
+                {
+                    detail.ErrorMessage = "Server returned:  "+ response.StatusCode;
+                }
             }
 
             info = new ExtensionRuleViolationInfo(context.Destination, context.ResponsePayload, detail);

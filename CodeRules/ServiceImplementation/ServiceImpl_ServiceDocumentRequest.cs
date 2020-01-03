@@ -101,6 +101,7 @@ namespace ODataValidator.Rule
             }
             else
             {
+                detail.ErrorMessage = "The Service Document is empty.";
                 passed = false;
             }
 

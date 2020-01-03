@@ -138,6 +138,12 @@ namespace ODataValidator.Rule
                 bool hasEtag = additionalInfos.Last().HasEtag;
                 resp = WebHelper.GetEntity(entityId);
                 detail2 = new ExtensionRuleResultDetail(this.Name, entityId, HttpMethod.Get, string.Empty, resp);
+                detail2.URI = url;
+                detail2.ResponsePayload = resp.ResponsePayload;
+                detail2.ResponseHeaders = resp.ResponseHeaders;
+                detail2.HTTPMethod = "GET";
+                detail2.ResponseStatusCode = resp.StatusCode.ToString();
+
                 if (HttpStatusCode.OK == resp.StatusCode)
                 {
                     JObject entity = JObject.Parse(resp.ResponsePayload);
@@ -152,6 +158,11 @@ namespace ODataValidator.Rule
                     {
                         resp = WebHelper.GetEntity(entityId);
                         detail4 = new ExtensionRuleResultDetail(this.Name, entityId, HttpMethod.Get, string.Empty, resp, string.Empty, reqDataStr);
+                        detail4.URI = url;
+                        detail4.ResponsePayload = resp.ResponsePayload;
+                        detail4.ResponseHeaders = resp.ResponseHeaders;
+                        detail4.HTTPMethod = "GET";
+                        detail4.ResponseStatusCode = resp.StatusCode.ToString();
 
                         if (HttpStatusCode.OK == resp.StatusCode)
                         {

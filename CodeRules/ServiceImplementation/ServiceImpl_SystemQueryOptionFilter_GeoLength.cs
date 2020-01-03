@@ -122,6 +122,12 @@ namespace ODataValidator.Rule
                 url = string.Format("{0}?$filter=geo.length({1}) eq {2}", url, propName, length);
                 resp = WebHelper.Get(new Uri(url), string.Empty, RuleEngineSetting.Instance().DefaultMaximumPayloadSize, svcStatus.DefaultHeaders);
                 var detail = new ExtensionRuleResultDetail(this.Name, url, HttpMethod.Get, string.Empty);
+                detail.URI = url;
+                detail.ResponsePayload = resp.ResponsePayload;
+                detail.ResponseHeaders = resp.ResponseHeaders;
+                detail.HTTPMethod = "GET";
+                detail.ResponseStatusCode = resp.StatusCode.ToString();
+
                 info = new ExtensionRuleViolationInfo(new Uri(url), string.Empty, detail);
                 if (null != resp && HttpStatusCode.OK == resp.StatusCode)
                 {
@@ -131,10 +137,16 @@ namespace ODataValidator.Rule
                     {
                         var len = this.GetLength(propName, et);
                         passed = len == length;
+                        if(passed == false)
+                        {
+                            detail.ErrorMessage = "The Lengths are not equal";
+                            break;
+                        }
                     }
                 }
                 else
                 {
+                    detail.ErrorMessage = "The server returned an error response:  " + detail.ResponseStatusCode;
                     passed = false;
                 }
             }
